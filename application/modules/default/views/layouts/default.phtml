@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title><?php echo APP_NAME; ?></title>
+<title>Chaplin</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css"/>
     <script type="text/javascript" src="/js/jquery-1.5.min.js"></script>
     <script type="text/javascript" src="/js/jquery.color.js"></script>
@@ -9,17 +9,16 @@
 </head>
 <body>
     <div id="contentwrapper">
-        <div id="appspace">
-            <header>
-                <?php echo $this->render('_header.phtml'); ?>
-            </header>
-            <div id="appcontent">
-                <?php echo $this->layout()->content; ?>
-            </div>
+        <header>
+            <?php echo $this->render('_header.phtml'); ?>
+        </header>
+        <div id="content">
+            <?php echo $this->layout()->content; ?>
         </div>
-        <nav id="launcher">
-            <?php echo $this->render('_launcher.phtml'); ?>
-        </nav>
+        </div>
+        <footer>
+            <?php echo $this->render('_footer.phtml'); ?>
+        </footer>
     </div>
 </body>
 </html>
