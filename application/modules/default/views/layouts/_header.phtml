@@ -1,20 +1,6 @@
-<div class="left">
-    <?php echo date('l dS F Y'); ?>
-</div>
-
-<div class="centre">
-<?php
-echo APP_NAME;
-if($this->apptitle) :
-    echo ': ' . $this->apptitle;
-    if($this->appsection) : echo ' - ' . $this->appsection; endif;
-endif;
-?>
-</div>
-
 <div class="right">
-    <?php if(Betabud_Auth::getInstance()->hasIdentity()) :
-        $modelUser = Betabud_Auth::getInstance()->getIdentity()->getUser(); ?>
+    <?php if(Chaplin_Auth::getInstance()->hasIdentity()) :
+        $modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser(); ?>
         Logged in as <strong><?php echo $modelUser->getUsername(); ?> - <?php echo $modelUser->getUserType()->getUserType();?></strong> | <a href="/userinfo">User Info</a> | <a href="/logout">Logout</a>
     <?php else: ?>
         <a href="/login">Login</a>

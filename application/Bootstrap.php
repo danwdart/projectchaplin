@@ -61,16 +61,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
     }
 
-    protected function _initConstants()
-    {
-        $config = new Zend_Config_Ini(APPLICATION_PATH . '/config/zetabud.ini');
-
-        foreach($config->zb->toArray() as $key => $value)
-        {
-            define(strtoupper($key), $value);
-        }
-    }
-
     protected function _initRoutes()
     {
         $router = Zend_Controller_Front::getInstance()->getRouter();
