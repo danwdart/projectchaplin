@@ -1,0 +1,23 @@
+<div class="widgetbox medium" style="text-align:center;margin:0 auto;">
+<div class="widgettitle" style="text-align:center; margin:0 auto;">
+    Please enter credentials:
+</div>
+<div class="widgetbody" style="text-align:center;margin:0 auto;">
+<?php echo $this->form; ?>
+</div>
+</div>
+<style>
+.messages {
+/*    border: 2px outset #999999;  */
+    font-weight: bold;
+    margin: 0 auto;
+    padding: 5px 20px;
+    width: 200px;
+}
+</style>
+
+<script>
+$(document).ready(function() {
+    $('#username').focus();
+});
+</script>
