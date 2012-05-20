@@ -1,0 +1,69 @@
+Models
+
+Axioms of a model:
+    1. It must fit a NoSQL-type database and with little fiddling a SQL-type one.
+    2. One type of model will have one type of DAO (Database Access Object) the sole purpose of which is to store and retrieve data.
+    3. One type of model will have one type of gateway: post- or pre- DAO, non-DAO-specific logic goes here.
+    4. A model may have one or more of the following types of field objects:
+        4.1. Id
+            4.1.1. This is included along with the model's definition
+            4.1.2. This must be set before saving the model
+            4.1.3. This must not be changed during the lifetime of the model.
+        4.2. Field
+            4.2.1. This can fit any scalar type of data such as int, string, float, etc. including arrays that will be dealt with in a raw fashion.
+        4.3. Array
+            4.3.1. This can be pushed and popped - the results of which will be saved to a compatible database non-atomically.
+            4.3.2. This can contain Fields and References (see 4.6)
+        4.4. Object
+            4.4.1. The purpose of an Object is to contain data of which the keys are not defined.
+            4.4.2. These are similar to Models in that they exhibit similar functionality - and are "child" models - and can thus hold other fields or collections (see 4.5).
+            4.4.3. These know exactly where they are in the source tree relative to the base element so they know how to tell the models to update themselves to accommodate them.
+            4.4.4. AssocChild Object
+                4.4.4.1. This references any type of object which has been explicitly defined (and this is recommended).
+                4.4.4.2. This will be dealt with by instantiating the object (which is similar to a model).
+            4.4.5. IndexChild object
+                4.4.5.1. This will match any object you wish to exist with no Id element
+                4.4.5.2. You will not be able to update existing IndexChildren - only add more (cannot guarantee index place)
+        4.5. Collection
+            4.5.1. The purpose of a Collection is to encapsulate groups of Child or IndexChild objects
+            4.5.2. These may be iterated over using any standard Iterator-based interfaces
+            4.5.3. The Collection may only "seek" for AssocChild objects
+            4.5.4. Any object in a Collection is dealt with by reference and as such any modifications to any children will cause the collection to be instantly aware of it,
+            4.5.5. Usually a Collection will hold only one type of object but in some instances it will hold other types - and as such will require the type of Object to be determined by a field.
+                4.5.5.1. A Collection should know the type of Object it has to create - this is specified on instantiation or determined by the array it is given.
+        4.6. Reference
+            4.6.1. A Reference is a "special" field type reference to another base model via its id - getting this field directly gets the model
+            4.6.2. These may be held anywhere as with a field
+    5. A DAO must know of the changes to any model on request to save the model. These are expressed in a standard syntax easily translatable.
+        For instance:
+            Model->getChanges() would return:
+                Collection(Names)
+                    AssocChild(Name)
+                        Id: 123abc
+                        Field(FirstName): Bob
+        which it could then parse to the format:
+            Names.123abc.FirstName: Bob
+
+The way that Models work is:
+
+1. A model has a list of types of fields - this being one collection 
+2. A collection can either start with no fields or some fields.
+3. A collection can either be a list of fields or a list of other collections (or children) with id as child rather than field name
+4. A standard collection can stand for both.
+5. An extended collection can be like a child.
+
+E.g.:
+
+{
+    id: 1,
+    Email: dandart@googlemail.com,
+    Credentials: {
+        _id: 127891,
+        openidassoc: 42486264
+    }
+}
+
+Main class User has 
+Collection using _id,Email,Credentials,
+Credentials is a collection using nothing - read/write fields - only accepts children (usually of one type)
+Children are collections with stuff already populated - read only fields.
