@@ -1,0 +1,134 @@
+The API for Betabud will be an installable REST interface
+
+All APIs will default to "jsonpretty". Optional parameter: format - accepts json, xml
+If the request format is application/json - POST/PUT will accept JSON Parameters.
+Optional attributes for authentication:
+  access_token (cookie or same request format as api call)
+  username & password (same request format as api call)
+  Session Id (cookie or same request format as api call)
+
+GET /user/
+Searches for a user
+Input parameters
+
+POST /user/
+Creates a new user
+
+PUT /user/
+Alters the account information for a user.
+
+GET /user/[UserId]
+Gets the information for a particular user
+
+GET /video/
+List the videos available.
+This data is not lazy-loaded but saved in the DB.
+
+Input parameters
+    term
+        String - Search term, UTF-8
+    userid
+        Identifier of the user under which to search
+    channelid
+        identifier of the user's channel under which to search.
+    skip
+        Int, The amount to skip
+    limit
+        Int, the amount to limit
+
+Sample request:
+    GET /video/?term=motorbike&userid=arb123&channel=bika&skip=10&limit=40
+
+Fields
+    
+    Title
+        String - title of the video, UTF-8 encoded.
+
+    Length
+        String in format MM:SS or HH:MM:SS
+
+    Width
+        Short int
+
+    Height
+        Short int
+
+    Format
+        String - format of the video - usually webm, sometimes ogv.
+
+    Bitrate
+        Float in kbps
+
+    Size
+        Float in kB
+
+    Tags
+        Array of tags relevant to this video.
+
+    NotTags
+        Array of tags irrelevant to this video.
+    
+    Feedback:
+        Object of appropriate feedback counts.
+            Like
+                Int
+            Dislike
+                Int
+            ...more later...
+
+    Comments
+        Array of objects:
+        
+            UserId:
+                The id of the user who made it
+            Username:
+                The username of the user who made it (at the time at which they made it).
+            Comment:
+                The comment of the user
+            Feedback:
+                Like above.
+            
+
+Sample Output (default in jsonpretty, others available, see above):
+{
+    "Videos" : [
+        {
+            "Title" : "Sample Video",
+            "Length" : "27:22",
+            "Width" : 1920,
+            "Height" : 1080,
+            "Format" :""webm",
+            "Bitrate" : 4248,
+            "Size" : "42000.600",
+            "Feedback": {
+                "Like": 42,
+                "Dislike": 1
+            },
+            "Tags": [
+                "epic",
+                "nightwish",
+                "sample"
+            ],
+            "NotTags": [
+                "wishingwell",
+                "thunder",
+                "trex"
+            ],
+            "Comments" : {
+                "UserId" : "420",
+                "Comment" : "Epic!",
+                "Feedback": {
+                    "Like": 1,
+                    "Dislike": 1
+                }
+            }
+        }
+    ],
+}
+
+POST /upload
+Params: file
+Encoding: x-multipart/form-data
+does MIME type detection, magic number detection and file extension detection.
+Uploads the file to the correct destination.
+Returns one element that would go in the above object (array_merge-able).
