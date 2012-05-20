@@ -1,4 +1,5 @@
 The API for Betabud will be an installable REST interface
+TODO: Channels. Improvements.
 
 All APIs will default to "jsonpretty". Optional parameter: format - accepts json, xml
 If the request format is application/json - POST/PUT will accept JSON Parameters.
@@ -7,18 +8,115 @@ Optional attributes for authentication:
   username & password (same request format as api call)
   Session Id (cookie or same request format as api call)
 
+We also introduce the notion of Tags/NotTags.
+When creating an item, we encourage Tags to be set (meaning an interest, or relevance),
+as well as NotTags to be set (a disinterest or irrelevance).
+When you search for items this way, we will search on the term being in Tags but not in NotTags
+preventing irrelevant results from appearing.
+Only tags are available publically.
+
 GET /user/
 Searches for a user
 Input parameters
+    name
+        String - first or last name
+    tags
+        Array of tags
+    ...more soon
+
+Sample request
+    GET /user/name=bob&tags[]=motorbikes&tags[]=mechanics
+
+Sample reponse
+    {
+        "Users": [
+            {
+                "Username": "bob52",
+                "FirstName": "Bob",
+                "LastName": "Dobbs",
+                "Brief": "Man of the Fnordic realms",
+                "AboutMe": "I am a simply charming bloke. ...",
+                "Tags": [
+                    "sailing",
+                    "fnord"
+                ],
+                "NotTags": [
+                    "fishing",
+                    "hats"
+                ],
+                "Views": 42000,
+                "Comments": [
+                    {
+                        "Username": "robertsmyth48",
+                        "Comment": "Hello"
+                    }
+                ]
+            }
+        ]
+    }
+
+    GET /user/[Username]
+    Gets the information for a particular user
+
+    Sample request
+        GET /user/bob52
+
+    Sample response
+        {
+            "FirstName": "Bob",
+            "LastName": "Dobbs",
+            "Brief": "Man of the Fnordic realms",
+            "AboutMe": "I am a simply charming bloke. ...",
+            "Tags": [
+                "sailing",
+                "fnord"
+            ],
+            "NotTags": [
+                "fishing",
+                "hats"
+            ],
+            "Views": 42000,
+            "Comments": [
+                {
+                    "Username": "robertsmyth48",
+                    "Comment": "Hello"
+                }
+            ]
+        }
+
+GET /user/[Username]/image(.ext)
+Gets a user's image - supports jpg, png, gif.
+    .ext - optional extension.
+
+Sample request
+    GET /user/bob52/image
+Sample response
+    (png image)
+
+GET /user/[Username]/profile.css
+Gets a user's CSS for their profile.
+
+Sample request
+    GET /user/bob52/profile.css
+Sample response
+    (png image)
+
 
 POST /user/
 Creates a new user
+Accepts all of the above in GET as parameters, plus:
+    Password
+        String
 
-PUT /user/
+Returns: the same as GET.
+
+PUT /user/[UserId]
 Alters the account information for a user.
+Accepts one or more parameters from GET and can overwrite a user's details.
 
-GET /user/[UserId]
-Gets the information for a particular user
+DELETE /user/[UserId]
+Deletes a user
+Returns: 204 No Content
 
 GET /video/
 List the videos available.
@@ -62,6 +160,15 @@ Fields
     Size
         Float in kB
 
+    Views
+        Int - number of complete views
+
+    PartialViews
+        Int - number of partial views
+
+    Bounces
+        Int - number of bounces.
+
     Tags
         Array of tags relevant to this video.
 
@@ -79,7 +186,7 @@ Fields
     Comments
         Array of objects:
         
-            UserId:
+            Username:
                 The id of the user who made it
             Username:
                 The username of the user who made it (at the time at which they made it).
@@ -87,12 +194,12 @@ Fields
                 The comment of the user
             Feedback:
                 Like above.
-            
 
 Sample Output (default in jsonpretty, others available, see above):
 {
     "Videos" : [
         {
+            "VideoId": "h4ck377",
             "Title" : "Sample Video",
             "Length" : "27:22",
             "Width" : 1920,
@@ -100,6 +207,9 @@ Sample Output (default in jsonpretty, others available, see above):
             "Format" :""webm",
             "Bitrate" : 4248,
             "Size" : "42000.600",
+            "Views": 4200,
+            "PartialViews": 780,
+            "Bounces": 80,
             "Feedback": {
                 "Like": 42,
                 "Dislike": 1
@@ -115,7 +225,7 @@ Sample Output (default in jsonpretty, others available, see above):
                 "trex"
             ],
             "Comments" : {
-                "UserId" : "420",
+                "Username" : "420",
                 "Comment" : "Epic!",
                 "Feedback": {
                     "Like": 1,
@@ -126,9 +236,49 @@ Sample Output (default in jsonpretty, others available, see above):
     ],
 }
 
-POST /upload
-Params: file
-Encoding: x-multipart/form-data
-does MIME type detection, magic number detection and file extension detection.
+POST /video
+Upload a video.
+Parameters:
+        File
+            Encoding: x-multipart/form-data
+            does MIME type detection, magic number detection and file extension detection.
+        Title
+            String
+        Tags
+            Array of strings
+        NotTags
+            Array of strings
+
+Sample request for POST fields:
+    {
+        "Title": "Ode to Bob",
+        "Tags": [
+            "bob",
+            "dobbs"
+        ],
+        "NotTags": [
+            "boba",
+            "cow",
+            "meow"
+        ]
+    }
+
 Uploads the file to the correct destination.
-Returns one element that would go in the above object (array_merge-able).
+Returns that of GET /video
+
+PUT /video/[VideoId]
+Change a video.
+Parameters:
+    VideoId
+        String
+    Any of POST /video
+Returns:
+    That of GET /video
+
+DELETE /video/[VideoId]
+Deletes a video
+Parameters:
+    VideoId
+        String
+Returns:
+204 No Content
