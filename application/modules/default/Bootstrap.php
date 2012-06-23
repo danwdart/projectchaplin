@@ -14,9 +14,15 @@ class Default_Bootstrap extends Zend_Application_Module_Bootstrap
         //$acl = $this->getApplication()->getResource('acl');     
         $acl = Zend_Registry::get('acl');
         {    
-            $acl->add(new Zend_Acl_Resource('default'));
+            $acl->add(new Zend_Acl_Resource('default/index'));
+            $acl->add(new Zend_Acl_Resource('default/error'));
+            $acl->add(new Zend_Acl_Resource('default/login'));
+            $acl->add(new Zend_Acl_Resource('default/video'));
                  
-            $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default');
+            $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/index');
+            $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/error');
+            $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/login');
+            $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_USER, 'default/video');
         }
     }
 }

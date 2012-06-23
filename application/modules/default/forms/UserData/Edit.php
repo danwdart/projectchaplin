@@ -1,5 +1,5 @@
 <?php
-class default_Form_UserData_Edit extends Zend_Form()
+class default_Form_UserData_Edit extends Zend_Form
 {
     public function init()
     { 

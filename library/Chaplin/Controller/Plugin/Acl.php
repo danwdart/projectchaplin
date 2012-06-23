@@ -35,12 +35,11 @@ class Chaplin_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         $strAction = $request->getActionName();
 
         $auth = Chaplin_Auth::getInstance();
-        // If we're on default don't bother with the /controller bit - it's all the same
-        $resource = ($defaultModule == $strModule)?$defaultModule:$strModule.'/'.$strController;
+        $resource = $strModule.'/'.$strController;
         $role = $auth->hasIdentity() ? $auth->getIdentity()->getUser()->getUserType()->getUserType(): Chaplin_Model_User_Helper_UserType::TYPE_GUEST;
         
         if (!$this->_acl->isAllowed($role, $resource, $strAction)) {
-            throw new Chaplin_Exception_Permission();
+            return $redirectHelper->gotoUrl('/login');
         }
     }
 }

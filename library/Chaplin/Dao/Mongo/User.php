@@ -1,5 +1,7 @@
 <?php
-class Chaplin_Dao_Mongo_User extends Chaplin_Dao_Mongo_Abstract
+class Chaplin_Dao_Mongo_User
+    extends Chaplin_Dao_Mongo_Abstract
+    implements Chaplin_Dao_Interface_User
 {
     const COLLECTION = 'Users';
 

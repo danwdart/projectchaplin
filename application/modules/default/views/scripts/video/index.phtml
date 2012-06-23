@@ -1,7 +1,7 @@
 <?php
 if($this->filename):?>
     Successfully uploaded your file. Here it is:<br/>
-<img src="<?php echo $this->filename;?>"/>
+<video src="<?php echo $this->filename;?>" controls></video>
 <?php
 else:
     echo $this->form;

@@ -32,6 +32,6 @@ class Chaplin_Gateway
     
     public function getVideo()
     {
-        return new Chapliin_Gateway_Video(new Chaplin_Dao_Mongo_Video());
+        return new Chaplin_Gateway_Video(new Chaplin_Dao_Mongo_Video());
     }
 }

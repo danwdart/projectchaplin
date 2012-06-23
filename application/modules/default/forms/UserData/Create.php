@@ -1,5 +1,5 @@
 <?php
-class default_Form_UserData_Create extends Zend_Form()
+class default_Form_UserData_Create extends Zend_Form
 {
     public function init()
     { 
@@ -11,9 +11,22 @@ class default_Form_UserData_Create extends Zend_Form()
 
         $password = new Zend_Form_Element_Password('password');
         $password->setLabel('Password:');
-
+        $password->addValidators(array(
+            new Zend_Validate_StringLength(array(
+                'min' => 6
+            ))
+        ));
+        
         $password2 = new Zend_Form_Element_Password('password2');
         $password2->setLabel('Repeat Password:');
+        $password2->addValidators(array(
+            new Zend_Validate_StringLength(array(
+                'min' => 6
+            )),
+            new Zend_Validate_Identical(array(
+                'token' => 'password'
+            ))
+        ));
 
         $fullname = new Zend_Form_Element_Text('fullname');
         $fullname->setLabel('Full Name:');
