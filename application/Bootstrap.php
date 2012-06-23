@@ -60,7 +60,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Registry::set('acl', $acl);
         
     }
-
+    
     protected function _initRoutes()
     {
         $router = Zend_Controller_Front::getInstance()->getRouter();

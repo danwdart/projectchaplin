@@ -1,6 +1,5 @@
 <?php
-
-class IndexController extends Chaplin_Controller_Action_App
+class IndexController extends Zend_Controller_Action
 {
     public function indexAction()
     {

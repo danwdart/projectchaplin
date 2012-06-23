@@ -3,7 +3,7 @@ class Chaplin_Gateway_User
 {
     private $_daoUser;
 
-    public function __construct(Chaplin_Dao_Mongo_User $daoUser)
+    public function __construct(Chaplin_Dao_Interface_User $daoUser)
     {
         $this->_daoUser = $daoUser;
     }

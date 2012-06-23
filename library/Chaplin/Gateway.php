@@ -30,18 +30,8 @@ class Chaplin_Gateway
         return new Chaplin_Gateway_User(new Chaplin_Dao_Mongo_User());
     }
     
-    public function getBlog()
+    public function getVideo()
     {
-        return new Chaplin_Gateway_Blog(new Chaplin_Dao_Mongo_Blog());
-    }
-
-    public function getOStatus_Site()
-    {
-        return new Chaplin_Gateway_OStatus_Site(new Chaplin_Dao_Mongo_OStatus_Site());
-    }
-
-    public function getOStatus_User()
-    {
-        return new Chaplin_Gateway_OStatus_User(new Chaplin_Dao_Mongo_OStatus_Usser());
+        return new Chapliin_Gateway_Video(new Chaplin_Dao_Mongo_Video());
     }
 }
