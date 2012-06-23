@@ -1,16 +1,14 @@
 <?php
 use Chaplin\Model\User as User;
-class LoginController extends Chaplin_Controller_Action_App
+class LoginController extends Zend_Controller_Action
 {
     private $_redirect_url;
 
     public function preDispatch()
     {
         parent::preDispatch();
-
-        $this->setAppTitle('Login');
-
-        $this->_redirect_url = $this->getReferrer();
+        
+        $this->_redirect_url = $this->_request->getServer('HTTP_REFERER');
 
         if(strstr($this->_redirect_url, '/login') !== false)
         {
@@ -20,11 +18,11 @@ class LoginController extends Chaplin_Controller_Action_App
 
     public function indexAction()
     {
-        $form = $this->_getLoginForm();
+        $form = new default_Form_Login();
 
-        if($this->isPost())
+        if($this->_request->isPost())
         {
-            $post = $this->getPost();
+            $post = $this->_request->getPost();
 
             $username = $post['username'];
             $password = $post['password'];
@@ -77,7 +75,7 @@ class LoginController extends Chaplin_Controller_Action_App
     {
         $this->setAppTitle('Register a new user');
 
-        $form = $this->_getUserDataForm();
+        $form = new default_Form_UserData_Create();
 
         if($this->isPost())
         {
@@ -173,11 +171,7 @@ class LoginController extends Chaplin_Controller_Action_App
 
     public function userinfoAction()
     {
-        $this->requireLogin();
-
-        $this->setAppTitle('Edit User Info');
-
-        $form = $this->_getUserDataForm(true);
+        $form = new default_Form_UserData_Edit();
 
         $user = Chaplin_Auth::getInstance()->getIdentity()->getUser();
 
@@ -270,77 +264,4 @@ class LoginController extends Chaplin_Controller_Action_App
 
         $this->view->assign('form', $form);
     }
-
-    private function _getLoginForm()
-    {
-        $form = new Zend_Form();
-        $form->setMethod('post');
-        $form->setAction('/login?redirect=' . $this->_redirect_url);
-
-        $username = new Zend_Form_Element_Text('username');
-        $username->setLabel('Username:');
-
-        $password = new Zend_Form_Element_Password('password');
-        $password->setLabel('Password:');
-
-        $submit = new Zend_Form_Element_Submit('Login');
-
-        $register = new Zend_Form_Element_Submit('Register');
-
-//      $forgot = new Zend_Form_Element_Submit('Forgot');
-//      $forgot->setLabel('Forgot Password');
-
-        $form->addElements(array($username, $password, $submit, $register));
-
-        return $form;
-    }    
-
-    private function _getUserDataForm($edit = false)
-    {
-        $form = new Zend_Form();
-        $form->setMethod('post');
-        $form->setAction('/login/register');
-        if($edit)
-        {
-            $form->setAction('/userinfo');
-        }
-
-        $username = new Zend_Form_Element_Text('username');
-        $username->setLabel('Username:');
-
-        if($edit)
-        {
-            $oldpassword = new Zend_Form_Element_Password('oldpassword');
-            $oldpassword->setLabel('Old Password:');
-        }
-
-        $password = new Zend_Form_Element_Password('password');
-        $password->setLabel('Password:');
-
-        $password2 = new Zend_Form_Element_Password('password2');
-        $password2->setLabel('Repeat Password:');
-
-        $fullname = new Zend_Form_Element_Text('fullname');
-        $fullname->setLabel('Full Name:');
-
-        $email = new Zend_Form_Element_Text('email');
-        $email->setLabel('Email Address:');
-
-        $register = new Zend_Form_Element_Submit('Register');
-        if($edit)
-        {
-            $register = new Zend_Form_Element_Submit('Save');
-        }
-
-        $form->addElement($username);
-
-        if($edit)
-        {
-            $form->addElement($oldpassword);
-        }
-
-        $form->addElements(array($password, $password2, $fullname, $email, $register));
-
-        return $form;
-    } 
 }

@@ -1,0 +1,9 @@
+<?php
+if($this->filename):?>
+    Successfully uploaded your file. Here it is:<br/>
+<img src="<?php echo $this->filename;?>"/>
+<?php
+else:
+    echo $this->form;
+endif;
+?>

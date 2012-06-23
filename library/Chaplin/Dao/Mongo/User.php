@@ -1,7 +1,7 @@
 <?php
 class Chaplin_Dao_Mongo_User extends Chaplin_Dao_Mongo_Abstract
 {
-    const COLLECTION = 'User';
+    const COLLECTION = 'Users';
 
     protected function _getCollectionName()
     {
