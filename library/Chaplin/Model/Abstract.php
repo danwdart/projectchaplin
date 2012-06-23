@@ -1,6 +1,8 @@
 <?php
 abstract class Chaplin_Model_Abstract
 {
+    const FIELD_ID = '_id';    
+    
     // Implement this
     protected static $_arrFields = array();
 

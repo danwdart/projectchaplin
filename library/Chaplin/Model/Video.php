@@ -1,5 +1,5 @@
 <?php
-class Chaplin_Model_Video extends Chaplin_Model_Abstract
+class Chaplin_Model_Video extends Chaplin_Model_Abstract_Base
 {
     const FIELD_VIDEOID = self::FIELD_ID;
     const FIELD_USERNAME = 'Username';
@@ -19,16 +19,31 @@ class Chaplin_Model_Video extends Chaplin_Model_Abstract
     const FIELD_ARRAY_NOTTAGS = 'NotTags';
     const CHILD_ASSOC_COMMENTS = 'Comments';
     
+    protected static $_arrFields = array(
+        self::FIELD_VIDEOID => 'Chaplin_Model_Field_FieldId',
+        self::FIELD_USERNAME => 'Chaplin_Model_Field_Field',
+        self::FIELD_FILENAME => 'Chaplin_Model_Field_Field',
+        self::FIELD_TITLE => 'Chaplin_Model_Field_Field'
+    );
+    
     public static function create(
         Chaplin_Model_User $modelUser,
         $strFilename, // form element?
         $strTitle
     ) {
         $video = new self();
-        $video->_setField(self::FIELD_USERNAME, $modelUser->getUsername();
+        $video->_setField(self::FIELD_VIDEOID, md5(new MongoId()));
+        $video->_setField(self::FIELD_USERNAME, $modelUser->getUsername());
         $video->_setField(self::FIELD_FILENAME, $strFilename);
-        $video_>_setField(self::FIELD_TITLE, $strTitle);
+        $video->_setField(self::FIELD_TITLE, $strTitle);
         return $video;
+    }
+    
+    public function delete()
+    {
+        return Chaplin_Gateway::getInstance()
+            ->getVideo()
+            ->delete($this);
     }
     
     public function save()
