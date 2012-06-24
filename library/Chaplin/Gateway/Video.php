@@ -8,6 +8,11 @@ class Chaplin_Gateway_Video
         $this->_daoVideo = $daoVideo;
     }
 
+    public function getFeaturedVideos()
+    {
+        return $this->_daoVideo->getFeaturedVideos();
+    }
+
     public function getByVideoId($strVideoId)
     {
         return $this->_daoVideo->getByVideoId($strVideoId);

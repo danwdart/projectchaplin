@@ -1,7 +1,20 @@
 <?php
 class VideoController extends Zend_Controller_Action
 {
-    public function indexAction()
+    public function watchAction()
+    {
+        $strVideoId = $this->_request->getParam('id', null);
+        if(is_null($strVideoId)) {
+            return $this->_redirect('/');
+        }
+        
+        $modelVideo = Chaplin_Gateway::getInstance()
+            ->getVideo()
+            ->getByVideoId($strVideoId);
+        $this->view->assign('video', $modelVideo);
+    }
+    
+    public function uploadAction()
     {
         if(!Chaplin_Auth::getInstance()->hasIdentity()) {
             return $this->_redirect('/login');
@@ -31,6 +44,13 @@ class VideoController extends Zend_Controller_Action
         
         $modelVideo->save();
         
-        $this->view->assign('filename', $strFilename);
+        $this->_helper->FlashMessenger('Video Saved.');
+        $this->_redirect('/video/watch/id/'.$modelVideo->getVideoId());
+    }
+    
+    public function youtubeAction()
+    {
+        $strURL = $this->_request->getQuery('url');
+        
     }
 }
