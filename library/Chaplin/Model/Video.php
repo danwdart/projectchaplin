@@ -25,7 +25,8 @@ class Chaplin_Model_Video extends Chaplin_Model_Abstract_Base
         self::FIELD_TIMECREATED => 'Chaplin_Model_Field_Field',
         self::FIELD_USERNAME => 'Chaplin_Model_Field_Field',
         self::FIELD_FILENAME => 'Chaplin_Model_Field_Field',
-        self::FIELD_TITLE => 'Chaplin_Model_Field_Field'
+        self::FIELD_TITLE => 'Chaplin_Model_Field_Field',
+        self::CHILD_ASSOC_COMMENTS => 'Chaplin_Model_Field_Collection_Assoc'
     );
     
     public static function create(
@@ -60,6 +61,11 @@ class Chaplin_Model_Video extends Chaplin_Model_Abstract_Base
     public function getThumbnail()
     {
         return null;
+    }
+    
+    public function getComments()
+    {
+        return $this->_getField(self::CHILD_ASSOC_COMMENTS, array());
     }
     
     public function delete()

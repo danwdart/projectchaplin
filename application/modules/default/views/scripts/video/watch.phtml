@@ -3,3 +3,10 @@
     <video id="video" controls src="<?php echo $this->video->getFilename();?>">
     </video>
 </p>
+<h2>Comments:</h2>
+<dl>
+    <?php foreach($this->video->getComments() as $modelComment):?>
+    <dt><?php echo $modelComment->getUsername();?></dt>
+    <dd><?php echo $modelComment->getComment();?></dd>
+    <?php endforeach;?>
+</dl>

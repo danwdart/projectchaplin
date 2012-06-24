@@ -1,0 +1,12 @@
+<h1>Node Manager</h1>
+Available nodes:
+<?php foreach($this->ittNodes as $modelNode):?>
+    <p><?php echo $modelNode->getIP();?> -
+        <?php echo $modelNode->bIsActive()?'':'Not';?> Active
+        |
+        <a href="/admin/node/ping/NodeId/<?php echo $modelNode->getNodeId();?>">
+            Ping
+        </a>
+    </p>
+<?php endforeach;?>
+<p><a href="/admin/node/create">Add Node</a></p>

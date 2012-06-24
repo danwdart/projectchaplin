@@ -34,4 +34,9 @@ class Chaplin_Gateway
     {
         return new Chaplin_Gateway_Video(new Chaplin_Dao_Mongo_Video());
     }
+    
+    public function getNode()
+    {
+        return new Chaplin_Gateway_Node(new Chaplin_Dao_Mongo_Node());
+    }
 }
