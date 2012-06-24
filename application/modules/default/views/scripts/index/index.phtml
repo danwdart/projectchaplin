@@ -1,1 +1,6 @@
-Default Content
+<?php foreach($this->ittFeaturedVideos as $modelVideo):?>
+<a href="/video/watch/id/<?php echo $modelVideo->getVideoId();?>">
+    <p><?php echo $modelVideo->getTitle();?></p>
+    <img src="<?php echo $modelVideo->getThumbnail();?>" alt="View Video"/>
+</a>
+<?php endforeach;?>
