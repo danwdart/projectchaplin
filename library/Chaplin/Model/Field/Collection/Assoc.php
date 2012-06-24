@@ -16,6 +16,11 @@ class Chaplin_Model_Field_Collection_Assoc extends Chaplin_Model_Field_Collectio
         $this->_arrFields = $arrObjFields;
         $this->_arrKeys = array_keys($arrFields);
     }
+    
+    public function getValue()
+    {
+        return $this;
+    }
 
     public function seek($strKey)
     {
