@@ -26,7 +26,7 @@ class default_Form_Video_Upload extends Zend_Form
             //    )
             //)),
             new Zend_Validate_File_Size(array(
-                'max' => 200000000
+                'max' => 2*1024*1024*1024
             ))
         ));            
         $strLocation = realpath(APPLICATION_PATH.'/../public/uploads');
