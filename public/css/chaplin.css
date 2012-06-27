@@ -1,0 +1,8 @@
+.thumbnail {
+    max-width:240px;
+    max-height: 180px;
+}
+#video {
+    max-width: 640px;
+    max-height: 480px;
+}
