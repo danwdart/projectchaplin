@@ -12,13 +12,13 @@ class default_Form_Video_Upload extends Zend_Form
         
         $upload = new Zend_Form_Element_File('File');
         $upload->addValidators(array(
-            new Zend_Validate_File_Extension(array(
-//                'extension' => array(
-                    'webm',
-                    'ogg',
-                    'ogv'
-  //              )
-            )),
+       //     new Zend_Validate_File_Extension(array(
+//     //           'extension' => array(
+       //             'webm',
+      //              'ogg',
+      //              'ogv'
+  //  //            )
+      //      )),
             //new Zend_Validate_File_MimeType(array(
             //    'type' => array(
             //        'video/ogg',

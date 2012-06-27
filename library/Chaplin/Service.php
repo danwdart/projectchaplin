@@ -51,4 +51,14 @@ class Chaplin_Service
         $objCache  = new Chaplin_Cache_Http_Client($objClient, $this->getCache());
         return new Chaplin_Service_Http_Client($objCache);
     }
+    
+    public function getFFMpeg()
+    {
+        return new Chaplin_Service_FFMpeg_API();
+    }
+    
+    public function getAVConv()
+    {
+        return new Chaplin_Service_AVConv_API();
+    }
 }

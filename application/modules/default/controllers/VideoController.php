@@ -32,13 +32,32 @@ class VideoController extends Zend_Controller_Action
         
         $form->File->receive();
         
-        $strFilename = '/uploads/'.basename($form->File->getFilename());
+        $strFilename = $form->File->getFilename();
+        $strPathToWebm = $strFilename.'.webm';
+        $strPathToThumb = $strFilename.'.png';
+        
+        $strWebM = basename($strPathToWebm);
+        $strThumb = basename($strPathToThumb);
+        
+        $strRelaPath = '/uploads/';
+        
+        Chaplin_Service::getInstance()
+            ->getAVConv()
+            ->convertFile($strFilename, $strPathToWebm);
+        
+        Chaplin_Service::getInstance()
+            ->getAVConv()
+            ->getThumbnail($strFilename, $strPathToThumb);
+        
+        // Put this somewhere else
+        unlink($strFilename);
         
         $modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser();
         
         $modelVideo = Chaplin_Model_Video::create(
             $modelUser,
-            $strFilename,
+            $strRelaPath.$strWebM,
+            $strRelaPath.$strThumb,
             $form->Title->getValue()
         );
         

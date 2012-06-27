@@ -5,6 +5,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Abstract_Base
     const FIELD_TIMECREATED = 'TimeCreated';
     const FIELD_USERNAME = 'Username';
     const FIELD_FILENAME = 'Filename';
+    const FIELD_THUMBNAIL = 'Thumbnail';
     const FIELD_TITLE = 'Title';
     const FIELD_LENGTH = 'Length';
     const FIELD_WIDTH = 'Width';
@@ -25,6 +26,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Abstract_Base
         self::FIELD_TIMECREATED => 'Chaplin_Model_Field_Field',
         self::FIELD_USERNAME => 'Chaplin_Model_Field_Field',
         self::FIELD_FILENAME => 'Chaplin_Model_Field_Field',
+        self::FIELD_THUMBNAIL => 'Chaplin_Model_Field_Field',
         self::FIELD_TITLE => 'Chaplin_Model_Field_Field',
         self::CHILD_ASSOC_COMMENTS => 'Chaplin_Model_Field_Collection_Assoc'
     );
@@ -32,6 +34,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Abstract_Base
     public static function create(
         Chaplin_Model_User $modelUser,
         $strFilename, // form element?
+        $strThumbURL,
         $strTitle
     ) {
         $video = new self();
@@ -39,6 +42,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Abstract_Base
         $video->_setField(self::FIELD_TIMECREATED, time());
         $video->_setField(self::FIELD_USERNAME, $modelUser->getUsername());
         $video->_setField(self::FIELD_FILENAME, $strFilename);
+        $video->_setField(self::FIELD_THUMBNAIL, $strThumbURL);
         $video->_setField(self::FIELD_TITLE, $strTitle);
         return $video;
     }
@@ -60,7 +64,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Abstract_Base
     
     public function getThumbnail()
     {
-        return null;
+        return $this->_getField(self::FIELD_THUMBNAIL, null);
     }
     
     public function getComments()
