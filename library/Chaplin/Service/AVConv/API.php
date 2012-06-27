@@ -12,7 +12,7 @@ class Chaplin_Service_AVConv_API
     {
     }
     
-    public function convertFile($strFile, $strOut)
+    public function convertFile($strFile, $strOut, $ret)
     {
         //TODO: stream status
         $strCommand = sprintf(
@@ -20,10 +20,10 @@ class Chaplin_Service_AVConv_API
             $strFile,
             $strOut
         );
-        passthru($strCommand);
+        return system($strCommand, $ret);
     }
     
-    public function getThumbnail($strFile, $strOut)
+    public function getThumbnail($strFile, $strOut, $ret)
     {
         $strCommand = sprintf(
             self::CMD_GET_THUMBNAIL,
@@ -31,7 +31,6 @@ class Chaplin_Service_AVConv_API
             self::THUMBNAIL_DEFAULT_TIME,
             $strOut
         );
-        die(var_dump($strCommand));
-        passthru($strCommand);
+        return system($strCommand, $ret);
     }
 }

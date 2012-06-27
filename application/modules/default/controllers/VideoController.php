@@ -41,13 +41,23 @@ class VideoController extends Zend_Controller_Action
         
         $strRelaPath = '/uploads/';
         
-        Chaplin_Service::getInstance()
-            ->getAVConv()
-            ->convertFile($strFilename, $strPathToWebm);
+        $ret = 0;
         
-        Chaplin_Service::getInstance()
+        $strError = Chaplin_Service::getInstance()
+            ->getAVConv()
+            ->convertFile($strFilename, $strPathToWebm, $ret);
+        if(0 != $ret) {
+            $form->Title->addError($strError);
+        }
+        
+        $ret = 0;
+            
+        $strError = Chaplin_Service::getInstance()
             ->getAVConv()
             ->getThumbnail($strFilename, $strPathToThumb);
+        if(0 != $ret) {
+            $form->Title->addError($strError);
+        }
         
         // Put this somewhere else
         unlink($strFilename);
