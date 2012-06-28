@@ -11,7 +11,7 @@ echo "deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen" >>
 apt-get update
 
 echo Installing dependencies for Ubuntu
-apt-get install php-pear php5-dev build-essential mongodb-10gen redis-server
+apt-get install php-pear php5-dev build-essential mongodb-10gen redis-server libav-tools
 
 echo Installing Mongo PHP extension
 pecl install mongo
