@@ -3,6 +3,12 @@
     <video id="video" controls src="<?php echo $this->video->getFilename();?>">
     </video>
 </p>
+<h3>Actions:</h3>
+<?php
+if ($this->video->isMine()):
+?>
+<a href="/video/delete/id/<?php echo $this->video->getVideoId();?>">Delete this video</a>
+<?php endif;?>
 <h2>Comments:</h2>
 <dl>
     <?php foreach($this->video->getComments() as $modelComment):?>

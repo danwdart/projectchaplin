@@ -82,4 +82,28 @@ class VideoController extends Zend_Controller_Action
         $strURL = $this->_request->getQuery('url');
         
     }
+    
+    public function deleteAction()
+    {
+        if(!Chaplin_Auth::getInstance()->hasIdentity()) {
+            return $this->_redirect('/login');
+        }
+        
+        $strVideoId = $this->_request->getParam('id', null);
+        if(is_null($strVideoId)) {
+            return $this->_redirect('/');
+        }
+        
+        $modelVideo = Chaplin_Gateway::getInstance()
+            ->getVideo()
+            ->getByVideoId($strVideoId);
+        
+        if ($modelVideo->isMine() || 
+            Chaplin_Auth::getInstance()->getIdentity()->getUser()->isGod()) {
+            // Confirmation?
+            $modelVideo->delete();
+        }
+                    
+        $this->_redirect('/');
+    }
 }

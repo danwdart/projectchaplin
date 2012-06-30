@@ -72,8 +72,30 @@ class Chaplin_Model_Video extends Chaplin_Model_Abstract_Base
         return $this->_getField(self::CHILD_ASSOC_COMMENTS, array());
     }
     
+    private function _getUsername()
+    {
+        return $this->_getField(self::FIELD_USERNAME, null);
+    }
+    
+    public function isMine()
+    {
+        if(!Chaplin_Auth::getInstance()->hasIdentity()) {
+            return false;
+        }
+        if(Chaplin_Auth::getInstance()->getIdentity()->getUser()->isGod()) {
+            // God users own everything, mwuhahaha
+            return true;
+        }
+        return Chaplin_Auth::getInstance()->getIdentity()->getUser()->getUsername() ==
+            $this->_getUsername();
+    }
+    
     public function delete()
     {
+        $strFullPath = APPLICATION_PATH.'/public'.$this->getFilename();
+        unlink($strFullPath);
+        $strThumbnailPath = APPLICATION_PATH.'/public'.$this->getThumbnail();
+        unlink($strThumbnailPath);
         return Chaplin_Gateway::getInstance()
             ->getVideo()
             ->delete($this);
