@@ -16,7 +16,7 @@ class Chaplin_Model_Video_Comment extends Chaplin_Model_Abstract_Child
         $strComment
     ) {
         $comment = new self($modelVideo);
-        $comment->setCId(md5(new MongoId());
+        $comment->setCId(md5(new MongoId()));
         $comment->_setField(self::FIELD_USERNAME, $modelUser->getUsername());
         $comment->_setField(self::FIELD_COMMENT, $strComment);
         return $video;

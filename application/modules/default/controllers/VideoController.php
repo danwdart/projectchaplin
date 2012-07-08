@@ -11,7 +11,33 @@ class VideoController extends Zend_Controller_Action
         $modelVideo = Chaplin_Gateway::getInstance()
             ->getVideo()
             ->getByVideoId($strVideoId);
+            
         $this->view->assign('video', $modelVideo);
+        
+        $formComment = new default_Form_Video_Comment();
+                
+        if(!$this->_request->isPost()) {
+            return $this->view->assign('formComment', $formComment);
+        }
+        
+        if(!Chaplin_Auth::getInstance()->hasIdentity()) {
+            return $this->_redirect('/login');
+        }
+        
+        if(!$formComment->isValid($this->_request->getPost())) {
+            return $this->view->assign('formComment', $formComment);
+        }
+           
+        $modelUser =  Chaplin_Auth::getInstance()->getIdentity()->getUser();
+          
+        $modelComment = Chaplin_Model_Video_Comment::create(
+            $modelVideo,
+            $modelUser,
+            $formComment->Comment->getValue()
+        );
+        $modelComment->save();
+        
+        return $this->view->assign('formComment', $formComment);
     }
     
     public function uploadAction()
