@@ -10,6 +10,10 @@ if ($this->video->isMine()):
 <a href="/video/delete/id/<?php echo $this->video->getVideoId();?>">Delete this video</a>
 <?php endif;?>
 <h2>Comments:</h2>
+<?php if(Chaplin_Auth::getInstance()->hasIdentity()): echo $this->formComment; else:
+?>
+Login above to comment.
+<? endif;?>
 <dl>
     <?php foreach($this->video->getComments() as $modelComment):?>
     <dt><?php echo $modelComment->getUsername();?></dt>
