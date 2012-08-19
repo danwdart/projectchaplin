@@ -35,14 +35,18 @@ abstract class Chaplin_Dao_Mongo_Abstract implements Chaplin_Dao_Interface
 
     private function _saveCollection(Chaplin_Model_Field_Collection_Abstract $collection, &$arrUpdate, $strPrefix = '')
     {
+        //die(var_dump($collection));
         if(!$collection->isEmpty()) {
             foreach($collection as $strFieldName => $objField) {
                 if($objField->isDirty()) {
                     $location = $strPrefix.$strFieldName;
                     $strClass = get_class($objField);
+                    if($objField instanceof Chaplin_Model_Abstract) {
+                        return $this->_saveCollection($objField->preUpdateFromDao($this), $arrUpdate, $location.'.');
+                    }
                     switch($strClass) {
                         case 'Chaplin_Model_Field_Collection_Assoc':
-                            $this->_saveCollection($objField, $arrUpdate, $strPrefix.'.');
+                            $this->_saveCollection($objField, $arrUpdate, $location.'.');
                             break;
                         case 'Chaplin_Model_Field_Field':
                         case 'Chaplin_Model_Field_FieldId':

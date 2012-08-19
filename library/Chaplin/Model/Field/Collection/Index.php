@@ -40,6 +40,12 @@ class Chaplin_Model_Field_Collection_Index extends Chaplin_Model_Field_Collectio
         $this->_intOffset++;
     }
 
+    public function add(Chaplin_Model_Abstract_Child $child)
+    {
+        $this->_arrFields[] = $child;
+        $this->_arrKeys[] = $child->getCId();
+    }
+
     public function rewind()
     {
         $this->_intOffset = 0;

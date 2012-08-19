@@ -5,6 +5,7 @@
 abstract class Chaplin_Model_Abstract_Child extends Chaplin_Model_Abstract
 {
     private $_modelParent;
+    private $_strCId;
 
     protected function _getModelParent()
     {
@@ -17,14 +18,24 @@ abstract class Chaplin_Model_Abstract_Child extends Chaplin_Model_Abstract
         $this->_modelParent = $modelParent;
     }
 
-    protected static function getParentCollectionName()
+    protected function getParentCollectionName()
     {
         throw new Exception('Implement This');
     }
 
+    public function setCId($strCId)
+    {
+        $this->_strCId = $strCId;
+    }
+
+    public function getCId()
+    {
+        return $this->_strCId;
+    }
+
     public function updateParent()
     {
-        $this->_modelParent->doSomethingToGetItsCorrectCollectionUpdated();
+        $this->_modelParent->_addChildToCollection($this);
     }
 
     public function save()
