@@ -8,11 +8,11 @@ class Chaplin_Model_Field_Collection_Assoc extends Chaplin_Model_Field_Collectio
 
     public function __construct(Array $arrFields = array())
     {
-	$arrObjFields = array();
-	// Not sure where this should go but...
-	foreach($arrFields as $strKey => $field) {
-	    $arrObjFields[$strKey] = new $field;
-	}
+    	$arrObjFields = array();
+    	// Not sure where this should go but...
+    	foreach($arrFields as $strKey => $field) {
+    	    $arrObjFields[$strKey] = new $field;
+    	}
         $this->_arrFields = $arrObjFields;
         $this->_arrKeys = array_keys($arrFields);
     }
@@ -47,6 +47,13 @@ class Chaplin_Model_Field_Collection_Assoc extends Chaplin_Model_Field_Collectio
     public function valid()
     {
         return isset($this->_arrKeys[$this->_intOffset]);
+    }
+
+    public function add(Chaplin_Model_Abstract_Child $child)
+    {
+        $this->_arrFields[$child->getCId()] = $child;
+        $this->_arrKeys[] = $child->getCId();
+        $this->_isDirty = true;
     }
     
     public function serialize()

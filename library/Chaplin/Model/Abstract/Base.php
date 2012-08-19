@@ -9,7 +9,7 @@ abstract class Chaplin_Model_Abstract_Base extends Chaplin_Model_Abstract
 
         foreach($arrDao as $strKey => $value) {
             if(is_array($value)) {
-                // TODO implement child class
+                continue;
             }
             $model->_setField($strKey, $value);
         }
@@ -23,9 +23,4 @@ abstract class Chaplin_Model_Abstract_Base extends Chaplin_Model_Abstract
     }
 
     abstract public function delete();
-
-    public function preUpdateFromDao(Chaplin_Dao_Interface $dao)
-    {
-        return $this->_getCollFields();
-    }
 }

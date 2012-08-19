@@ -73,6 +73,7 @@ class VideoController extends Zend_Controller_Action
             ->getAVConv()
             ->convertFile($strFilename, $strPathToWebm, $ret);
         if(0 != $ret) {
+            die(var_dump($strError));
             $form->Title->addError($strError);
         }
         
@@ -80,8 +81,9 @@ class VideoController extends Zend_Controller_Action
             
         $strError = Chaplin_Service::getInstance()
             ->getAVConv()
-            ->getThumbnail($strFilename, $strPathToThumb);
+            ->getThumbnail($strFilename, $strPathToThumb, $ret);
         if(0 != $ret) {
+            die(var_dump($strError));
             $form->Title->addError($strError);
         }
         

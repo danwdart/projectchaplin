@@ -10,6 +10,11 @@ class Chaplin_Model_Video_Comment extends Chaplin_Model_Abstract_Child
         self::FIELD_COMMENT => 'Chaplin_Model_Field_Field'
     );
     
+    public function getParentFieldName()
+    {
+        return Chaplin_Model_Video::CHILD_ASSOC_COMMENTS;
+    }
+
     public static function create(
         Chaplin_Model_Video $modelVideo,
         Chaplin_Model_User $modelUser,
@@ -19,7 +24,7 @@ class Chaplin_Model_Video_Comment extends Chaplin_Model_Abstract_Child
         $comment->setCId(md5(new MongoId()));
         $comment->_setField(self::FIELD_USERNAME, $modelUser->getUsername());
         $comment->_setField(self::FIELD_COMMENT, $strComment);
-        return $video;
+        return $comment;
     }
     
     public function getUsername()

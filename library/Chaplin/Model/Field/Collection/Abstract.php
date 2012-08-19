@@ -1,4 +1,4 @@
-<?php
+s`<?php
 /**
  * This is a collection of any type of field.
 **/
@@ -26,4 +26,6 @@ abstract class Chaplin_Model_Field_Collection_Abstract extends Chaplin_Model_Fie
     {
         return 0 == count($this->_arrFields);
     }
+
+    abstract public function add(Chaplin_Model_Abstract_Child $child);
 }

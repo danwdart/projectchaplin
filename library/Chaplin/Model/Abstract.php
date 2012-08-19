@@ -3,6 +3,8 @@ abstract class Chaplin_Model_Abstract
 {
     const FIELD_ID = '_id';    
     
+    private $_bIsDirty = false;
+
     // Implement this
     protected static $_arrFields = array();
 
@@ -12,6 +14,11 @@ abstract class Chaplin_Model_Abstract
     protected function __construct()
     {
         $this->_collFields = new Chaplin_Model_Field_Collection_Assoc(static::$_arrFields);
+    }
+
+    public function isDirty()
+    {
+        return $this->_bIsDirty;
     }
 
     private function _getFieldObject($strField)
@@ -30,8 +37,7 @@ abstract class Chaplin_Model_Abstract
 
     protected function _addChildToCollection(Chaplin_Model_Abstract_Child $modelChild)
     {
-        $strClass = get_class($modelChild);
-        $strFieldName = $strClass::getParentFieldName(); // @TODO protect this
+        $strFieldName = $modelChild->getParentFieldName(); // @TODO protect this
         $collection = $this->_getField($strFieldName, array());
         $collection->add($modelChild);
     }
@@ -43,7 +49,13 @@ abstract class Chaplin_Model_Abstract
 
     protected function _setField($strField, $mixedDefault)
     {
+        $this->_bIsDirty = true;
         return $this->_getFieldObject($strField)->setValue($mixedDefault);
+    }
+
+    public function preUpdateFromDao(Chaplin_Dao_Interface $dao)
+    {
+        return $this->_getCollFields();
     }
 
     abstract public function save();
