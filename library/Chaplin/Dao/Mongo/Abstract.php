@@ -33,6 +33,14 @@ abstract class Chaplin_Dao_Mongo_Abstract implements Chaplin_Dao_Interface
         $this->_getCollection()->removeArray($arrCriteria);
     }
 
+    private function _textToSafe($strText)
+    {
+        if('UTF-8' != mb_detect_encoding($strText)) {
+            $strText = mb_convert_encoding($strText, 'UTF-8');
+        }
+        return $strText;
+    }
+
     private function _saveCollection(Chaplin_Model_Field_Collection_Abstract $collection, &$arrUpdate, $strPrefix = '')
     {
         //die(var_dump($collection));
@@ -50,7 +58,7 @@ abstract class Chaplin_Dao_Mongo_Abstract implements Chaplin_Dao_Interface
                             break;
                         case 'Chaplin_Model_Field_Field':
                         case 'Chaplin_Model_Field_FieldId':
-                            $arrUpdate['$set'][$location] = $objField->getValue(null);
+                            $arrUpdate['$set'][$location] = $this->_textToSafe($objField->getValue(null));
                             break;
                         case 'Chaplin_Model_Field_Array':
                             $arrUpdate['$addToSet'][$location] = array(
