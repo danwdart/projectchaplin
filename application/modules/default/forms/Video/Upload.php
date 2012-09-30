@@ -7,24 +7,15 @@ class default_Form_Video_Upload extends Zend_Form
         $this->setMethod('post');
         $this->setEncType('multipart/form-data');
         
-        $title = new Zend_Form_Element_Text('Title');
-        $title->setLabel('Title');
-        
-        $upload = new Zend_Form_Element_File('File');
+        $upload = new Zend_Form_Element_File(
+            'Files[]',
+            array(
+                'label' => 'Upload files...',
+                'multiple' => 'multiple',
+                'isArray' => true
+            )
+        );
         $upload->addValidators(array(
-       //     new Zend_Validate_File_Extension(array(
-//     //           'extension' => array(
-       //             'webm',
-      //              'ogg',
-      //              'ogv'
-  //  //            )
-      //      )),
-            //new Zend_Validate_File_MimeType(array(
-            //    'type' => array(
-            //        'video/ogg',
-            //        'video/webm'
-            //    )
-            //)),
             new Zend_Validate_File_Size(array(
                 'max' => 2*1024*1024*1024
             ))
@@ -35,7 +26,7 @@ class default_Form_Video_Upload extends Zend_Form
         $submit = new Zend_Form_Element_Submit('Upload');
         $submit->setLabel('Upload');
         
-        $this->addElements(array($title, $upload, $submit));
+        $this->addElements(array($upload, $submit));
     }
 }
         

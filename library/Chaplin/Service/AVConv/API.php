@@ -20,6 +20,7 @@ class Chaplin_Service_AVConv_API
             $strFile,
             $strOut
         );
+        //die(var_dump($strCommand));
         return system($strCommand, $ret);
     }
     
@@ -31,6 +32,7 @@ class Chaplin_Service_AVConv_API
             self::THUMBNAIL_DEFAULT_TIME,
             $strOut
         );
+        //die(var_dump($strCommand));
         return system($strCommand, $ret);
     }
 }

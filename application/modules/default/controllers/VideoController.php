@@ -53,56 +53,71 @@ class VideoController extends Zend_Controller_Action
         }
         
         if(!$form->isValid($this->_request->getPost())) {
+            echo 'Set post_max_size to something sensible.';
             return $this->view->assign('form', $form);
         }
         
-        $form->File->receive();
-        
-        $strFilename = $form->File->getFilename();
-        $strPathToWebm = $strFilename.'.webm';
-        $strPathToThumb = $strFilename.'.png';
-        
-        $strWebM = basename($strPathToWebm);
-        $strThumb = basename($strPathToThumb);
-        
-        $strRelaPath = '/uploads/';
-        
-        $ret = 0;
-        
-        $strError = Chaplin_Service::getInstance()
-            ->getAVConv()
-            ->convertFile($strFilename, $strPathToWebm, $ret);
-        if(0 != $ret) {
-            die(var_dump($strError));
-            $form->Title->addError($strError);
+        // We can't directly receive multiple files
+
+        $adapter = $form->Files->getTransferAdapter();
+        foreach($adapter->getFileInfo() as $info) {
+            if (!$adapter->receive($info['name'])) {
+                die(print_r($adapter->getMessages(),true));
+            }
         }
-        
-        $ret = 0;
+
+        $this->view->videos = array();
+
+        foreach ($adapter->getFileInfo() as $arrFileInfo) {
+            /*$adapter->addFilter(
+                'Rename', array(
+                    'target' => $form->Files->getDestination(),
+                    'overwrite' => true
+                )
+            );*/
+            $strFilename = $arrFileInfo['tmp_name'];      
+
+            $strPathToWebm = $strFilename.'.webm';
+            $strPathToThumb = $strFilename.'.png';
             
-        $strError = Chaplin_Service::getInstance()
-            ->getAVConv()
-            ->getThumbnail($strFilename, $strPathToThumb, $ret);
-        if(0 != $ret) {
-            die(var_dump($strError));
-            $form->Title->addError($strError);
+            $strWebM = basename($strPathToWebm);
+            $strThumb = basename($strPathToThumb);
+            
+            $strRelaPath = '/uploads/';
+            
+            $ret = 0;
+            
+            $strError = Chaplin_Service::getInstance()
+                ->getAVConv()
+                ->convertFile($strFilename, $strPathToWebm, $ret);
+            if(0 != $ret) {
+                die(var_dump($strError));
+            }
+            
+            $ret = 0;
+                
+            $strError = Chaplin_Service::getInstance()
+                ->getAVConv()
+                ->getThumbnail($strFilename, $strPathToThumb, $ret);
+            if(0 != $ret) {
+                die(var_dump($strError));
+            }
+            
+            // Put this somewhere else
+            //unlink($strFilename);
+            
+            $modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser();
+            
+            $modelVideo = Chaplin_Model_Video::create(
+                $modelUser,
+                $strRelaPath.$strWebM,
+                $strRelaPath.$strThumb,
+                null
+            );
+            
+            $modelVideo->save();
+            $this->view->videos[] = $modelVideo;
         }
-        
-        // Put this somewhere else
-        unlink($strFilename);
-        
-        $modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser();
-        
-        $modelVideo = Chaplin_Model_Video::create(
-            $modelUser,
-            $strRelaPath.$strWebM,
-            $strRelaPath.$strThumb,
-            $form->Title->getValue()
-        );
-        
-        $modelVideo->save();
-        
-        $this->_helper->FlashMessenger('Video Saved.');
-        $this->_redirect('/video/watch/id/'.$modelVideo->getVideoId());
     }
     
     public function youtubeAction()
