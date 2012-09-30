@@ -25,6 +25,8 @@ make
 make install
 cd ..
 rm -rf phpredis
-
+a2enmod headers
+a2enmod rewrite
+/etc/init.d/apache2 restart
 echo All done. You can now setup a custom Apache vhost pointing at the public/ directory.
 echo For easy setup of this, try installing autopache from git@github.com:dandart/autopache.git
