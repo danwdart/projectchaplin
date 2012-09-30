@@ -1,9 +1,11 @@
-<?php
-if($this->filename):?>
-    Successfully uploaded your file. Here it is:<br/>
-<video src="<?php echo $this->filename;?>" controls></video>
-<?php
-else:
-    echo $this->form;
-endif;
-?>
+<?php if(isset($this->videos)): ?>
+	<h2>Name your videos</h2>
+	<?php foreach($this->videos as $video): 
+	//var_dump($video);?>
+	<img src="<?php echo $video->getThumbnail(); ?>"/>
+
+	<?php endforeach; ?>
+<?php else:?>
+	<h2>Upload files</h2>
+	<?php echo $this->form;?>
+<?php endif; ?>
