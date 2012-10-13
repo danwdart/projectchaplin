@@ -2,8 +2,10 @@
 	<h2>Name your videos</h2>
 	<?php foreach($this->videos as $video): 
 	//var_dump($video);?>
-	<img src="<?php echo $video->getThumbnail(); ?>"/>
-
+	<p>
+		<img src="<?php echo $video->getThumbnail(); ?>"/>
+		
+	</p>
 	<?php endforeach; ?>
 <?php else:?>
 	<h2>Upload files</h2>

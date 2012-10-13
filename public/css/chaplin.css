@@ -1,3 +1,71 @@
+* {
+	padding:0;
+	margin: 0;
+}
+
+html, body {
+	height:100%;
+	width:100%;
+}
+
+#contentwrapper {
+	width: 100%;
+	height:100%;
+	min-height:100%;
+	position:relative;
+}
+
+header {
+	height: 25px;
+	border-width: 0 0 1px 0;
+	padding: 5px;
+}
+
+header a {
+	color: #555555;
+	font-weight: 700;
+	text-decoration: none;
+	font-size: 14pt;
+}
+
+header a:hover {
+	color: #666666;
+	text-decoration: underline;
+}
+
+header .left {
+	width: 30%;
+	text-align:left;
+	float:left;
+}
+
+header .middle {
+	width: 38%;
+	margin: 0 auto;
+	float:left;
+	text-align:center;
+}
+
+header .right {
+	width: 30%;
+	text-align: right;
+	float:right;
+}
+
+#content {
+	padding: 0 10px 20px; /* cheat - as footer height */
+}
+
+footer {
+	position:absolute;
+	bottom:0;
+	left:0;
+	width:100%;
+	height: 20px;
+	text-align: center;
+	font-size: 10pt;
+}
+
 .thumbnail {
     max-width:240px;
     max-height: 180px;
