@@ -54,6 +54,7 @@ header .right {
 
 #content {
 	padding: 0 10px 20px; /* cheat - as footer height */
+	overflow:auto;
 }
 
 footer {
