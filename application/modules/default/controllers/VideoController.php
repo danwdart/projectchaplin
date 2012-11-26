@@ -39,6 +39,17 @@ class VideoController extends Zend_Controller_Action
         
         return $this->view->assign('formComment', $formComment);
     }
+
+    public function voteAction()
+    {
+        $strVideoId = $this->_request->getParam('id', null);
+        if(is_null($strVideoId)) {
+            return $this->_redirect('/');
+        }
+
+        $strVote = $this->_request->getParam('vote', null);
+        
+    }
     
     public function uploadAction()
     {

@@ -9,6 +9,10 @@
 ?>
 <a href="/video/delete/id/<?php echo $this->video->getVideoId();?>">Delete this video</a>
 <?php endif;?>
+<p><h3>
+	<a class="ajax" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up">Vote Up</a> | 
+	<a class="ajax" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down">Vote Down</a>
+</h3></p>
 <h2>Comments:</h2>
 <?php if(Chaplin_Auth::getInstance()->hasIdentity()): echo $this->formComment; else: 
 echo 'Login above to comment.'; endif;  ?>
