@@ -1,5 +1,5 @@
 <?php
-class Chaplin_Model_User extends Chaplin_Model_Abstract_Base
+class Chaplin_Model_User extends Chaplin_Model_Field_Hash
 {
     const FIELD_Username = Chaplin_Dao_Mongo_Abstract::FIELD_Id;
     const FIELD_Password = 'Password';
@@ -10,13 +10,13 @@ class Chaplin_Model_User extends Chaplin_Model_Abstract_Base
 
     const SALT = 'dguqwtduR^%$*%%';
 
-    protected static $_arrFields = array(
+    protected $_arrFields = array(
         self::FIELD_Username => 'Chaplin_Model_Field_FieldId',
         self::FIELD_Password => 'Chaplin_Model_Field_Field',
         self::FIELD_Nick => 'Chaplin_Model_Field_Field',
         self::FIELD_Email => 'Chaplin_Model_Field_Field',
         self::FIELD_UserTypeId => 'Chaplin_Model_Field_Field',
-        self::CHILD_ASSOC_Credentials => 'Chaplin_Model_Field_Collection_Assoc'
+//        self::CHILD_ASSOC_Credentials => 'Chaplin_Model_Field_Collection_Assoc'
     );
 
     public static function create($strUsername, $strPassword)
@@ -37,7 +37,7 @@ class Chaplin_Model_User extends Chaplin_Model_Abstract_Base
     {
         return sha1(self::SALT.$strPassword);
     }
-    
+
     public function setPassword($strPassword)
     {
         $this->_setField(self::FIELD_Password, self::encodePassword($strPassword));

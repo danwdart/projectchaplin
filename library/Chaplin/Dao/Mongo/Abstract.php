@@ -15,11 +15,17 @@ abstract class Chaplin_Dao_Mongo_Abstract implements Chaplin_Dao_Interface
 
     abstract protected function _getCollectionName();
 
-    protected function _save(Chaplin_Model_Abstract_Base $modelBase)
+    protected function _save(Chaplin_Model_Field_Hash $hash)
     {
-        $arrCriteria = array(self::FIELD_Id => $modelBase->getId());
-        $arrUpdate = array();
-        $this->_saveCollection($modelBase->preUpdateFromDao($this), $arrUpdate);
+        $collFields = $hash->getFields($this);
+    
+        if (is_null($collFields[self::FIELD_Id]->getValue(null))) {
+            throw new Exception('Id is null');
+        }
+    
+        $arrCriteria = array(self::FIELD_Id => $collFields[self::FIELD_Id]->getValue(null));
+        $arrUpdate = $this->_getUpdateArray($collFields);
+        
         if(isset($arrUpdate['$set'][self::FIELD_Id])) {
             unset($arrUpdate['$set'][self::FIELD_Id]);
         }
@@ -41,38 +47,25 @@ abstract class Chaplin_Dao_Mongo_Abstract implements Chaplin_Dao_Interface
         return $strText;
     }
 
-    private function _saveCollection(Chaplin_Model_Field_Collection_Abstract $collection, &$arrUpdate, $strPrefix = '')
+    private function _getUpdateArray(Array $collFields)
     {
-        //die(var_dump($collection));
-        if(!$collection->isEmpty()) {
-            foreach($collection as $strFieldName => $objField) {
-                if($objField->isDirty()) {
-                    $location = $strPrefix.$strFieldName;
-                    $strClass = get_class($objField);
-                    if($objField instanceof Chaplin_Model_Abstract) {
-                        return $this->_saveCollection($objField->preUpdateFromDao($this), $arrUpdate, $location.'.');
-                    }
-                    switch($strClass) {
-                        case 'Chaplin_Model_Field_Collection_Assoc':
-                            $this->_saveCollection($objField, $arrUpdate, $location.'.');
-                            break;
-                        case 'Chaplin_Model_Field_Field':
-                        case 'Chaplin_Model_Field_FieldId':
-                            $arrUpdate['$set'][$location] = $this->_textToSafe($objField->getValue(null));
-                            break;
-                        case 'Chaplin_Model_Field_Array':
-                            $arrUpdate['$addToSet'][$location] = array(
-                                '$each' => array(
-                                    $objField->getValue()
-                                )
-                            );
-                            break;
-                        default:
-                            throw new Exception('Not Implemented class '.$strClass);
-                    }
+        $arrUpdate = array();
+        foreach($collFields as $strFieldName => $objField) {
+            if($objField->bIsDirty()) {
+                $strClass = get_class($objField);
+                switch($strClass) {
+                    case 'Chaplin_Model_Field_Field':
+                        $arrUpdate['$set'][$strFieldName] = $this->_textToSafe($objField->getValue(null));
+                        break;
+                    case 'Chaplin_Model_Field_FieldId':
+                        // Ids do not update
+                        break;
+                    default:
+                        throw new Exception('Not Implemented class '.$strClass);
                 }
             }
         }
+        return $arrUpdate;
     }
     
     public function setMongoCollection(Mongo_Collection $mongoCollection)

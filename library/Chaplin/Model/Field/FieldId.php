@@ -4,28 +4,22 @@ class Chaplin_Model_Field_FieldId
 {
     private $_mixedValue;
     
-    public static function create($mixedValue)
+    public function setFromData($mixedValue)
     {
         $this->_mixedValue = $mixedValue;
     }
     
-    public function getValue()
+    public function setValue($mixedValue)
+    {
+        if (!is_null($this->_mixedValue)) {
+            throw new Exception('id fields are read-only');
+        }
+        $this->_mixedValue = $mixedValue;
+        $this->_bIsDirty = true;
+    }
+    
+    public function getValue($mixedDefault)
     {
         return $this->_mixedValue;
     }
-    
-    public function setValue($strValue)
-    {
-        if(!is_null($this->_mixedValue)) {
-            throw new Chaplin_Model_Field_Exception_ReadOnly();
-        }
-        $this->_mixedChanges = $strValue;
-        $this->_mixedValue = $strValue;
-        return $this;
-    }
-    
-    public function getChanges()
-    {
-        return $this->_mixedChanges;
-    }
-}   
+}  

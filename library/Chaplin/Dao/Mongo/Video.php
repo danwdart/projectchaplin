@@ -49,7 +49,7 @@ class Chaplin_Dao_Mongo_Video
 
     public function convertToModel($arrVideo)
     {
-        return Chaplin_Model_Video::createFromDao($this, $arrVideo);
+        return Chaplin_Model_Video::createFromData($this, $arrVideo);
     }
 
     public function delete(Chaplin_Model_Video $modelVideo)

@@ -1,19 +1,12 @@
 <?php
 abstract class Chaplin_Model_Field_Abstract
 {
-    protected $_mixedChanges;
-
-    public function __construct()
-    {
-        // use when initiating
-    }
+    protected $_bIsDirty = false;
     
     public function bIsDirty()
     {
-        return !empty($this->getChanges());
+        return $this->_bIsDirty;
     }
     
-    abstract public function setValue($value);
-    
-    abstract public function getChanges();
+    abstract public function getValue($mixedDefault);
 }

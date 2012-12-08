@@ -4,25 +4,21 @@ class Chaplin_Model_Field_Field
 {
     private $_mixedValue;
     
-    public static function create($mixedValue)
+    public function setFromData($mixedValue)
     {
         $this->_mixedValue = $mixedValue;
-    }
+    }       
     
-    public function getValue()
+    public function setValue($mixedValue)
     {
-        return $this->_mixedValue;
+        $this->_mixedValue = $mixedValue;
+        $this->_bIsDirty = true;
     }
-    
-    public function setValue($strValue)
+        
+    public function getValue($mixedDefault)
     {
-        $this->_mixedValue = $strValue;
-        $this->_mixedChanges = $strValue;
-        return $this;
+        return (is_null($this->_mixedValue))?
+            $mixedDefault:
+            $this->_mixedValue;
     }
-    
-    public function getChanges()
-    {
-        return $this->_mixedChanges;
-    }
-}   
+}  
