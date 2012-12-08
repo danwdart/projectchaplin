@@ -39,7 +39,7 @@ class Chaplin_Dao_Mongo_User
 
     public function convertToModel($arrUser)
     {
-        return Chaplin_Model_User::createFromDao($this, $arrUser);
+        return Chaplin_Model_User::createFromData($this, $arrUser);
     }
 
     public function delete(Chaplin_Model_User $modelUser)

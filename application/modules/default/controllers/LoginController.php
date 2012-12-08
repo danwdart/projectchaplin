@@ -1,5 +1,4 @@
 <?php
-use Chaplin\Model\User as User;
 class LoginController extends Zend_Controller_Action
 {
     private $_redirect_url;
@@ -126,7 +125,7 @@ class LoginController extends Zend_Controller_Action
             }*/
             try
             {
-                $user = Chaplin_Model_User::create($username, $password);;
+                $user = Chaplin_Model_User::create($username, $password);
                 $user->setEmail($email);
                 $user->setNick($fullname);
                 $user->setUserType(new Chaplin_Model_User_Helper_UserType(Chaplin_Model_User_Helper_UserType::ID_USER));
@@ -137,6 +136,7 @@ class LoginController extends Zend_Controller_Action
             }
             catch(Exception $e)
             {
+                echo $e->getMessage();
                 return $this->view->assign('form', $form->addError('Could not create account. '.
                     'Reason: '.$e->getMessage()));
             }

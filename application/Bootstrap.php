@@ -147,7 +147,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         try {
             parent::_bootstrap($resource);
         } catch(Exception $e) {
-            echo $e->getMessage();
+            echo '<h1>'.$e->getMessage().'</h1>';
         }
     } 
 
@@ -156,7 +156,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
        try {
            parent::run();
        } catch(Exception $e) {
-           echo $e->getMessage();
+           echo '<h1>'.$e->getMessage().'</h1>';
        }
     }
 }
