@@ -2,6 +2,7 @@
 <p>
     <video id="video" controls src="<?php echo $this->video->getFilename();?>">
     </video>
+    
 </p>
 <h3>Actions:</h3>
 <?php
@@ -22,3 +23,26 @@ echo 'Login above to comment.'; endif;  ?>
     <dd><?php echo $modelComment->getComment();?></dd>
     <?php endforeach; ?>
 </dl>
+<script>
+(function() {
+
+var elem = document.getElementById("video");
+elem.addEventListener('dblclick', function() {    
+    if (elem.requestFullScreen) {
+      elem.requestFullScreen();
+    } else if (elem.mozRequestFullScreen) {
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullScreen) {
+      elem.webkitRequestFullScreen();
+    }
+});
+elem.addEventListener('click', function() {
+    if(this.paused) {
+        this.play();
+    } else {
+        this.pause();
+    }
+});
+
+})();
+</script>
