@@ -23,6 +23,12 @@ class Chaplin_Gateway_Video
         return $this->_daoVideo->getByUser($modelUser);
     }
     
+    public function getByUserUnnamed(Chaplin_Model_User $modelUser)
+    {
+        return $this->_daoVideo->getByUserUnnamed($modelUser);
+    }
+    
+    
     public function delete(Chaplin_Model_Video $modelVideo)
     {
         return $this->_daoVideo->delete($modelVideo);

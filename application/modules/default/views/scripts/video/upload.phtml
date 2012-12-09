@@ -1,13 +1,2 @@
-<?php if(isset($this->videos)): ?>
-	<h2>Name your videos</h2>
-	<?php foreach($this->videos as $video): 
-	//var_dump($video);?>
-	<p>
-		<img src="<?php echo $video->getThumbnail(); ?>"/>
-		
-	</p>
-	<?php endforeach; ?>
-<?php else:?>
-	<h2>Upload files</h2>
-	<?php echo $this->form;?>
-<?php endif; ?>
+<h2>Upload files</h2>
+<?php echo $this->form;?>
