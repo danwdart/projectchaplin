@@ -1,0 +1,9 @@
+<h2>Name your videos</h2>
+<div style="position:relative; width: 1000px;">
+<?php foreach($this->videos as $video): 
+//var_dump($video);?>
+    <div style="float: left; border: 1px solid black; padding:5px;">
+     	<img src="<?php echo $video->getThumbnail(); ?>" style="width: 320px; max-height:240px"/>
+    </div>
+<?php endforeach; ?>
+</div>

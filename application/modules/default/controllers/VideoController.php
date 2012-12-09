@@ -53,15 +53,19 @@ class VideoController extends Zend_Controller_Action
     
     public function uploadAction()
     {
-        if(!Chaplin_Auth::getInstance()->hasIdentity()) {
-            return $this->_redirect('/login');
-        }
-        
         $form = new default_Form_Video_Upload();
         
         if(!$this->_request->isPost()) {
             return $this->view->assign('form', $form);
         }
+        
+        var_dump($_POST);
+        var_dump($_FILES);
+        var_dump(file_get_contents('php://stdin'));
+
+        die();
+        
+        
         
         if(!$form->isValid($this->_request->getPost())) {
             echo 'Set post_max_size to something sensible.';
@@ -80,6 +84,7 @@ class VideoController extends Zend_Controller_Action
         $this->view->videos = array();
 
         foreach ($adapter->getFileInfo() as $arrFileInfo) {
+        die(var_dump($arrFileInfo));
             /*$adapter->addFilter(
                 'Rename', array(
                     'target' => $form->Files->getDestination(),
@@ -129,6 +134,18 @@ class VideoController extends Zend_Controller_Action
             $modelVideo->save();
             $this->view->videos[] = $modelVideo;
         }
+    }
+    
+    public function nameAction()
+    {
+        $identity = Chaplin_Auth::getInstance()
+            ->getIdentity();
+        
+        $modelUser = $identity->getUser();
+        
+        $this->view->videos = Chaplin_Gateway::getInstance()
+            ->getVideo()
+            ->getByUserUnnamed($modelUser);
     }
     
     public function youtubeAction()

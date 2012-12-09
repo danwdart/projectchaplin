@@ -2,6 +2,8 @@
 class Chaplin_Model_Field_Hash
     extends Chaplin_Model_Field_Abstract
 {
+    const FIELD_ID = Chaplin_Dao_Mongo_Abstract::FIELD_Id;
+    
     protected $_arrFields = array();
     protected $_collFields = array();
 

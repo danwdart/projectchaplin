@@ -17,16 +17,21 @@ class default_Form_Video_Upload extends Zend_Form
         );
         $upload->addValidators(array(
             new Zend_Validate_File_Size(array(
-                'max' => 2*1024*1024*1024
+                'max' => 200*1024*1024
             ))
         ));            
         $strLocation = realpath(APPLICATION_PATH.'/../public/uploads');
         $upload->setDestination($strLocation);
         
+        $progress = new Zend_Form_Element_Hidden(
+            ini_get('session.upload_progress.name')
+        );
+        $progress->setValue('file');
+        
         $submit = new Zend_Form_Element_Submit('Upload');
         $submit->setLabel('Upload');
         
-        $this->addElements(array($upload, $submit));
+        $this->addElements(array($progress, $upload, $submit));
     }
 }
         

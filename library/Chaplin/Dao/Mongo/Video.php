@@ -36,13 +36,25 @@ class Chaplin_Dao_Mongo_Video
         return $this->convertToModel($arrVideo);
     }
     
-    public function getByUser(Chaplin_Model_User $modelVideo)
+    public function getByUser(Chaplin_Model_User $modelUser)
     {
         $arrQuery = array(
-            Chaplin_Model_Video::FIELD_USERID => $strUserId
+            Chaplin_Model_Video::FIELD_USERNAME => $modelUser->getUsername()
         );
         
-        $cursor = $this->_getCollection->find($arrQuery);
+        $cursor = $this->_getCollection()->find($arrQuery);
+        
+        return new Chaplin_Iterator_Dao_Mongo_Cursor($cursor, $this);
+    }
+    
+    public function getByUserUnnamed(Chaplin_Model_User $modelUser)
+    {
+        $arrQuery = array(
+            Chaplin_Model_Video::FIELD_USERNAME => $modelUser->getUsername(),
+            Chaplin_Model_Video::FIELD_TITLE => ''
+        );
+        
+        $cursor = $this->_getCollection()->find($arrQuery);
         
         return new Chaplin_Iterator_Dao_Mongo_Cursor($cursor, $this);
     }
