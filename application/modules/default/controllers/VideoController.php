@@ -39,6 +39,27 @@ class VideoController extends Zend_Controller_Action
         
         return $this->view->assign('formComment', $formComment);
     }
+    
+    public function downloadAction()
+    {
+        $this->_helper->layout()->disableLayout(); 
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        $strVideoId = $this->_request->getParam('id', null);
+        if(is_null($strVideoId)) {
+            return $this->_redirect('/');
+        }
+        
+        $modelVideo = Chaplin_Gateway::getInstance()
+            ->getVideo()
+            ->getByVideoId($strVideoId);
+        // read/etc/protect later?
+        $strPath = realpath(APPLICATION_PATH.'/../public'.$modelVideo->getFilename());
+        $this->getResponse()->setHeader(
+            'Content-Disposition', 'attachment; filename='.basename($modelVideo->getFilename())
+        );
+        echo file_get_contents($strPath);
+    }
 
     public function voteAction()
     {
