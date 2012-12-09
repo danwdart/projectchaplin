@@ -78,21 +78,11 @@ class VideoController extends Zend_Controller_Action
         
         if(!$this->_request->isPost()) {
             return $this->view->assign('form', $form);
-        }
-        
-        var_dump($_POST);
-        var_dump($_FILES);
-        var_dump(file_get_contents('php://stdin'));
-
-        die();
-        
-        
+        }        
         
         if(!$form->isValid($this->_request->getPost())) {
-            echo 'Set post_max_size to something sensible.';
             return $this->view->assign('form', $form);
         }
-        
         // We can't directly receive multiple files
 
         $adapter = $form->Files->getTransferAdapter();
@@ -105,7 +95,6 @@ class VideoController extends Zend_Controller_Action
         $this->view->videos = array();
 
         foreach ($adapter->getFileInfo() as $arrFileInfo) {
-        die(var_dump($arrFileInfo));
             /*$adapter->addFilter(
                 'Rename', array(
                     'target' => $form->Files->getDestination(),
@@ -124,12 +113,13 @@ class VideoController extends Zend_Controller_Action
             
             $ret = 0;
             
-            $strError = Chaplin_Service::getInstance()
-                ->getAVConv()
-                ->convertFile($strFilename, $strPathToWebm, $ret);
-            if(0 != $ret) {
-                die(var_dump($strError));
-            }
+            // Don't do the conversion yet
+          //  $strError = Chaplin_Service::getInstance()
+          //      ->getAVConv()
+          //      ->convertFile($strFilename, $strPathToWebm, $ret);
+          ///  if(0 != $ret) {
+           //     die(var_dump($strError));
+          //  }
             
             $ret = 0;
                 
@@ -147,7 +137,7 @@ class VideoController extends Zend_Controller_Action
             
             $modelVideo = Chaplin_Model_Video::create(
                 $modelUser,
-                $strRelaPath.$strWebM,
+                null,
                 $strRelaPath.$strThumb,
                 null
             );
