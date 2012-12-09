@@ -33,9 +33,9 @@ abstract class Chaplin_Dao_Mongo_Abstract implements Chaplin_Dao_Interface
         $this->_getCollection()->updateArray($arrCriteria, $arrUpdate);
     }
 
-    protected function _delete(Chaplin_Model_Abstract_Base $modelBase)
+    protected function _delete(Chaplin_Model_Field_Hash $hash)
     {
-        $arrCriteria = array(self::FIELD_Id => $modelBase->getId());
+        $arrCriteria = array(self::FIELD_Id => $hash->getId());
         $this->_getCollection()->removeArray($arrCriteria);
     }
 

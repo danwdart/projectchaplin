@@ -1,6 +1,13 @@
+<div style="margin: 15px auto; text-align:center; font-size: 24pt; font-weight: 100;">
+    Featured Videos:
+</div>
+<div style="width: 80%; position:relative; margin: 0 auto">
 <?php foreach($this->ittFeaturedVideos as $modelVideo):?>
+<div style="float:left; height: 120px; max-width: 160px; padding:5px; background-color:grey;">
 <a href="/video/watch/id/<?php echo $modelVideo->getVideoId();?>">
     <p><?php echo $modelVideo->getTitle();?></p>
-    <img src="<?php echo $modelVideo->getThumbnail();?>" alt="View Video" class="thumbnail"/>
+    <img src="<?php echo $modelVideo->getThumbnail();?>" alt="View Video" class="thumbnail" style="max-with: 160px; max-height:120px;"/>
 </a>
+</div>
 <?php endforeach;?>
+</div>

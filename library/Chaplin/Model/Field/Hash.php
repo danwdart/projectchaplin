@@ -7,6 +7,11 @@ class Chaplin_Model_Field_Hash
     protected $_arrFields = array();
     protected $_collFields = array();
 
+    public function getId()
+    {
+        return $this->_getField(self::FIELD_ID, null);
+    }
+
     public static function createFromData(Chaplin_Dao_Interface $dao, Array $arrArray)
     {
         $hash = new static();
