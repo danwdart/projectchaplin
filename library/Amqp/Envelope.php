@@ -29,7 +29,7 @@ class Amqp_Envelope
     }
     
     public function getCorrelationId()
-    [
+    {
         return $this->_amqpEnvelope->getCorrelationId();
     }
     

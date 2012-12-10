@@ -92,6 +92,4 @@ class Amqp_Connection
     {
         return $this->_amqpConnection->reconnect();
     }
-    
-    public function 
 }

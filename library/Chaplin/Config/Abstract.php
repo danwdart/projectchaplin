@@ -37,7 +37,7 @@ abstract class Chaplin_Config_Abstract
             throw new Exception($strConfigFile);
         }
 
-        $strConfigClass = 'Zend_Config'.$this->_getConfigType();
+        $strConfigClass = 'Zend_Config_'.$this->_getConfigType();
         
         if(!class_exists($strConfigClass)) {
             throw new Exception('Config class '.$strConfigClass.' does not exist');
@@ -57,7 +57,7 @@ abstract class Chaplin_Config_Abstract
     {
         if(is_null($strValue)) {
             throw new Exception(
-                'Nonexistent key: '.$strKey,' on '.APPLICATION_ENV
+                'Nonexistent key: '.$strKey.' on '.APPLICATION_ENV
             );
         }
         

@@ -13,4 +13,25 @@ class Chaplin_Config_Amqp
     {
         return realpath(APPLICATION_PATH.'/../config/amqp.xml');
     }
+    
+    public function getConfigArray()
+    {
+        return $this->_getValue($this->_zendConfig->exchanges, 'exchanges')->toArray();
+    }
+    
+    public function getConfigConnectionRead()
+    {
+        return $this->_getValue(
+            $this->_zendConfig->server->read,
+            'server.read'
+        )->toArray();
+    }
+    
+    public function getConfigConnectionWrite()
+    {
+        return $this->_getValue(
+            $this->_zendConfig->server->write,
+            'server.write'
+        )->toArray();
+    }
 }

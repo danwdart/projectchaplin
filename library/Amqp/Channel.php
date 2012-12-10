@@ -7,7 +7,12 @@ class Amqp_Channel
     public function __construct(Amqp_Connection $amqpConnection)
     {
         $this->_amqpConnection = $amqpConnection->getConnection();
-        $this->_amqpChannel = new AMQPChannel($amqpConnection->getConnection);
+        $this->_amqpChannel = new AMQPChannel($amqpConnection->getConnection());
+    }
+
+    public function getAMQPChannel()
+    {
+        return $this->_amqpChannel;
     }
 
     public function commitTransaction()
