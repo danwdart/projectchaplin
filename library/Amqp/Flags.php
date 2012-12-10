@@ -15,4 +15,26 @@ class Amqp_Flags
     const IMMEDIATE = AMQP_IMMEDIATE;
     const MULTIPLE = AMQP_MULTIPLE;
     const NOWAIT = AMQP_NOWAIT;
+    
+    public static function getFlags(Array $arrFlags)
+    {
+        $ret = 0;
+        
+        foreach($arrFlags as $strFlag => $intValue) {
+            if ($intValue) {
+                switch($strFlag) {
+                    case 'Durable':
+                        $ret |= self::DURABLE;
+                        break;
+                    case 'AutoDelete':
+                        $ret |= self::AUTODELETE;
+                        break;
+                    default:
+                        throw new Exception('Unhandled Flag: '.$strFlag);
+                }
+            }
+        }
+        
+        return $ret;
+    }   
 }

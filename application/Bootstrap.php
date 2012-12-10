@@ -5,6 +5,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         $autoloader = Zend_Loader_Autoloader::getInstance();
         $autoloader->registerNamespace('Chaplin_');
+        $autoloader->registerNamespace('Amqp_');
         $autoloader->registerNamespace('Mongo_');
         $autoloader->registerNamespace('FFMpeg\\');
         $autoloader->registerNamespace('Monolog\\');

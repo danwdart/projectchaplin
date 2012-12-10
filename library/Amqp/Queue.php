@@ -4,10 +4,10 @@ class Amqp_Queue
     private $_amqpChannel;
     private $_amqpQueue;
 
-    public function __construct(AMQPChannel $amqpChannel)
+    public function __construct(AMQP_Channel $amqpChannel)
     {
         $this->_amqpChannel = $amqpChannel;
-        $this->_amqpQueue = new AMQPQueue($amqpChannel);
+        $this->_amqpQueue = new AMQPQueue($amqpChannel->getAMQPChannel());
     }
     
     public function ack($strDeliveryTag, $intFlags = AMQP_NOPARAM)
@@ -27,10 +27,13 @@ class Amqp_Queue
 
     public function consume(callable $callback, $intFlags = AMQP_NOPARAM)
     {
-        return $this->_amqpQueue->consume($callback, $intFlags);
+        $callback2 = function(AMQPEnvelope $amqpEnvelope)  use ($callback) {
+            $callback(new Amqp_Envelope($amqpEnvelope));
+        };
+        return $this->_amqpQueue->consume($callback2, $intFlags);
     }
     
-    public function declare()
+    public function declareQueue()
     {
         return $this->_amqpQueue->declare();
     }

@@ -1,10 +1,10 @@
 <?php
 class Amqp_Exchange
 {
-    const TYPE_DIRECT = AMQP_DIRECT;
-    const TYPE_FANOUT = AMQP_FANOUT;
-    const TYPE_TOPIC = AMQP_TOPIC;
-    const TYPE_HEADER = AMQP_HEADER;
+    const TYPE_DIRECT = AMQP_EX_TYPE_DIRECT;
+    const TYPE_FANOUT = AMQP_EX_TYPE_FANOUT;
+    const TYPE_TOPIC = AMQP_EX_TYPE_TOPIC;
+//s    const TYPE_HEADER = AMQP_EX_TYPE_HEADER;
 
     private $_amqpChannel;
     private $_amqpExchange;
@@ -12,7 +12,7 @@ class Amqp_Exchange
     public function __construct(Amqp_Channel $amqpChannel)
     {
         $this->_amqpChannel = $amqpChannel;
-        $this->_amqpExchange = new AMQPExchange($amqpChannel);
+        $this->_amqpExchange = new AMQPExchange($amqpChannel->getAMQPChannel());
     }
     
     public function bind($strDestExchangeName, $strSourceExchangeName, $strRoutingKey)
@@ -20,7 +20,7 @@ class Amqp_Exchange
         return $this->_amqpExchange->bind($strDestExchangeName, $strSourceExchangeName, $strRoutingKey);
     }
     
-    public function declare()
+    public function declareExchange()
     {
         return $this->_amqpExchange->declare();
     }
@@ -47,7 +47,7 @@ class Amqp_Exchange
     
     public function setArguments(Array $arrArguments)
     {
-        $this_>_amqpExchange->setArguments($arrArguments);
+        return $this->_amqpExchange->setArguments($arrArguments);
     }    
     
     public function getFlags()

@@ -1,61 +1,112 @@
 <?php
-class Canddi_Dao_Amqp_Exchange
+class Chaplin_Dao_Amqp_Exchange
 {
-    const CONFIG_NAME = 'Name';
     const CONFIG_TYPE = 'Type';
     const CONFIG_FLAGS = 'Flags';
-    const CONFIG_QUEUE = 'Queue';
-    const CONFIG_QUEUE_NAME = 'Name';
+    const CONFIG_QUEUES = 'Queues';
     const CONFIG_QUEUE_KEYS = 'Keys';
 
     private $_strExchangeName;
     private $_strExchangeType;
     private $_arrExchange;
 
+    private static $_amqpConnectionRead;
+    private static $_amqpConnectionWrite;
+
     public function __construct($strExchangeName)
     {
         if (is_null($strExchangeName)) {
             throw new Exception('Cannot create with blank exchange name');
         }
+        
+        $this->_strExchangeName = $strExchangeName;
 
-        $arrExchanges = Canddi_Helper_Config_RabbitMQ::getInstance()->getArrayExchanges();
-        if (!isset($arrExchanges[$strExchangeName]) 
-        || !is_array($arrExchanges[$strExchangeName])) {
-            throw new Canddi_Dao_Exception_Message_ExchangeNotFound($strExchangeName);
+        $arrExchanges = Chaplin_Config_Amqp::getInstance()
+            ->getConfigArray();
+        
+        if (!isset($arrExchanges[$strExchangeName]) ||
+            !is_array($arrExchanges[$strExchangeName])) {
+            throw new Exception($strExchangeName.' exchange not found');
         }
-        $this->_arrExchange     = $arrExchanges[$strExchangeName];
-        if (!isset($this->_arrExchange[self::CONFIG_NAME]))
-            throw new Canddi_Dao_Exception_Message_ExchangeNameEmpty();
+        
+        $this->_arrExchange = $arrExchanges[$strExchangeName];
+
         if (!isset($this->_arrExchange[self::CONFIG_TYPE]))
             throw new Canddi_Dao_Exception_Message_ExchangeTypeEmpty();
     }
-    /**
-    *  This loads the RabbitConnection
-    *  This is a little naughty because it relies on the default RabbitConnection already being created
-    **/
-    private function _getConnection($bWrite = false)
+    
+    private static function _getReadConnection()
     {
-        if (true === $bWrite)
-            $rabbitCon = Rabbit_Connection::getDefaultWriteConnection();
-        else
-            $rabbitCon		= Rabbit_Connection::getDefaultConnection();
+        if (is_null(self::$_amqpConnectionRead)) {
+            $arrReadConfig = Chaplin_Config_Amqp::getInstance()
+            ->getConfigConnectionWrite();
 
-        if (is_null($rabbitCon))
-            throw new Canddi_Dao_Exception_Message_ConnectionEmpty();
-        return $rabbitCon;
+            self::$_amqpConnectionRead = new Amqp_Connection($arrReadConfig);
+            if (!self::$_amqpConnectionRead->isConnected()) {
+                self::$_amqpConnectionRead->connect();
+            }
+            if (!self::$_amqpConnectionRead->isConnected()) {
+                throw new Exception('Connection exception');
+            }
+        }
+        
+        return self::$_amqpConnectionRead;
     }
     
-    private function _getExchange($bWrite = false)
+    private static function _getWriteConnection()
     {
-        $rabbitCon = $this->_getConnection($bWrite);
+        if (is_null(self::$_amqpConnectionWrite)) {
+            $arrWriteConfig = Chaplin_Config_Amqp::getInstance()
+            ->getConfigConnectionRead();
 
-        $arrFlags = (isset($this->_arrExchange[self::CONFIG_FLAGS]))?$this->_arrExchange[self::CONFIG_FLAGS]:array();
-        $objFlags = new Rabbit_Flags($arrFlags);
-        return $rabbitCon->getExchange($this->_arrExchange[self::CONFIG_NAME]
-            ,$this->_arrExchange[self::CONFIG_TYPE]
-            ,$objFlags                   
-        );
+            self::$_amqpConnectionWrite = new Amqp_Connection($arrWriteConfig);
+            if (!self::$_amqpConnectionWrite->isConnected()) {
+                self::$_amqpConnectionWrite->connect();
+            }
+            if (!self::$_amqpConnectionWrite->isConnected()) {
+                throw new Exception('Connection exception');
+            }
+        }
+        
+        return self::$_amqpConnectionWrite;
     }
+    
+    private function _getReadExchange()
+    {
+        $amqpConnection = self::_getReadConnection();
+
+        $arrFlags = (isset($this->_arrExchange[self::CONFIG_FLAGS]))?
+            $this->_arrExchange[self::CONFIG_FLAGS]:
+            array();
+            
+        $intFlags = Amqp_Flags::getFlags($arrFlags);
+        $amqpChannel = new Amqp_Channel($amqpConnection);
+        $exchange = new Amqp_Exchange($amqpChannel);
+        $exchange->setName($this->_strExchangeName);
+        $exchange->setType($this->_arrExchange[self::CONFIG_TYPE]);
+        $exchange->setFlags($intFlags);
+        $exchange->declareExchange();
+        return $exchange;
+    }
+    
+    private function _getWriteExchange()
+    {
+        $amqpConnection = self::_getWriteConnection();
+
+        $arrFlags = (isset($this->_arrExchange[self::CONFIG_FLAGS]))?
+            $this->_arrExchange[self::CONFIG_FLAGS]:
+            array();
+            
+        $intFlags = Amqp_Flags::getFlags($arrFlags);
+        $amqpChannel = new Amqp_Channel($amqpConnection);
+        $exchange = new Amqp_Exchange($amqpChannel);
+        $exchange->setName($this->_strExchangeName);
+        $exchange->setType($this->_arrExchange[self::CONFIG_TYPE]);
+        $exchange->setFlags($intFlags);
+        $exchange->declareExchange();
+        return $exchange;
+    }
+    
     /**
     *  Provides the queue listening functionality
     *  @param: $queueName
@@ -63,58 +114,60 @@ class Canddi_Dao_Amqp_Exchange
     **/
     public function listen($strQueue, Closure $callback)
     {
-        if (!isset($this->_arrExchange[self::CONFIG_QUEUE]) || !is_array($this->_arrExchange[self::CONFIG_QUEUE][$strQueue]))
-            throw new Canddi_Dao_Exception_Message_QueueNotFound($strQueue);
-
-        $arrQueue       = $this->_arrExchange[self::CONFIG_QUEUE][$strQueue];
-
-        if(!isset($arrQueue[self::CONFIG_QUEUE_NAME])) {
-            throw new Canddi_Dao_Exception_Message_QueueNotFound($strQueue.', '.self::CONFIG_QUEUE_NAME);           
+        if (!isset($this->_arrExchange[self::CONFIG_QUEUES]) ||
+           !is_array($this->_arrExchange[self::CONFIG_QUEUES][$strQueue])) {
+            throw new Exception('Queue not found: '.$strQueue);
         }
 
-        if(!isset($arrQueue[self::CONFIG_QUEUE_KEYS]) || !is_array($arrQueue[self::CONFIG_QUEUE_KEYS])) {
-            throw new Canddi_Dao_Exception_Message_QueueNotFound($strQueue.', '.self::CONFIG_QUEUE_KEYS);  
+        $arrQueue = $this->_arrExchange[self::CONFIG_QUEUES][$strQueue];
+
+        if (!isset($arrQueue[self::CONFIG_QUEUE_KEYS]) ||
+            !is_array($arrQueue[self::CONFIG_QUEUE_KEYS])) {
+            throw new Exception($strQueue.' has no keys');
         }
 
-        $queueName = $arrQueue[self::CONFIG_QUEUE_NAME];
-        $queueKeys = $arrQueue[self::CONFIG_QUEUE_KEYS];
+        $arrKeys = $arrQueue[self::CONFIG_QUEUE_KEYS];
 
-        $arrFlags = (isset($arrQueue[self::CONFIG_FLAGS]))?$arrQueue[self::CONFIG_FLAGS]:array();
-        $objFlags = new Rabbit_Flags($arrFlags);	
-        $rabbitCon = $this->_getConnection();
-        $rabbitQueue    = $rabbitCon->getQueue($queueName, $objFlags);
+        $arrFlags = (isset($arrQueue[self::CONFIG_FLAGS]))?
+            $arrQueue[self::CONFIG_FLAGS]:
+            array();
+            
+        $intFlags = Amqp_Flags::getFlags($arrFlags);
+        $amqpConnection = $this->_getReadConnection();
         
-        /**
-        *  We need to convert a Rabbit_Message into a Canddi_Message
-        **/
-        $localCallback  = function(Rabbit_Message $rabbitMsg) use ($callback) {
-            $modelMessage = Canddi_Message_Abstract::createFromDao($rabbitMsg);
-            $callback($modelMessage);
+        $amqpChannel = new Amqp_Channel($amqpConnection);
+        $amqpQueue = new Amqp_Queue($amqpChannel);
+        $amqpQueue->declareQueue();
+        
+        $localCallback  = function(Amqp_Envelope $amqpEnvelope) use ($callback) {
+            var_dump($amqpEnvelope);
+            ob_flush();
+//            $modelMessage = Canddi_Message_Abstract::createFromDao($rabbitMsg);
+//            $callback($modelMessage);
         };
 
         // Make sure the exchange is created so there's something to listen on - DO NOT DELETE THIS
-        $this->_getExchange(false);
+        $this->_getReadExchange();
 
-        foreach($queueKeys as $strQueueKey) {
-            $strRoutingKey = is_null($strQueueKey)?Canddi_Message_Abstract::WORDS_SKIP:$strQueueKey;
-            $rabbitQueue->bind($this->_arrExchange[self::CONFIG_QUEUE_NAME], $strRoutingKey);
+        foreach($arrKeys as $strQueueKey) {
+            $strRoutingKey = is_null($strQueueKey)?'#':$strQueueKey;
+            $amqpQueue->bind($this->_strExchangeName, $strRoutingKey);
         }
         
-        $rabbitQueue->consume($localCallback, $queueName);
+        $amqpQueue->consume($localCallback, $intFlags);
     }
 
     /**
     *  Publishes the message
     *  @param: $modelMessage
     **/
-    public function publish(Canddi_Message_Abstract $modelMessage = null)
+    public function publish($strThingy, $strRoutingKey)
     {
-        if (is_null($modelMessage))
-            throw new Canddi_Dao_Exception_Message_MessageEmpty();
-        $strRoutingKey		= $modelMessage->getRoutingKey();
-        $strMessageBody		= $modelMessage->getMessageBody();
-        $arrMsgProperties	= $modelMessage->getMessageProperties();
-        $rabbitMessage		= new Rabbit_Message($strMessageBody, $arrMsgProperties);
-        $rabbitExchange     = $this->_getExchange(true)->publish($rabbitMessage, $strRoutingKey);
+        //$strRoutingKey		= $modelMessage->getRoutingKey();
+        //$strMessageBody		= $modelMessage->getMessageBody();
+        //$arrMsgProperties	= $modelMessage->getMessageProperties();
+        
+        $this->_getWriteExchange()
+            ->publish($strThingy, $strRoutingKey);
     }
 }

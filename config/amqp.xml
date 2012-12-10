@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<configdata>
+    <default>
+        <exchanges>
+            <Video>
+                <Type>topic</Type>
+                <Queues>
+                    <encode>
+                        <Keys>
+                            <Key>video.encode.#</Key>
+                        </Keys>
+                    </encode>
+                    <debug>
+                        <Keys>
+                            <Key>#</Key>
+                        </Keys>
+                        <Flags>
+                            <Durable>false</Durable>
+                            <AutoDelete>true</AutoDelete>
+                        </Flags>
+                    </debug>
+                </Queues>
+            </Video>
+        </exchanges>
+        <server>
+            <write>
+                <host>localhost</host>
+                <port>5672</port>
+                <vhost>/</vhost>
+                <username>guest</username>
+                <password>guest</password>
+            </write>
+            <read>
+                <host>localhost</host>
+                <port>5672</port>
+                <vhost>/</vhost>
+                <username>guest</username>
+                <password>guest</password>
+            </read>
+        </server>
+    </default>
+    <production extends="default">
+    </production>
+    <development extends="default">
+    </development>
+</configdata>
