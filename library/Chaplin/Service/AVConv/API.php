@@ -3,7 +3,7 @@ class Chaplin_Service_AVConv_API
 {
     const THUMBNAIL_DEFAULT_TIME = 10;
     
-    const CMD_CONVERT_FILE = 'ffmpeg -i "%s" "%s"';
+    const CMD_CONVERT_FILE = 'ffmpeg -threads 9 -i "%s" "%s"';
     const CMD_GET_THUMBNAIL = 'ffmpeg -i "%s" -f image2 -vframes 1 -ss %s "%s"'; 
     
     private $_ffmpeg;

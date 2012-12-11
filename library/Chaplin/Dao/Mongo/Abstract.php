@@ -25,6 +25,11 @@ abstract class Chaplin_Dao_Mongo_Abstract implements Chaplin_Dao_Interface
     
         $arrCriteria = array(self::FIELD_Id => $collFields[self::FIELD_Id]->getValue(null));
         $arrUpdate = $this->_getUpdateArray($collFields);
+        if(empty($arrUpdate)) {
+            // We're doomed if we let this go through
+            // Nothing!
+            return;
+        }
         
         if(isset($arrUpdate['$set'][self::FIELD_Id])) {
             unset($arrUpdate['$set'][self::FIELD_Id]);
