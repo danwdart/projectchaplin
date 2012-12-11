@@ -19,5 +19,12 @@ class CliController extends Zend_Controller_Action
             ->getExchange('Video')
             ->debug();
     }
+    
+    public function processAction()
+    {
+        Chaplin_Service::getInstance()
+            ->getExchange('Video')
+            ->process();
+    }       
 }
 

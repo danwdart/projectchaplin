@@ -4,8 +4,12 @@ class Chaplin_Service_Amqp_Video
 {
     const EXCHANGE_NAME = 'Video';
 
-    public function debugMessage()
+    public function process()
     {
-        $this->publishMessage('Hello World!', 'thingy');
+        $queueName = 'encode';
+  		$callback = function(Chaplin_Message_Video_Convert $msg) {
+  		    $msg->process();
+  		};
+  		$this->_listen($queueName, $callback);
     }
 }

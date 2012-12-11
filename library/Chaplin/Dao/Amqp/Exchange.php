@@ -137,13 +137,13 @@ class Chaplin_Dao_Amqp_Exchange
         
         $amqpChannel = new Amqp_Channel($amqpConnection);
         $amqpQueue = new Amqp_Queue($amqpChannel);
+        $amqpQueue->setName($strQueue);
+        $amqpQueue->setFlags($intFlags);
         $amqpQueue->declareQueue();
         
         $localCallback  = function(Amqp_Envelope $amqpEnvelope) use ($callback) {
-            var_dump($amqpEnvelope);
-            ob_flush();
-//            $modelMessage = Canddi_Message_Abstract::createFromDao($rabbitMsg);
-//            $callback($modelMessage);
+            $modelMessage = Chaplin_Message_Abstract::createFromDao($amqpEnvelope);
+            $callback($modelMessage);
         };
 
         // Make sure the exchange is created so there's something to listen on - DO NOT DELETE THIS
@@ -161,13 +161,13 @@ class Chaplin_Dao_Amqp_Exchange
     *  Publishes the message
     *  @param: $modelMessage
     **/
-    public function publish($strThingy, $strRoutingKey)
+    public function publish(Chaplin_Message_Abstract $message, $strRoutingKey)
     {
         //$strRoutingKey		= $modelMessage->getRoutingKey();
         //$strMessageBody		= $modelMessage->getMessageBody();
         //$arrMsgProperties	= $modelMessage->getMessageProperties();
         
         $this->_getWriteExchange()
-            ->publish($strThingy, $strRoutingKey);
+            ->publish(Zend_Json::encode($message), $strRoutingKey);
     }
 }

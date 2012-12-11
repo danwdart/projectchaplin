@@ -15,11 +15,11 @@ class default_Form_Video_Upload extends Zend_Form
                 'isArray' => true
             )
         );
-        $upload->addValidators(array(
-            new Zend_Validate_File_Size(array(
-                'max' => 200*1024*1024
-            ))
-        ));            
+        //$upload->addValidators(array(
+        //    new Zend_Validate_File_Size(array(
+        //        'max' => 200*1024*1024
+        //    ))
+        //));            
         $strLocation = realpath(APPLICATION_PATH.'/../public/uploads');
         $upload->setDestination($strLocation);
         

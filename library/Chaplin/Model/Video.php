@@ -61,6 +61,11 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     {
         return $this->_getField(self::FIELD_FILENAME, null);
     }
+    
+    public function setFilename($strFilename)
+    {
+        return $this->_getField(self::FIELD_FILENAME, $strFilename);
+    }
 
     public function getThumbnail()
     {
@@ -72,7 +77,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         return $this->_getField(self::CHILD_ASSOC_COMMENTS, array());
     }
 
-    private function _getUsername()
+    public function getUsername()
     {
         return $this->_getField(self::FIELD_USERNAME, null);
     }
@@ -87,7 +92,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
             return true;
         }
         return Chaplin_Auth::getInstance()->getIdentity()->getUser()->getUsername() ==
-            $this->_getUsername();
+            $this->getUsername();
     }
 
     public function delete()
