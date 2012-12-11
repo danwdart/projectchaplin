@@ -31,7 +31,7 @@ class Chaplin_Dao_Mongo_Video
         $arrVideo = $this->_getCollection()->findOne($arrQuery);
         
         if(is_null($arrVideo)) {
-            throw new Chaplin_Dao_Exception_Video_NotFound();
+            throw new Chaplin_Dao_Exception_Video_NotFound($strVideoId);
         }
         return $this->convertToModel($arrVideo);
     }

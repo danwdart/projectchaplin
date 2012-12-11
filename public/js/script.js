@@ -37,7 +37,6 @@ $(document).ready(function() {
         }
         xhr.onreadystatechange = function(e) {
             if ( 4 == this.readyState ) {
-                alert(this.responseText);
                 window.location = '/video/name';
             }
         }

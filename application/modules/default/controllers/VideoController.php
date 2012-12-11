@@ -103,23 +103,12 @@ class VideoController extends Zend_Controller_Action
             );*/
             $strFilename = $arrFileInfo['tmp_name'];      
 
-            $strPathToWebm = $strFilename.'.webm';
             $strPathToThumb = $strFilename.'.png';
             
-            $strWebM = basename($strPathToWebm);
-            $strThumb = basename($strPathToThumb);
+            $strRelaFile = basename($strFilename);
+            $strRelaThumb = basename($strPathToThumb);
             
             $strRelaPath = '/uploads/';
-            
-            $ret = 0;
-            
-            // Don't do the conversion yet
-          //  $strError = Chaplin_Service::getInstance()
-          //      ->getAVConv()
-          //      ->convertFile($strFilename, $strPathToWebm, $ret);
-          ///  if(0 != $ret) {
-           //     die(var_dump($strError));
-          //  }
             
             $ret = 0;
                 
@@ -137,12 +126,14 @@ class VideoController extends Zend_Controller_Action
             
             $modelVideo = Chaplin_Model_Video::create(
                 $modelUser,
-                null,
-                $strRelaPath.$strThumb,
+                $strRelaPath.$strRelaFile,
+                $strRelaPath.$strRelaThumb,
                 null
             );
-            
             $modelVideo->save();
+            
+            Chaplin_Message_Video_Convert::create($modelVideo)->send();
+           
             $this->view->videos[] = $modelVideo;
         }
     }
