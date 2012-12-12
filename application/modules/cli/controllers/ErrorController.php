@@ -15,12 +15,16 @@ class ErrorController extends Zend_Controller_Action
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
                 echo 'Not Found - property'.PHP_EOL;
+                ob_flush();
+                flush();
                 break;
             default:
                 echo 'something broke horribly'.PHP_EOL;
                 echo get_class($errors->exception).PHP_EOL;
                 echo $errors->exception->getMessage().PHP_EOL;
                 echo $errors->exception->getTraceAsString().PHP_EOL;  
+                ob_flush();
+                flush();
                 break;
         }
  
@@ -29,6 +33,8 @@ class ErrorController extends Zend_Controller_Action
             echo get_class($this->exception);
             echo $this->exception->getMessage();
             echo $this->exception->getTraceAsString();
+            ob_flush();
+            flush();
         }        
         //$this->_request);
     }
