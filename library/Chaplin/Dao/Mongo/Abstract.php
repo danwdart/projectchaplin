@@ -63,7 +63,7 @@ abstract class Chaplin_Dao_Mongo_Abstract implements Chaplin_Dao_Interface
             if($objField->bIsDirty()) {
                 $strClass = get_class($objField);
                 switch($strClass) {
-                    case 'Chaplin_Model_Field_Field':w
+                    case 'Chaplin_Model_Field_Field':
                         $arrUpdate['$set'][$strFieldName] = $this->_textToSafe($objField->getValue(null));
                         break;
                     case 'Chaplin_Model_Field_FieldId':
