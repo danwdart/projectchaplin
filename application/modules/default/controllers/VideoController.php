@@ -153,7 +153,7 @@ class VideoController extends Zend_Controller_Action
     public function youtubeAction()
     {
         $strURL = $this->_request->getQuery('url');
-        
+         
     }
     
     public function deleteAction()

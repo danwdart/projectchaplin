@@ -58,8 +58,6 @@ class Chaplin_Message_Video_Convert
         flush();
         
         $modelVideo->setFilename($modelVideo->getFilename().'.webm');
-        echo var_dump($modelVideo);
-        ob_flush();
         $modelVideo->save();
     }
     
