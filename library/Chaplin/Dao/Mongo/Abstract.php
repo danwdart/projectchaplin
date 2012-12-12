@@ -18,6 +18,10 @@ abstract class Chaplin_Dao_Mongo_Abstract implements Chaplin_Dao_Interface
     protected function _save(Chaplin_Model_Field_Hash $hash)
     {
         $collFields = $hash->getFields($this);
+        
+        if (!isset($collFields[self::FIELD_Id])) {
+            throw new Exception('Cannot save hashes without _id');
+        }
     
         if (is_null($collFields[self::FIELD_Id]->getValue(null))) {
             throw new Exception('Id is null');
@@ -60,6 +64,9 @@ abstract class Chaplin_Dao_Mongo_Abstract implements Chaplin_Dao_Interface
                 $strClass = get_class($objField);
                 switch($strClass) {
                     case 'Chaplin_Model_Field_Field':
+                    echo $strFieldName.' : '.$this->_textToSafe($objField->getValue(null));
+                    ob_flush();
+                    flush();
                         $arrUpdate['$set'][$strFieldName] = $this->_textToSafe($objField->getValue(null));
                         break;
                     case 'Chaplin_Model_Field_FieldId':

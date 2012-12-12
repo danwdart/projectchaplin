@@ -27,6 +27,8 @@ abstract class Chaplin_Service_Amqp_Abstract
                 $callback($msg);
             } catch(Exception $e) {
                 echo $e->getMessage().PHP_EOL.$e->getTraceAsString().PHP_EOL;
+                ob_flush();
+                flush();
             }
         };
         $this->_daoExchange->listen($queueName, $callbackEx);

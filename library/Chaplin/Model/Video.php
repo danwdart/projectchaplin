@@ -64,7 +64,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     
     public function setFilename($strFilename)
     {
-        return $this->_getField(self::FIELD_FILENAME, $strFilename);
+        return $this->_setField(self::FIELD_FILENAME, $strFilename);
     }
 
     public function getThumbnail()

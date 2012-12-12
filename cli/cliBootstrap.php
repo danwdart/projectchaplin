@@ -17,6 +17,8 @@ class cliBootstrap extends Zend_Application_Bootstrap_Bootstrap
             parent::_bootstrap($resource);
         } catch(Exception $e) {
             echo $e->getException();
+            ob_flush();
+            flush();
         }
     }
     public function run()
@@ -25,6 +27,8 @@ class cliBootstrap extends Zend_Application_Bootstrap_Bootstrap
             parent::run();
         } catch(Exception $e) {
             echo $e->getException();
+            ob_flush();
+            flush();
         }
     }
 }
