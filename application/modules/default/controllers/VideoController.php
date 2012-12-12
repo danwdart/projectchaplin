@@ -108,6 +108,9 @@ class VideoController extends Zend_Controller_Action
             $strRelaFile = basename($strFilename);
             $strRelaThumb = basename($strPathToThumb);
             
+            $arrPathInfo = pathinfo($strFilename);
+            $strTitle = $arrPathInfo['filename'];
+            
             $strRelaPath = '/uploads/';
             
             $ret = 0;
@@ -128,7 +131,7 @@ class VideoController extends Zend_Controller_Action
                 $modelUser,
                 $strRelaPath.$strRelaFile,
                 $strRelaPath.$strRelaThumb,
-                null
+                $strTitle
             );
             $modelVideo->save();
             

@@ -173,7 +173,7 @@ class LoginController extends Zend_Controller_Action
                 $email = $post['email'];
                 $fullname = $post['fullname'];
 
-                if(!$user->isPassword($oldpassword))
+                if(!$user->verifyPassword($oldpassword))
                 {
                     return $this->view->assign('form', $form->addError('Old Password does not match. Want to try again?'));
                 }

@@ -37,6 +37,11 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
     {
         return sha1(self::SALT.$strPassword);
     }
+    
+    public function verifyPassword($strPassword)
+    {
+        return (self::encodePassword($strPassword) == $this->_getField(self::FIELD_Password, null));
+    }
 
     public function setPassword($strPassword)
     {
