@@ -7,6 +7,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     const FIELD_FILENAME = 'Filename';
     const FIELD_THUMBNAIL = 'Thumbnail';
     const FIELD_TITLE = 'Title';
+    const FIELD_DESCRIPTION = 'Description';
     const FIELD_LENGTH = 'Length';
     const FIELD_WIDTH = 'Width';
     const FIELD_HEIGHT = 'Height';
@@ -28,6 +29,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         self::FIELD_FILENAME => 'Chaplin_Model_Field_Field',
         self::FIELD_THUMBNAIL => 'Chaplin_Model_Field_Field',
         self::FIELD_TITLE => 'Chaplin_Model_Field_Field',
+        self::FIELD_DESCRIPTION => 'CHaplin_Model_Field_Field'
         //self::CHILD_ASSOC_COMMENTS => 'Chaplin_Model_Field_Collection_Assoc'
     );
 
@@ -45,6 +47,14 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         $video->_setField(self::FIELD_THUMBNAIL, $strThumbURL);
         $video->_setField(self::FIELD_TITLE, $strTitle);
         return $video;
+    }
+
+    public function setFromAPIArray(Array $arrVideo)
+    {
+        foreach($arrVideo as $strKey => $strValue) {
+            $strValue = (string)$strValue;
+            $this->_setField($strKey, $strValue);
+        }
     }
 
     public function getVideoId()
@@ -66,10 +76,33 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     {
         return $this->_setField(self::FIELD_FILENAME, $strFilename);
     }
+    
+    public function getFilenameRoot()
+    {
+        $arrPathInfo = pathinfo($this->getFilename());
+        return $arrPathInfo['filename'];
+    }
+    
+    public function getSuggestedTitle()
+    {
+        return ('' == $this->getTitle())?
+            $this->getFilenameRoot():
+            $this->getTitle();
+    }
 
     public function getThumbnail()
     {
         return $this->_getField(self::FIELD_THUMBNAIL, null);
+    }
+    
+    public function getDescription()
+    {
+        return $this->_getField(self::FIELD_DESCRIPTION, null);
+    }
+    
+    public function setDescription($strDescription)
+    {
+        return $this->_setField(self::FIELD_DESCRIPTION, $strDescription);
     }
 
     public function getComments()

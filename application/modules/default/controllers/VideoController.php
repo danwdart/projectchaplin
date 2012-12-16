@@ -148,9 +148,66 @@ class VideoController extends Zend_Controller_Action
         
         $modelUser = $identity->getUser();
         
-        $this->view->videos = Chaplin_Gateway::getInstance()
+        $ittVideos = Chaplin_Gateway::getInstance()
             ->getVideo()
             ->getByUserUnnamed($modelUser);
+        
+        $this->view->videos = $ittVideos;
+        
+        $form = new default_Form_Video_Name($ittVideos);
+        
+        if (!$this->_request->isPost()) {        
+            return $this->view->form = $form;
+        }
+        
+        if (!$form->isValid($this->_request->getPost())) {
+            return $this->view->form = $form;
+        }
+        
+        $arrVideos = $this->_request->getPost('Videos', array());
+        
+        foreach($arrVideos as $strVideoId => $arrVideos) {
+            $modelVideo = Chaplin_Gateway::getInstance()
+                ->getVideo()
+                ->getByVideoId($strVideoId);
+            if($modelVideo->isMine()) {
+                $modelVideo->setFromAPIArray($arrVideos);
+                $modelVideo->save();
+            }
+        }
+        
+        $this->_redirect('/');        
+    }
+    
+    public function editAction()
+    {
+        $strVideoId = $this->_request->getParam('id', null);
+        if(is_null($strVideoId)) {
+            return $this->_redirect('/');
+        }
+        
+        $modelVideo = Chaplin_Gateway::getInstance()
+            ->getVideo()
+            ->getByVideoId($strVideoId);
+        
+        $form = new default_Form_Video_Edit($modelVideo);
+        
+        if (!$this->_request->isPost()) {
+            return $this->view->form = $form;
+        }
+        
+        if (!$form->isValid($this->_request->getPost())) {
+            return $this->view->form = $form;
+        }
+        
+        $arrVideos = $this->_request->getPost('Video', array());
+        
+        if($modelVideo->isMine()) {
+            $modelVideo->setFromAPIArray($arrVideos);
+            $modelVideo->save();
+        }
+        
+        return $this->view->form = $form;
     }
     
     public function youtubeAction()
