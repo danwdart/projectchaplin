@@ -1,4 +1,4 @@
-<?php
+w<?php
 class Chaplin_Gateway_User
 {
     private $_daoUser;
