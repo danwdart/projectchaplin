@@ -1,0 +1,48 @@
+<video id="broadcast" autoplay style="display: none;width: 800px; height: 600px; border: outset;"></video>
+<canvas id="canvas" style="width: 800px; height: 600px; border: outset;" height="600" width="800"></canvas>
+<img id="else" style="width: 800px; height: 600px; border: outset;" height="600" width="800"/>
+<script src="http://manc.dandart.co.uk:1337/socket.io/socket.io.js"></script>
+<script>
+$(function() {
+    var socket = io.connect('http://manc.dandart.co.uk:1337');
+    socket.on('message', function (data) {
+        console.log(data);
+    });
+
+    navigator.getUserMedia_ = navigator.getUserMedia || navigator.webkitGetUserMedia || 
+        navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    if('undefined' == typeof navigator.getUserMedia_) {
+        console.log('No api');
+        return;
+    }
+    navigator.getUserMedia_({ video: true, audio: false },
+        function (stream) {
+    	    var domURL = window.URL || window.webkitURL;
+        	//start streaming via the video element
+        	document.getElementById('broadcast').src =
+    	        domURL ? domURL.createObjectURL(stream) : stream;
+    	        
+    	    var video = document.getElementById('broadcast');
+            var canvas = document.getElementById('canvas');
+            var ctx = canvas.getContext('2d');
+
+            setInterval(
+                function() {
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    socket.emit('frame', {"src": canvas.toDataURL('image/webp') });
+                },
+                100
+            );
+
+        },
+        function() {
+            console.log('fail');
+        }
+    );
+
+
+    socket.on('frame', function(data) {
+        document.getElementById('else').setAttribute('src', data.src);
+    });
+});
+</script>
