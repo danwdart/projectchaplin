@@ -63,13 +63,15 @@ class VideoController extends Zend_Controller_Action
 
     public function voteAction()
     {
+        $this->_helper->layout()->disableLayout(); 
+        $this->_helper->viewRenderer->setNoRender(true);
+    
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
             return $this->_redirect('/');
         }
 
         $strVote = $this->_request->getParam('vote', null);
-        
     }
     
     public function uploadAction()
@@ -207,7 +209,7 @@ class VideoController extends Zend_Controller_Action
             $modelVideo->save();
         }
         
-        return $this->view->form = $form;
+        return $this->_redirect('/video/watch/id/'.$strVideoId);
     }
     
     public function youtubeAction()

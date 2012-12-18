@@ -14,6 +14,7 @@
 | <a href="/video/delete/id/<?php echo $this->video->getVideoId();?>">Delete this video</a> | 
 <a href="/video/edit/id/<?php echo $this->video->getVideoId();?>">Edit this video</a>
 <?php endif;?>
+<!--
 <p><h3>
 	<a class="ajax" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up">Vote Up</a> | 
 	<a class="ajax" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down">Vote Down</a>
@@ -27,8 +28,24 @@ echo 'Login above to comment.'; endif;  ?>
     <dd><?php echo $modelComment->getComment();?></dd>
     <?php endforeach; ?>
 </dl>
+-->
 <script>
 (function() {
+    $('a.ajax').click(function(e) {
+        e.preventDefault();
+        el = $(this);
+        $.ajax({
+            url: $(this).attr('href'),
+            method: 'GET',
+            success: function() {
+                el.after(el.html());
+                el.hide();
+            }
+        });
+        console.log('tried');
+        return false;
+    });
+
 
 var elem = document.getElementById("video");
 
