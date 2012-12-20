@@ -1,20 +1,6 @@
 <?php
 class LoginController extends Zend_Controller_Action
 {
-    private $_redirect_url;
-
-    public function preDispatch()
-    {
-        parent::preDispatch();
-        
-        $this->_redirect_url = $this->_request->getServer('HTTP_REFERER');
-
-        if(strstr($this->_redirect_url, '/login') !== false)
-        {
-            $this->_redirect_url = '/';
-        }
-    }
-
     public function indexAction()
     {
         $form = new default_Form_Login();
@@ -36,7 +22,13 @@ class LoginController extends Zend_Controller_Action
                 $auth = Chaplin_Auth::getInstance();
                 $auth->authenticate($adapter);
                 if($auth->hasIdentity()) {
-                    return $this->_redirect($this->_redirect_url);
+                    $login = new Zend_Session_Namespace('login');
+                    if (!is_null($login->url)) {
+                        $this->_redirect($login->url);
+                        $login->url = null;
+                        return;
+                    }
+                    return $this->_redirect('/');
                 }
                 else
                 {
