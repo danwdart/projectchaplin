@@ -1,10 +1,10 @@
-<video id="broadcast" autoplay style="display: none;width: 800px; height: 600px; border: outset;"></video>
-<canvas id="canvas" style="width: 800px; height: 600px; border: outset;" height="600" width="800"></canvas>
+<video id="broadcast" autoplay style="width: 800px; height: 600px; border: outset;"></video>
+<canvas id="canvas" style="display:none;width: 800px; height: 600px; border: outset;" height="600" width="800"></canvas>
 <img id="else" style="width: 800px; height: 600px; border: outset;" height="600" width="800"/>
-<script src="http://manc.dandart.co.uk:1337/socket.io/socket.io.js"></script>
+<script src="http://<?php echo $_SERVER['HTTP_HOST']?>:1337/socket.io/socket.io.js"></script>
 <script>
 $(function() {
-    var socket = io.connect('http://manc.dandart.co.uk:1337');
+    var socket = io.connect('http://'+window.location.hostname+':1337');
     socket.on('message', function (data) {
         console.log(data);
     });
