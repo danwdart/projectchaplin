@@ -25,7 +25,7 @@ header a {
 	color: #555555;
 	font-weight: 700;
 	text-decoration: none;
-	font-size: 14pt;
+	font-size: 11pt;
 }
 
 header a:hover {
@@ -53,7 +53,7 @@ header .right {
 }
 
 #content {
-	padding: 0 10px 20px; /* cheat - as footer height */
+	padding: 0 0 20px; /* cheat - as footer height */
 	overflow:auto;
 }
 
