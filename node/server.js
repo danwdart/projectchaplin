@@ -5,6 +5,9 @@ io.sockets.on('connection', function (socket) {
         console.log(data);
     });
     socket.on('frame', function(data) {
-        socket.broadcast.emit('frame', data);
+        socket.broadcast.emit('frame', {src: data.src, id: socket.id});
+    });
+    socket.on('disconnect', function() {
+        socket.broadcast.emit('client disconnect', {id: socket.id});
     });
 });
