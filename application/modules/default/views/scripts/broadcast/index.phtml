@@ -1,67 +1,73 @@
-<div style="text-slign:center; margin:0 auto;width:100%;">
-    <video id="broadcast" autoplay style="width: 400px; height: 300px; border: outset;"></video>
-    <canvas id="canvas" style="display:none;width: 400px; height: 300px; border: outset;" height="300" width="400"></canvas>
-    <img id="else" style="width: 400px; height: 300px; border: outset;" height="300" width="400"/>
+<div id="clients">
+<video id="broadcast" autoplay></video>
+<button class="filter" value="none"/>None</button>
+<button class="filter" value="blur"/>Blur</button>
+<button class="filter" value="gray"/>Grey</button>
+<button class="filter" value="sepia"/>Sepia</button>
+<button class="filter" value="bright"/>Bright</button>
+<button class="filter" value="highcontrast"/>High Contrast</button>
+<button class="filter" value="colour"/>Colourful</button>
+<button class="filter" value="invert"/>Invert</button>
+<button class="filter" value="saturate"/>Saturate</button>
+<canvas id="canvas" height="300" width="400"></canvas>
 </div>
 <br/>
 <div id="status"></div>
 <script src="http://<?php echo $_SERVER['HTTP_HOST']?>:1337/socket.io/socket.io.js"></script>
+<script src="/js/video.js"></script>   
+<script src="/js/broadcast.js"></script>
 <script>
 $(function() {
-    if ('undefined' == typeof io) {
-        alert('Socket.io not loaded');
-        return;
-    }
-    var socket = io.connect('http://'+window.location.hostname+':1337');
-    if ('undefined' == typeof socket) {
-        alert('Socket undefined');
-        return;
-    }
-    
-    socket.on('message', function (data) {
-        console.log(data);
+    var elem = document.getElementById("broadcast");
+    addfullscreen(elem);
+    $('.filter').click(function() {
+        $('#broadcast').attr('class', $(this).attr('value'));
     });
-    socket.on('frame', function(data) {
-        document.getElementById('else').setAttribute('src', data.src);
-    });
-});
-
-$(function() {
-    navigator.getUserMedia_ = 
-        navigator.getUserMedia ||
-        navigator.webkitGetUserMedia || 
-        navigator.mozGetUserMedia ||
-        navigator.msGetUserMedia;
-        
-    if('undefined' == typeof navigator.getUserMedia_) {
-        $('#status').html('getUserMedia is not supported in your browser. This is an experimental feature.');
-        return;
-    }
-    navigator.getUserMedia_({ video: true, audio: false },
-        function (stream) {
-    	    var domURL = window.URL || window.webkitURL;
-        	//start streaming via the video element
-        	document.getElementById('broadcast').src =
-    	        domURL ? domURL.createObjectURL(stream) : stream;
-    	        
-    	    var video = document.getElementById('broadcast');
-            var canvas = document.getElementById('canvas');
-            var ctx = canvas.getContext('2d');
-
-            setInterval(
-                function() {
-                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                    if ('undefined' != typeof socket) {
-                        socket.emit('frame', {"src": canvas.toDataURL('image/png') });
-                    }
-                },
-                100
-            );
-
-        },
-        function() {
-            $('#status').html('Could not run getUserMedia - you probably denied it');
-        }
-    );
 });
 </script>
+<style>
+    .none {
+        -webkit-filter: none;
+    }
+    .blur {
+        -webkit-filter: blur(3px);
+    }
+    .gray {
+        -webkit-filter: grayscale(1);
+    }
+    .sepia {
+        -webkit-filter: sepia(1);
+    }
+    .bright {
+        -webkit-filter: brightness(0.5);
+    }
+    .highcontrast {
+        -webkit-filter: contrast(5);
+    }
+    .colour {
+        -webkit-filter: hue-rotate(180deg);
+    }
+    .invert {
+        -webkit-filter: invert(1);
+    }
+    .saturate {
+        -webkit-filter: saturate(5);
+    }
+
+    #broadcast {
+        width: 400px;
+        height: 300px;
+        border: outset;
+    }
+    #canvas {
+        display:none;
+        width: 400px;
+        height: 300px;
+        border: outset;
+    }
+    .clientvideo {
+        width: 400px;
+        height: 300px;
+        border: outset;
+    }
+</style>
