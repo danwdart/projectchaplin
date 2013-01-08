@@ -1,15 +1,17 @@
 <div id="clients">
-<video id="broadcast" autoplay></video>
-<button class="filter" value="none"/>None</button>
-<button class="filter" value="blur"/>Blur</button>
-<button class="filter" value="gray"/>Grey</button>
-<button class="filter" value="sepia"/>Sepia</button>
-<button class="filter" value="bright"/>Bright</button>
-<button class="filter" value="highcontrast"/>High Contrast</button>
-<button class="filter" value="colour"/>Colourful</button>
-<button class="filter" value="invert"/>Invert</button>
-<button class="filter" value="saturate"/>Saturate</button>
-<canvas id="canvas" height="300" width="400"></canvas>
+    <video id="broadcast" autoplay style="display:block;float:left;"></video>
+    <div class="buttons">
+        <button class="filter" value="none"/>None</button>
+        <button class="filter" value="blur"/>Blur</button>
+        <button class="filter" value="gray"/>Grey</button>
+        <button class="filter" value="sepia"/>Sepia</button>
+        <button class="filter" value="bright"/>Bright</button>
+        <button class="filter" value="highcontrast"/>Contrast</button>
+        <button class="filter" value="colour"/>Colourful</button>
+        <button class="filter" value="invert"/>Invert</button>
+        <button class="filter" value="saturate"/>Saturate</button>
+    </div>
+    <canvas id="canvas" height="300" width="400"></canvas>
 </div>
 <br/>
 <div id="status"></div>
@@ -26,6 +28,28 @@ $(function() {
 });
 </script>
 <style>
+    .buttons {
+        width: 15px;
+        height: 300px;
+        float:left;
+        display:block;
+    }
+    #broadcast {
+        width: 400px;
+        height: 300px;
+        border: outset;
+    }
+    #canvas {
+        display:none;
+        width: 400px;
+        height: 300px;
+        border: outset;
+    }
+    .clientvideo {
+        width: 400px;
+        height: 300px;
+        border: outset;
+    }
     .none {
         -webkit-filter: none;
     }
@@ -52,22 +76,5 @@ $(function() {
     }
     .saturate {
         -webkit-filter: saturate(5);
-    }
-
-    #broadcast {
-        width: 400px;
-        height: 300px;
-        border: outset;
-    }
-    #canvas {
-        display:none;
-        width: 400px;
-        height: 300px;
-        border: outset;
-    }
-    .clientvideo {
-        width: 400px;
-        height: 300px;
-        border: outset;
     }
 </style>
