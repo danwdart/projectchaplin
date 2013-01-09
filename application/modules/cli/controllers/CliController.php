@@ -26,5 +26,16 @@ class CliController extends Zend_Controller_Action
             ->getExchange('Video')
             ->process();
     }       
+
+    public function telnetAction()
+    {
+        $listener = Chaplin_Socket_Listen_Udp::create('0.0.0.0', 1234);
+        $listener->listen(function($strText, Closure $closureSend) {
+            echo $strText.PHP_EOL;
+            $closureSend('Echo: ('.$strText.')'.PHP_EOL);
+            ob_flush();
+            flush(); 
+        });
+    }
 }
 
