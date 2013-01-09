@@ -39,7 +39,7 @@ class Chaplin_Dao_Amqp_Exchange
     {
         if (is_null(self::$_amqpConnectionRead)) {
             $arrReadConfig = Chaplin_Config_Amqp::getInstance()
-            ->getConfigConnectionWrite();
+            ->getConfigConnectionRead();
 
             self::$_amqpConnectionRead = new Amqp_Connection($arrReadConfig);
             if (!self::$_amqpConnectionRead->isConnected()) {
@@ -57,7 +57,7 @@ class Chaplin_Dao_Amqp_Exchange
     {
         if (is_null(self::$_amqpConnectionWrite)) {
             $arrWriteConfig = Chaplin_Config_Amqp::getInstance()
-            ->getConfigConnectionRead();
+            ->getConfigConnectionWrite();
 
             self::$_amqpConnectionWrite = new Amqp_Connection($arrWriteConfig);
             if (!self::$_amqpConnectionWrite->isConnected()) {
