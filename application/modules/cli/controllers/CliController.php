@@ -27,7 +27,7 @@ class CliController extends Zend_Controller_Action
             ->process();
     }       
 
-    public function telnetAction()
+    public function telnetudpAction()
     {
         $listener = Chaplin_Socket_Listen_Udp::create('0.0.0.0', 1234);
         $listener->listen(function($strText, Closure $closureSend) {
@@ -36,6 +36,33 @@ class CliController extends Zend_Controller_Action
             ob_flush();
             flush(); 
         });
+    }
+
+    public function telnettcpAction()
+    {
+        Chaplin_Socket_Listen_Client::setOnRead(function($strData, $socket) {
+            echo 'Client message: ('.$strData.')'.PHP_EOL;
+            ob_flush();
+            flush();
+            $socket->write('Echo: '.$strData.PHP_EOL);
+
+        });
+
+        Chaplin_Socket_Listen_Client::setOnConnect(function($socket) {
+            echo 'Client connected'.PHP_EOL;
+            ob_flush();
+            flush();
+            $socket->write('Hello!'.PHP_EOL);
+        });        
+
+        Chaplin_Socket_Listen_Client::setOnDisconnect(function($socket) {
+            echo 'Client disconnected'.PHP_EOL;
+            ob_flush();
+            flush();
+        });
+
+        $listener = Chaplin_Socket_Listen_Tcp::create('0.0.0.0', 12345);
+        $listener->listen();
     }
 }
 

@@ -17,7 +17,6 @@ class cliBootstrap extends Zend_Application_Bootstrap_Bootstrap
             parent::_bootstrap($resource);
         } catch(Exception $e) {
             echo $e->getException();
-            ob_flush();
             flush();
         }
     }

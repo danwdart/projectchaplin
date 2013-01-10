@@ -68,7 +68,7 @@ abstract class Chaplin_Socket_Abstract
 	public function write($strText)
 	{
 		$intLength = strlen($strText);
-
+		
 		$intSent = socket_write($this->_resourceSocket, $strText);
 
 		if (false === $intSent) {

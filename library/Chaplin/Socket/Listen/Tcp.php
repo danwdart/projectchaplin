@@ -33,64 +33,28 @@ class Chaplin_Socket_Listen_Tcp
 		}
 		socket_set_nonblock($this->_resourceSocket);
 		
-		$arrResources = array($this->_resourceSocket);
+		$arrClients = array();
 
 		while(true) {
-			$arrRead = $arrResources;
-			$arrWrite = null;
-			$arrExcept = null;
-
-			$intChanges = socket_select($arrRead, $arrWrite, $arrExcept, 0);
-			
-			echo Zend_Json::encode(array($intChanges,$arrRead, $arrWrite, $arrExcept))."\r";
-			ob_flush();
-			flush();
-
-			// returns number of changed
-			if(0 === $intChanges) {
-				continue;
-			}
-			if (false === $intChanges) {
-				$this->_exceptionError();
-			}
-    		
-			echo $intChanges;
-			ob_flush();
-			flush();
-
-			// Anyone need to connect
-			if (in_array($this->_resourceSocket, $arrRead)) {
-				$socketClient = socket_accept($this->_resourceSocket);
-				
-				$this->_clients[] = $socketClient;
-
-				$client = new Chaplin_Socket_Listen_Client($socketClient);			
+			$socketClient = @socket_accept($this->_resourceSocket);
+			if (is_resource($socketClient)) {
+				$client = new Chaplin_Socket_Listen_Client($socketClient);
 				$client->onConnect();
-
-				$intIdx = array_search($socketClient, $arrRead);
-				unset($arrRead[$intIdx]);
+				$arrClients[] = $socketClient;
 			}
 
-			$arrRead = array();
-
-			// Need to read from any left
-			foreach($arrRead as $resourceSocketReader) {
-				$client = new Chaplin_Socket_Listen_Client($resourceSocketReader);
-				$strData = @socket_read($resourceSocketReader, 1024, PHP_NORMAL_READ);
-				// disconnected
-				if(false === $strData) {
-					$intIdx = array_search($resourceSocketReader, $this->_clients);
-					unset($this->_clients[$intIdx]);
+			foreach($arrClients as $idxClient => $resClient) {
+				$client = new Chaplin_Socket_Listen_Client($resClient);
+				if (@socket_recv($resClient, $string, 1024, MSG_DONTWAIT) === 0) {
 					$client->onDisconnect();
-					continue;
+					unset($arrClients[$idxClient]);
+					socket_close($resClient);
+				} else {
+					if (!empty($string)) {
+						$string = trim($string);
+						$client->onRead($string);
+					}
 				}
-
-				// Have data to read
-				$strData = trim($strData);
-				if (empty($strData)) {
-					continue;
-				}
-				$client->onRead($strData);
 			}
 		}
 		socket_close($this->_resourceSocket);
