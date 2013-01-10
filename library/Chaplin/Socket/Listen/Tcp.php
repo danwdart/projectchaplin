@@ -6,6 +6,8 @@ class Chaplin_Socket_Listen_Tcp
 
 	private static $_arrConnections;
 
+	private $_arrClients = array();
+
 	public static function create($strHost, $intPort)
 	{
 		$strId = self::_createId($strHost, $intPort);
@@ -22,6 +24,17 @@ class Chaplin_Socket_Listen_Tcp
 		return self::PROTOCOL;
 	}
 
+	public function broadcast($strText)
+	{
+		if(empty($this->_arrClients)) {
+			return;
+		}
+		foreach($this->_arrClients as $socketClient) {
+			$client = new Chaplin_Socket_Listen_Client($socketClient);
+			$client->write($strText);
+		}
+	}
+
 	public function listen()
 	{
 		if (!$this->_bBound) {
@@ -32,22 +45,20 @@ class Chaplin_Socket_Listen_Tcp
 			$this->_exceptionError();
 		}
 		socket_set_nonblock($this->_resourceSocket);
-		
-		$arrClients = array();
 
 		while(true) {
 			$socketClient = @socket_accept($this->_resourceSocket);
 			if (is_resource($socketClient)) {
 				$client = new Chaplin_Socket_Listen_Client($socketClient);
 				$client->onConnect();
-				$arrClients[] = $socketClient;
+				$this->_arrClients[] = $socketClient;
 			}
 
-			foreach($arrClients as $idxClient => $resClient) {
+			foreach($this->_arrClients as $idxClient => $resClient) {
 				$client = new Chaplin_Socket_Listen_Client($resClient);
 				if (@socket_recv($resClient, $string, 1024, MSG_DONTWAIT) === 0) {
 					$client->onDisconnect();
-					unset($arrClients[$idxClient]);
+					unset($this->_arrClients[$idxClient]);
 					socket_close($resClient);
 				} else {
 					if (!empty($string)) {

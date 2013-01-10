@@ -40,7 +40,9 @@ class CliController extends Zend_Controller_Action
 
     public function telnettcpAction()
     {
-        Chaplin_Socket_Listen_Client::setOnRead(function($strData, $socket) {
+        $listener = Chaplin_Socket_Listen_Tcp::create('0.0.0.0', 12345);
+
+        Chaplin_Socket_Listen_Client::setOnRead(function($strData, $socket) use ($listener) {
             echo 'Client message: ('.$strData.')'.PHP_EOL;
             ob_flush();
             flush();
@@ -48,20 +50,20 @@ class CliController extends Zend_Controller_Action
 
         });
 
-        Chaplin_Socket_Listen_Client::setOnConnect(function($socket) {
+        Chaplin_Socket_Listen_Client::setOnConnect(function($socket) use ($listener) {
+            $listener->broadcast('New client coming online'.PHP_EOL);
             echo 'Client connected'.PHP_EOL;
             ob_flush();
             flush();
             $socket->write('Hello!'.PHP_EOL);
         });        
 
-        Chaplin_Socket_Listen_Client::setOnDisconnect(function($socket) {
+        Chaplin_Socket_Listen_Client::setOnDisconnect(function($socket) use ($listener) {
             echo 'Client disconnected'.PHP_EOL;
             ob_flush();
             flush();
         });
-
-        $listener = Chaplin_Socket_Listen_Tcp::create('0.0.0.0', 12345);
+       
         $listener->listen();
     }
 }
