@@ -29,6 +29,8 @@ class Chaplin_Socket_Listen_Client
 	public function onRead($strData)
 	{
 		echo __METHOD__.PHP_EOL;
+		ob_flush();
+		flush();
 		if(is_null(self::$_onRead)) {
 			return;
 		}
@@ -39,6 +41,8 @@ class Chaplin_Socket_Listen_Client
 	public function onDisconnect()
 	{
 		echo __METHOD__.PHP_EOL;
+		ob_flush();
+		flush();
 		if(is_null(self::$_onDisconnect)) {
 			return;
 		}
@@ -49,6 +53,8 @@ class Chaplin_Socket_Listen_Client
 	public function onConnect()
 	{
 		echo __METHOD__.PHP_EOL;
+		ob_flush();
+		flush();
 		if(is_null(self::$_onConnect)) {
 			return;
 		}
