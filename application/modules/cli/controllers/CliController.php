@@ -66,5 +66,37 @@ class CliController extends Zend_Controller_Action
        
         $listener->listen();
     }
+
+    public function broadcastAction()
+    {
+        $listener = Chaplin_Socket_Listen_Tcp::create('0.0.0.0', 12345);
+
+        Chaplin_Socket_Listen_Client::setOnRead(function($strData, $socket) use ($listener) {
+            echo 'Client message: ('.$strData.')'.PHP_EOL;
+            if ('PONG' == $strData) {
+                echo 'Received a pong'.PHP_EOL;
+                ob_flush();
+                flush();
+            }
+        });
+
+        Chaplin_Socket_Listen_Client::setOnConnect(function($socket) use ($listener) {
+            Chaplin_Async::setTimeout(5, function() use($socket) {
+                if(!$socket->isConnected()) {
+                    return;
+                }
+                echo 'Sending a ping'.PHP_EOL;
+                ob_flush();
+                flush();
+                $socket->write('PING'.PHP_EOL);
+                sleep(5);
+            });
+        });        
+
+        Chaplin_Socket_Listen_Client::setOnDisconnect(function($socket) use ($listener) {
+        });
+       
+        $listener->listen();
+    }
 }
 
