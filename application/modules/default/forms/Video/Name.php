@@ -23,6 +23,6 @@ class default_Form_Video_Name extends Zend_Form
         
         $this->addSubForm($sfVideos, 'Videos');
         $this->addElement($submit);
-        $this->setAttribs(array('style' => 'width: 800px; margin: 0 auto;'));
+        $this->setAttribs(array('style' => 'width: 800px;'));
     }   
 }

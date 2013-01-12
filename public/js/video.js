@@ -67,3 +67,10 @@ function enableclicktoplay(elem) {
         }
     });
 }
+
+$('.fullscreen').each(function(idx, elem) {
+    addfullscreen(elem);
+});
+$('.clicktoplay').each(function(idx, elem) {
+    enableclicktoplay(elem);
+});

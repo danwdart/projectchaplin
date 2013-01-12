@@ -23,14 +23,17 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     const CHILD_ASSOC_COMMENTS = 'Comments';
 
     protected $_arrFields = array(
-        self::FIELD_VIDEOID => 'Chaplin_Model_Field_FieldId',
-        self::FIELD_TIMECREATED => 'Chaplin_Model_Field_Field',
-        self::FIELD_USERNAME => 'Chaplin_Model_Field_Field',
-        self::FIELD_FILENAME => 'Chaplin_Model_Field_Field',
-        self::FIELD_THUMBNAIL => 'Chaplin_Model_Field_Field',
-        self::FIELD_TITLE => 'Chaplin_Model_Field_Field',
-        self::FIELD_DESCRIPTION => 'CHaplin_Model_Field_Field'
-        //self::CHILD_ASSOC_COMMENTS => 'Chaplin_Model_Field_Collection_Assoc'
+        self::FIELD_VIDEOID => array('Class' => 'Chaplin_Model_Field_FieldId'),
+        self::FIELD_TIMECREATED => array('Class' => 'Chaplin_Model_Field_Field'),
+        self::FIELD_USERNAME => array('Class' => 'Chaplin_Model_Field_Field'),
+        self::FIELD_FILENAME => array('Class' => 'Chaplin_Model_Field_Field'),
+        self::FIELD_THUMBNAIL => array('Class' => 'Chaplin_Model_Field_Field'),
+        self::FIELD_TITLE => array('Class' => 'Chaplin_Model_Field_Field'),
+        self::FIELD_DESCRIPTION => array('Class' => 'CHaplin_Model_Field_Field'),
+        self::CHILD_ASSOC_COMMENTS => array(
+            'Class' => 'Chaplin_Model_Field_Collection',
+            'Param' => 'Chaplin_Model_Video_Comment'
+        )
     );
 
     public static function create(

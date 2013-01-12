@@ -28,7 +28,7 @@ abstract class Chaplin_Dao_Mongo_Abstract implements Chaplin_Dao_Interface
         }
     
         $arrCriteria = array(self::FIELD_Id => $collFields[self::FIELD_Id]->getValue(null));
-        $arrUpdate = $this->_getUpdateArray($collFields);
+        $arrUpdate = array('$set' => $this->_getUpdateArray($collFields));
         if(empty($arrUpdate)) {
             // We're doomed if we let this go through
             // Nothing!
@@ -56,7 +56,7 @@ abstract class Chaplin_Dao_Mongo_Abstract implements Chaplin_Dao_Interface
         return $strText;
     }
 
-    private function _getUpdateArray(Array $collFields)
+    private function _getUpdateArray(Array $collFields, $strPrefix = '')
     {
         $arrUpdate = array();
         foreach($collFields as $strFieldName => $objField) {
@@ -64,10 +64,21 @@ abstract class Chaplin_Dao_Mongo_Abstract implements Chaplin_Dao_Interface
                 $strClass = get_class($objField);
                 switch($strClass) {
                     case 'Chaplin_Model_Field_Field':
-                        $arrUpdate['$set'][$strFieldName] = $this->_textToSafe($objField->getValue(null));
+                        $arrUpdate[$strPrefix.$strFieldName] = $this->_textToSafe($objField->getValue(null));
                         break;
                     case 'Chaplin_Model_Field_FieldId':
                         // Ids do not update
+                        break;
+                    case 'Chaplin_Model_Field_Collection':
+                        foreach($objField as $hash) {
+                            foreach(
+                                $this->_getUpdateArray(
+                                    $hash->getFields($this),
+                                    $strFieldName.'.'.$hash->getId().'.'
+                                ) as $strField => $mixedValue) {
+                                $arrUpdate[$strField] = $mixedValue;
+                            }
+                        }
                         break;
                     default:
                         throw new Exception('Not Implemented class '.$strClass);

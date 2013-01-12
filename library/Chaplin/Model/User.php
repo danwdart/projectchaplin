@@ -11,12 +11,12 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
     const SALT = 'dguqwtduR^%$*%%';
 
     protected $_arrFields = array(
-        self::FIELD_Username => 'Chaplin_Model_Field_FieldId',
-        self::FIELD_Password => 'Chaplin_Model_Field_Field',
-        self::FIELD_Nick => 'Chaplin_Model_Field_Field',
-        self::FIELD_Email => 'Chaplin_Model_Field_Field',
-        self::FIELD_UserTypeId => 'Chaplin_Model_Field_Field',
-//        self::CHILD_ASSOC_Credentials => 'Chaplin_Model_Field_Collection_Assoc'
+        self::FIELD_Username => array('Class' => 'Chaplin_Model_Field_FieldId'),
+        self::FIELD_Password => array('Class' => 'Chaplin_Model_Field_Field'),
+        self::FIELD_Nick => array('Class' => 'Chaplin_Model_Field_Field'),
+        self::FIELD_Email => array('Class' => 'Chaplin_Model_Field_Field'),
+        self::FIELD_UserTypeId => array('Class' => 'Chaplin_Model_Field_Field'),
+        self::CHILD_ASSOC_Credentials => array('Class' => 'Chaplin_Model_Field_Collection')
     );
 
     public static function create($strUsername, $strPassword)

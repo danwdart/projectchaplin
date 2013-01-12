@@ -22,10 +22,22 @@ class Chaplin_Model_Field_Hash
         return $hash;
     }
 
+    public static function createFromIterator(Iterator $itt, Array $arrArray)
+    {
+        $hash = new static();
+        foreach($arrArray as $strField => $mixedValue) {
+            $hash->_getFieldObject($strField)->setFromData($mixedValue);
+        }
+        
+        return $hash;   
+    }
+
     protected function __construct()
     {
-        foreach($this->_arrFields as $strField => $strClass) {
-            $this->_collFields[$strField] = new $strClass;
+        foreach($this->_arrFields as $strField => $arrClassArray) {
+            $strClass = $arrClassArray['Class'];
+            $strParam = isset($arrClassArray['Param'])?$arrClassArray['Param']:null;
+            $this->_collFields[$strField] = new $strClass($strParam);
         }
     }
     

@@ -1,4 +1,7 @@
 $(function() {
+    $('.filter').click(function() {
+        $('#broadcast').attr('class', $(this).attr('value'));
+    });
     if ('undefined' == typeof io) {
         alert('Socket.io not loaded');
         return;

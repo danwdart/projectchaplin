@@ -8,7 +8,7 @@ class default_Form_Video_Comment extends Zend_Form
         
         $comment = new Zend_Form_Element_Textarea('Comment');
         $comment->setAttribs(array(
-            'style' => 'width:300px;height:150px;'
+            'style' => 'width:250px;height:40px;'
         ));
         $comment->setLabel('Your Comment');
 

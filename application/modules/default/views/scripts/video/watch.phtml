@@ -1,39 +1,31 @@
 <h1><?php echo $this->video->getTitle();?></h1>
-<p>
-    <video id="video" controls src="<?php echo $this->video->getFilename();?>">
+    <video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->video->getFilename();?>">
     </video>
-</p>
-<i>Video Description:</i>
 <br/><?php echo $this->video->getDescription(); ?>
-<br/><br/>
-<h3>Actions:</h3>
 <a href="/video/download/id/<?php echo $this->video->getVideoId();?>">Download</a>
 <?php
 	if ($this->video->isMine()):
 ?>
-| <a href="/video/delete/id/<?php echo $this->video->getVideoId();?>">Delete this video</a> | 
-<a href="/video/edit/id/<?php echo $this->video->getVideoId();?>">Edit this video</a>
+    | <a href="/video/delete/id/<?php echo $this->video->getVideoId();?>">Delete</a> | 
+    <a href="/video/edit/id/<?php echo $this->video->getVideoId();?>">Edit</a>
 <?php endif;?>
-<!--
-<p><h3>
-	<a class="ajax" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up">Vote Up</a> | 
-	<a class="ajax" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down">Vote Down</a>
-</h3></p>
-<h2>Comments:</h2>
+<br/>
+<a class="ajax" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/good">good</a> /
+<a class="ajax" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/bad">bad</a> &nbsp;&nbsp;
+
+<a class="ajax" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/lol">lol</a> /
+<a class="ajax" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/poor">poor</a> &nbsp;&nbsp;
+
+<a class="ajax" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/cute">cute</a> /
+<a class="ajax" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/ugly">ugly</a> &nbsp;&nbsp;
+
+<a class="ajax" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/win">win</a> /
+<a class="ajax" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/fail">fail</a> &nbsp;&nbsp;
+
 <?php if(Chaplin_Auth::getInstance()->hasIdentity()): echo $this->formComment; else: 
 echo 'Login above to comment.'; endif;  ?>
-<dl>
-    <?php foreach($this->video->getComments() as $modelComment):?>
-    <dt><?php echo $modelComment->getUsername();?></dt>
-    <dd><?php echo $modelComment->getComment();?></dd>
-    <?php endforeach; ?>
-</dl>
--->
-<script src="/js/video.js"></script>   
-<script>
-$(function() {
-    var elem = document.getElementById("video");
-    addfullscreen(elem);
-    enableclicktoplay(elem);
-});
-</script>
+<br/>
+<?php foreach($this->video->getComments() as $modelComment):?>
+<p><i><?php echo $modelComment->getUsername();?></i> said: <?php echo $modelComment->getComment();?></p>
+<?php endforeach; ?>
+<script src="/js/video.js"></script>
