@@ -7,10 +7,10 @@ class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
     const FIELD_ACTIVE = 'Active';
 
     protected $_arrFields = array(
-        self::FIELD_NODEID => 'Chaplin_Model_Field_FieldId',
-        self::FIELD_IP => 'Chaplin_Model_Field_Field',
-        self::FIELD_NAME => 'Chaplin_Model_Field_Field',
-        self::FIELD_ACTIVE => 'Chaplin_Model_Field_Field'
+        self::FIELD_NODEID => array('Class' => 'Chaplin_Model_Field_FieldId'),
+        self::FIELD_IP => array('Class' => 'Chaplin_Model_Field_Field'),
+        self::FIELD_NAME => array('Class' => 'Chaplin_Model_Field_Field'),
+        self::FIELD_ACTIVE => array('Class' => 'Chaplin_Model_Field_Field')
     );
 
     public static function create($strIP, $strName)

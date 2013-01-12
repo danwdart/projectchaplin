@@ -1,5 +1,5 @@
 <div id="clients">
-    <video id="broadcast" autoplay style="display:block;float:left;"></video>
+    <video id="broadcast" class="fullscreen" autoplay style="display:block;float:left;"></video>
     <div class="buttons">
         <button class="filter" value="none"/>None</button>
         <button class="filter" value="blur"/>Blur</button>
@@ -18,63 +18,4 @@
 <script src="http://<?php echo $_SERVER['HTTP_HOST']?>:1337/socket.io/socket.io.js"></script>
 <script src="/js/video.js"></script>   
 <script src="/js/broadcast.js"></script>
-<script>
-$(function() {
-    var elem = document.getElementById("broadcast");
-    addfullscreen(elem);
-    $('.filter').click(function() {
-        $('#broadcast').attr('class', $(this).attr('value'));
-    });
-});
-</script>
-<style>
-    .buttons {
-        width: 15px;
-        height: 300px;
-        float:left;
-        display:block;
-    }
-    #broadcast {
-        width: 400px;
-        height: 300px;
-        border: outset;
-    }
-    #canvas {
-        display:none;
-        width: 400px;
-        height: 300px;
-        border: outset;
-    }
-    .clientvideo {
-        width: 400px;
-        height: 300px;
-        border: outset;
-    }
-    .none {
-        -webkit-filter: none;
-    }
-    .blur {
-        -webkit-filter: blur(3px);
-    }
-    .gray {
-        -webkit-filter: grayscale(1);
-    }
-    .sepia {
-        -webkit-filter: sepia(1);
-    }
-    .bright {
-        -webkit-filter: brightness(0.5);
-    }
-    .highcontrast {
-        -webkit-filter: contrast(5);
-    }
-    .colour {
-        -webkit-filter: hue-rotate(180deg);
-    }
-    .invert {
-        -webkit-filter: invert(1);
-    }
-    .saturate {
-        -webkit-filter: saturate(5);
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="/css/broadcast.css"/>

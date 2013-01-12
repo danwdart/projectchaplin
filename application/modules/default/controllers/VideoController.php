@@ -31,11 +31,12 @@ class VideoController extends Zend_Controller_Action
         $modelUser =  Chaplin_Auth::getInstance()->getIdentity()->getUser();
           
         $modelComment = Chaplin_Model_Video_Comment::create(
-            $modelVideo,
+            $modelVideo->getComments(),
             $modelUser,
             $formComment->Comment->getValue()
         );
-        $modelComment->save();
+
+        $modelVideo->save();
         
         return $this->view->assign('formComment', $formComment);
     }
