@@ -20,12 +20,19 @@ class CliController extends Zend_Controller_Action
             ->debug();
     }
     
-    public function processAction()
+    public function encodeAction()
     {
         Chaplin_Service::getInstance()
             ->getExchange('Video')
-            ->process();
+            ->encode();
     }       
+
+    public function youtubeAction()
+    {
+        Chaplin_Service::getInstance()
+            ->getExchange('Video')
+            ->youtube();
+    }    
 
     public function telnetudpAction()
     {

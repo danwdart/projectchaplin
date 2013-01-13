@@ -16,7 +16,7 @@ $(document).ready(function() {
         bar.style.display='block';
         bar.style.position='relative';
         bar.appendChild(progressbar);
-        elFiles.parentNode.insertBefore(bar, elFiles	.nextSibling);
+        elFiles.parentNode.insertBefore(bar, elFiles.nextSibling);
         
         xhr = new XMLHttpRequest();
         
