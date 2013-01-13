@@ -6,6 +6,9 @@ class default_Form_Video_Upload extends Zend_Form
         $this->setAction('');
         $this->setMethod('post');
         $this->setEncType('multipart/form-data');
+        $this->setAttribs(array(
+            'class' => 'upload'
+        ));
         
         $upload = new Zend_Form_Element_File(
             'Files[]',

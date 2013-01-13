@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    $('form').submit(function() {
+    $('form.upload').submit(function() {
+        $(window).bind('beforeunload', function(){ return 'Are you sure you want to leave? Files are currently uploading.'; });
         elFiles = document.getElementById('Files-0');
         //elFiles.addEventListener('change', function(e) {
         
@@ -37,6 +38,7 @@ $(document).ready(function() {
         }
         xhr.onreadystatechange = function(e) {
             if ( 4 == this.readyState ) {
+                $(window).bind('beforeunload', function(){ return null; });
                 window.location = '/video/name';
             }
         }
