@@ -59,7 +59,7 @@ $(function() {
         navigator.msGetUserMedia;
         
     if('undefined' == typeof navigator.getUserMedia_) {
-        $('#status').html('getUserMedia is not supported in your browser. This is an experimental feature.');
+        $('#status').html('getUserMedia is not supported in your browser. This is an experimental feature.<br/>To turn this on, this is media.navigator.enabled and media.navigator.permission.disabled');
         clients =  document.getElementById('clients');
         broadcast = document.getElementById('broadcast');
         clients.removeChild(broadcast);
@@ -69,10 +69,9 @@ $(function() {
         {
             video: true,
             audio: false
-        },
+        },                
         function (stream) {
     	    var domURL = window.URL || window.webkitURL;
-        	//start streaming via the video element
         	document.getElementById('broadcast').src =
     	        domURL ? domURL.createObjectURL(stream) : stream;
     	        
@@ -92,7 +91,7 @@ $(function() {
 
         },
         function() {
-            $('#status').html('Could not run getUserMedia - you probably denied it');
+            $('#status').html('Could not run getUserMedia -either you denied it or the about:config option<br/>media.navigator.permission.disabled is not set to false');
         }
     );
 });
