@@ -1,0 +1,14 @@
+<h1><?php echo $this->entryVideo->getVideoTitle();?></h1>
+    <video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->videoURL;?>">
+    </video>
+<br/><?php echo str_replace("\n", '<br/>', $this->entryVideo->getVideoDescription()); ?>
+<br/>
+<a href="/video/youtubeimport/id/<?php echo $this->entryVideo->getVideoId();?>">Import</a> |
+<a class="ajax" href="/video/vote/id/<?php echo $this->entryVideo->getVideoId();?>/vote/up">+1</a> /
+<a class="ajax" href="/video/vote/id/<?php echo $this->entryVideo->getVideoId();?>/vote/down">-1</a> &nbsp;&nbsp;
+<a href="/video/download/id/<?php echo $this->entryVideo->getVideoId();?>">Download</a>
+<br/>
+<?php if(Chaplin_Auth::getInstance()->hasIdentity()): echo $this->formComment; else: 
+echo 'Login above to comment.'; endif;  ?>
+<br/>
+<script src="/js/video.js"></script>

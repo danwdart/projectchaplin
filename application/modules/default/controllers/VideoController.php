@@ -41,6 +41,21 @@ class VideoController extends Zend_Controller_Action
         return $this->view->assign('formComment', $formComment);
     }
 
+    public function watchyoutubeAction()
+    {
+        $strVideoId = $this->_request->getParam('id', null);
+        if(is_null($strVideoId)) {
+            return $this->_redirect('/');
+        }
+
+        // Get the YT information
+
+        $yt = new Zend_Gdata_YouTube();
+        $entryVideo = $yt->getVideoEntry($strVideoId);
+        $this->view->entryVideo = $entryVideo;
+        $this->view->videoURL = Chaplin_Service::getInstance()->getYouTube($strVideoId)->getDownloadURL();
+    }
+
     public function commentsAction()
     {
         $this->_helper->layout()->disableLayout();

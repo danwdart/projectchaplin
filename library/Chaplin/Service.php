@@ -72,4 +72,9 @@ class Chaplin_Service
     {
         return new Chaplin_Service_AVConv_API();
     }
+
+    public function getYouTube($strURL)
+    {
+        return new Chaplin_Service_YouTube_API($strURL);
+    }
 }

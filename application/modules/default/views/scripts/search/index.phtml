@@ -12,4 +12,20 @@
 </div>
 </a>
 <?php endforeach;?>
+
+<h2>YouTube results for: <?php echo $this->strSearchTerm; ?></h2>
+<?php  foreach($this->videoFeed as $ytVideo):?>
+<a href="/video/watchyoutube/id/<?php echo $ytVideo->getVideoId(); ?>">
+<div class="thumb-wrapper">
+<?php
+$arrThumbnails = $ytVideo->getVideoThumbnails();
+if (isset($arrThumbnails[0])) :?>
+<div class="thumb-img">
+    <img src="<?php echo htmlentities($arrThumbnails[0]['url']);?>" alt="View Video"/>
+</div>
+<?php endif;?>
+<p><?php echo $ytVideo->getVideoTitle();?></p>
+</div>
+</a>
+<?php endforeach;?>
 </div>

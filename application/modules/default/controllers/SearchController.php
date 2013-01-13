@@ -13,6 +13,17 @@ class SearchController extends Zend_Controller_Action
             ->getVideo()
             ->getBySearchTerms($strSearchTerm)
         );
+
+        // Retrieve Youtube results
+
+        $yt = new Zend_Gdata_YouTube();
+        $query = $yt->newVideoQuery();
+        $query->videoQuery = urlencode($strSearchTerm);
+        $query->startIndex = 10;
+        $query->maxResults = 20;
+        $query->orderBy = 'viewCount';
+ 
+        $this->view->videoFeed = $yt->getVideoFeed($query);
     }
 }
 
