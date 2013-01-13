@@ -1,0 +1,15 @@
+<div class="content-header">
+    Search for "<?php echo $this->strSearchTerm; ?>"
+</div>
+<div class="content-centre">
+<?php foreach($this->ittVideos as $modelVideo):?>
+<a href="/video/watch/id/<?php echo $modelVideo->getVideoId();?>">
+<div class="thumb-wrapper">
+<div class="thumb-img">
+    <img src="<?php echo htmlentities($modelVideo->getThumbnail());?>" alt="View Video"/>
+</div>
+<p><?php echo $modelVideo->getShortTitle();?></p>
+</div>
+</a>
+<?php endforeach;?>
+</div>
