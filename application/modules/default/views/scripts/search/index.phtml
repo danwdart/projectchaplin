@@ -12,9 +12,12 @@
 </div>
 </a>
 <?php endforeach;?>
-
+</div>
+<div style="clear:both"></div>
+<br/>
 <h2>YouTube results for: <?php echo $this->strSearchTerm; ?></h2>
-<?php  foreach($this->videoFeed as $ytVideo):?>
+<div class="content-centre" id="youtubevids">
+<?php foreach($this->videoFeed as $ytVideo):?>
 <a href="/video/watchyoutube/id/<?php echo $ytVideo->getVideoId(); ?>">
 <div class="thumb-wrapper">
 <?php
@@ -29,3 +32,4 @@ if (isset($arrThumbnails[0])) :?>
 </a>
 <?php endforeach;?>
 </div>
+<script src="/js/search.js"></script>

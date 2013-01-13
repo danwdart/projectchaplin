@@ -272,7 +272,7 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
         }
         return $this;
     }
-
+    
     /**
      * Sets the param to return videos of a specific format
      *

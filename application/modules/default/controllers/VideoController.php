@@ -56,6 +56,42 @@ class VideoController extends Zend_Controller_Action
         $this->view->videoURL = Chaplin_Service::getInstance()->getYouTube($strVideoId)->getDownloadURL();
     }
 
+    public function importyoutubeAction()
+    {
+        $strVideoId = $this->_request->getParam('id', null);
+        if(is_null($strVideoId)) {
+            return $this->_redirect('/');
+        }
+
+        // Get the YT information
+
+        $yt = new Zend_Gdata_YouTube();
+        $entryVideo = $yt->getVideoEntry($strVideoId);
+
+        $strTitle = $entryVideo->getVideoTitle();
+
+        $strPath = realpath(APPLICATION_PATH.'/../public/uploads');
+        $strVideoFile = $strPath.'/'.$strTitle.'.webm';
+        $strRelaFile = '/uploads/'.$strTitle.'.webm';
+        $strThumbnail = Chaplin_Service::getInstance()
+            ->getYouTube($strVideoId)
+            ->downloadThumbnail($strPath);
+
+        $modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser();
+            
+        $modelVideo = Chaplin_Model_Video::create(
+            $modelUser,
+            $strRelaFile,
+            $strThumbnail,
+            $strTitle
+        );
+        $modelVideo->save();
+        
+        Chaplin_Message_Video_YouTube::create($modelVideo, $strVideoId)->send();
+
+        $this->_redirect('/video/watch/id/'.$modelVideo->getVideoId());
+    }
+
     public function commentsAction()
     {
         $this->_helper->layout()->disableLayout();
@@ -88,6 +124,9 @@ class VideoController extends Zend_Controller_Action
             ->getByVideoId($strVideoId);
         // read/etc/protect later?
         $strPath = realpath(APPLICATION_PATH.'/../public'.$modelVideo->getFilename());
+        $this->getResponse()->setHeader(
+            'Content-Type', 'video/webm'
+        );
         $this->getResponse()->setHeader(
             'Content-Disposition', 'attachment; filename='.basename($modelVideo->getFilename())
         );
@@ -128,7 +167,6 @@ class VideoController extends Zend_Controller_Action
         }
 
         $this->view->videos = array();
-
         foreach ($adapter->getFileInfo() as $arrFileInfo) {
             /*$adapter->addFilter(
                 'Rename', array(
@@ -137,6 +175,12 @@ class VideoController extends Zend_Controller_Action
                 )
             );*/
             $strFilename = $arrFileInfo['tmp_name'];      
+            $strMimeType = $arrFileInfo['type'];
+            if (0 !== strpos($strMimeType, 'video/')) {
+                // Ignore any non-videos
+                // TODO: extension check?
+                continue;
+            }
 
             $strPathToThumb = $strFilename.'.png';
             
