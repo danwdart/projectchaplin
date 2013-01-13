@@ -40,6 +40,23 @@ class VideoController extends Zend_Controller_Action
         
         return $this->view->assign('formComment', $formComment);
     }
+
+    public function commentsAction()
+    {
+        $this->_helper->layout()->disableLayout();
+
+        $strVideoId = $this->_request->getParam('id', null);
+        if(is_null($strVideoId)) {
+            throw new Exception('Invalid video');
+        }
+
+        $ittComments = Chaplin_Gateway::getInstance()
+            ->getVideo()
+            ->getByVideoId($strVideoId)
+            ->getComments();
+
+        $this->view->assign('comments', $ittComments);
+    }
     
     public function downloadAction()
     {
@@ -146,6 +163,9 @@ class VideoController extends Zend_Controller_Action
     
     public function nameAction()
     {
+        // Not sure how to implement this yet
+        // Will skip until I work it out
+        return $this->_redirect('/');
         $identity = Chaplin_Auth::getInstance()
             ->getIdentity();
         

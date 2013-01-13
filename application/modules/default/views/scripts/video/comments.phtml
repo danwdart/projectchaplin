@@ -1,0 +1,3 @@
+<?php foreach($this->comments as $modelComment):?>
+<p><i><?php echo $modelComment->getUsername();?></i> said: <?php echo $modelComment->getComment();?></p>
+<?php endforeach; ?>

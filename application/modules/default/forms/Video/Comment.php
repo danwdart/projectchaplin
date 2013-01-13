@@ -5,15 +5,18 @@ class default_Form_Video_Comment extends Zend_Form
     {
         $this->setAction('');
         $this->setMethod('post');
+        $this->setAttribs(array(
+            'class' => 'ajax',
+            'rel' => 'comments'
+        ));
         
         $comment = new Zend_Form_Element_Textarea('Comment');
         $comment->setAttribs(array(
-            'style' => 'width:250px;height:40px;'
+            'style' => 'width:250px;height:40px;margin:0;',
+            'placeholder' => 'Your Comment'
         ));
-        $comment->setLabel('Your Comment');
-
         $submit = new Zend_Form_Element_Submit('Submit');
-        $submit->setLabel('Submit Comment');
+        $submit->setLabel('Say it!');
         
         $this->addElements(array($comment, $submit));
     }

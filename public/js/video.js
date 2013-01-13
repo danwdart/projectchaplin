@@ -13,6 +13,40 @@ $(function() {
         console.log('tried');
         return false;
     });
+    $('form.ajax input[type="submit"]').click(function(e) {
+        e.preventDefault();
+        parent = $('form.ajax');
+        $.ajax({
+            url: parent.attr('action'),
+            type: parent.attr('method'),
+            data: parent.serialize(),
+            success: function() {
+                parent.append('<span class="success" style="color:green;">Comment posted... </span>');
+                parent.children('.success').fadeOut(3000, function() {$(this).remove();});
+            },
+            failure: function() {
+                parent.append('<span class="failure" style="color:red;">Sorry, we couldn\'t post your comment.</span>');
+            }
+        });
+        parentrel = parent.attr('rel');
+        if (null != parentrel) {
+            el = $('#'+parentrel);
+            elrel = el.attr('rel');
+            if (null != elrel) {
+                $.ajax({
+                    url: elrel,
+                    type: 'GET',
+                    success: function(data) {
+                        el.html(data);
+                    },
+                    failure: function() {
+                        console.log('failed to update');
+                    }
+                });
+            }
+        }
+        return false;
+    });
 });
 
 function addfullscreen(elem) {
