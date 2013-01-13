@@ -21,6 +21,22 @@ class Chaplin_Dao_Mongo_Video
         $cursor->limit(40);
         return new Chaplin_Iterator_Dao_Mongo_Cursor($cursor, $this);
     }
+
+    public function getBySearchTerms($strSearchTerms)
+    {
+
+        $strRegex = '/('.implode('|',explode(' ',preg_quote($strSearchTerms))).')/i';
+        $arrQuery = array(
+            Chaplin_Model_Video::FIELD_TITLE => new MongoRegex($strRegex)
+        );
+        
+        $cursor = $this->_getCollection()->find($arrQuery);
+        $cursor->sort(array(Chaplin_Model_Video::FIELD_TIMECREATED =>
+            Chaplin_Iterator_Interface::SORT_DESC
+        ));
+        $cursor->limit(40);
+        return new Chaplin_Iterator_Dao_Mongo_Cursor($cursor, $this);
+    }
     
     public function getByVideoId($strVideoId)
     {

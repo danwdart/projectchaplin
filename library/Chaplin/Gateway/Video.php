@@ -28,6 +28,11 @@ class Chaplin_Gateway_Video
         return $this->_daoVideo->getByUserUnnamed($modelUser);
     }
     
+    public function getBySearchTerms($strSearchTerms)
+    {
+        return $this->_daoVideo->getBySearchTerms($strSearchTerms);   
+    }
+
     public function delete(Chaplin_Model_Video $modelVideo)
     {
         return $this->_daoVideo->delete($modelVideo);
