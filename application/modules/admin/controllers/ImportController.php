@@ -37,4 +37,15 @@ class Admin_ImportController extends Zend_Controller_Action
 
 		$this->view->assign('form', $form);
 	}
+
+	public function convertAction()
+	{
+		foreach($this->_request->getPost() as $strFile) {
+			echo base64_decode($strFile).'<br/>';
+		}
+
+		die();
+
+		//$this->_redirect('/');
+	}
 }
