@@ -1,14 +1,25 @@
+<?php
+$bIsLoggedIn = false;
+if(Chaplin_Auth::getInstance()->hasIdentity()) :
+    $modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser();
+    $bIsLoggedIn = true;
+endif;
+?>
 <div class="left">
     <a href="/">Home</a> |
     <a href="/video/upload">Upload</a> |
     <a href="/broadcast">Broadcast</a>
+    <?php if ($bIsLoggedIn && $modelUser->isGod()) :?>
+    | <a href="/admin/import">Import</a>
+    | <a href="/admin/users">Users</a>
+    | <a href="/admin/node">Nodes</a>
+    <?php endif; ?>"
 </div>
 <div class="middle">
 	Project Chaplin Video Sharing
 </div>
 <div class="right">
-    <?php if(Chaplin_Auth::getInstance()->hasIdentity()) :
-        $modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser(); ?>
+    <?php if($bIsLoggedIn): ?>
         Logged in as <strong><?php echo $modelUser->getUsername(); ?> - <?php echo $modelUser->getUserType()->getUserType();?></strong> | <a href="/userinfo">User Info</a> | <a href="/logout">Logout</a>
     <?php else: ?>
         <a href="/login">Login</a>
