@@ -11,16 +11,18 @@ endif;
     <a href="/broadcast">Broadcast</a>
     <?php if ($bIsLoggedIn && $modelUser->isGod()) :?>
     | <a href="/admin/import">Import</a>
-    | <a href="/admin/users">Users</a>
+    | <a href="/admin/user">Users</a>
     | <a href="/admin/node">Nodes</a>
-    <?php endif; ?>"
+    <?php endif; ?>
 </div>
 <div class="middle">
 	Project Chaplin Video Sharing
 </div>
 <div class="right">
     <?php if($bIsLoggedIn): ?>
-        Logged in as <strong><?php echo $modelUser->getUsername(); ?> - <?php echo $modelUser->getUserType()->getUserType();?></strong> | <a href="/userinfo">User Info</a> | <a href="/logout">Logout</a>
+        Logged in as <strong>
+            <a href="/user/<?php echo $modelUser->getUsername();?>"><?php echo $modelUser->getNick(); ?></a> - 
+            <?php echo $modelUser->getUserType()->getUserType();?></strong> | <a href="/userinfo">User Info</a> | <a href="/logout">Logout</a>
     <?php else: ?>
         <a href="/login">Login</a>
     <?php endif; ?>
