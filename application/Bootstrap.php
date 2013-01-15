@@ -96,6 +96,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         );
         $router->addRoute('product', $route);
         */
+        $route = new Zend_Controller_Router_Route(
+            'user/:id/:action',
+            array(
+                'controller' => 'user',
+                'action' => 'index',
+                'id' => null
+            )
+        );
+        $router->addRoute('user', $route);
+
         $route = new Zend_Controller_Router_Route_Static(
             'logout',
             array(
@@ -103,7 +113,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'action' => 'logout'
             )
         );
-
         $router->addRoute('logout', $route);
         
         $route = new Zend_Controller_Router_Route_Static(
@@ -113,7 +122,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'action' => 'userinfo'
             )
         );
-
         $router->addRoute('userinfo', $route);
     }
     

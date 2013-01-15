@@ -17,11 +17,13 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
             $acl->add(new Zend_Acl_Resource('admin/node'));
             $acl->add(new Zend_Acl_Resource('admin/nodestatus'));
             $acl->add(new Zend_Acl_Resource('admin/error'));
+            $acl->add(new Zend_Acl_Resource('admin/user'));
             
             $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/import');     
             $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/node');
             $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'admin/nodestatus');            
             $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/error');
+            $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/user');
         }
     }
 }
