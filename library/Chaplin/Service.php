@@ -51,6 +51,8 @@ class Chaplin_Service
         switch($strExchangeName) {
             case Chaplin_Service_Amqp_Video::EXCHANGE_NAME:
                 return new Chaplin_Service_Amqp_Video($daoAmqp);
+            case Chaplin_Service_Amqp_Notification::EXCHANGE_NAME:
+                return new Chaplin_Service_Amqp_Notification($daoAmqp);
             default:
                 throw new Exception('Exchange not configured: '.$strExchangeName);
         }

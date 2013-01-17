@@ -1,6 +1,8 @@
 <?php
 class Chaplin_Session_SaveHandler_Redis implements Zend_Session_SaveHandler_Interface
 {
+  const c_ZNAME = 'Chaplin_SessionSet';
+
   /**
    * PhpRedis instance
    *
@@ -15,8 +17,6 @@ class Chaplin_Session_SaveHandler_Redis implements Zend_Session_SaveHandler_Inte
   **/
   protected $_set;
 
-  const c_ZNAME = 'Chaplin_SessionSet';
-
   /**
    * Configuration
    * 
@@ -25,7 +25,8 @@ class Chaplin_Session_SaveHandler_Redis implements Zend_Session_SaveHandler_Inte
   protected $_options = array(
     'keyprefix' => 'PHPSESSIONS_',
     'lifetime'  => null,
-    );
+    'registrykey' => null
+  );
 
   /**
    * Construct save handler
@@ -38,22 +39,26 @@ class Chaplin_Session_SaveHandler_Redis implements Zend_Session_SaveHandler_Inte
       $options = $options->toArray();
     }
 
+    $configSessions = Chaplin_Config_Sessions::getInstance();
+
     // Set default lifetime
-    $this->_options['lifetime'] = (integer)ini_get('session.gc_maxlifetime');
+    $this->_options['lifetime'] = (integer)$configSessions->getRememberMeSeconds();
+
+    // Set default keyprefix
+    $this->_options['keyprefix'] = (integer)$configSessions->getName();    
 
     $this->setOptions($options);
+  
+    if (is_null($options['registrykey'])) {
+        throw new Exception('registrykey is not set');
+    }
+    $this->_phpredis = Zend_Registry::get($options['registrykey']);
 
     foreach ($this->_options as $name => $value) {
       if (isset($options[$name])) {
         unset($options[$name]);
       }
     }
-
-    if(isset($options['phpredis'])) {
-      $this->_phpredis = $options['phpredis'];
-    } else {
-      $this->_phpredis = Zend_Registry::get(Chaplin_Dao_PhpRedis_Abstract::DEFAULT_REGISTRY_KEY);
-     }
      
     $this->_set = array();
   }

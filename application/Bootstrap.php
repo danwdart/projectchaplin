@@ -72,14 +72,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     
     protected function _initRedis()
 	{
-    $config	= new Zend_Config_Ini(APPLICATION_PATH.'/config/redis.ini', APPLICATION_ENV);
-        if (isset($config->phpredis)) {
-          $arrPhpRedis = $config->phpredis->toArray();
-          $redis = new Redis();
-          $strHost = $arrPhpRedis['servers'][0]['host'];
-          $strPort = $arrPhpRedis['servers'][0]['port'];
-          $redis->connect($strHost, $strPort, Chaplin_Dao_PhpRedis_Abstract::TIMEOUT_REDIS);
-          Zend_Registry::set(Chaplin_Dao_PhpRedis_Abstract::DEFAULT_REGISTRY_KEY, $redis);
+        $configServers = Chaplin_Config_Servers::getInstance();
+        if ($configServers->getRedisSettings()) {
+            $strRegistryKey = $configServers->getRedisSettings()->registrykey;
+            $intTimeout = (int)$configServers->getRedisSettings()->timeout;
+            $arrServers = $configServers->getRedisSettings()->servers->toArray();
+            $redis = new Redis();
+            $strHost = $arrServers[0]['host'];
+            $strPort = $arrServers[0]['port'];
+            $redis->connect($strHost, $strPort, $intTimeout);
+            Zend_Registry::set($strRegistryKey, $redis);
         }
 	}
     
@@ -128,26 +130,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initSession()
     {
         $this->bootstrap('redis');
-        $sessionName        = 'Chaplin_Session_';
-        $sessionOptions 	= array(
-            'name' 			=> $sessionName,
-        //  'cookie_domain'	=> 'projectchaplin'
-        );
-
-        //If redis is registered then use it
-        if (Zend_Registry::isRegistered(
-            Chaplin_Dao_PhpRedis_Abstract::DEFAULT_REGISTRY_KEY
-        )) {
-            $options = array(
-                'keyPrefix' => $sessionName,
-                'lifetime'  => 1800,    //30-minute sessions
-                'phpredis'   => 
-                Zend_Registry::get(  Chaplin_Dao_PhpRedis_Abstract::DEFAULT_REGISTRY_KEY)
-            );
-            $saveHandler = new Chaplin_Session_SaveHandler_Redis($options);
-            Zend_Session::setSaveHandler($saveHandler);
-        }
-        Zend_Session::setOptions($sessionOptions);
+        $configSessions = Chaplin_Config_Sessions::getInstance();
+        Zend_Session::setSaveHandler($configSessions->getSaveHandler());
+        Zend_Session::setOptions($configSessions->getSessionOptions());
         Zend_Session::start();
     }
 

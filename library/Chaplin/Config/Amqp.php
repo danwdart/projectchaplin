@@ -2,7 +2,7 @@
 class Chaplin_Config_Amqp
     extends Chaplin_Config_Abstract
 {
-    const CONFIG_TYPE = 'Xml';
+    const CONFIG_TYPE = 'Json';
 
     protected function _getConfigType()
     {
@@ -11,27 +11,11 @@ class Chaplin_Config_Amqp
 
     protected function _getConfigFile()
     {
-        return realpath(APPLICATION_PATH.'/../config/amqp.xml');
+        return realpath(APPLICATION_PATH.'/config/amqp.json');
     }
     
     public function getConfigArray()
     {
         return $this->_getValue($this->_zendConfig->exchanges, 'exchanges')->toArray();
-    }
-    
-    public function getConfigConnectionRead()
-    {
-        return $this->_getValue(
-            $this->_zendConfig->server->read,
-            'server.read'
-        )->toArray();
-    }
-    
-    public function getConfigConnectionWrite()
-    {
-        return $this->_getValue(
-            $this->_zendConfig->server->write,
-            'server.write'
-        )->toArray();
     }
 }

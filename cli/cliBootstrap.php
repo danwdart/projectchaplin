@@ -7,8 +7,18 @@ class cliBootstrap extends Zend_Application_Bootstrap_Bootstrap
         $autoloader->registerNamespace('Chaplin_');
         $autoloader->registerNamespace('Amqp_');
         $autoloader->registerNamespace('Mongo_');
-        $autoloader->registerNamespace('FFMpeg\\');
-        $autoloader->registerNamespace('Monolog\\');
+        $autoloader->registerNamespace('Mustache_');
+    }
+
+    protected function _initSmtp()
+    {
+        $configSmtp = Chaplin_Config_Servers::getInstance();
+        $arrSmtp = $configSmtp->getSmtpSettings();
+        $transport = new Zend_Mail_Transport_Smtp(
+            $arrSmtp['server']['host'],
+            $arrSmtp['server']['options']
+        );
+        Zend_Mail::setDefaultTransport($transport);
     }
 
     protected function _bootstrap($resource = null)
