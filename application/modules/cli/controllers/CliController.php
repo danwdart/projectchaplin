@@ -19,6 +19,18 @@ class CliController extends Zend_Controller_Action
             ->getExchange('Video')
             ->debug();
     }
+
+    public function sendAction()
+    {
+        Chaplin_Message_Notification_Generic::create()->send();
+    }
+
+    public function notificationAction()
+    {
+        Chaplin_Service::getInstance()
+            ->getExchange('Notification')
+            ->notification();
+    }
     
     public function encodeAction()
     {

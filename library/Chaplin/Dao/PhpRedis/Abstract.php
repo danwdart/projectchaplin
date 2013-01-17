@@ -2,9 +2,6 @@
 abstract class Chaplin_Dao_PhpRedis_Abstract
     implements Chaplin_Dao_Interface
 {
-    const TIMEOUT_REDIS = 2.5;
-    const DEFAULT_REGISTRY_KEY = 'PhpRedis_Registry';
-    
     /**
      * Cache of model Account
     **/

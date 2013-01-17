@@ -1,0 +1,45 @@
+{
+    "default": {
+        "exchanges": {
+            "Video": {
+                "Type": "topic",
+                "Queues": {
+                    "encode": {
+                        "Keys": ["video.encode.#"]
+                    },
+                    "youtube": {
+                        "Keys": ["video.youtube.#"]
+                    },
+                    "debug": {
+                        "Keys": ["#"],
+                        "Flags": {
+                            "Durable": false,
+                            "AutoDelete": true
+                        }
+                    }
+                }
+            },
+            "Notification": {
+                "Type": "topic",
+                "Queues": {
+                    "notification": {
+                        "Keys": ["notification.#"]
+                    },
+                    "debug": {
+                        "Keys": ["#"],
+                        "Flags": {
+                            "Durable": false,
+                            "AutoDelete": true
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "production": {
+        "_extends": "default"
+    },
+    "development": {
+        "_extends": "default"
+    }
+}

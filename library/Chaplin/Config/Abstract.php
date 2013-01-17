@@ -1,33 +1,32 @@
 <?php
 abstract class Chaplin_Config_Abstract
 {
-    protected static $_instance;
+    private static $_arrInstances;
     
     protected $_zendConfig;
     
     public static function getInstance()
     {
         $strClass = get_called_class();
-        if(!is_null($strClass::$_instance)) {
-           return $strClass::$_instance;
+        if(isset(self::$_arrInstances[$strClass])) {
+           return self::$_arrInstances[$strClass];
         }
         
         $instance = new $strClass();
-        $strClass::$_instance = $instance;
+        self::$_arrInstances[$strClass] = $instance;
         return $instance;
     }
      
     public static function inject(Chaplin_Config_Abstract $mockInstance)
     {
         $strClass = get_called_class();
-        $strClass::$_instance = $mockInstance;
+        self::$_arrInstances[$strClass] = $mockInstance;
         return $mockInstance;
     }
 
     public static function reset()
     {
-        $strClass = get_called_class();
-        $strClass::$_instance = null;
+        self::$_arrInstances = array();
     }
     
     private function __construct()
