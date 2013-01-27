@@ -1,5 +1,5 @@
 <?php
-class Chaplin_Auth_Adapter_Mongo implements Zend_Auth_Adapter_Interface
+class Chaplin_Auth_Adapter_Database implements Zend_Auth_Adapter_Interface
 {
     public function __construct($strUsername, $strPassword)
     {
