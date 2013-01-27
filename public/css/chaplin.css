@@ -176,3 +176,11 @@ footer {
 .space {
     padding:10px;
 }
+
+ul.errors {
+    color: red;
+}
+
+ul.errors li {
+    list-style-type: none;
+}
