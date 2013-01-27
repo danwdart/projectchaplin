@@ -5,16 +5,6 @@ interface Chaplin_Iterator_Interface extends Countable, ArrayAccess, SeekableIte
     const SORT_DESC = -1; 
     const SORT_NUM_ASC = 2;
     const SORT_NUM_DESC = -2; 
-       /** 
-     *  Returns the total number of matching rows (ie: select count(*))
-     *  @return:    integer
-    **/
-    public function countAll();
-    /** 
-     *  Returns the number of rows in this iterator (ie: select * limit 10)
-     *  @return:    integer
-    **/
-    public function countDisplay();
     /**
      *  Returns whether the Iterator is empty (ie no data passed in)
      *  @return:    true | false;

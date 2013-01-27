@@ -16,7 +16,7 @@ class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
     public static function create($strIP, $strName)
     {
         $node = new self();
-        $node->_setField(self::FIELD_NODEID, md5(new MongoId()));
+        $node->_setField(self::FIELD_NODEID, md5(uniqid()));
         $node->_setField(self::FIELD_IP, $strIP);
         $node->_setField(self::FIELD_NAME, $strName);
         $node->_setField(self::FIELD_ACTIVE, false);

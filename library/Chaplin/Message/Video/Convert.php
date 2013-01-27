@@ -8,9 +8,10 @@ class Chaplin_Message_Video_Convert
 
     public static function create(Chaplin_Model_Video $modelVideo)
     {
-        $msgTest = new self();
-        $msgTest->_setField(self::FIELD_VIDEOID, $modelVideo->getVideoId());
-        return $msgTest;
+        $msgVideo = new self();
+        $msgVideo->_setField(self::FIELD_VIDEOID, $modelVideo->getVideoId());
+        $msgVideo->_modelVideo = $modelVideo;
+        return $msgVideo;
     }
     
     private function _getVideoId()

@@ -25,18 +25,30 @@ class Chaplin_Gateway
         self::$_instance = $gateway;
     }
 
-    public function getUser()
+    private function _getGateway($strName)
     {
-        return new Chaplin_Gateway_User(new Chaplin_Dao_Mongo_User());
+        $configGateways = Chaplin_Config_Gateways::getInstance();
+        $strDaoType = $configGateways->getDaoType($strName);
+        if (is_null($strDaoType)) {
+            throw new Exception('Dao Type is null for '.$strName);
+        }
+        $strDaoClass = 'Chaplin_Dao_'.$strDaoType.'_'.$strName;
+        $strGatewayClass = 'Chaplin_Gateway_'.$strName;
+        if (!class_exists($strGatewayClass)) {
+            throw new Exception('Class does not exist: '.$strGatewayClass);
+        }
+        if (!class_exists($strDaoClass)) {
+            throw new Exception('Class does not exist: '.$strDaoClass);
+        }
+        return new $strGatewayClass(new $strDaoClass());
     }
-    
-    public function getVideo()
+
+    public function __call($strMethod, Array $arrParams)
     {
-        return new Chaplin_Gateway_Video(new Chaplin_Dao_Mongo_Video());
-    }
-    
-    public function getNode()
-    {
-        return new Chaplin_Gateway_Node(new Chaplin_Dao_Mongo_Node());
+        if ('get' != substr($strMethod, 0, 3)) {
+            throw new Exception('Invalid method: '.__CLASS__.'::'.$strMethod);
+        }
+        $strGatewayType = substr($strMethod, 3);
+        return $this->_getGateway($strGatewayType);        
     }
 }
