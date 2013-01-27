@@ -70,21 +70,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         ini_set('upload_max_filesize', '2000M');
     }
     
-    protected function _initRedis()
-	{
-        $configServers = Chaplin_Config_Servers::getInstance();
-        if ($configServers->getRedisSettings()) {
-            $strRegistryKey = $configServers->getRedisSettings()->registrykey;
-            $intTimeout = (int)$configServers->getRedisSettings()->timeout;
-            $arrServers = $configServers->getRedisSettings()->servers->toArray();
-            $redis = new Redis();
-            $strHost = $arrServers[0]['host'];
-            $strPort = $arrServers[0]['port'];
-            $redis->connect($strHost, $strPort, $intTimeout);
-            Zend_Registry::set($strRegistryKey, $redis);
-        }
-	}
-    
     protected function _initRoutes()
     {
         $router = Zend_Controller_Front::getInstance()->getRouter();
@@ -129,10 +114,24 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     
     protected function _initSession()
     {
-        $this->bootstrap('redis');
         $configSessions = Chaplin_Config_Sessions::getInstance();
-        Zend_Session::setSaveHandler($configSessions->getSaveHandler());
-        Zend_Session::setOptions($configSessions->getSessionOptions());
+        $configServers = Chaplin_Config_Servers::getInstance();
+        if ($configServers->getRedisSettings()) {
+            $strRegistryKey = $configServers->getRedisSettings()->registrykey;
+            $intTimeout = (int)$configServers->getRedisSettings()->timeout;
+            $arrServers = $configServers->getRedisSettings()->servers->toArray();
+            $redis = new Redis();
+            $strHost = $arrServers[0]['host'];
+            $strPort = $arrServers[0]['port'];
+            $redis->connect($strHost, $strPort, $intTimeout);
+            Zend_Registry::set($strRegistryKey, $redis);
+        }
+        if (!is_null($configSessions->getSaveHandler())) {
+            Zend_Session::setSaveHandler($configSessions->getSaveHandler());
+        }
+        if (!is_null($configSessions->getSessionOptions())) {
+            Zend_Session::setOptions($configSessions->getSessionOptions());
+        }
         Zend_Session::start();
     }
 

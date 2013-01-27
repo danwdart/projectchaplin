@@ -44,10 +44,9 @@ class Chaplin_Config_Sessions
             $this->_zendConfig->saveHandler->class,
             'saveHandler.class'
         );
-        $arrOptions = $this->_getValue(
-        	$this->_zendConfig->saveHandler->options,
-        	'savehandler.options'
-        );
-        return new $strClassName($arrOptions);
+        $arrOptions = $this->_zendConfig->saveHandler->options;
+        if (!empty($strClassName)) {
+            return new $strClassName($arrOptions);
+        }
     }
 }

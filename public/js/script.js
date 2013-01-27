@@ -39,6 +39,7 @@ $(document).ready(function() {
         xhr.onreadystatechange = function(e) {
             if ( 4 == this.readyState ) {
                 $(window).bind('beforeunload', function(){ return null; });
+                // Check here what the status was
                 window.location = '/video/name';
             }
         }

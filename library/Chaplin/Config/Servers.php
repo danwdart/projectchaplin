@@ -16,10 +16,7 @@ class Chaplin_Config_Servers
     
     public function getRedisSettings()
     {
-        return $this->_getValue(
-            $this->_zendConfig->phpredis,
-            'phpredis'
-        );
+        return $this->_zendConfig->phpredis;
     }
 
     public function getAmqpSettings()
@@ -54,15 +51,7 @@ class Chaplin_Config_Servers
         )->toArray();      
     }
 
-    public function getDBType()
-    {
-        return $this->_getValue(
-            $this->_zendConfig->dbtype,
-            'dbtype'
-        );
-    }
-
-    public function getSQLSettings()
+    public function getSqlSettings()
     {
         return $this->_getValue(
             $this->_zendConfig->sql,
