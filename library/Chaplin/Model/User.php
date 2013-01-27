@@ -22,6 +22,7 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
     public static function create($strUsername, $strPassword)
     {
         $modelUser = new self();
+        $modelUser->_bIsNew = true;
         $modelUser->_setField(self::FIELD_Username, self::encodeUsername($strUsername));
         $modelUser->_setField(self::FIELD_Password, self::encodePassword($strPassword));
         return $modelUser;

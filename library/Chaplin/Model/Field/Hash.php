@@ -6,6 +6,12 @@ class Chaplin_Model_Field_Hash
     
     protected $_arrFields = array();
     protected $_collFields = array();
+    protected $_bIsNew;
+
+    public function bIsNew()
+    {
+        return $this->_bIsNew;
+    }
 
     public function getId()
     {
@@ -73,5 +79,10 @@ class Chaplin_Model_Field_Hash
         $this->_getFieldObject($strName)->setValue($mixedValue);
         $this->_bIsDirty = true;
         return $this;
+    }
+
+    public function postSave(Chaplin_Dao_Interface $dao)
+    {
+        $this->_bIsNew = false;
     }
 }

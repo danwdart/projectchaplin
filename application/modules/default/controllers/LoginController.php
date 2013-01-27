@@ -146,6 +146,7 @@ class LoginController extends Zend_Controller_Action
 
         $user = Chaplin_Auth::getInstance()->getIdentity()->getUser();
 
+        $form->username->setValue($user->getUsername());
         $form->fullname->setValue($user->getNick());
         $form->email->setValue($user->getEmail());
 
@@ -169,36 +170,14 @@ class LoginController extends Zend_Controller_Action
                 {
                     return $this->view->assign('form', $form->addError('Old Password does not match. Want to try again?'));
                 }
-
-                /*
-                if(!User::isValidEmail($email))
-                {
-                    $this->addMessage(array(
-                        'text' => 'Not a valid Email',
-                        'class' => 'warn'
-                    ));
-                }
-
-                if(!User::isValidUsername($username))
-                {
-                    $this->addMessage(array(
-                        'text' => 'Not a Valid Username',
-                        'class' => 'warn'
-                    ));
-
-                }
-
-                if(!User::isValidPassword($password))
-                {
-                    $this->addMessage(array(
-                        'text' => 'Not A Valid Password',
-                        'class' => 'warn'
-                    ));
-                }
-                */
+                // @TODO add valid email
+                // @TODO add valid Username
+                // @TODO add valid password
                 try
                 {
-                    $user->setPassword($password);
+                    if (!empty($password) && !empty($password2) && $password == $password2) {
+                        $user->setPassword($password);
+                    }
                     $user->setEmail($email);
                     $user->setNick($fullname);
                     $user->save();
