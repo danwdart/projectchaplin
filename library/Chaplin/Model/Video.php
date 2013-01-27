@@ -43,6 +43,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         $strTitle
     ) {
         $video = new self();
+        $video->_bIsNew = true;
         $video->_setField(self::FIELD_VIDEOID, md5(uniqid()));
         $video->_setField(self::FIELD_TIMECREATED, time());
         $video->_setField(self::FIELD_USERNAME, $modelUser->getUsername());

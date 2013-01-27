@@ -61,7 +61,13 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
         $strTable = $this->_getTable();
         $collFields = $hash->getFields($this);
         $arrUpdate = $this->_getUpdateArray($collFields);
-        $this->_getAdapter()->insert($strTable, $arrUpdate);
+        if ($hash->bIsNew()) {
+            $this->_getAdapter()->insert($strTable, $arrUpdate);
+        } else {
+            $strWhere = $this->_getPrimaryKey().' = '.$hash->getId();
+            $this->_getAdapter()->update($strTable, $arrUpdate, $strWhere);
+        }
+        $hash->postSave($this);
     }
 
     protected function _delete(Chaplin_Model_Field_Hash $hash)
