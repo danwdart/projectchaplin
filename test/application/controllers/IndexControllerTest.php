@@ -1,8 +1,6 @@
 <?php
-
 class IndexControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 {
-
     public function setUp()
     {
         $this->bootstrap = new Zend_Application(APPLICATION_ENV, APPLICATION_PATH . '/application.ini');
@@ -21,8 +19,6 @@ class IndexControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         $this->assertController($urlParams['controller']);
         $this->assertAction($urlParams['action']);
     }
-
-
 }
 
 
