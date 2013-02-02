@@ -25,63 +25,57 @@
 class Chaplin_Socket_Listen_Client
 	extends Chaplin_Socket_Abstract
 {
-	private static $_onRead;
-	private static $_onDisconnect;
-	private static $_onConnect;
+	private $_onRead;
+	private $_onDisconnect;
+	private $_onConnect;
 
 	public function __construct($resourceSocket)
 	{
 		$this->_resourceSocket = $resourceSocket;
 	}
 
-	public static function setOnRead(Closure $closure)
+	public function getResource()
 	{
-		self::$_onRead = $closure;
+		return $this->_resourceSocket;
 	}
 
-	public static function setOnDisconnect(Closure $closure)
+	public function onRead(Callable $closure)
 	{
-		self::$_onDisconnect = $closure;
+		$this->_onRead = $closure;
+		return $this;
 	}
 
-	public static function setOnConnect(Closure $closure)
+	public function onDisconnect(Callable $closure)
 	{
-		self::$_onConnect = $closure;
+		$this->_onDisconnect = $closure;
+		return $this;
 	}
 
-	public function onRead($strData)
+	public function invokeRead($strData)
 	{
 		echo __METHOD__.PHP_EOL;
 		ob_flush();
 		flush();
-		if(is_null(self::$_onRead)) {
+		if(is_null($this->_onRead)) {
+			echo 'No read'.PHP_EOL; ob_flush();flush();
 			return;
 		}
-		$callback = self::$_onRead;
-		$callback($strData, $this);
+		$callback = $this->_onRead;
+		$callback($strData);
+		return $this;
 	}
 
-	public function onDisconnect()
+	public function invokeDisconnect()
 	{
 		echo __METHOD__.PHP_EOL;
 		ob_flush();
 		flush();
-		if(is_null(self::$_onDisconnect)) {
+		if(is_null($this->_onDisconnect)) {
+			echo 'No disconnect'.PHP_EOL; ob_flush();flush();
 			return;
 		}
-		$callback = self::$_onDisconnect;
-		$callback($this);
-	}
-
-	public function onConnect()
-	{
-		echo __METHOD__.PHP_EOL;
-		ob_flush();
-		flush();
-		if(is_null(self::$_onConnect)) {
-			return;
-		}
-		$callback = self::$_onConnect;
-		$callback($this);
+		$callback = $this->_onDisconnect;
+		$callback();
+		return $this;
 	}
 }
