@@ -123,6 +123,22 @@ class CliController extends Zend_Controller_Action
             ->send('QUIT :I\'m leaving now');
     }
 
+    public function getpageAction()
+    {
+        $socket = Chaplin_Socket_Connect_Tcp::create('dandart.co.uk', 80)
+            ->bind()
+            ->connect()
+            ->send('GET / HTTP/1.1')
+            ->send('Host: dandart.co.uk')
+            ->send('');
+        do {
+            $response = $socket->readText(1024);
+            echo $response;
+            ob_flush();
+        } while ('' !== $response);
+        $socket->disconnect();
+    }
+
     public function broadcastAction()
     {
         $listener = Chaplin_Socket_Listen_Tcp::create('0.0.0.0', 12345);
