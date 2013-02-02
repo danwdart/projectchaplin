@@ -84,29 +84,25 @@ class CliController extends Zend_Controller_Action
     {
         $listener = Chaplin_Socket_Listen_Tcp::create('0.0.0.0', 12345);
 
-        Chaplin_Socket_Listen_Client::setOnRead(function($strData, $socket) use ($listener) {
-            echo 'Client message: ('.$strData.')'.PHP_EOL;
-            ob_flush();
-            flush();
-            $socket->write('Echo: '.$strData.PHP_EOL);
-
-        });
-
-        Chaplin_Socket_Listen_Client::setOnConnect(function($socket) use ($listener) {
+        $listener->listen(function(Chaplin_Socket_Listen_Client $client) use ($listener) {
             $listener->broadcast('New client coming online'.PHP_EOL);
+
             echo 'Client connected'.PHP_EOL;
             ob_flush();
             flush();
-            $socket->write('Hello!'.PHP_EOL);
-        });        
-
-        Chaplin_Socket_Listen_Client::setOnDisconnect(function($socket) use ($listener) {
-            echo 'Client disconnected'.PHP_EOL;
-            ob_flush();
-            flush();
+            $client->write('Hello!'.PHP_EOL)
+            ->onRead(function($strData) use ($client) {
+                echo 'Client message: ('.$strData.')'.PHP_EOL;
+                ob_flush();
+                flush();
+                $client->write('Echo: '.$strData.PHP_EOL);
+            })
+            ->onDisconnect(function() use ($client) {
+                echo 'Client disconnected'.PHP_EOL;
+                ob_flush();
+                flush();
+            });
         });
-       
-        $listener->listen();
     }
 
     public function broadcastAction()

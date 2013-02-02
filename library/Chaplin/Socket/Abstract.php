@@ -68,6 +68,7 @@ abstract class Chaplin_Socket_Abstract
 	{
 		socket_close($this->_resourceSocket);
 		$this->_bConnected = false;
+		return $this;
 	}
 
 	public function readText($intLength)
@@ -100,5 +101,6 @@ abstract class Chaplin_Socket_Abstract
 		if ($intLength !== $intSent) {
 			throw new Exception('Sent only ('.$intSent.') bytes of ('.$intLength.') total');
 		}
+		return $this;
 	}
 }
