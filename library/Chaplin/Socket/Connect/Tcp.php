@@ -55,5 +55,6 @@ class Chaplin_Socket_Connect_Tcp
 			$this->_exceptionError();
 		}
 		socket_set_block($this->_resourceSocket);
+		return $this;
 	}
 }

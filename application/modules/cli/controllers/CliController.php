@@ -105,6 +105,24 @@ class CliController extends Zend_Controller_Action
         });
     }
 
+    public function ircbotAction()
+    {
+        $socket = Chaplin_Socket_Connect_Tcp::create('irc.megworld.co.uk', 6667)
+            ->bind()
+            ->connect()
+            ->waitFor('/Found your hostname/')
+            ->send('NICK ChaplinBot')
+            ->send('USER ChaplinBot projectchaplin.dandart.co.uk projectchaplin :Chaplin Bot')
+            ->waitFor('/376/')
+            ->send('JOIN #bots')
+            ->waitFor('/396/')
+            ->waitFor('/Welcome/')
+            ->send('PRIVMSG #bots :I am a bot. Tra la la la.')
+            ->waitFor('/what now/')
+            ->send('PRIVMSG #bots :I am leaving now.')
+            ->send('QUIT :I\'m leaving now');
+    }
+
     public function broadcastAction()
     {
         $listener = Chaplin_Socket_Listen_Tcp::create('0.0.0.0', 12345);
@@ -134,4 +152,3 @@ class CliController extends Zend_Controller_Action
         $listener->listen();
     }
 }
-
