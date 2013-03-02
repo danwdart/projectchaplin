@@ -84,29 +84,59 @@ class CliController extends Zend_Controller_Action
     {
         $listener = Chaplin_Socket_Listen_Tcp::create('0.0.0.0', 12345);
 
-        Chaplin_Socket_Listen_Client::setOnRead(function($strData, $socket) use ($listener) {
-            echo 'Client message: ('.$strData.')'.PHP_EOL;
-            ob_flush();
-            flush();
-            $socket->write('Echo: '.$strData.PHP_EOL);
-
-        });
-
-        Chaplin_Socket_Listen_Client::setOnConnect(function($socket) use ($listener) {
+        $listener->listen(function(Chaplin_Socket_Listen_Client $client) use ($listener) {
             $listener->broadcast('New client coming online'.PHP_EOL);
+
             echo 'Client connected'.PHP_EOL;
             ob_flush();
             flush();
-            $socket->write('Hello!'.PHP_EOL);
-        });        
-
-        Chaplin_Socket_Listen_Client::setOnDisconnect(function($socket) use ($listener) {
-            echo 'Client disconnected'.PHP_EOL;
-            ob_flush();
-            flush();
+            $client->write('Hello!'.PHP_EOL)
+            ->onRead(function($strData) use ($client) {
+                echo 'Client message: ('.$strData.')'.PHP_EOL;
+                ob_flush();
+                flush();
+                $client->write('Echo: '.$strData.PHP_EOL);
+            })
+            ->onDisconnect(function() use ($client) {
+                echo 'Client disconnected'.PHP_EOL;
+                ob_flush();
+                flush();
+            });
         });
-       
-        $listener->listen();
+    }
+
+    public function ircbotAction()
+    {
+        $socket = Chaplin_Socket_Connect_Tcp::create('irc.megworld.co.uk', 6667)
+            ->bind()
+            ->connect()
+            ->waitFor('/Found your hostname/')
+            ->send('NICK ChaplinBot')
+            ->send('USER ChaplinBot projectchaplin.dandart.co.uk projectchaplin :Chaplin Bot')
+            ->waitFor('/376/')
+            ->send('JOIN #bots')
+            ->waitFor('/396/')
+            ->waitFor('/Welcome/')
+            ->send('PRIVMSG #bots :I am a bot. Tra la la la.')
+            ->waitFor('/what now/')
+            ->send('PRIVMSG #bots :I am leaving now.')
+            ->send('QUIT :I\'m leaving now');
+    }
+
+    public function getpageAction()
+    {
+        $socket = Chaplin_Socket_Connect_Tcp::create('dandart.co.uk', 80)
+            ->bind()
+            ->connect()
+            ->send('GET / HTTP/1.1')
+            ->send('Host: dandart.co.uk')
+            ->send('');
+        do {
+            $response = $socket->readText(1024);
+            echo $response;
+            ob_flush();
+        } while ('' !== $response);
+        $socket->disconnect();
     }
 
     public function broadcastAction()
@@ -138,4 +168,3 @@ class CliController extends Zend_Controller_Action
         $listener->listen();
     }
 }
-

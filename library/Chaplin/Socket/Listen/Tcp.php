@@ -1,4 +1,4 @@
-<?php
+ <?php
 /**
  * This file is part of Project Chaplin.
  *
@@ -29,6 +29,8 @@ class Chaplin_Socket_Listen_Tcp
 
 	private static $_arrConnections;
 
+	private $_onConnect;
+
 	private $_arrClients = array();
 
 	public static function create($strHost, $intPort)
@@ -58,7 +60,7 @@ class Chaplin_Socket_Listen_Tcp
 		}
 	}
 
-	public function listen()
+	public function listen(Callable $callback)
 	{
 		if (!$this->_bBound) {
 			$this->bind();
@@ -73,20 +75,20 @@ class Chaplin_Socket_Listen_Tcp
 			$socketClient = @socket_accept($this->_resourceSocket);
 			if (is_resource($socketClient)) {
 				$client = new Chaplin_Socket_Listen_Client($socketClient);
-				$client->onConnect();
-				$this->_arrClients[] = $socketClient;
+				$callback($client);
+				$this->_arrClients[] = $client;
 			}
 
-			foreach($this->_arrClients as $idxClient => $resClient) {
-				$client = new Chaplin_Socket_Listen_Client($resClient);
+			foreach($this->_arrClients as $idxClient => $client) {
+				$resClient = $client->getResource();
 				if (@socket_recv($resClient, $string, 1024, MSG_DONTWAIT) === 0) {
-					$client->onDisconnect();
+					$client->invokeDisconnect();
 					unset($this->_arrClients[$idxClient]);
 					socket_close($resClient);
 				} else {
 					if (!empty($string)) {
 						$string = trim($string);
-						$client->onRead($string);
+						$client->invokeRead($string);
 					}
 				}
 			}
