@@ -1,11 +1,19 @@
 To install the dependencies of Project Chaplin, you will need to install the
 following packages:
 
+An AMQP server like RabbitMQ (change config/servers.ini - section "amqp" to set credentials)
 Apache + PHP
 MySQL
+FFMPEG/AVConv
 
 For simple SQL setup create the user and database:
 mysql -uroot -p < sql/createuser.sql
 [enter mysql root password]
 
 mysql -uchaplin -pchaplin chaplin < sql/schema.sql
+
+To run the processor for processing uploads:
+php cli/cli.php cli encode
+
+To run the processor for importing YouTube:
+php cli/cli.php cli youtube
