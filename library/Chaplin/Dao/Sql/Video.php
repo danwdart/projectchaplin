@@ -69,12 +69,20 @@ class Chaplin_Dao_Sql_Video
             
     public function delete(Chaplin_Model_Video $modelVideo)
     {
-    	return [];
+    	return $this->_delete($modelVideo);
+    }
+
+    protected function _sqlToModel(Array $arrSql)
+    {
+        $arrModel = parent::_sqlToModel($arrSql);
+        unset($arrModel['Fb_Pos']);
+        unset($arrModel['Fb_Neg']);
+        return $arrModel;
     }
 
     public function save(Chaplin_Model_Video $modelVideo)
     {
-    	return [];
+        return $this->_save($modelVideo);
     }
 
     public function convertToModel($arrData)

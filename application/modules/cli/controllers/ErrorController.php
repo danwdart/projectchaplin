@@ -37,7 +37,8 @@ class ErrorController extends Zend_Controller_Action
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
-                echo 'Not Found - property'.PHP_EOL;
+                echo 'Not Found - no route, controller or action'.PHP_EOL;
+                var_dump($this->_request->getParams());
                 ob_flush();
                 flush();
                 break;

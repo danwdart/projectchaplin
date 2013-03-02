@@ -24,8 +24,10 @@
 **/
 ?>
 <h1><?php echo $this->entryVideo->getVideoTitle();?></h1>
-    <video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->videoURL;?>">
-    </video>
+<iframe class="youtube-player" type="text/html" width="640" height="385" src="http://www.youtube.com/embed/<?php echo $this->entryVideo->getVideoId(); ?>" frameborder="0">
+</iframe>
+<br/><i>To watch on all devices, import this video to Chaplin below.</i>
+<br/>
 <br/>
 <span style="font-size:8pt;"><?php echo str_replace("\n", '<br/>', $this->entryVideo->getVideoDescription()); ?></span>
 <br/>
