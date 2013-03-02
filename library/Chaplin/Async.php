@@ -35,10 +35,6 @@ class Chaplin_Async
 				self::setTimeout($intTime, $closure);
 			default:
 		}
-		
-		while(pcntl_wait($status, WNOHANG OR WUNTRACED) > 0) {
-  			usleep(5000);
- 		}
 	}
 
 	public static function async(Closure $closure)
@@ -51,9 +47,5 @@ class Chaplin_Async
 				return $closure();
 			default:
 		}
-		
-		while(pcntl_wait($status, WNOHANG OR WUNTRACED) > 0) {
-  			usleep(5000);
- 		}
 	}
 }

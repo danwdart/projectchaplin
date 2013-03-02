@@ -37,11 +37,11 @@ abstract class Chaplin_Socket_Connect_Abstract
 
 	public function bind()
 	{
-		$this->_bBound = socket_bind($this->_resourceSocket, $this->_strHost);
+		$this->_bBound = @socket_bind($this->_resourceSocket, '0.0.0.0');
 		if (!$this->_bBound) {
 			$this->_exceptionError();
 		}
-	}
 
-	
+		return $this;
+	}
 }
