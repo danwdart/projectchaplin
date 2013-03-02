@@ -81,7 +81,8 @@ class VideoController extends Zend_Controller_Action
         $yt = new Zend_Gdata_YouTube();
         $entryVideo = $yt->getVideoEntry($strVideoId);
         $this->view->entryVideo = $entryVideo;
-        $this->view->videoURL = Chaplin_Service::getInstance()->getYouTube($strVideoId)->getDownloadURL();
+        // This won't work remotely
+        //$this->view->videoURL = Chaplin_Service::getInstance()->getYouTube($strVideoId)->getDownloadURL();
     }
 
     public function importyoutubeAction()

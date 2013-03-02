@@ -97,7 +97,8 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
 
     protected function _delete(Chaplin_Model_Field_Hash $hash)
     {
-        $this->_getAdapter()->delete($this->_getTable(), $this->_getPrimaryKey().' = '.$hash->getid());
+        $strWhere = $this->_getAdapter()->quoteInto($this->_getPrimaryKey().' = ?', $hash->getId());
+        $this->_getAdapter()->delete($this->_getTable(), $strWhere);
     }
 
     private function _getUpdateArray(Array $collFields)
