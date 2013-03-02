@@ -2,7 +2,10 @@ To install the dependencies of Project Chaplin, you will need to install the
 following packages:
 
 Apache + PHP
-MongoDB + phpmongo
-Redis + phpredis
+MySQL
 
-A script to install these on Ubuntu is provided (install_ubuntu.sh).
+For simple SQL setup create the user and database:
+mysql -uroot -p < sql/createuser.sql
+[enter mysql root password]
+
+mysql -uchaplin -pchaplin chaplin < sql/schema.sql
