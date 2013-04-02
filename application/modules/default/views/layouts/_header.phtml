@@ -44,8 +44,14 @@ endif;
 <div class="right">
     <?php if($bIsLoggedIn): ?>
         Logged in as <strong>
-            <a href="/user/<?php echo $modelUser->getUsername();?>"><?php echo $modelUser->getNick(); ?></a> - 
-            <?php echo $modelUser->getUserType()->getUserType();?></strong> | <a href="/userinfo">User Info</a> | <a href="/logout">Logout</a>
+            <a href="/user/<?php echo $modelUser->getUsername();?>">
+                <?php echo $modelUser->getNick(); ?>
+            </a> - 
+            <?php echo $modelUser->getUserType()->getUserType();?>
+        </strong> |
+        <a href="/userinfo">User Info</a> |
+        <a href="/messages"><?php echo $modelUser->getMessages()->count(); ?>
+        <a href="/logout">Logout</a>
     <?php else: ?>
         <a href="/login">Login</a>
     <?php endif; ?>
