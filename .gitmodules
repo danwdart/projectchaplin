@@ -1,0 +1,9 @@
+[submodule "submodules/mustache.php"]
+	path = submodules/mustache.php
+	url = git@github.com:dandart/mustache.php.git
+[submodule "submodules/Zend-Mongo-Db"]
+	path = submodules/Zend-Mongo-Db
+	url = git@github.com:dandart/Zend-Mongo-Db.git
+[submodule "submodules/youtube-dl"]
+	path = submodules/youtube-dl
+	url = git://github.com/rg3/youtube-dl.git
