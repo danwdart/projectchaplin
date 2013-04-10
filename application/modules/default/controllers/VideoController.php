@@ -116,7 +116,8 @@ class VideoController extends Zend_Controller_Action
         );
         $modelVideo->save();
         
-        Chaplin_Message_Video_YouTube::create($modelVideo, $strVideoId)->send();
+        $modelYoutube = Chaplin_Model_Video_Youtube::create($modelVideo, $strVideoId);
+        Chaplin_Gateway::getInstance()->getVideo_Youtube()->save($modelYoutube);
 
         $this->_redirect('/video/watch/id/'.$modelVideo->getVideoId());
     }
@@ -243,7 +244,8 @@ class VideoController extends Zend_Controller_Action
             );
             $modelVideo->save();
             
-            Chaplin_Message_Video_Convert::create($modelVideo)->send();
+            $modelConvert = Chaplin_Model_Video_Convert::create($modelVideo);
+            Chaplin_Gateway::getInstance()->getVideo_Convert()->save($modelConvert);
            
             $this->view->videos[] = $modelVideo;
         }

@@ -41,4 +41,14 @@ class Chaplin_Config_Gateways
     {
         return $this->_zendConfig->gateways->$strGatewayType->type;
     }
+
+    public function getDaoName($strGatewayType)
+    {
+        return $this->_zendConfig->gateways->$strGatewayType->name;   
+    }
+
+    public function getParam($strGatewayType)
+    {
+        return $this->_zendConfig->gateways->$strGatewayType->param;
+    }
 }

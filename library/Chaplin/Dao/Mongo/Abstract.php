@@ -63,7 +63,6 @@ abstract class Chaplin_Dao_Mongo_Abstract implements Chaplin_Dao_Interface
         }
 
         $this->_getCollection()->updateArray($arrCriteria, $arrUpdate);
-        $hash->postSave($this);
     }
 
     protected function _delete(Chaplin_Model_Field_Hash $hash)
