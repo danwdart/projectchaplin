@@ -82,7 +82,10 @@ class VideoController extends Zend_Controller_Action
         $entryVideo = $yt->getVideoEntry($strVideoId);
         $this->view->entryVideo = $entryVideo;
         // This won't work remotely
-        //$this->view->videoURL = Chaplin_Service::getInstance()->getYouTube($strVideoId)->getDownloadURL();
+        if (in_array($this->_request->getClientIp(), ['127.0.0.1', '::1'])) {
+            $this->view->videoURL = Chaplin_Service::getInstance()->getYouTube($strVideoId)->getDownloadURL();
+            $this->view->isLocal = true;
+        }
     }
 
     public function importyoutubeAction()

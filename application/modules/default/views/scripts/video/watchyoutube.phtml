@@ -24,8 +24,13 @@
 **/
 ?>
 <h1><?php echo $this->entryVideo->getVideoTitle();?></h1>
-<iframe class="youtube-player" type="text/html" width="640" height="385" src="http://www.youtube.com/embed/<?php echo $this->entryVideo->getVideoId(); ?>" frameborder="0">
-</iframe>
+<?php if ($this->isLocal) : ?>
+	<video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->videoURL;?>">
+	</video>
+<?php else : ?>
+	<iframe class="youtube-player" type="text/html" width="640" height="385" src="http://www.youtube.com/embed/<?php echo $this->entryVideo->getVideoId(); ?>" frameborder="0">
+	</iframe>
+<?php endif; ?>
 <br/><i>To watch on all devices, import this video to Chaplin below.</i>
 <br/>
 <br/>
