@@ -27,8 +27,6 @@ class default_Form_UserData_Edit extends Zend_Form
     public function init()
     { 
         $this->setMethod('post');
-        $this->setAction('/userinfo');
-
         $username = new Zend_Form_Element_Text('username');
         $username->setLabel('Username:');
 

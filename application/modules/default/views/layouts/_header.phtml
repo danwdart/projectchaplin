@@ -29,7 +29,6 @@ if(Chaplin_Auth::getInstance()->hasIdentity()) :
 endif;
 ?>
 <div class="left">
-    <a href="/">Home</a> |
     <a href="/video/upload">Upload</a> |
     <a href="/broadcast">Broadcast</a>
     <?php if ($bIsLoggedIn && $modelUser->isGod()) :?>
@@ -39,7 +38,7 @@ endif;
     <?php endif; ?>
 </div>
 <div class="middle">
-	Project Chaplin Video Sharing
+	<a href="/">Project Chaplin Video Sharing</a>
 </div>
 <div class="right">
     <?php if($bIsLoggedIn): ?>
@@ -49,8 +48,7 @@ endif;
             </a> - 
             <?php echo $modelUser->getUserType()->getUserType();?>
         </strong> |
-        <a href="/userinfo">User Info</a> |
-        <a href="/messages"><?php echo $modelUser->getMessages()->count(); ?>
+        <a href="/messages">[<?php echo $modelUser->getMessages()->count(); ?>] |
         <a href="/logout">Logout</a>
     <?php else: ?>
         <a href="/login">Login</a>

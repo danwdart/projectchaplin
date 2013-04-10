@@ -23,15 +23,17 @@
  * @link       https://github.com/dandart/projectchaplin
 **/
 $strNick = $this->modelUser->getNick();
+$bIsMe = $this->modelUser
 ?>
 <div class="widgetbox centre medium">
 	<div class="widgettitle">
 		<h3><?php echo $strNick;?></h3>
 	</div>
 	<div class="widgettitle">Profile Information</div>
-	<div class="widgetbody space" style="text-align:left; height: 150px;" contenteditable>
+	<div class="widgetbody space" style="text-align:left; height: 150px;" <?php if ($this->bIsMe):?>contenteditable<?php endif; ?>>
 		Some information about <?php echo $strNick;?> here. <?php echo $strNick;?> is cool. <?php echo $strNick;?> makes the best sandwiches.
 	</div>
+	<?php if ($this->bIsMe) : ?>
 	<div class="widgettitle">Custom CSS</div>
 	<div class="widgetbody space" style="text-align:left; height: 150px;">
 		<style>
@@ -47,4 +49,15 @@ $strNick = $this->modelUser->getNick();
 			}
 		</style>
 	</div>
+	<?php endif; ?>
 </div>
+<?php if ($this->bIsMe) : ?>
+<div class="widgetbox centre medium">
+<div class="widgettitle centre space">
+    Change your details:
+</div>
+<div class="widgetbody centre space">
+    <?php echo $this->form; ?>
+</div>
+</div>
+<?php endif; ?>
