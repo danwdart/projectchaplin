@@ -92,6 +92,11 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
         return $this->_getField(self::FIELD_Email, null);
     }
 
+    public function getMessages()
+    {
+        return new ArrayObject;
+    }
+
     public function setEmail($strEmail)
     {
         $this->_setField(self::FIELD_Email, $strEmail);

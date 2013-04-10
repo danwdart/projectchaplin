@@ -52,18 +52,27 @@ class Chaplin_Gateway
     {
         $configGateways = Chaplin_Config_Gateways::getInstance();
         $strDaoType = $configGateways->getDaoType($strName);
+        $param = $configGateways->getParam($strName);
+
+        $strGatewayClass = 'Chaplin_Gateway_'.$strName;
+        
+        if (!is_null($configGateways->getDaoName($strName))) {
+            $strName = $configGateways->getDaoName($strName);
+        }
         if (is_null($strDaoType)) {
             throw new Exception('Dao Type is null for '.$strName);
         }
         $strDaoClass = 'Chaplin_Dao_'.$strDaoType.'_'.$strName;
-        $strGatewayClass = 'Chaplin_Gateway_'.$strName;
+        
         if (!class_exists($strGatewayClass)) {
             throw new Exception('Class does not exist: '.$strGatewayClass);
         }
         if (!class_exists($strDaoClass)) {
             throw new Exception('Class does not exist: '.$strDaoClass);
         }
-        return new $strGatewayClass(new $strDaoClass());
+
+        $dao = new $strDaoClass($param);
+        return new $strGatewayClass($dao);
     }
 
     public function __call($strMethod, Array $arrParams)

@@ -68,19 +68,6 @@ class Chaplin_Service
         $this->_zendCache   = $zendCache;
     }
     
-    public function getExchange($strExchangeName)
-    {
-        $daoAmqp = new Chaplin_Dao_Amqp_Exchange($strExchangeName);
-        switch($strExchangeName) {
-            case Chaplin_Service_Amqp_Video::EXCHANGE_NAME:
-                return new Chaplin_Service_Amqp_Video($daoAmqp);
-            case Chaplin_Service_Amqp_Notification::EXCHANGE_NAME:
-                return new Chaplin_Service_Amqp_Notification($daoAmqp);
-            default:
-                throw new Exception('Exchange not configured: '.$strExchangeName);
-        }
-    }
-    
     public function getHttpClient()
     {
         $objClient = new Chaplin_Http_Client();

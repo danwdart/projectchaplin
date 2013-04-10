@@ -22,13 +22,17 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class Chaplin_Message_Video_YouTube
-    extends Chaplin_Message_Abstract
+class Chaplin_Model_Video_Youtube
+    extends Chaplin_Model_Field_Hash
+    implements Chaplin_Model_Interface_Message
 {
     const FIELD_YTID = 'YTId';
     const FIELD_VIDEOID = 'VideoId';
 
-    private $_modelVideo;
+    protected $_arrFields = [
+        self::FIELD_YTID => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_VIDEOID => ['Class' => 'Chaplin_Model_Field_Field']
+    ];
 
     public static function create(Chaplin_Model_Video $modelVideo, $strYouTubeId)
     {
@@ -37,22 +41,6 @@ class Chaplin_Message_Video_YouTube
         $msgTest->_setField(self::FIELD_YTID, $strYouTubeId);
         return $msgTest;
     }
-    
-    private function _getVideoId()
-    {
-        return $this->_getField(self::FIELD_VIDEOID, null);
-    }
-    
-    private function _getModelVideo()
-    {
-        if(is_null($this->_modelVideo)) {
-            $this->_modelVideo = Chaplin_Gateway::getInstance()
-                ->getVideo()
-                ->getByVideoId($this->_getVideoId());
-        }
-        
-        return $this->_modelVideo;
-    }                
     
     private function _getYouTubeId()
     {
@@ -86,6 +74,6 @@ class Chaplin_Message_Video_YouTube
 
     public function getExchangeName()
     {
-        return Chaplin_Service_Amqp_Video::EXCHANGE_NAME;
+        return 'Video';
     }
 }    

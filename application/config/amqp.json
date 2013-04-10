@@ -4,26 +4,11 @@
             "Video": {
                 "Type": "topic",
                 "Queues": {
-                    "encode": {
-                        "Keys": ["video.encode.#"]
+                    "convert": {
+                        "Keys": ["video.convert.#"]
                     },
                     "youtube": {
                         "Keys": ["video.youtube.#"]
-                    },
-                    "debug": {
-                        "Keys": ["#"],
-                        "Flags": {
-                            "Durable": false,
-                            "AutoDelete": true
-                        }
-                    }
-                }
-            },
-            "Notification": {
-                "Type": "topic",
-                "Queues": {
-                    "notification": {
-                        "Keys": ["notification.#"]
                     },
                     "debug": {
                         "Keys": ["#"],

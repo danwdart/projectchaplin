@@ -22,12 +22,17 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class Chaplin_Message_Video_Convert
-    extends Chaplin_Message_Abstract
+class Chaplin_Model_Video_Convert
+    extends Chaplin_Model_Field_Hash
+    implements Chaplin_Model_Interface_Message
 {
     const FIELD_VIDEOID = 'VideoId';
 
     private $_modelVideo;
+
+    protected $_arrFields = [
+        self::FIELD_VIDEOID => ['Class' => 'Chaplin_Model_Field_Field']
+    ];
 
     public static function create(Chaplin_Model_Video $modelVideo)
     {
@@ -36,27 +41,23 @@ class Chaplin_Message_Video_Convert
         $msgVideo->_modelVideo = $modelVideo;
         return $msgVideo;
     }
-    
-    private function _getVideoId()
-    {
-        return $this->_getField(self::FIELD_VIDEOID, null);
-    }
-    
+
     private function _getModelVideo()
     {
-        if(is_null($this->_modelVideo)) {
+        if (is_null($this->_modelVideo)) {
             $this->_modelVideo = Chaplin_Gateway::getInstance()
-                ->getVideo()
-                ->getByVideoId($this->_getVideoId());
+            ->getVideo()
+            ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
         }
-        
         return $this->_modelVideo;
-    }                
+    }
     
     public function process()
     {
-        $modelVideo = $this->_getModelVideo();
-        
+        $modelVideo = Chaplin_Gateway::getInstance()
+            ->getVideo()
+            ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
+    
         $strFullPath = APPLICATION_PATH.'/../public';
         
         $strFilename = $strFullPath.$modelVideo->getFilename();
@@ -87,11 +88,11 @@ class Chaplin_Message_Video_Convert
     
     public function getRoutingKey()
     {
-        return 'video.encode.'.$this->_getModelVideo()->getUsername();
+        return 'video.convert.'.$this->_getModelVideo()->getUsername();
     }
 
     public function getExchangeName()
     {
-        return Chaplin_Service_Amqp_Video::EXCHANGE_NAME;
+        return 'Video';
     }
 }    

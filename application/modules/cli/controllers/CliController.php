@@ -28,44 +28,18 @@ class CliController extends Zend_Controller_Action
     {
         $this->_helper->viewRenderer->setNoRender(true);
     }
-
-    public function cliAction()
-    {
-        Chaplin_Service::getInstance()
-            ->getExchange('Video')
-            ->debugMessage();
-    }
     
-    public function debugAction()
+    public function convertAction()
     {
-        Chaplin_Service::getInstance()
-            ->getExchange('Video')
-            ->debug();
-    }
-
-    public function sendAction()
-    {
-        Chaplin_Message_Notification_Generic::create()->send();
-    }
-
-    public function notificationAction()
-    {
-        Chaplin_Service::getInstance()
-            ->getExchange('Notification')
-            ->notification();
-    }
-    
-    public function encodeAction()
-    {
-        Chaplin_Service::getInstance()
-            ->getExchange('Video')
-            ->encode();
+        Chaplin_Gateway::getInstance()
+            ->getVideo_Convert()
+            ->convert();
     }       
 
     public function youtubeAction()
     {
-        Chaplin_Service::getInstance()
-            ->getExchange('Video')
+        Chaplin_Gateway::getInstance()
+            ->getVideo_Youtube()
             ->youtube();
     }    
 

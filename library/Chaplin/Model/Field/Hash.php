@@ -24,12 +24,13 @@
 **/
 class Chaplin_Model_Field_Hash
     extends Chaplin_Model_Field_Abstract
+    implements JsonSerializable
 {
     const FIELD_ID = Chaplin_Dao_Mongo_Abstract::FIELD_Id;
     
     protected $_arrFields = array();
     protected $_collFields = array();
-    protected $_bIsNew;
+    protected $_bIsNew = true;
 
     public function bIsNew()
     {
@@ -47,6 +48,7 @@ class Chaplin_Model_Field_Hash
         foreach($arrArray as $strField => $mixedValue) {
             $hash->_getFieldObject($strField)->setFromData($mixedValue);
         }
+        $hash->_bIsNew = false;
         
         return $hash;
     }
@@ -57,6 +59,7 @@ class Chaplin_Model_Field_Hash
         foreach($arrArray as $strField => $mixedValue) {
             $hash->_getFieldObject($strField)->setFromData($mixedValue);
         }
+        $hash->_bIsNew = false;
         
         return $hash;   
     }
@@ -96,16 +99,45 @@ class Chaplin_Model_Field_Hash
             return $mixedDefault;
         }
     }
+
+    public function jsonSerialize()
+    {
+        return $this->_getModelArray($this->_collFields);
+    }
     
+    private function _getModelArray(Array $arrFields)
+    {
+        $arrOut = array();
+        foreach($this->_collFields as $strFieldName => $objField) {
+            $strClass = get_class($objField);
+            switch($strClass) {
+                case 'Chaplin_Model_Field_Field':
+                case 'Chaplin_Model_Field_FieldId':
+                    $arrOut[$strFieldName] = $objField->getValue(null);
+                    break;
+                case 'Chaplin_Model_Field_Collection':
+                    foreach($objField as $hash) {
+                        foreach(
+                            $this->_getModelArray($hash->_collFields
+                            ) as $strField => $mixedValue) {
+                            if (!isset($arrOut[$strFieldName])) {
+                                $arrOut[$strFieldName] = [];
+                            }
+                            $arrOut[$strFieldName][$strField] = $mixedValue;
+                        }
+                    }
+                    break;
+                default:
+                    throw new Exception('Not Implemented class '.$strClass);
+            }
+        }
+        return $arrOut;
+    }
+
     protected function _setField($strName, $mixedValue)
     {
         $this->_getFieldObject($strName)->setValue($mixedValue);
         $this->_bIsDirty = true;
         return $this;
-    }
-
-    public function postSave(Chaplin_Dao_Interface $dao)
-    {
-        $this->_bIsNew = false;
     }
 }

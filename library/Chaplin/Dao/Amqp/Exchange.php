@@ -23,6 +23,7 @@
  * @link       https://github.com/dandart/projectchaplin
 **/
 class Chaplin_Dao_Amqp_Exchange
+    implements Chaplin_Dao_Interface
 {
     const CONFIG_TYPE = 'Type';
     const CONFIG_FLAGS = 'Flags';
@@ -165,8 +166,31 @@ class Chaplin_Dao_Amqp_Exchange
         $amqpQueue->declareQueue();
         
         $localCallback  = function(Amqp_Envelope $amqpEnvelope) use ($callback) {
-            $modelMessage = Chaplin_Message_Abstract::createFromDao($amqpEnvelope);
-            $callback($modelMessage);
+            $strBody = $amqpEnvelope->getBody();
+            try {
+                $arrData = Zend_Json::decode($strBody);
+            } catch (Zend_Json_Exception $e) {
+                echo 'Invalid Json: '.$strBody;
+                ob_flush();
+                flush();
+                return;
+            }
+            $strClass = $amqpEnvelope->getType();
+            if (!class_exists($strClass)) {
+                echo 'Class does not exist: '.$strClass;
+                ob_flush();
+                flush();
+                return;
+            }
+
+            if (!is_array($arrData)) {
+                echo 'Not array: '.print_r($arrData, true);
+                ob_flush();
+                flush();
+                return;
+            }
+            $model = $strClass::createFromData($this, $arrData);
+            $callback($model);
         };
 
         // Make sure the exchange is created so there's something to listen on - DO NOT DELETE THIS
@@ -184,13 +208,21 @@ class Chaplin_Dao_Amqp_Exchange
     *  Publishes the message
     *  @param: $modelMessage
     **/
-    public function publish(Chaplin_Message_Abstract $message, $strRoutingKey)
+    public function publish(Chaplin_Model_Field_Hash $message, $strRoutingKey)
     {
-        //$strRoutingKey		= $modelMessage->getRoutingKey();
-        //$strMessageBody		= $modelMessage->getMessageBody();
-        //$arrMsgProperties	= $modelMessage->getMessageProperties();
-        
         $this->_getWriteExchange()
-            ->publish(Zend_Json::encode($message), $strRoutingKey);
+            ->publish(
+                Zend_Json::encode($message), 
+                $strRoutingKey,
+                AMQP_NOPARAM,
+                [
+                    'content_type' => 'application/json',
+                    'type' => get_class($message)
+                ]);
+    }
+
+    public function save(Chaplin_Model_Field_Hash $model)
+    {
+        return $this->publish($model, $model->getRoutingKey());
     }
 }
