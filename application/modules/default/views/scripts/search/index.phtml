@@ -40,6 +40,22 @@
 </div>
 <div style="clear:both"></div>
 <br/>
+
+<?php if ($this->ytUser) : ?>
+	<h2>Found YouTube user <?php echo $this->strSearchTerm; ?></h2>
+	<div class="content-centre">
+		<a href="/user/youtube/id/<?php echo $this->strSearchTerm; ?>">
+			<div class="thumb-wrapper">
+				<div class="thumb-img">
+    				<img src="<?php echo htmlentities($this->ytUser->getThumbnail()->getUrl());?>" alt="View User"/>
+				</div>
+				<p><?php echo $this->ytUser->getUsername();?></p>
+			</div>
+		</a>
+	</div>
+	<div style="clear:both;"></div>
+<?php endif; ?>
+<rr/>
 <h2>YouTube results for: <?php echo $this->strSearchTerm; ?></h2>
 <div class="content-centre" id="youtubevids">
 <?php foreach($this->videoFeed as $ytVideo):?>
@@ -56,5 +72,6 @@ if (isset($arrThumbnails[0])) :?>
 </div>
 </a>
 <?php endforeach;?>
+
 </div>
 <script src="/js/search.js"></script>
