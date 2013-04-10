@@ -31,7 +31,10 @@
 	<iframe class="youtube-player" type="text/html" width="640" height="385" src="http://www.youtube.com/embed/<?php echo $this->entryVideo->getVideoId(); ?>" frameborder="0">
 	</iframe>
 <?php endif; ?>
-<h3>Uploaded: <?php echo date('d/m/Y H:i', strtotime($this->entryVideo->getPublished())); ?></h3>
+<h3>Uploaded on <?php echo date('d/m/Y H:i', strtotime($this->entryVideo->getPublished()));
+	$strName = $this->entryVideo->getAuthor()[0]->getName();
+?> by <a href="/user/youtube/id/<?php echo $strName; ?>"><?php echo $strName; ?></a>
+</h3>
 <br/><i>To watch on all devices, import this video to Chaplin below.</i>
 <br/>
 <br/>
