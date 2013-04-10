@@ -73,6 +73,12 @@ header .right {
 	float:right;
 }
 
+#search {
+    text-align:left;
+    max-width: 100%;
+    margin-right:2px;
+}
+
 #content {
     width: 90%;
     margin: 0 auto;
@@ -165,7 +171,7 @@ footer {
 }
 
 .medium {
-    width:50%;
+    max-width: 500px;
 }
 
 .centre {
