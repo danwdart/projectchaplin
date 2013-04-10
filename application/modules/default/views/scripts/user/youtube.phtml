@@ -22,33 +22,19 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class UserController extends Zend_Controller_Action
-{
-	public function indexAction()
-	{
-		$strUsername = $this->_request->getParam('id', null);
-		if(is_null($strUsername)) {
-			return $this->_redirect('/');
-		}
-
-		try {
-			$modelUser = Chaplin_Gateway::getInstance()
-				->getUser()
-				->getByUsername($strUsername);
-		} catch(Chaplin_Dao_Exception_User_NotFound $e) {
-			$this->_redirect('/');
-		}
-
-		$this->view->modelUser = $modelUser;
-	}
-
-	public function youtubeAction()
-	{
-		$strUsername = $this->_request->getParam('id', null);
-
-		$yt = new Zend_Gdata_YouTube();
-
-		$this->view->strUsername = $strUsername;
-		$this->view->ittVideos = $yt->getUserUploads($strUsername);
-	}
-}
+?>
+<div class="content-header">
+    Videos for user <?php echo $this->strUsername; ?>
+</div>
+<div class="content-centre">
+<?php foreach($this->ittVideos as $videoEntry):?>
+<a href="/video/watchyoutube/id/<?php echo $videoEntry->getVideoId();?>">
+<div class="thumb-wrapper">
+<div class="thumb-img">
+    <img src="<?php echo htmlentities($videoEntry->getVideoThumbnails()[0]['url']);?>" alt="View Video"/>
+</div>
+<p><?php echo $videoEntry->getTitle();?></p>
+</div>
+</a>
+<?php endforeach;?>
+</div>

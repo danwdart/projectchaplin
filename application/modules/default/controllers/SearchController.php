@@ -40,12 +40,17 @@ class SearchController extends Zend_Controller_Action
         // Retrieve Youtube results
 
         $yt = new Zend_Gdata_YouTube();
+        $yt->setMajorProtocolVersion(2);
         $query = $yt->newVideoQuery();
         $query->videoQuery = urlencode($strSearchTerm);
         $query->startIndex = 0;
         $query->maxResults = 50;
         $query->orderBy = 'viewCount';
- 
+
+        try {
+            $this->view->ytUser = $yt->getUserProfile($strSearchTerm);
+        } catch (Exception $e) {}
+
         $this->view->videoFeed = $yt->getVideoFeed($query);
     }
 
