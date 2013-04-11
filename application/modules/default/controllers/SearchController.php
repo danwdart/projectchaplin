@@ -73,7 +73,7 @@ class SearchController extends Zend_Controller_Action
         $query->videoQuery = urlencode($strSearchTerm);
         $query->startIndex = (is_null($intSkip))?0:(int)$intSkip;
         $query->maxResults = (is_null($intLimit))?0:(int)$intLimit;
-        $query->orderBy = 'viewCount';
+        $query->orderBy = 'relevance';
  
         $this->view->videoFeed = $yt->getVideoFeed($query);
     }
