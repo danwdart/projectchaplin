@@ -45,7 +45,7 @@ class SearchController extends Zend_Controller_Action
         $query->videoQuery = urlencode($strSearchTerm);
         $query->startIndex = 0;
         $query->maxResults = 50;
-        $query->orderBy = 'viewCount';
+        $query->orderBy = 'relevance';
 
         try {
             $this->view->ytUser = $yt->getUserProfile($strSearchTerm);
