@@ -42,13 +42,13 @@ endif;
 </div>
 <div class="right">
     <?php if($bIsLoggedIn): ?>
-        Logged in as <strong>
+        <strong>
             <a href="/user/<?php echo $modelUser->getUsername();?>">
                 <?php echo $modelUser->getNick(); ?>
             </a> - 
             <?php echo $modelUser->getUserType()->getUserType();?>
         </strong> |
-        <a href="/messages">[<?php echo $modelUser->getMessages()->count(); ?>] |
+        <a href="/messages">[<?php echo $modelUser->getMessages()->count(); ?>]</a> |
         <a href="/logout">Logout</a>
     <?php else: ?>
         <a href="/login">Login</a>
