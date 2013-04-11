@@ -30,6 +30,9 @@ io.sockets.on('connection', function (socket) {
     socket.on('frame', function(data) {
         socket.broadcast.emit('frame', {src: data.src, id: socket.id});
     });
+    socket.on('rtc', function(data) {
+        socket.broadcast.emit('rtc', data);
+    });
     socket.on('disconnect', function() {
         socket.broadcast.emit('client disconnect', {id: socket.id});
     });
