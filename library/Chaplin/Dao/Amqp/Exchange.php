@@ -165,7 +165,12 @@ class Chaplin_Dao_Amqp_Exchange
         $amqpQueue->setFlags($intFlags);
         $amqpQueue->declareQueue();
         
-        $localCallback  = function(Amqp_Envelope $amqpEnvelope) use ($callback) {
+        $localCallback  = function(
+            Amqp_Envelope $amqpEnvelope
+        ) use (
+            $callback,
+            $amqpQueue
+        ) {
             $strBody = $amqpEnvelope->getBody();
             try {
                 $arrData = Zend_Json::decode($strBody);
@@ -190,7 +195,16 @@ class Chaplin_Dao_Amqp_Exchange
                 return;
             }
             $model = $strClass::createFromData($this, $arrData);
-            $callback($model);
+            try {
+                $callback($model);
+            } catch (Exception $e) {
+                echo 'Caught Exception: '.$e->getMessage().PHP_EOL;
+                ob_flush();
+                flush();
+            }
+
+            // Apparently in this version you have to manually ack
+            $amqpQueue->ack($amqpEnvelope->getDeliveryTag());
         };
 
         // Make sure the exchange is created so there's something to listen on - DO NOT DELETE THIS

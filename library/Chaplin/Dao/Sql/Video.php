@@ -43,7 +43,7 @@ class Chaplin_Dao_Sql_Video
 	public function getFeaturedVideos()
 	{
         $strSql = 'SELECT * FROM %s';
-        $arrRows = $this->_getAdapter()->fetchAll(sprintf($strSql, self::TABLE));;
+        $arrRows = $this->_getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
 		return new Chaplin_Iterator_Dao_Sql_Rows($arrRows, $this);
 	}
     

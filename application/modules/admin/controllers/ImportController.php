@@ -63,12 +63,56 @@ class Admin_ImportController extends Zend_Controller_Action
 
 	public function convertAction()
 	{
-		foreach($this->_request->getPost() as $strFile) {
-			echo base64_decode($strFile).'<br/>';
+		foreach($this->_request->getPost() as $strFile => $intInclude) {
+			if (!$intInclude) {
+				continue;
+			}
+			$strFilename = base64_decode($strFile);
+
+
+            $strPathToThumb = $strFilename.'.png';
+            
+            $strRelaFile = basename($strFilename);
+            
+            $strPath = realpath(APPLICATION_PATH.'/../public/uploads');
+            $strFullStoredPath = $strPath.'/'.$strRelaFile;
+
+
+            copy($strFilename, $strFullStoredPath);
+       
+
+            $strRelaThumb = basename($strPathToThumb);
+            
+            $arrPathInfo = pathinfo($strFilename);
+            $strTitle = $arrPathInfo['filename'];
+            
+            $strRelaPath = '/uploads/';
+            
+            $ret = 0;
+                
+            $strError = Chaplin_Service::getInstance()
+                ->getAVConv()
+                ->getThumbnail($strFilename, $strPathToThumb, $ret);
+            if(0 != $ret) {
+                die(var_dump($strError));
+            }
+            
+            // Put this somewhere else
+            //unlink($strFilename);
+            
+            $modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser();
+            
+            $modelVideo = Chaplin_Model_Video::create(
+                $modelUser,
+                $strRelaPath.$strRelaFile,
+                $strRelaPath.$strRelaThumb,
+                $strTitle
+            );
+            $modelVideo->save();
+            
+            $modelConvert = Chaplin_Model_Video_Convert::create($modelVideo);
+            Chaplin_Gateway::getInstance()->getVideo_Convert()->save($modelConvert);
 		}
-
-		die();
-
-		//$this->_redirect('/');
+		$this->_redirect('/');
 	}
 }
