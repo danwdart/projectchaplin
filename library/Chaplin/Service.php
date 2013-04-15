@@ -44,21 +44,32 @@ class Chaplin_Service
     {
         if (is_null($this->_zendCache)) {
             //@TODO - probably put this in a config file
-            $frontendOptions    = array('lifetime' => NULL, 'automatic_serialization' => true);
-            if (Zend_Registry::isRegistered(Chaplin_Dao_PhpRedis_Abstract::DEFAULT_REGISTRY_KEY)){
-                $backendOptions = array(
-                    'phpredis' => Zend_Registry::get(Chaplin_Dao_PhpRedis_Abstract::DEFAULT_REGISTRY_KEY)
-                    );
+            $frontendOptions = [
+                'lifetime' => null,
+                'automatic_serialization' => true
+            ];
+            if (Zend_Registry::isRegistered(
+                    Chaplin_Dao_PhpRedis_Abstract::DEFAULT_REGISTRY_KEY
+            )){
+                $backendOptions = [
+                    'phpredis' => Zend_Registry::get(
+                        Chaplin_Dao_PhpRedis_Abstract::DEFAULT_REGISTRY_KEY
+                    )
+                ];
                 $backendType = new Chaplin_Cache_Backend_PhpRedis($backendOptions);
             } else {
-                $backendOptions     = array('cache_dir' => '/zendCache/');
-                $backendType        = 'File';
+                $backendOptions = [
+                    'cache_dir' => APPLICATION_PATH.'/../temp/'
+                ];
+                $backendType = 'File';
             }
 
-            $this->_zendCache   = Zend_Cache::factory('Core'
-                ,$backendType
-                ,$frontendOptions
-                ,$backendOptions);
+            $this->_zendCache = Zend_Cache::factory(
+                'Core',
+                $backendType,
+                $frontendOptions,
+                $backendOptions
+            );
         }
         return $this->_zendCache;
     }

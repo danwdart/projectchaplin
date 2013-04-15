@@ -25,6 +25,8 @@
 abstract class Chaplin_Dao_PhpRedis_Abstract
     implements Chaplin_Dao_Interface
 {
+    const DEFAULT_REGISTRY_KEY = 'RedisRegistry';
+    
     /**
      * Redis instance
     **/

@@ -24,6 +24,8 @@
 **/
 interface Chaplin_Dao_Interface_User extends Chaplin_Dao_Interface
 {
+	public function getAllUsers();
+	
     public function getByUsernameAndPassword($strUsername, $strPassword);
     
     public function getByUsername($strUsername);
