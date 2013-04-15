@@ -42,22 +42,38 @@ class Chaplin_Dao_Sql_Node
 
 	public function getAllNodes()
 	{
-
+		$strSql = 'SELECT * FROM %s';
+        $arrRows = $this->_getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
+        return new Chaplin_Iterator_Dao_Sql_Rows($arrRows, $this);
 	}
     
     public function getByNodeId($strNodeId)
     {
+    	$strSql = 'SELECT * FROM %s WHERE %s = ?';
 
+        $arrRow = $this->_getAdapter()->fetchRow(
+        	sprintf(
+        		$strSql, 
+        		self::TABLE,
+        		self::PK
+        	)
+        , $strNodeId);
+
+        if(empty($arrRow)) {
+            throw new Exception('No node named '.$strNodeId);
+        }
+
+        return $this->convertToModel($arrRow);
     }
     
     public function delete(Chaplin_Model_Node $modelNode)
     {
-
+    	return $this->_delete($modelNode);
     }
 
     public function save(Chaplin_Model_Node $modelNode)
     {
-
+    	return $this->_save($modelNode);
     }
 
     public function convertToModel($arrData)

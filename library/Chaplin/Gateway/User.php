@@ -31,6 +31,11 @@ class Chaplin_Gateway_User
         $this->_daoUser = $daoUser;
     }
 
+    public function getAllUsers()
+    {
+        return $this->_daoUser->getAllUsers();
+    }
+
     public function getByUsernameAndPassword($strUsername, $strPassword)
     {
         return $this->_daoUser->getByUsernameAndPassword($strUsername, $strPassword);

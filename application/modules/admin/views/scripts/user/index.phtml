@@ -23,5 +23,37 @@
  * @link       https://github.com/dandart/projectchaplin
 **/
 ?>
+<style>
+#users {
+	margin: 0;
+}
+#users th {
+	border: 2px outset;
+	width: 150px;
+}
+#users td {
+	border: 1px solid black;
+	padding: 4px;
+}
+</style>
 <h2>Users</h2>
-<p>Coming soon!</p>
+<table id="users">
+	<tr>
+		<th>Username</th>
+		<th>Nick</th>
+		<th>Type</th>
+		<th>Email</th>
+	</tr>
+	<?php foreach($this->ittUsers as $modelUser):?>
+	<tr>
+		<td>
+			<a href="/user/<?php echo $modelUser->getUsername(); ?>">
+				<?php echo $modelUser->getUsername(); ?>
+			</a>
+		</td>
+		<td><?php echo $modelUser->getNick(); ?></td>
+		<td><?php echo $modelUser->getUserType()->getUserType(); ?></td>
+		<td><?php echo $modelUser->getEmail(); ?></td>
+	</tr>
+	<?php endforeach;?>
+</table>
