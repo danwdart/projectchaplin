@@ -43,6 +43,8 @@ class Chaplin_Service_AVConv_API
             $strFile,
             $strOut
         );
+        echo $strCommand.PHP_EOL;
+        ob_flush();
         //die(var_dump($strCommand));
         return system($strCommand, $ret);
     }

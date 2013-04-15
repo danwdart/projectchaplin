@@ -43,7 +43,6 @@ class Chaplin_Dao_Sql_User extends Chaplin_Dao_Sql_Abstract implements Chaplin_D
         $strSql = 'SELECT * FROM %s';
         $arrRows = $this->_getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
         return new Chaplin_Iterator_Dao_Sql_Rows($arrRows, $this);
-
     }
 
     public function getByUsernameAndPassword($strUsername, $strPassword)
