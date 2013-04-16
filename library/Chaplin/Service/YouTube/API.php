@@ -35,7 +35,7 @@ class Chaplin_Service_YouTube_API
 
     public function getDownloadURL()
     {
-        $strCommandLine = APPLICATION_PATH.self::LOCATION.' --prefer-free-formats -g '.$this->_strURL;
+        $strCommandLine = APPLICATION_PATH.self::LOCATION.' --prefer-free-formats -g -- "'.$this->_strURL.'"';
         return exec($strCommandLine);
     }
     
@@ -43,7 +43,7 @@ class Chaplin_Service_YouTube_API
     {
         $strCommandLine = APPLICATION_PATH.self::LOCATION.
             " --prefer-free-formats -o '".
-            $strPathToSave."/%(title)s.%(ext)s' ".'"'.$this->_strURL.'"';
+            $strPathToSave."/%(title)s.%(ext)s' -- ".'"'.$this->_strURL.'"';
         echo $strCommandLine.PHP_EOL;
         ob_flush();
         flush();
