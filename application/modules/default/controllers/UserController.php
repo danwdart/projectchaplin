@@ -111,5 +111,12 @@ class UserController extends Zend_Controller_Action
 
 		$this->view->strUsername = $strUsername;
 		$this->view->ittVideos = $yt->getUserUploads($strUsername);
+        $this->view->bHasUserFavourites = true;
+        try {
+            $this->view->ittFavourites = $yt->getUserFavorites($strUsername);
+        } catch (Zend_Gdata_App_HttpException $e) {
+            // We weren't allowed to view their favourites
+            $this->view->bHasUserFavourites = false;
+        }
 	}
 }
