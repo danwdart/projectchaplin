@@ -38,3 +38,22 @@
 </a>
 <?php endforeach;?>
 </div>
+<div style="clear:both"></div>
+<br/>
+<?php if ($this->bHasUserFavourites) : ?>
+<div class="content-header">
+	    Favourites for user <?php echo $this->strUsername; ?>
+	</div>
+	<div class="content-centre">
+	<?php foreach($this->ittFavourites as $videoEntry):?>
+	<a href="/video/watchyoutube/id/<?php echo $videoEntry->getVideoId();?>">
+	<div class="thumb-wrapper">
+	<div class="thumb-img">
+	    <img src="<?php echo htmlentities($videoEntry->getVideoThumbnails()[0]['url']);?>" alt="View Video"/>
+	</div>
+	<p><?php echo $videoEntry->getTitle();?></p>
+	</div>
+	</a>
+	<?php endforeach;?>
+	</div>
+<?php endif; ?>
