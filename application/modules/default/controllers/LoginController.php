@@ -136,7 +136,7 @@ class LoginController extends Zend_Controller_Action
                 'redirect_uri' => 'http://manc.dandart.co.uk/login/oauth/provider/google',
                 'token_uri' => 'https://accounts.google.com/o/oauth2/token',
                 'info_uri' => 'https://www.googleapis.com/oauth2/v3/userinfo',
-                'callback_decode' => 'json_decode',
+                'callback_decode' => ['Zend_Json','decode'],
                 'key_email' => 'email',
                 'key_fullname' => 'name',
                 'key_firstname' => 'given_name',
