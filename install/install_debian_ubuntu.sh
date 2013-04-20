@@ -5,8 +5,8 @@ then
 	exit 1
 fi
 
-echo Installing dependencies for Ubuntu
-apt-get install cmake php-pear php5-dev build-essential libav-tools php5-mysql
+echo Installing dependencies for Debian/Ubuntu
+apt-get install cmake nodejs php-pear php5-dev build-essential libav-tools php5-mysql
 
 echo Installing the AMQP library
 mkdir deps
