@@ -120,6 +120,7 @@ class LoginController extends Zend_Controller_Action
         catch(Exception $e)
         {
             $form->Register->addError('Could not create account. Reason: '.$e->getMessage());
+            $form->markAsError();
             return $this->view->assign('form', $form);
         }
     }

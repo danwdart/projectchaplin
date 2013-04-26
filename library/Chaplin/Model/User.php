@@ -24,7 +24,7 @@
 **/
 class Chaplin_Model_User extends Chaplin_Model_Field_Hash
 {
-    const FIELD_Username = Chaplin_Dao_Mongo_Abstract::FIELD_Id;
+    const FIELD_Username = '_id';
     const FIELD_Password = 'Password';
     const FIELD_Nick = 'Nick';
     const FIELD_Email = 'Email';
