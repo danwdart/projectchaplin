@@ -24,7 +24,7 @@
 **/
 abstract class Chaplin_Dao_Mongo_Abstract implements Chaplin_Dao_Interface
 {
-    const FIELD_Id = Mongo_Connection::MONGO_FIELD_ID;
+    const FIELD_Id = '_id';
 
     protected $_strCollection = null; // You must set this!
     protected $_strDatabase = 'Chaplin';
