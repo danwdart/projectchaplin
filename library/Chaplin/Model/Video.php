@@ -160,6 +160,11 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         return $this->_getField(self::FIELD_LICENCE, Chaplin_Model_Video_Licence::ID_CCBYSA);
     }
 
+    public function getLicence()
+    {
+        return new Chaplin_Model_Video_Licence($this->getLicenceId());
+    }
+
     public function getUsername()
     {
         return $this->_getField(self::FIELD_USERNAME, null);
