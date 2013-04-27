@@ -26,6 +26,8 @@
 <h1><?php echo $this->video->getTitle();?></h1>
     <video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->video->getFilename();?>">
     </video>
+<br/>Uploaded by: <a href="/user/<?php echo $this->video->getUsername(); ?>"><?php echo $this->video->getUsername(); ?></a>
+<br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
 <br/><?php echo $this->video->getDescription(); ?>
 <br/>
 <a class="ajax" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up">+1</a> /
