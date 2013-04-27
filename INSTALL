@@ -12,6 +12,9 @@ mysql -uroot -p < sql/createuser.sql
 
 mysql -uchaplin -pchaplin chaplin < sql/schema.sql
 
+To run the broadcast nodejs server:
+nodejs node/server.js
+
 To run the processor for processing uploads:
 php cli/cli.php cli encode
 
