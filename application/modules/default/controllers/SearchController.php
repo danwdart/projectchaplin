@@ -22,7 +22,7 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class SearchController extends Zend_Controller_Action
+class SearchController extends Chaplin_Controller_Action_Api
 {
     public function indexAction()
     {

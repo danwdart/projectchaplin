@@ -83,7 +83,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_View_Helper_Navigation_HelperAbstract::setDefaultAcl($acl);
         Zend_View_Helper_Navigation_HelperAbstract::setDefaultRole(Chaplin_Model_User_Helper_UserType::TYPE_GUEST);
         Zend_Registry::set('acl', $acl);
-        
+    }
+
+    protected function _initApi()
+    {
+        $this->bootstrap('frontController');
+        Zend_Controller_Action_HelperBroker::addPrefix('Chaplin_Controller_Action_Helper');
+        $this->frontController->registerPlugin(new Chaplin_Controller_Plugin_Api());
     }
     
     protected function _initIniValues()
