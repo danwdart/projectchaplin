@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS Chaplin.Videos (
     Thumbnail   VARCHAR(255) NOT NULL,
     Title       VARCHAR(255) NOT NULL,
     Description VARCHAR(255),
+    Licence     VARCHAR(10),
     Length      SMALLINT,
     Width       SMALLINT,
     Height      SMALLINT,
