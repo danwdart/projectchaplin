@@ -22,7 +22,7 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class VideoController extends Zend_Controller_Action
+class VideoController extends Chaplin_Controller_Action_Api
 {
     public function watchAction()
     {
