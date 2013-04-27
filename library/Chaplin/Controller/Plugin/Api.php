@@ -27,18 +27,5 @@ class Chaplin_Controller_Plugin_Api
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
-        $strActionName = $request->getActionName();
-        if ((strlen($strActionName) - 5) == strrpos($strActionName, '.json')) {
-            $strActionName = substr($strActionName, 0, strlen($strActionName) - 5);
-            $request->setActionName($strActionName);
-            $request->setParam('format', 'json');
-        }
-
-        $strControllerName = $request->getControllerName();
-        if ((strlen($strControllerName) - 5) == strrpos($strControllerName, '.json')) {
-            $strControllerName = substr($strControllerName, 0, strlen($strControllerName) - 5);
-            $request->setControllerName($strControllerName);
-            $request->setParam('format', 'json');
-        }
     }
 }
