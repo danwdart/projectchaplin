@@ -34,8 +34,13 @@ class VideoController extends Chaplin_Controller_Action_Api
         $modelVideo = Chaplin_Gateway::getInstance()
             ->getVideo()
             ->getByVideoId($strVideoId);
+
+        $ittComments = Chaplin_Gateway::getInstance()
+            ->getVideo_Comment()
+            ->getByVideoId($strVideoId);
             
         $this->view->assign('video', $modelVideo);
+        $this->view->assign('ittComments', $ittComments);
         
         $formComment = new default_Form_Video_Comment();
                 
@@ -59,12 +64,14 @@ class VideoController extends Chaplin_Controller_Action_Api
         $modelUser =  Chaplin_Auth::getInstance()->getIdentity()->getUser();
           
         $modelComment = Chaplin_Model_Video_Comment::create(
-            $modelVideo->getComments(),
+            $modelVideo,
             $modelUser,
             $strComment
         );
 
-        $modelVideo->save();
+        Chaplin_Gateway::getInstance()
+            ->getVideo_Comment()
+            ->save($modelComment);
         
         return $this->view->assign('formComment', $formComment);
     }
@@ -135,11 +142,32 @@ class VideoController extends Chaplin_Controller_Action_Api
         }
 
         $ittComments = Chaplin_Gateway::getInstance()
-            ->getVideo()
-            ->getByVideoId($strVideoId)
-            ->getComments();
+            ->getVideo_Comment()
+            ->getByVideoId($strVideoId);
 
         $this->view->assign('comments', $ittComments);
+    }
+
+    public function deletecommentAction()
+    {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+
+        $strCommentId = $this->_request->getParam('id', null);
+        
+        $modelComment = Chaplin_Gateway::getInstance()
+            ->getVideo_Comment()
+            ->getById($strCommentId);
+
+        if (!$modelComment->isMine()) {
+            return;
+        }
+
+        Chaplin_Gateway::getInstance()
+            ->getVideo_Comment()
+            ->deleteById($strCommentId);
+
+        $this->getResponse()->setHttpResponseCode(204);
     }
     
     public function downloadAction()

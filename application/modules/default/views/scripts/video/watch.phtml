@@ -30,8 +30,8 @@
 <br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
 <br/><?php echo $this->video->getDescription(); ?>
 <br/>
-<a class="ajax" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up">+1</a> /
-<a class="ajax" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down">-1</a> &nbsp;&nbsp;
+<a class="atotext" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up">+1</a> /
+<a class="atotext" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down">-1</a> &nbsp;&nbsp;
 <a href="/video/download/id/<?php echo $this->video->getVideoId();?>">Download</a>
 <?php
 	if ($this->video->isMine()):
@@ -44,8 +44,19 @@
 echo 'Login above to comment.'; endif;  ?>
 <br/>
 <div id="comments" rel="/video/comments/id/<?php echo $this->video->getVideoId();?>">
-<?php foreach($this->video->getComments() as $modelComment):?>
-<p><i><?php echo $modelComment->getUsername();?></i> said: <?php echo $modelComment->getComment();?></p>
+	<?php foreach($this->ittComments as $modelComment):?>
+	<p>
+		<i>
+			<?php echo $modelComment->getUsername();?>
+		</i> said: 
+		<?php echo $modelComment->getComment();?>
+		<?php if ($modelComment->isMine()): ?>
+			<a class="ajax" href="/video/deletecomment/id/<?php echo $modelComment->getCommentId(); ?>" 
+				rel="comments">
+			(X)
+			</a>
+		<?php endif;?>
+	</p>
 <?php endforeach; ?>
 </div>
 <script src="/js/video.js"></script>

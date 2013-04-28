@@ -22,7 +22,7 @@
  * @link       https://github.com/dandart/projectchaplin
 **/
 $(function() {
-    $('a.ajax').click(function(e) {
+    $('a.atotext').click(function(e) {
         e.preventDefault();
         el = $(this);
         $.ajax({
@@ -36,6 +36,30 @@ $(function() {
         console.log('tried');
         return false;
     });
+    $('a.ajax').click(function(e) {
+        e.preventDefault();
+        el = $(this);
+        $.ajax({
+            url: el.attr('href'),
+            method: 'GET',
+            success: function() {
+                rel = el.attr('rel');
+                if (null != rel) {
+                    elRel = $('#'+rel);
+                    elRelUrl = elRel.attr('rel');
+                    if (null != elRelUrl) {
+                        $.ajax({
+                            url: elRelUrl,
+                            method: 'GET',
+                            success: function(data) {
+                                elRel.html(data);
+                            }
+                        });
+                    }
+                }
+            }
+        })
+    })
     $('form.ajax input[type="submit"]').click(function(e) {
         e.preventDefault();
         parent = $('form.ajax');

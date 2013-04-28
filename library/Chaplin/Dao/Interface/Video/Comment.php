@@ -22,20 +22,15 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-foreach($this->comments as $modelComment):?>
-	<p>
-		<i>
-			<?php echo $modelComment->getUsername();?>
-		</i> said: 
-		<?php echo $modelComment->getComment();?>
-		<?php if ($modelComment->isMine()): ?>
-			<a class="ajax" href="/video/deletecomment/id/<?php echo $modelComment->getCommentId(); ?>" 
-				rel="comments">
-			(X)
-			</a>
-		<?php endif;?>
-	</p>
-<?php endforeach;
-// Until we JSONify this then we need to include the AJAX stuff again
-?>
-<script src="/js/video.js"></script>
+interface Chaplin_Dao_Interface_Video_Comment extends Chaplin_Dao_Interface
+{
+	public function getById($strId);
+
+	public function getByVideoId($strVideoId);
+
+	public function save(Chaplin_Model_Video_Comment $modelComment);
+
+	public function delete(Chaplin_Model_Video_Comment $modelComment);
+
+	public function deleteById($strComment);
+}
