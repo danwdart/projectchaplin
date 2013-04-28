@@ -109,7 +109,9 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
     public function getShortTitle()
     {
-        return substr($this->getTitle(), 0, 25).'...';
+        return 25 > strlen($this->getTitle()) ?
+            $this->getTitle():
+            substr($this->getTitle(), 0, 25).'...';
     }
 
     public function getFilename()

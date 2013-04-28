@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS Chaplin.Videos_NotTags (
 );
 CREATE TABLE IF NOT EXISTS Chaplin.Videos_Comments (
     CommentId   VARCHAR(50) NOT NULL PRIMARY KEY,
+    VideoId     VARCHAR(50) NOT NULL REFERENCES Videos,
     Username    VARCHAR(50) NOT NULL REFERENCES Users,
     Comment     VARCHAR(255) NOT NULL
 );

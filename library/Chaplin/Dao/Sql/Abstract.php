@@ -94,10 +94,15 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
         }
     }
 
+    protected function _deleteWhere($strField, $strValue)
+    {
+        $strWhere = $this->_getAdapter()->quoteInto($strField.' = ?', $strValue);
+        $this->_getAdapter()->delete($this->_getTable(), $strWhere);
+    }
+
     protected function _delete(Chaplin_Model_Field_Hash $hash)
     {
-        $strWhere = $this->_getAdapter()->quoteInto($this->_getPrimaryKey().' = ?', $hash->getId());
-        $this->_getAdapter()->delete($this->_getTable(), $strWhere);
+        return $this->_deleteWhere($this->_getPrimaryKey(), $hash->getId());
     }
 
     private function _getUpdateArray(Array $collFields)
