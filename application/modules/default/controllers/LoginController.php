@@ -117,9 +117,14 @@ class LoginController extends Zend_Controller_Action
             // AJAX: Success
             return $this->_redirect($this->_redirect_url);
         }
+        catch (Zend_Db_Statement_Exception $e) {
+            $form->username->addError('Could not create account - a user aleady exists with that name');
+            $form->markAsError();
+            return $this->view->assign('form', $form);
+        }
         catch(Exception $e)
         {
-            $form->Register->addError('Could not create account. Reason: '.$e->getMessage());
+            $form->username->addError('Could not create account. Reason: '.$e->getMessage());
             $form->markAsError();
             return $this->view->assign('form', $form);
         }
