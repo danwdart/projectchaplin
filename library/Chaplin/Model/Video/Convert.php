@@ -84,6 +84,9 @@ class Chaplin_Model_Video_Convert
         echo 'Converted '.$strFilename;
         ob_flush();
         flush();
+        
+        Chaplin_Gateway::getEmail()
+            ->videoFinished($modelVideo);
     }
     
     public function getRoutingKey()

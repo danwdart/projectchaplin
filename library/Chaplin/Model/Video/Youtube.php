@@ -65,6 +65,13 @@ class Chaplin_Model_Video_Youtube
         echo 'Downloaded '.$this->_getYouTubeId().PHP_EOL;
         ob_flush();
         flush();
+
+        $modelVideo = Chaplin_Gateway::getInstance()
+            ->getVideo()
+            ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
+
+        Chaplin_Gateway::getEmail()
+            ->videoFinished($modelVideo);
     }
     
     public function getRoutingKey()

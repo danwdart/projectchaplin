@@ -1,5 +1,6 @@
 <?php
 class Chaplin_Gateway_Video_Youtube
+    extends Chaplin_Gateway_Abstract
 {
 	private $_daoExchange;
 
