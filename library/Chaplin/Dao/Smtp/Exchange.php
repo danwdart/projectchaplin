@@ -22,38 +22,30 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class Chaplin_Gateway_User
-    extends Chaplin_Gateway_Abstract
+class Chaplin_Dao_Smtp_Exchange
+    implements Chaplin_Dao_Interface
 {
-    private $_daoUser;
-
-    public function __construct(Chaplin_Dao_Interface_User $daoUser)
-    {
-        $this->_daoUser = $daoUser;
-    }
-
-    public function getAllUsers()
-    {
-        return $this->_daoUser->getAllUsers();
-    }
-
-    public function getByUsernameAndPassword($strUsername, $strPassword)
-    {
-        return $this->_daoUser->getByUsernameAndPassword($strUsername, $strPassword);
-    }
-    
-    public function getByUsername($strUsername)
-    {
-        return $this->_daoUser->getByUsername($strUsername);
-    }
-    
-    public function delete(Chaplin_Model_User $modelUser)
-    {
-        $this->_daoUser->delete($modelUser);
-    }
-
-    public function save(Chaplin_Model_User $modelUser)
-    {
-        $this->_daoUser->save($modelUser);
-    }
+	public function email(
+		Chaplin_Model_User $modelUser,
+		$strSubject,
+		$strTemplate,
+		$arrParams
+	) {
+		$mail = new Zend_Mail();
+		$mail->addTo($modelUser->getEmail(), $modelUser->getNick());
+		$mail->setFrom('info@projectchaplin.com', 'Project Chaplin');
+		$mail->setSubject($strSubject);
+		$strFilenameTemplateHTML = APPLICATION_PATH.
+			'/../mustache/en_GB/mail/html/'.$strTemplate.'.mustache';
+		$strFilenameTemplateText = APPLICATION_PATH.
+			'/../mustache/en_GB/mail/text/'.$strTemplate.'.mustache';
+		$strTemplateHTML = file_get_contents($strFilenameTemplateHTML);
+		$strTemplateText = file_get_contents($strFilenameTemplateText);
+		$m = new Mustache_Engine();
+		$strHTML = $m->render($strTemplateHTML, $arrParams);
+		$strText = $m->render($strTemplateText, $arrParams);
+		$mail->setBodyText($strText);
+		$mail->setBodyHTML($strHTML);
+		$mail->send();
+	}
 }

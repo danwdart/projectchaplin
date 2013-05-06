@@ -23,6 +23,7 @@
  * @link       https://github.com/dandart/projectchaplin
 **/
 class Chaplin_Gateway_Video_Comment
+    extends Chaplin_Gateway_Abstract
 {
     private $_daoComment;
 
