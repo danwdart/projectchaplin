@@ -29,9 +29,12 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
     const FIELD_Nick = 'Nick';
     const FIELD_Email = 'Email';
     const FIELD_UserTypeId = 'UserTypeId';
+    const FIELD_HASH = 'Hash';
     const CHILD_ASSOC_Credentials = 'Credentials';
 
     const SALT = 'dguqwtduR^%$*%%';
+
+    const HASH_SHA512 = 'sha512';   
 
     protected $_arrFields = array(
         self::FIELD_Username => array('Class' => 'Chaplin_Model_Field_FieldId'),
@@ -39,6 +42,7 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
         self::FIELD_Nick => array('Class' => 'Chaplin_Model_Field_Field'),
         self::FIELD_Email => array('Class' => 'Chaplin_Model_Field_Field'),
         self::FIELD_UserTypeId => array('Class' => 'Chaplin_Model_Field_Field'),
+        self::FIELD_HASH => array('Class' => 'Chaplin_Model_Field_Field'),
         self::CHILD_ASSOC_Credentials => array('Class' => 'Chaplin_Model_Field_Collection')
     );
 
@@ -47,7 +51,7 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
         $modelUser = new self();
         $modelUser->_bIsNew = true;
         $modelUser->_setField(self::FIELD_Username, self::encodeUsername($strUsername));
-        $modelUser->_setField(self::FIELD_Password, self::encodePassword($strPassword));
+        $modelUser->setPassword($strPassword);
         return $modelUser;
     }
 
@@ -59,7 +63,7 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
     /** I'm not sure about this */
     public static function encodePassword($strPassword)
     {
-        return sha1(self::SALT.$strPassword);
+        return hash('sha512', self::SALT.$strPassword, false);
     }
     
     public function verifyPassword($strPassword)
@@ -70,6 +74,7 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
     public function setPassword($strPassword)
     {
         $this->_setField(self::FIELD_Password, self::encodePassword($strPassword));
+        $this->_setField(self::FIELD_HASH, self::HASH_SHA512);
     }
 
     public function getUsername()

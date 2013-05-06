@@ -41,7 +41,18 @@ class CliController extends Zend_Controller_Action
         Chaplin_Gateway::getInstance()
             ->getVideo_Youtube()
             ->youtube();
-    }    
+    }
+
+    public function emailAction()
+    {
+        $modelUser = Chaplin_Gateway::getInstance()->getUser()->getByUsername('dan');
+        Chaplin_Gateway::getInstance()->getEmail()->email(
+            $modelUser,
+            'Hi',
+            'email',
+            ['who' => 'World']
+        );
+    }
 
     public function telnetudpAction()
     {

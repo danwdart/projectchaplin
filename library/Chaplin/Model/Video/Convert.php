@@ -57,7 +57,10 @@ class Chaplin_Model_Video_Convert
         $modelVideo = Chaplin_Gateway::getInstance()
             ->getVideo()
             ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
-    
+        
+        $modelVideo->setFilename($modelVideo->getFilename().'.webm');
+        $modelVideo->save();
+
         $strFullPath = APPLICATION_PATH.'/../public';
         
         $strFilename = $strFullPath.$modelVideo->getFilename();
@@ -82,8 +85,8 @@ class Chaplin_Model_Video_Convert
         ob_flush();
         flush();
         
-        $modelVideo->setFilename($modelVideo->getFilename().'.webm');
-        $modelVideo->save();
+        Chaplin_Gateway::getEmail()
+            ->videoFinished($modelVideo);
     }
     
     public function getRoutingKey()
