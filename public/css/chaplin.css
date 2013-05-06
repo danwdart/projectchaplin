@@ -190,3 +190,7 @@ ul.errors {
 ul.errors li {
     list-style-type: none;
 }
+
+.green {
+    color:green;
+}

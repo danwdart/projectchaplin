@@ -30,7 +30,12 @@
     Please enter credentials:
 </div>
 <div class="widgetbody centre space">
-<?php echo $this->form; ?>
+	<?php if ($this->messages) :
+		foreach($this->messages as $strMessage):
+			echo '<span class="green">'.$strMessage.'</span>';
+		endforeach;
+	endif;
+	echo $this->form; ?>
 </div>
 <div class="widgettitle centre space">
     OAuth Login:

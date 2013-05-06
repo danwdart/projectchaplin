@@ -34,4 +34,21 @@ class Chaplin_Gateway_Email
 			]
 		);
 	}
+
+	public function resetPassword(
+		Chaplin_Model_User $modelUser
+	) {
+		$strValidationToken = $modelUser->resetPassword();
+        Chaplin_Gateway::getUser()->save($modelUser);
+
+        $this->_daoExchange->email(
+			$modelUser,
+			'Reset Password',
+			'resetpassword',
+			[
+				// todo replace with vhost
+				'Url' => 'http://projectchaplin/login/validate/token/'.$strValidationToken
+			]
+		);
+	}
 }

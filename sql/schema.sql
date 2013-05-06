@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS Chaplin.Users (
     Nick        VARCHAR(30) NOT NULL,
     Email       VARCHAR(255) NOT NULL,
     Hash        VARCHAR(20) NOT NULL,
+    Validation  VARCHAR(32),
     UserTypeId  TINYINT
 );
 CREATE TABLE IF NOT EXISTS Chaplin.Users_Credentials (
