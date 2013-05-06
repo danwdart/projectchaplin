@@ -31,6 +31,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $autoloader->registerNamespace('Amqp_');
         $autoloader->registerNamespace('FFMpeg\\');
         $autoloader->registerNamespace('Monolog\\');
+        $autoloader->registerNamespace('Mustache_');
     }
 
     protected function _initAcl()

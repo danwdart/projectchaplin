@@ -30,6 +30,7 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
     const FIELD_Email = 'Email';
     const FIELD_UserTypeId = 'UserTypeId';
     const FIELD_HASH = 'Hash';
+    const FIELD_VALIDATION = 'Validation';
     const CHILD_ASSOC_Credentials = 'Credentials';
 
     const SALT = 'dguqwtduR^%$*%%';
@@ -42,6 +43,7 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
         self::FIELD_Nick => array('Class' => 'Chaplin_Model_Field_Field'),
         self::FIELD_Email => array('Class' => 'Chaplin_Model_Field_Field'),
         self::FIELD_UserTypeId => array('Class' => 'Chaplin_Model_Field_Field'),
+        self::FIELD_VALIDATION => array('Class' => 'Chaplin_Model_Field_Field'),
         self::FIELD_HASH => array('Class' => 'Chaplin_Model_Field_Field'),
         self::CHILD_ASSOC_Credentials => array('Class' => 'Chaplin_Model_Field_Collection')
     );
@@ -75,6 +77,14 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
     {
         $this->_setField(self::FIELD_Password, self::encodePassword($strPassword));
         $this->_setField(self::FIELD_HASH, self::HASH_SHA512);
+    }
+
+    public function resetPassword()
+    {
+        $strValidationToken = md5(uniqid());
+        $this->_setField(self::FIELD_VALIDATION, $strValidationToken);
+        $this->_setField(self::FIELD_Password, '');
+        return $strValidationToken;
     }
 
     public function getUsername()
