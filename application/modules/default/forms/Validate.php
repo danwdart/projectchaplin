@@ -22,43 +22,40 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class Chaplin_Gateway_User
-    extends Chaplin_Gateway_Abstract
+class default_Form_Validate extends Zend_Form
 {
-    private $_daoUser;
+    private $_strToken;
 
-    public function __construct(Chaplin_Dao_Interface_User $daoUser)
+    public function __construct($strToken)
     {
-        $this->_daoUser = $daoUser;
-    }
-
-    public function getAllUsers()
-    {
-        return $this->_daoUser->getAllUsers();
+        parent::__construct();
+        $this->_strToken = $strToken;
     }
 
-    public function getByUsernameAndPassword($strUsername, $strPassword)
+    public function init()
     {
-        return $this->_daoUser->getByUsernameAndPassword($strUsername, $strPassword);
-    }
-    
-    public function getByUsername($strUsername)
-    {
-        return $this->_daoUser->getByUsername($strUsername);
-    }
-    
-    public function delete(Chaplin_Model_User $modelUser)
-    {
-        $this->_daoUser->delete($modelUser);
-    }
+        $this->setMethod('post');
 
-    public function save(Chaplin_Model_User $modelUser)
-    {
-        $this->_daoUser->save($modelUser);
-    }
+        $token = new Zend_Form_Element_Hidden('token');
+        $token->setValue($this->_strToken);
 
-    public function updateByToken($strToken, $strPassword)
-    {
-        return $this->_daoUser->updateByToken($strToken, $strPassword);
+        $password = new Zend_Form_Element_Password('password');
+        $password->setLabel('New Password:');
+
+        $password2 = new Zend_Form_Element_Password('password2');
+        $password2->addValidators(array(
+            new Zend_Validate_StringLength(array(
+                'min' => 6
+            )),
+            new Zend_Validate_Identical(array(
+                'token' => 'password'
+            ))
+        ));
+        
+        $password2->setLabel('Confirm Password:');
+
+        $submit = new Zend_Form_Element_Submit('Reset');
+
+        $this->addElements(array($token, $password, $password2, $submit));
     }
 }
