@@ -22,15 +22,12 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-interface Chaplin_Dao_Interface_User extends Chaplin_Dao_Interface
-{
-	public function getAllUsers();
-	
-    public function getByUsernameAndPassword($strUsername, $strPassword);
-    
-    public function getByUsername($strUsername);
-
-    public function save(Chaplin_Model_User $modelUser);
-
-    public function updateByToken($strToken, $strPassword);
-}
+?>
+<div class="widgetbox medium centre">
+<div class="widgettitle centre space">
+    Please enter required details:
+</div>
+<div class="widgetbody centre space">
+<?php echo $this->form; ?>
+</div>
+</div>

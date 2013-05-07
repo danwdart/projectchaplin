@@ -167,7 +167,32 @@ class LoginController extends Zend_Controller_Action
 
     public function validateAction()
     {
+        $strToken = $this->_request->getParam('token', null);
+        if (empty($strToken)) {
+            $this->_redirect('/login');
+        }
 
+        $form = new default_Form_Validate($strToken);
+
+        if (!$this->_request->isPost()) {
+            return $this->view->form = $form;
+        }
+
+        if (!$form->isValid($this->_request->getPost())) {
+            return $this->view->form = $form;
+        }
+
+        Chaplin_Gateway::getUser()
+            ->updateByToken(
+                $strToken,
+                $form->password->getValue()
+            );
+
+        $this->_helper->flashMessenger(
+            'If a user account exists then your password has been set.<br/>'.
+            'You can now login below.'
+        );
+        $this->_redirect('/login');
     }
 
     public function oauthAction()
