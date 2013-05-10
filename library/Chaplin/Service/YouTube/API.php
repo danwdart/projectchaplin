@@ -35,15 +35,15 @@ class Chaplin_Service_YouTube_API
 
     public function getDownloadURL()
     {
-        $strCommandLine = APPLICATION_PATH.self::LOCATION.' --prefer-free-formats -g -- "'.$this->_strURL.'"';
+        $strCommandLine = APPLICATION_PATH.self::LOCATION.' --prefer-free-formats -g -- '.escapeshellarg($this->_strURL);
         return exec($strCommandLine);
     }
     
     public function downloadVideo($strPathToSave)
     {
         $strCommandLine = APPLICATION_PATH.self::LOCATION.
-            " --prefer-free-formats -o '".
-            $strPathToSave."/%(title)s.%(ext)s' -- ".'"'.$this->_strURL.'"';
+            " --prefer-free-formats -o ".
+            escapeshellarg($strPathToSave."/%(title)s.%(ext)s")." -- ".escapeshellarg($this->_strURL);
         echo $strCommandLine.PHP_EOL;
         ob_flush();
         flush();
