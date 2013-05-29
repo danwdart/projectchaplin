@@ -43,7 +43,7 @@ class Chaplin_Service_YouTube_API
     {
         $strCommandLine = APPLICATION_PATH.self::LOCATION.
             " --prefer-free-formats -o ".
-            escapeshellarg($strPathToSave."/%(title)s.%(ext)s")." -- ".escapeshellarg($this->_strURL);
+            escapeshellarg($strPathToSave."/%(id)s.%(ext)s")." -- ".escapeshellarg($this->_strURL);
         echo $strCommandLine.PHP_EOL;
         ob_flush();
         flush();
@@ -55,7 +55,7 @@ class Chaplin_Service_YouTube_API
         $yt = new Zend_Gdata_YouTube();
         $entryVideo = $yt->getVideoEntry($this->_strURL);
 
-        $strFilename = $strPathToSave.'/'.$entryVideo->getVideoTitle().'.webm.png';
+        $strFilename = $strPathToSave.'/'.$entryVideo->getVideoId().'.webm.png';
 
         $arrThumbnails = $entryVideo->getVideoThumbnails();
         if (!isset($arrThumbnails[0])) {
