@@ -110,8 +110,8 @@ class VideoController extends Chaplin_Controller_Action_Api
         $strTitle = $entryVideo->getVideoTitle();
 
         $strPath = realpath(APPLICATION_PATH.'/../public/uploads');
-        $strVideoFile = $strPath.'/'.$strTitle.'.webm';
-        $strRelaFile = '/uploads/'.$strTitle.'.webm';
+        $strVideoFile = $strPath.'/'.$strVideoId.'.webm';
+        $strRelaFile = '/uploads/'.$strVideoId.'.webm';
         $strThumbnail = Chaplin_Service::getInstance()
             ->getYouTube($strVideoId)
             ->downloadThumbnail($strPath);
