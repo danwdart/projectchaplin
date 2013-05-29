@@ -35,6 +35,8 @@ class VideoController extends Chaplin_Controller_Action_Api
             ->getVideo()
             ->getByVideoId($strVideoId);
 
+        $this->view->strTitle = $modelVideo->getTitle();
+
         $ittComments = Chaplin_Gateway::getInstance()
             ->getVideo_Comment()
             ->getByVideoId($strVideoId);
@@ -93,6 +95,7 @@ class VideoController extends Chaplin_Controller_Action_Api
             $this->view->videoURL = Chaplin_Service::getInstance()->getYouTube($strVideoId)->getDownloadURL();
             $this->view->isLocal = true;
         }
+        $this->view->strTitle = $this->view->entryVideo->getTitle()->getText();
     }
 
     public function importyoutubeAction()
