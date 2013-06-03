@@ -194,3 +194,13 @@ ul.errors li {
 .green {
     color:green;
 }
+
+label, input[type=button], input[type=submit], button {
+    cursor: pointer;
+}
+
+@media all and (orientation:portrait) {
+}
+
+@media all and (orientation:landscape) {
+}
