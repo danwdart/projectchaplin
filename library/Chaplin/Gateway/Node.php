@@ -47,6 +47,11 @@ class Chaplin_Gateway_Node
         return $this->_daoNode->delete($modelNode);
     }
 
+    public function deleteById($strId)
+    {
+        return $this->_daoNode->deleteById($strId);
+    }
+
     public function save(Chaplin_Model_Node $modelNode)
     {
         return $this->_daoNode->save($modelNode);
