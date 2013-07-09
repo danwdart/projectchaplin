@@ -23,6 +23,7 @@
  * @link       https://github.com/dandart/projectchaplin
 **/
 class Chaplin_Gateway_User
+    extends Chaplin_Gateway_Abstract
 {
     private $_daoUser;
 
@@ -54,5 +55,10 @@ class Chaplin_Gateway_User
     public function save(Chaplin_Model_User $modelUser)
     {
         $this->_daoUser->save($modelUser);
+    }
+
+    public function updateByToken($strToken, $strPassword)
+    {
+        return $this->_daoUser->updateByToken($strToken, $strPassword);
     }
 }

@@ -41,6 +41,7 @@ class Default_Bootstrap extends Zend_Application_Module_Bootstrap
             $acl->add(new Zend_Acl_Resource('default/broadcast'));
             $acl->add(new Zend_Acl_Resource('default/error'));
             $acl->add(new Zend_Acl_Resource('default/login'));
+            $acl->add(new Zend_Acl_Resource('default/manifest'));
             $acl->add(new Zend_Acl_Resource('default/messages'));
             $acl->add(new Zend_Acl_Resource('default/search'));
             $acl->add(new Zend_Acl_Resource('default/video'));
@@ -50,6 +51,7 @@ class Default_Bootstrap extends Zend_Application_Module_Bootstrap
             $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_USER, 'default/broadcast');
             $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/error');
             $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/login');
+            $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/manifest');
             $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_USER, 'default/messages');
             $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/search');
             $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/user');

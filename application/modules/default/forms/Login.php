@@ -38,11 +38,10 @@ class default_Form_Login extends Zend_Form
 
         $submit = new Zend_Form_Element_Submit('Login');
         $register = new Zend_Form_Element_Submit('Register');
+        $forgot = new Zend_Form_Element_Submit('Forgot');
+        $forgot->setLabel('Forgot Password');
 
-//      $forgot = new Zend_Form_Element_Submit('Forgot');
-//      $forgot->setLabel('Forgot Password');
-
-        $this->addElements(array($username, $password, $submit, $register));
+        $this->addElements(array($username, $password, $submit, $register, $forgot));
 
     }
 }

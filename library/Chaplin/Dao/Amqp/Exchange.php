@@ -178,21 +178,21 @@ class Chaplin_Dao_Amqp_Exchange
                 echo 'Invalid Json: '.$strBody;
                 ob_flush();
                 flush();
-                return;
+                return $amqpQueue->ack($amqpEnvelope->getDeliveryTag());;
             }
             $strClass = $amqpEnvelope->getType();
             if (!class_exists($strClass)) {
                 echo 'Class does not exist: '.$strClass;
                 ob_flush();
                 flush();
-                return;
+                return $amqpQueue->ack($amqpEnvelope->getDeliveryTag());;
             }
 
             if (!is_array($arrData)) {
                 echo 'Not array: '.print_r($arrData, true);
                 ob_flush();
                 flush();
-                return;
+                return $amqpQueue->ack($amqpEnvelope->getDeliveryTag());;
             }
             $model = $strClass::createFromData($this, $arrData);
             try {

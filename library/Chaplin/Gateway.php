@@ -34,6 +34,11 @@ class Chaplin_Gateway
     {
     }
 
+    public static function __callStatic($strMethod, Array $arrArgs)
+    {
+        return call_user_func_array([self::getInstance(), $strMethod], $arrArgs);
+    }
+
     public static function getInstance()
     {
         if(is_null(self::$_instance)) {
@@ -48,7 +53,7 @@ class Chaplin_Gateway
         self::$_instance = $gateway;
     }
 
-    private function _getGateway($strName)
+    public function getGateway($strName)
     {
         $configGateways = Chaplin_Config_Gateways::getInstance();
         $strDaoType = $configGateways->getDaoType($strName);
@@ -81,6 +86,6 @@ class Chaplin_Gateway
             throw new Exception('Invalid method: '.__CLASS__.'::'.$strMethod);
         }
         $strGatewayType = substr($strMethod, 3);
-        return $this->_getGateway($strGatewayType);        
+        return $this->getGateway($strGatewayType);        
     }
 }
