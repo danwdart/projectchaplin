@@ -1,0 +1,8 @@
+RewriteEngine On
+RewriteCond %{REQUEST_URI} .*\.png
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^.*$ notencoded.png [NC,L]
+
+RewriteCond %{REQUEST_URI} .*\.webm
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^.*$ notencoded.webm [NC,L]

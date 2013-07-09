@@ -28,6 +28,10 @@ class LoginController extends Zend_Controller_Action
     {
         $form = new default_Form_Login();
 
+        if ($this->_helper->flashMessenger->hasMessages()) {
+            $this->view->messages = $this->_helper->flashMessenger->getMessages();
+        }
+
         if(!$this->_request->isPost()) {
             return $this->view->assign('form', $form);
         }
@@ -39,6 +43,10 @@ class LoginController extends Zend_Controller_Action
 
         if(isset($post['Register'])) {
             return $this->_redirect('/login/register');
+        }
+
+        if (isset($post['Forgot'])) {
+            return $this->_redirect('/login/forgot');
         }
         
         if(!$form->isValid($post)) {
@@ -117,11 +125,74 @@ class LoginController extends Zend_Controller_Action
             // AJAX: Success
             return $this->_redirect($this->_redirect_url);
         }
-        catch(Exception $e)
-        {
-            $form->Register->addError('Could not create account. Reason: '.$e->getMessage());
+        catch (Zend_Db_Statement_Exception $e) {
+            $form->username->addError('Could not create account - a user aleady exists with that name');
+            $form->markAsError();
             return $this->view->assign('form', $form);
         }
+        catch(Exception $e)
+        {
+            $form->username->addError('Could not create account. Reason: '.$e->getMessage());
+            $form->markAsError();
+            return $this->view->assign('form', $form);
+        }
+    }
+
+    public function forgotAction()
+    {
+        $form = new default_Form_Forgot();
+        if (!$this->_request->isPost()) {
+            return $this->view->form = $form;
+        }
+        if (!$form->isValid($this->_request->getPost())) {
+            return $this->view->form = $form;
+        }
+
+        try {
+            $modelUser = Chaplin_Gateway::getUser()
+                ->getByUsername($form->username->getValue());
+            
+            Chaplin_Gateway::getEmail()
+                ->resetPassword($modelUser);
+
+        } catch (Chaplin_Dao_Exception_User_NotFound $e) {
+        }
+
+        $this->_helper->flashMessenger(
+            'You should soon receive an email containing<br/>'.
+            'instructions on how to set your password.'
+        );
+        $this->_redirect('/login');
+    }
+
+    public function validateAction()
+    {
+        $strToken = $this->_request->getParam('token', null);
+        if (empty($strToken)) {
+            $this->_redirect('/login');
+        }
+
+        $form = new default_Form_Validate($strToken);
+
+        if (!$this->_request->isPost()) {
+            return $this->view->form = $form;
+        }
+
+        if (!$form->isValid($this->_request->getPost())) {
+            return $this->view->form = $form;
+        }
+
+        Chaplin_Gateway::getUser()
+            ->updateByToken(
+                $strToken,
+                $form->password->getValue()
+            );
+
+        $this->_helper->flashMessenger(
+            'If a user account exists then your password has been set.<br/>'.
+            'You can now login below.'
+        );
+        $this->_redirect('/login');
     }
 
     public function oauthAction()

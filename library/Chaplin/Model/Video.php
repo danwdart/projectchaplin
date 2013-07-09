@@ -31,6 +31,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     const FIELD_THUMBNAIL = 'Thumbnail';
     const FIELD_TITLE = 'Title';
     const FIELD_DESCRIPTION = 'Description';
+    const FIELD_LICENCE = 'Licence';
     const FIELD_LENGTH = 'Length';
     const FIELD_WIDTH = 'Width';
     const FIELD_HEIGHT = 'Height';
@@ -45,30 +46,31 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     const FIELD_ARRAY_NOTTAGS = 'NotTags';
     const CHILD_ASSOC_COMMENTS = 'Comments';
 
-    protected $_arrFields = array(
-        self::FIELD_VIDEOID => array('Class' => 'Chaplin_Model_Field_FieldId'),
-        self::FIELD_TIMECREATED => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_USERNAME => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_FILENAME => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_THUMBNAIL => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_TITLE => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_DESCRIPTION => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_LENGTH => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_WIDTH => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_HEIGHT => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_FORMAT => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_BITRATE => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_SIZE => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_VIEWS => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_PARTIALVIEWS => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_BOUNCES => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_ARRAY_TAGS => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_ARRAY_NOTTAGS => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::CHILD_ASSOC_COMMENTS => array(
+    protected $_arrFields = [
+        self::FIELD_VIDEOID         => ['Class' => 'Chaplin_Model_Field_FieldId'],
+        self::FIELD_TIMECREATED     => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_USERNAME        => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_FILENAME        => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_THUMBNAIL       => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_TITLE           => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_DESCRIPTION     => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_LICENCE         => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_LENGTH          => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_WIDTH           => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_HEIGHT          => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_FORMAT          => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_BITRATE         => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_SIZE            => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_VIEWS           => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_PARTIALVIEWS    => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_BOUNCES         => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_ARRAY_TAGS      => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_ARRAY_NOTTAGS   => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::CHILD_ASSOC_COMMENTS  => [
             'Class' => 'Chaplin_Model_Field_Collection',
             'Param' => 'Chaplin_Model_Video_Comment'
-        )
-    );
+        ]
+    ];
 
     public static function create(
         Chaplin_Model_User $modelUser,
@@ -107,7 +109,9 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
     public function getShortTitle()
     {
-        return substr($this->getTitle(), 0, 25).'...';
+        return 25 > strlen($this->getTitle()) ?
+            $this->getTitle():
+            substr($this->getTitle(), 0, 25).'...';
     }
 
     public function getFilename()
@@ -151,6 +155,16 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     public function getComments()
     {
         return $this->_getField(self::CHILD_ASSOC_COMMENTS, array());
+    }
+
+    public function getLicenceId()
+    {
+        return $this->_getField(self::FIELD_LICENCE, Chaplin_Model_Video_Licence::ID_CCBYSA);
+    }
+
+    public function getLicence()
+    {
+        return new Chaplin_Model_Video_Licence($this->getLicenceId());
     }
 
     public function getUsername()

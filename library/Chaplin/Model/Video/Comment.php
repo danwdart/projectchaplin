@@ -25,27 +25,35 @@
 class Chaplin_Model_Video_Comment
     extends Chaplin_Model_Field_Hash
 {
+    const FIELD_COMMENTID = 'CommentId';
+    const FIELD_VIDEOID = 'VideoId';
     const FIELD_USERNAME = 'Username';
     const FIELD_COMMENT = 'Comment';
     //Feedback
     
     protected $_arrFields = array(
         self::FIELD_ID => array('Class' => 'Chaplin_Model_Field_FieldId'),
+        self::FIELD_VIDEOID => array('Class' => 'Chaplin_Model_Field_Field'),
         self::FIELD_USERNAME => array('Class' => 'Chaplin_Model_Field_Field'),
         self::FIELD_COMMENT => array('Class' => 'Chaplin_Model_Field_Field')
     );
     
     public static function create(
-        Chaplin_Model_Field_Collection $collection,
+        Chaplin_Model_Video $modelVideo,
         Chaplin_Model_User $modelUser,
         $strComment
     ) {
         $comment = new self();
-        $comment->_setField(self::FIELD_ID, md5(new MongoId()));
+        $comment->_setField(self::FIELD_ID, md5(uniqid()));
+        $comment->_setField(self::FIELD_VIDEOID, $modelVideo->getVideoId());
         $comment->_setField(self::FIELD_USERNAME, $modelUser->getUsername());
         $comment->_setField(self::FIELD_COMMENT, $strComment);
-        $collection->addHash($comment);
         return $comment;
+    }
+
+    public function getCommentId()
+    {
+        return $this->_getField(self::FIELD_ID, null);
     }
     
     public function getUsername()
@@ -67,5 +75,18 @@ class Chaplin_Model_Video_Comment
     public function getComment()
     {
         return $this->_getField(self::FIELD_COMMENT, null);
+    }
+
+    public function isMine()
+    {
+        if(!Chaplin_Auth::getInstance()->hasIdentity()) {
+            return false;
+        }
+        if(Chaplin_Auth::getInstance()->getIdentity()->getUser()->isGod()) {
+            // God users own everything, mwuhahaha
+            return true;
+        }
+        return Chaplin_Auth::getInstance()->getIdentity()->getUser()->getUsername() ==
+            $this->getUsername();
     }
 }

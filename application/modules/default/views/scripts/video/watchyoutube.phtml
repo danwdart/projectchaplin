@@ -41,9 +41,11 @@
 <span style="font-size:8pt;"><?php echo str_replace("\n", '<br/>', $this->entryVideo->getVideoDescription()); ?></span>
 <br/>
 <a href="/video/importyoutube/id/<?php echo $this->entryVideo->getVideoId();?>">Import</a> |
-<a class="ajax" href="/video/vote/id/<?php echo $this->entryVideo->getVideoId();?>/vote/up">+1</a> /
-<a class="ajax" href="/video/vote/id/<?php echo $this->entryVideo->getVideoId();?>/vote/down">-1</a> &nbsp;&nbsp;
-<a href="/video/download/id/<?php echo $this->entryVideo->getVideoId();?>">Download</a>
+<a class="atotext" href="/video/vote/id/<?php echo $this->entryVideo->getVideoId();?>/vote/up">+1</a> /
+<a class="atotext" href="/video/vote/id/<?php echo $this->entryVideo->getVideoId();?>/vote/down">-1</a> &nbsp;&nbsp;
+<?php if ($this->isLocal) : ?>
+<a href="<?php echo $this->videoURL;?>">Download</a>
+<?php endif; ?>
 <br/>
 <?php if(Chaplin_Auth::getInstance()->hasIdentity()): echo $this->formComment; else: 
 echo 'Login above to comment.'; endif;  ?>

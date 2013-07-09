@@ -23,5 +23,19 @@
  * @link       https://github.com/dandart/projectchaplin
 **/
 foreach($this->comments as $modelComment):?>
-<p><i><?php echo $modelComment->getUsername();?></i> said: <?php echo $modelComment->getComment();?></p>
-<?php endforeach; ?>
+	<p>
+		<i>
+			<?php echo $modelComment->getUsername();?>
+		</i> said: 
+		<?php echo $modelComment->getComment();?>
+		<?php if ($modelComment->isMine()): ?>
+			<a class="ajax" href="/video/deletecomment/id/<?php echo $modelComment->getCommentId(); ?>" 
+				rel="comments">
+			(X)
+			</a>
+		<?php endif;?>
+	</p>
+<?php endforeach;
+// Until we JSONify this then we need to include the AJAX stuff again
+?>
+<script src="/js/video.js"></script>

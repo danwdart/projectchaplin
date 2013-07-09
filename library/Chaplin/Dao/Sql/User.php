@@ -86,4 +86,24 @@ class Chaplin_Dao_Sql_User extends Chaplin_Dao_Sql_Abstract implements Chaplin_D
     {
         return Chaplin_Model_User::createFromData($this, $this->_sqlToModel($arrData));
     }
+
+    public function updateByToken($strToken, $strPassword)
+    {
+        $arrData = [
+            Chaplin_Model_User::FIELD_Password =>
+                Chaplin_Model_User::encodePassword($strPassword),
+            Chaplin_Model_User::FIELD_VALIDATION => null,
+            Chaplin_Model_User::FIELD_HASH => Chaplin_Model_User::HASH_SHA512
+        ];
+
+        $intNumUpdated = $this->_getAdapter()
+            ->update(
+                $this->_getTable(),
+                $arrData,
+                $this->_getAdapter()->quoteInto(
+                    Chaplin_Model_User::FIELD_VALIDATION.' = ?',
+                    $strToken
+                )
+            );
+    }
 }

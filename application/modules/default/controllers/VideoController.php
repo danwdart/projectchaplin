@@ -22,7 +22,7 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class VideoController extends Zend_Controller_Action
+class VideoController extends Chaplin_Controller_Action_Api
 {
     public function watchAction()
     {
@@ -34,8 +34,15 @@ class VideoController extends Zend_Controller_Action
         $modelVideo = Chaplin_Gateway::getInstance()
             ->getVideo()
             ->getByVideoId($strVideoId);
+
+        $this->view->strTitle = $modelVideo->getTitle();
+
+        $ittComments = Chaplin_Gateway::getInstance()
+            ->getVideo_Comment()
+            ->getByVideoId($strVideoId);
             
         $this->view->assign('video', $modelVideo);
+        $this->view->assign('ittComments', $ittComments);
         
         $formComment = new default_Form_Video_Comment();
                 
@@ -59,12 +66,14 @@ class VideoController extends Zend_Controller_Action
         $modelUser =  Chaplin_Auth::getInstance()->getIdentity()->getUser();
           
         $modelComment = Chaplin_Model_Video_Comment::create(
-            $modelVideo->getComments(),
+            $modelVideo,
             $modelUser,
             $strComment
         );
 
-        $modelVideo->save();
+        Chaplin_Gateway::getInstance()
+            ->getVideo_Comment()
+            ->save($modelComment);
         
         return $this->view->assign('formComment', $formComment);
     }
@@ -86,6 +95,7 @@ class VideoController extends Zend_Controller_Action
             $this->view->videoURL = Chaplin_Service::getInstance()->getYouTube($strVideoId)->getDownloadURL();
             $this->view->isLocal = true;
         }
+        $this->view->strTitle = $this->view->entryVideo->getTitle()->getText();
     }
 
     public function importyoutubeAction()
@@ -103,8 +113,8 @@ class VideoController extends Zend_Controller_Action
         $strTitle = $entryVideo->getVideoTitle();
 
         $strPath = realpath(APPLICATION_PATH.'/../public/uploads');
-        $strVideoFile = $strPath.'/'.$strTitle.'.webm';
-        $strRelaFile = '/uploads/'.$strTitle.'.webm';
+        $strVideoFile = $strPath.'/'.$strVideoId.'.webm';
+        $strRelaFile = '/uploads/'.$strVideoId.'.webm';
         $strThumbnail = Chaplin_Service::getInstance()
             ->getYouTube($strVideoId)
             ->downloadThumbnail($strPath);
@@ -135,11 +145,32 @@ class VideoController extends Zend_Controller_Action
         }
 
         $ittComments = Chaplin_Gateway::getInstance()
-            ->getVideo()
-            ->getByVideoId($strVideoId)
-            ->getComments();
+            ->getVideo_Comment()
+            ->getByVideoId($strVideoId);
 
         $this->view->assign('comments', $ittComments);
+    }
+
+    public function deletecommentAction()
+    {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+
+        $strCommentId = $this->_request->getParam('id', null);
+        
+        $modelComment = Chaplin_Gateway::getInstance()
+            ->getVideo_Comment()
+            ->getById($strCommentId);
+
+        if (!$modelComment->isMine()) {
+            return;
+        }
+
+        Chaplin_Gateway::getInstance()
+            ->getVideo_Comment()
+            ->deleteById($strCommentId);
+
+        $this->getResponse()->setHttpResponseCode(204);
     }
     
     public function downloadAction()

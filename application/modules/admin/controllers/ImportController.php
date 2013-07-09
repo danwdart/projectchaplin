@@ -66,7 +66,7 @@ class Admin_ImportController extends Zend_Controller_Action
 
 	public function convertAction()
 	{
-		foreach($this->_request->getPost() as $strFile => $intInclude) {
+		foreach($this->_request->getPost('Videos') as $strFile => $intInclude) {
 			if (!$intInclude) {
 				continue;
 			}

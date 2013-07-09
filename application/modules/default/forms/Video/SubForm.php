@@ -49,7 +49,11 @@ class default_Form_Video_SubForm extends Zend_Form_SubForm
         $elDescription->setAttribs(array('style' => 'width: 200px; height:75px;'));
         $elDescription->setLabel('Description');
         $elDescription->addValidators(array('NotEmpty'));
-        $this->addElements(array($elImage, $elTitle, $elDescription));
+        $elLicence = new Zend_Form_Element_Select('Licence');
+        $elLicence->setMultiOptions(Chaplin_Model_Video_Licence::getSelectOptions());
+        $elLicence->setValue($modelVideo->getLicenceId());
+        $elLicence->setLabel('Licence');
+        $this->addElements(array($elImage, $elTitle, $elDescription, $elLicence));
         $this->setAttribs(array('style' => 'float:left; width: 240px; padding: 5px; border: 0; margin: 5px'));
         $this->removeDecorator('DtDdWrapper');
     }
