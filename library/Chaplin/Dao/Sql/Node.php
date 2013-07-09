@@ -71,6 +71,11 @@ class Chaplin_Dao_Sql_Node
     	return $this->_delete($modelNode);
     }
 
+    public function deleteById($strId)
+    {
+        return $this->_deleteById($strId);
+    }
+
     public function save(Chaplin_Model_Node $modelNode)
     {
     	return $this->_save($modelNode);

@@ -53,7 +53,11 @@ class Admin_NodeController extends Zend_Controller_Action
 
     public function deleteAction()
     {
-        
+        $strNodeId = $this->_request->getParam('NodeId', null);
+        if(!is_null($strNodeId)) {
+            Chaplin_Gateway::getNode()->deleteById($strNodeId);
+        }
+        return $this->_redirect('/admin/node');
     }
     
     public function pingAction()
