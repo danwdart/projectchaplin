@@ -50,6 +50,11 @@ class Admin_NodeController extends Zend_Controller_Action
         $this->_helper->FlashMessenger('Added Node');
         return $this->_redirect('/admin/node');
     }
+
+    public function deleteAction()
+    {
+        
+    }
     
     public function pingAction()
     {
