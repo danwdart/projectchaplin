@@ -27,7 +27,10 @@ class Admin_ImportController extends Zend_Controller_Action
 	private $_strAcceptableTypes = '3gp|3gpp|flv|asf|mov|rm|wmv|mp4|mpg|webm|avi|mkv|ogv';
 
 	public function indexAction()
-	{
+    {
+        // This is likely to take a long time.
+        set_time_limit(0);
+
 		$form = new Admin_Form_Import_Directory();
 
 		if(!$this->_request->isPost()) {
