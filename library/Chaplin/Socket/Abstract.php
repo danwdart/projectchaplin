@@ -66,6 +66,10 @@ abstract class Chaplin_Socket_Abstract
 
     public function disconnect()
     {
+        if (!$this->isConnected()) {
+            echo 'Tried to disconnect but was not connected.'.PHP_EOL;
+            ob_flush();
+        }
         socket_close($this->_resourceSocket);
         $this->_bConnected = false;
         return $this;
@@ -96,10 +100,19 @@ abstract class Chaplin_Socket_Abstract
         while(true) {
             $strResponse = $this->readText(1024);
             if(1 == preg_match($strRegex, $strResponse)) {
-                break;
+                return $this;
             }
         }
-        return $this;
+    }
+
+    public function waitForAndReturn($strRegex)
+    {
+        while(true) {
+            $strResponse = $this->readText(1024);
+            if(1 == preg_match($strRegex, $strResponse)) {
+                return $strResponse;
+            }
+        }
     }
 
     public function readBinary($intLength)
@@ -118,13 +131,20 @@ abstract class Chaplin_Socket_Abstract
 
     public function write($strText)
     {
+        if (!$this->isConnected()) {
+            echo 'Tried to use write() but was not connected.'.PHP_EOL;
+            ob_flush();
+            return $this;
+        }
         $intLength = strlen($strText);
         
-        $intSent = socket_write($this->_resourceSocket, $strText.self::CRLF);
+        $intSent = @socket_write($this->_resourceSocket, $strText.self::CRLF);
 
         if (false === $intSent) {
             $this->_exceptionError();
         }
+
+        // Not so sure what's up here
         if ($intLength+2 !== $intSent) {
             throw new Exception('Sent only ('.$intSent.') bytes of ('.$intLength.') total');
         }

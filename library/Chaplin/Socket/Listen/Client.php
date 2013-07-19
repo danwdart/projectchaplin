@@ -31,6 +31,7 @@ class Chaplin_Socket_Listen_Client
 
 	public function __construct($resourceSocket)
 	{
+		$this->_bConnected = true;
 		$this->_resourceSocket = $resourceSocket;
 	}
 
@@ -57,7 +58,7 @@ class Chaplin_Socket_Listen_Client
 		ob_flush();
 		flush();
 		if(is_null($this->_onRead)) {
-			echo 'No read'.PHP_EOL; ob_flush();flush();
+			echo 'No read handler'.PHP_EOL; ob_flush();flush();
 			return;
 		}
 		$callback = $this->_onRead;
@@ -71,11 +72,12 @@ class Chaplin_Socket_Listen_Client
 		ob_flush();
 		flush();
 		if(is_null($this->_onDisconnect)) {
-			echo 'No disconnect'.PHP_EOL; ob_flush();flush();
+			echo 'No disconnect handler'.PHP_EOL; ob_flush();flush();
 			return;
 		}
 		$callback = $this->_onDisconnect;
 		$callback();
+		$this->_onRead = null;
 		return $this;
 	}
 }

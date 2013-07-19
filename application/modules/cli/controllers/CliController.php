@@ -43,6 +43,25 @@ class CliController extends Zend_Controller_Action
             ->youtube();
     }
 
+    public function httpAction()
+    {
+        $listener = Chaplin_Socket_Listen_Tcp::create('0.0.0.0', 80);
+        $listener->listen(function(Chaplin_Socket_Listen_Client $client) use ($listener) {
+            $text = [];
+            $client->onRead(function($strData) use ($client) {
+                $arrHeaders = [
+                     'HTTP/1.1 200 Hunky Dory',
+                     'Content-Type: text/html',
+                     'Connection: close'
+                ];
+                $strData = '<h1>You sent</h1><p>'.str_replace("\r\n", '<br/>', $strData);
+                $client->write(implode("\r\n", $arrHeaders)."\r\n\r\n".$strData."\r\n\r\n");
+                $client->disconnect();
+                $client->onRead(function($strData) use ($client) {});
+            });
+        });
+    }
+
     public function emailAction()
     {
         $modelUser = Chaplin_Gateway::getInstance()->getUser()->getByUsername('dan');
