@@ -119,8 +119,10 @@ class Chaplin_Model_Message
             $this->_getField(self::FIELD_PARAMS, array())
         );
 
+        $strVhost = Chaplin_Config_Settings::getInstance()->getVhost();
+
         $mail = new Zend_Mail();
-        $mail->setFrom('chaplin@dandart.co.uk', 'Chaplin');
+        $mail->setFrom('chaplin@'.$strVhost, 'Chaplin');
         $mail->setSubject($this->_getField(self::FIELD_TITLE, null));
         $mail->addTo($modelUser->getEmail());
         $mail->setBodyHtml($strMessageHtml);

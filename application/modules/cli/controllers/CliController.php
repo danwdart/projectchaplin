@@ -92,12 +92,14 @@ class CliController extends Zend_Controller_Action
 
     public function ircbotAction()
     {
+        $strVhost = Chaplin_Config_Servers::getInstance()->getVhost();
+
         $socket = Chaplin_Socket_Connect_Tcp::create('irc.megworld.co.uk', 6667)
             ->bind()
             ->connect()
             ->waitFor('/Found your hostname/')
             ->send('NICK ChaplinBot')
-            ->send('USER ChaplinBot projectchaplin.dandart.co.uk projectchaplin :Chaplin Bot')
+            ->send('USER ChaplinBot '.$strVhost.' projectchaplin :Chaplin Bot')
             ->waitFor('/376/')
             ->send('JOIN #bots')
             ->waitFor('/396/')

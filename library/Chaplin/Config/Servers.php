@@ -89,4 +89,20 @@ class Chaplin_Config_Servers
             'sql'
         );
     }
+
+    /**
+     * Gets the Virtual Host setting
+     * Useful for sending email when
+     * we don't know the request URU
+     *
+     * @return string
+     * @author Dan Dart
+     **/
+    public function getVhost()
+    {
+        return $this->_getValue(
+            $this->_zendConfig->vhost,
+            'vhost'
+        );
+    }
 }

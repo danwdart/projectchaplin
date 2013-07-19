@@ -38,7 +38,11 @@ class Chaplin_Gateway_Email
 	public function resetPassword(
 		Chaplin_Model_User $modelUser
 	) {
+		$strVhost = Chaplin_Config_Servers::getInstance()->getVhost();
+
 		$strValidationToken = $modelUser->resetPassword();
+		// Let's make sure that we save before we send the email.
+		// It's a bit odd but it ensures atomic saves.
         Chaplin_Gateway::getUser()->save($modelUser);
 
         $this->_daoExchange->email(
@@ -46,8 +50,7 @@ class Chaplin_Gateway_Email
 			'Reset Password',
 			'resetpassword',
 			[
-				// todo replace with vhost
-				'Url' => 'http://projectchaplin/login/validate/token/'.$strValidationToken
+				'Url' => 'http://'.$strVhost.'/login/validate/token/'.$strValidationToken
 			]
 		);
 	}

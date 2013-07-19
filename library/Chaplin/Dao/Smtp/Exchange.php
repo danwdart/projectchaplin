@@ -31,9 +31,11 @@ class Chaplin_Dao_Smtp_Exchange
 		$strTemplate,
 		$arrParams
 	) {
+		$strVhost = Chaplin_Config_Servers::getInstance()->getVhost();
+		
 		$mail = new Zend_Mail();
 		$mail->addTo($modelUser->getEmail(), $modelUser->getNick());
-		$mail->setFrom('info@projectchaplin.com', 'Project Chaplin');
+		$mail->setFrom('info@'.$strVhost, 'Project Chaplin');
 		$mail->setSubject($strSubject);
 		$strFilenameTemplateHTML = APPLICATION_PATH.
 			'/../mustache/en_GB/mail/html/'.$strTemplate.'.mustache';
