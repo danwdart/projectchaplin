@@ -119,7 +119,7 @@ class Chaplin_Model_Message
             $this->_getField(self::FIELD_PARAMS, array())
         );
 
-        $strVhost = Chaplin_Config_Settings::getInstance()->getVhost();
+        $strVhost = Chaplin_Config_Chaplin::getInstance()->getVhost();
 
         $mail = new Zend_Mail();
         $mail->setFrom('chaplin@'.$strVhost, 'Chaplin');
