@@ -35,13 +35,15 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
     protected function _initAcl()
     {    
         $acl = Zend_Registry::get('acl');
-        {    
+        {   
+            $acl->add(new Zend_Acl_Resource('admin/events')); 
             $acl->add(new Zend_Acl_Resource('admin/import'));
             $acl->add(new Zend_Acl_Resource('admin/node'));
             $acl->add(new Zend_Acl_Resource('admin/nodestatus'));
             $acl->add(new Zend_Acl_Resource('admin/error'));
             $acl->add(new Zend_Acl_Resource('admin/user'));
             
+            $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_MINION, 'admin/events');
             $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/import');     
             $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/node');
             $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'admin/nodestatus');            
