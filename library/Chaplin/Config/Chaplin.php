@@ -34,7 +34,7 @@ class Chaplin_Config_Chaplin
 
     protected function _getConfigFile()
     {
-        return realpath(APPLICATION_PATH.'/config/chaplin.ini');
+        return realpath(APPLICATION_PATH.'/../config/chaplin.ini');
     }
     
     public function getLocale()
@@ -42,6 +42,14 @@ class Chaplin_Config_Chaplin
         return $this->_getValue(
             $this->_zendConfig->locale,
             'locale'
+        );
+    }
+
+    public function getVhost()
+    {
+        return $this->_getValue(
+            $this->_zendConfig->vhost,
+            'vhost'
         );
     }
 }

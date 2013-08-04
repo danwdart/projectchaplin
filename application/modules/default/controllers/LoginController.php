@@ -197,7 +197,7 @@ class LoginController extends Zend_Controller_Action
 
     public function oauthAction()
     {
-        $strVhost = Chaplin_Config_Settings::getInstance()->getVhost();
+        $strVhost = Chaplin_Config_Chaplin::getInstance()->getVhost();
 
         $oauth = [
             'google' => [
