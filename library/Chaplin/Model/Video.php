@@ -167,6 +167,11 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         return new Chaplin_Model_Video_Licence($this->getLicenceId());
     }
 
+    public function getTimeCreated()
+    {
+        return $this->_getField(self::FIELD_TIMECREATED, null);
+    }
+
     public function getUsername()
     {
         return $this->_getField(self::FIELD_USERNAME, null);
