@@ -27,6 +27,10 @@
 <?php if (isset($this->exception)): ?>
 <?php if ('development' == APPLICATION_ENV): ?>
 <h2><?php echo $this->exception->getMessage() ?></h2>
+	<h3>Exception Class: </h3>
+	<pre>
+<?php echo get_class($this->exception); ?>
+	</pre>
     <h3>Backtrace:</h3>
     <pre>
 <?php echo $this->exception->getTraceAsString() ?>
