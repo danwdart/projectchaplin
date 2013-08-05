@@ -31,7 +31,7 @@
 <a href="/video/watch/id/<?php echo $modelVideo->getVideoId();?>">
 <div class="thumb-wrapper">
 <div class="thumb-img">
-    <img src="<?php echo htmlentities($modelVideo->getThumbnail());?>" alt="View Video"/>
+    <img src="<?php echo htmlentities($modelVideo->getThumbnail()).'?'.time();?>" alt="View Video"/>
 </div>
 <p><?php echo $modelVideo->getShortTitle();?></p>
 </div>

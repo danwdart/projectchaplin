@@ -24,7 +24,7 @@
 **/
 ?>
 <h1><?php echo $this->video->getTitle();?></h1>
-    <video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->video->getFilename();?>">
+    <video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->video->getFilename().'?'.time();?>">
     </video>
 <br/>Uploaded by: <a href="/user/<?php echo $this->video->getUsername(); ?>"><?php echo $this->video->getUsername(); ?></a>
 <br/>Uploaded on <?php echo date('d/m/Y H:i', strtotime($this->video->getTimeCreated()));?>
