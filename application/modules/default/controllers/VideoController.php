@@ -26,6 +26,13 @@ class VideoController extends Chaplin_Controller_Action_Api
 {
     public function watchAction()
     {
+        $modelUser = Chaplin_Auth::getInstance()
+            ->hasIdentity()?
+        Chaplin_Auth::getInstance()
+            ->getIdentity()
+            ->getUser():
+        null;
+        
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
             return $this->_redirect('/');
@@ -33,7 +40,7 @@ class VideoController extends Chaplin_Controller_Action_Api
         
         $modelVideo = Chaplin_Gateway::getInstance()
             ->getVideo()
-            ->getByVideoId($strVideoId);
+            ->getByVideoId($strVideoId, $modelUser);
 
         $this->view->strTitle = $modelVideo->getTitle();
 
@@ -62,8 +69,6 @@ class VideoController extends Chaplin_Controller_Action_Api
         if (empty($strComment)) {
             return $this->view->assign('formComment', $formComment);
         }
-           
-        $modelUser =  Chaplin_Auth::getInstance()->getIdentity()->getUser();
           
         $modelComment = Chaplin_Model_Video_Comment::create(
             $modelVideo,

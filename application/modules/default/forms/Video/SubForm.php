@@ -40,21 +40,26 @@ class default_Form_Video_SubForm extends Zend_Form_SubForm
         $strImageURL = $modelVideo->getThumbnail();
         $elImage = new Zend_Form_Element_Image('Image');
         $elImage->setImage($strImageURL);
-        $elImage->setAttribs(array('style' => 'max-width: 200px; height: 150px;'));
+        $elImage->setAttribs(['style' => 'max-width: 200px; height: 150px;']);
         $elTitle = new Zend_Form_Element_Text('Title');
         $elTitle->setLabel('Title');
         $elTitle->setValue($modelVideo->getSuggestedTitle());
-        $elTitle->addValidators(array('NotEmpty'));
+        $elTitle->addValidators(['NotEmpty']);
         $elDescription = new Zend_Form_Element_Textarea('Description');
-        $elDescription->setAttribs(array('style' => 'width: 200px; height:75px;'));
+        $elDescription->setAttribs(['style' => 'width: 200px; height:75px;']);
         $elDescription->setLabel('Description');
-        $elDescription->addValidators(array('NotEmpty'));
+        $elDescription->addValidators(['NotEmpty']);
         $elLicence = new Zend_Form_Element_Select('Licence');
         $elLicence->setMultiOptions(Chaplin_Model_Video_Licence::getSelectOptions());
         $elLicence->setValue($modelVideo->getLicenceId());
         $elLicence->setLabel('Licence');
-        $this->addElements(array($elImage, $elTitle, $elDescription, $elLicence));
-        $this->setAttribs(array('style' => 'float:left; width: 240px; padding: 5px; border: 0; margin: 5px'));
+        $elPrivacy = new Zend_Form_Element_Select('Privacy');
+        $elPrivacy->setLabel('Limit To');
+        $elPrivacy->setValue($modelVideo->getPrivacyId());
+        $elPrivacy->addValidators(['NotEmpty']);
+        $elPrivacy->setMultiOptions(Chaplin_Model_Video_Privacy::getSelectOptions());
+        $this->addElements([$elImage, $elTitle, $elDescription, $elLicence, $elPrivacy]);
+        $this->setAttribs(['style' => 'float:left; width: 240px; padding: 5px; border: 0; margin: 5px']);
         $this->removeDecorator('DtDdWrapper');
     }
 }

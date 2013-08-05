@@ -40,16 +40,24 @@ class Chaplin_Dao_Sql_Video
         return self::PK;
     }
 
-	public function getFeaturedVideos()
+	public function getFeaturedVideos(Chaplin_Model_User $modelUser = null)
 	{
-        $strSql = 'SELECT * FROM %s';
+        $strSql = 'SELECT * FROM %s WHERE '.
+            Chaplin_Model_Video::FIELD_PRIVACY.' = "'.Chaplin_Model_Video_Privacy::ID_PUBLIC.
+            ((is_null($modelUser))? '"' : 
+            '" OR '.
+            Chaplin_Model_Video::FIELD_USERNAME .' = "'.$modelUser->getUsername().'"');
         $arrRows = $this->_getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
 		return new Chaplin_Iterator_Dao_Sql_Rows($arrRows, $this);
 	}
     
-    public function getByVideoId($strVideoId)
+    public function getByVideoId($strVideoId, Chaplin_Model_User $modelUser = null)
     {
-    	$strSql = 'SELECT * FROM %s WHERE %s = ?';
+    	$strSql = 'SELECT * FROM %s WHERE %s = ? AND ('.
+            Chaplin_Model_Video::FIELD_PRIVACY.' = "'.Chaplin_Model_Video_Privacy::ID_PUBLIC.
+            ((is_null($modelUser))? '")' : 
+            '" OR '.
+            Chaplin_Model_Video::FIELD_USERNAME .' = "'.$modelUser->getUsername().'")');
         $arrRow = $this->_getAdapter()->fetchRow(sprintf($strSql, self::TABLE, self::PK), $strVideoId);
         if (false === $arrRow) {
             throw new Chaplin_Dao_Exception_Video_NotFound($strVideoId);

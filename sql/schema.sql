@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS Chaplin.Videos (
     Views       BIGINT,
     PartialViews BIGINT,
     Bounces     BIGINT,
+    Privacy     TINYINT,
     Fb_Pos      BIGINT,
     Fb_Neg      BIGINT
 );

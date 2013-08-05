@@ -24,9 +24,9 @@
 **/
 interface Chaplin_Dao_Interface_Video extends Chaplin_Dao_Interface
 {
-    public function getFeaturedVideos();
+    public function getFeaturedVideos(Chaplin_Model_User $modelUser = null);
     
-    public function getByVideoId($strVideoId);
+    public function getByVideoId($strVideoId, Chaplin_Model_User $modelUser = null);
 
     public function getBySearchTerms($strSearchTerms);
     
