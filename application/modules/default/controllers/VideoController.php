@@ -32,7 +32,7 @@ class VideoController extends Chaplin_Controller_Action_Api
             ->getIdentity()
             ->getUser():
         null;
-        
+
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
             return $this->_redirect('/');
@@ -334,6 +334,13 @@ class VideoController extends Chaplin_Controller_Action_Api
     
     public function editAction()
     {
+        $modelUser = Chaplin_Auth::getInstance()
+            ->hasIdentity()?
+        Chaplin_Auth::getInstance()
+            ->getIdentity()
+            ->getUser():
+        null;
+
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
             return $this->_redirect('/');
@@ -341,7 +348,7 @@ class VideoController extends Chaplin_Controller_Action_Api
         
         $modelVideo = Chaplin_Gateway::getInstance()
             ->getVideo()
-            ->getByVideoId($strVideoId);
+            ->getByVideoId($strVideoId, $modelUser);
         
         $form = new default_Form_Video_Edit($modelVideo);
         
