@@ -41,6 +41,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     const FIELD_VIEWS = 'Views';
     const FIELD_PARTIALVIEWS = 'PartialViews';
     const FIELD_BOUNCES = 'Bounces';
+    const FIELD_PRIVACY = 'Privacy';
     const FIELD_OBJ_FEEDBACK = 'Feedback';
     const FIELD_ARRAY_TAGS = 'Tags';
     const FIELD_ARRAY_NOTTAGS = 'NotTags';
@@ -64,6 +65,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         self::FIELD_VIEWS           => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_PARTIALVIEWS    => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_BOUNCES         => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_PRIVACY         => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_ARRAY_TAGS      => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_ARRAY_NOTTAGS   => ['Class' => 'Chaplin_Model_Field_Field'],
         self::CHILD_ASSOC_COMMENTS  => [
@@ -86,6 +88,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         $video->_setField(self::FIELD_FILENAME, $strFilename);
         $video->_setField(self::FIELD_THUMBNAIL, $strThumbURL);
         $video->_setField(self::FIELD_TITLE, $strTitle);
+        $video->_setField(self::FIELD_PRIVACY, Chaplin_Model_Video_Privacy::ID_PUBLIC);
         return $video;
     }
 
@@ -165,6 +168,16 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     public function getLicence()
     {
         return new Chaplin_Model_Video_Licence($this->getLicenceId());
+    }
+
+    public function getPrivacyId()
+    {
+        return $this->_getField(self::FIELD_PRIVACY, Chaplin_Model_Video_Privacy::ID_PUBLIC);
+    }
+
+    public function getPrivacy()
+    {
+        return new Chaplin_Model_Video_Privacy($this->getPrivacyId());
     }
 
     public function getTimeCreated()

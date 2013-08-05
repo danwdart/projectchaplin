@@ -26,9 +26,16 @@ class IndexController extends Zend_Controller_Action
 {
     public function indexAction()
     {
+    	$modelUser = Chaplin_Auth::getInstance()
+    		->hasIdentity()?
+    	Chaplin_Auth::getInstance()
+    		->getIdentity()
+    		->getUser():
+    	null;
+
         $this->view->assign('ittFeaturedVideos', Chaplin_Gateway::getInstance()
             ->getVideo()
-            ->getFeaturedVideos()
+            ->getFeaturedVideos($modelUser)
         );
     }
 }

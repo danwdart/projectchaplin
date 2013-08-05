@@ -32,14 +32,14 @@ class Chaplin_Gateway_Video
         $this->_daoVideo = $daoVideo;
     }
 
-    public function getFeaturedVideos()
+    public function getFeaturedVideos(Chaplin_Model_User $modelUser = null)
     {
-        return $this->_daoVideo->getFeaturedVideos();
+        return $this->_daoVideo->getFeaturedVideos($modelUser);
     }
 
-    public function getByVideoId($strVideoId)
+    public function getByVideoId($strVideoId, Chaplin_Model_User $modelUser = null)
     {
-        return $this->_daoVideo->getByVideoId($strVideoId);
+        return $this->_daoVideo->getByVideoId($strVideoId, $modelUser);
     }
     
     public function getByUser(Chaplin_Model_User $modelUser)
