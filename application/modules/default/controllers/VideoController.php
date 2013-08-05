@@ -95,6 +95,7 @@ class VideoController extends Chaplin_Controller_Action_Api
             $this->view->videoURL = Chaplin_Service::getInstance()->getYouTube($strVideoId)->getDownloadURL();
             $this->view->isLocal = true;
         }
+        $this->view->strScheme = Chaplin_Config_Chaplin::getInstance()->getScheme();
         $this->view->strTitle = $this->view->entryVideo->getTitle()->getText();
     }
 

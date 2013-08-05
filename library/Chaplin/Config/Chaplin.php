@@ -52,4 +52,17 @@ class Chaplin_Config_Chaplin
             'vhost'
         );
     }
+
+    public function isSSL()
+    {
+        return $this->_getValue(
+            $this->_zendConfig->ssl,
+            'ssl'
+        );
+    }
+
+    public function getScheme()
+    {
+        return $this->isSSL()?'https':'http';
+    }
 }

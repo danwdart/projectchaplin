@@ -28,7 +28,14 @@
 	<video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->videoURL;?>">
 	</video>
 <?php else : ?>
-	<iframe class="youtube-player" type="text/html" width="640" height="385" src="http://www.youtube.com/embed/<?php echo $this->entryVideo->getVideoId(); ?>" frameborder="0">
+	<iframe 
+		class="youtube-player"
+		type="text/html"
+		width="640"
+		height="385"
+		src="<?php echo $this->strScheme; ?>://www.youtube.com/embed/<?php echo $this->entryVideo->getVideoId(); ?>"
+		frameborder="0"
+	>
 	</iframe>
 <?php endif; ?>
 <h3>Uploaded on <?php echo date('d/m/Y H:i', strtotime($this->entryVideo->getPublished()));
