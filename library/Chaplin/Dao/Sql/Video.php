@@ -80,11 +80,25 @@ class Chaplin_Dao_Sql_Video
     	return $this->_delete($modelVideo);
     }
 
+    protected function _modelToSql(Array $arrModel)
+    {
+        $arrSql = parent::_modelToSql($arrModel);
+        if (isset($arrSql[Chaplin_Model_Video::FIELD_TIMECREATED])) {
+            $dt = DateTime::createFromFormat('U', $arrSql[Chaplin_Model_Video::FIELD_TIMECREATED]);
+            $arrSql[Chaplin_Model_Video::FIELD_TIMECREATED] = $dt->format(self::DATETIME_SQL);
+        }
+        return $arrSql;
+    }    
+
     protected function _sqlToModel(Array $arrSql)
     {
         $arrModel = parent::_sqlToModel($arrSql);
         unset($arrModel['Fb_Pos']);
         unset($arrModel['Fb_Neg']);
+        if (isset($arrModel[Chaplin_Model_Video::FIELD_TIMECREATED])) {
+            $dt = DateTime::createFromFormat(self::DATETIME_SQL, $arrModel[Chaplin_Model_Video::FIELD_TIMECREATED]);
+            $arrModel[Chaplin_Model_Video::FIELD_TIMECREATED] = (int)$dt->format('U');
+        }
         return $arrModel;
     }
 
