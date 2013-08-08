@@ -24,6 +24,8 @@
 **/
 abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
 {
+    const DATETIME_SQL = 'Y-m-d H:i:s';
+    
     private static $_zendDb;
 
     public function __construct()
