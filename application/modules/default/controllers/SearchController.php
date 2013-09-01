@@ -31,6 +31,24 @@ class SearchController extends Chaplin_Controller_Action_Api
     	if(is_null($strSearchTerm)) {
     		return $this->_redirect('/');
     	}
+
+        try {
+            // TODO : search helper
+            // Note: only full Scheme://FQDN/Path URLs are supported currently
+            $uri = Zend_Uri::factory($strSearchTerm);
+            // Detect YouTube
+            if (false !== strpos($uri->getHost(), 'youtube.com')) {
+                $strQS = $uri->getQuery();
+                parse_str($strQS, $arrQuery);
+                if (isset($arrQuery['v'])) {
+                    $strSearchTerm = $arrQuery['v'];
+                }
+            }
+            // Insert other detectors here
+        } catch (Zend_Uri_Exception $e) {
+            // That's fine
+        }
+
     	$this->view->assign('strSearchTerm', $strSearchTerm);
         $this->view->assign('ittVideos', Chaplin_Gateway::getInstance()
             ->getVideo()
