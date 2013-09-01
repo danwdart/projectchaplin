@@ -24,6 +24,25 @@
 **/
 class VideoController extends Chaplin_Controller_Action_Api
 {
+    public function demoAction()
+    {
+        $modelUser = Chaplin_Auth::getInstance()
+            ->hasIdentity()?
+        Chaplin_Auth::getInstance()
+            ->getIdentity()
+            ->getUser():
+        null;
+
+        $modelVideo = Chaplin_Model_Video::create(
+            $modelUser,
+            '',
+            '',
+            'demo'
+        );
+        $modelVideo->save();
+        $this->_redirect('/');
+    }
+
     public function watchAction()
     {
         $modelUser = Chaplin_Auth::getInstance()
