@@ -83,6 +83,19 @@ class VideoController extends Chaplin_Controller_Action_Api
         return $this->view->assign('formComment', $formComment);
     }
 
+    public function testAction()
+    {
+         $modelVideo = Chaplin_Model_Video::create(
+            Zend_Auth::getInstance()->getIdentity()->getUser(),
+            '',
+            '',
+            'Test Video'
+        );
+        $modelVideo->save();
+        
+        $this->_redirect('/video/watch/id/'.$modelVideo->getVideoId());
+    }
+
     public function watchyoutubeAction()
     {
         $strVideoId = $this->_request->getParam('id', null);

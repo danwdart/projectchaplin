@@ -24,6 +24,8 @@
 **/
 abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
 {
+    const DATETIME_FORMAT = 'Y-m-d H:i:s';
+
     private static $_zendDb;
 
     public function __construct()
@@ -79,6 +81,18 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
             $strText = mb_convert_encoding($strText, 'UTF-8');
         }
         return $strText;
+    }
+
+    protected function _timestampToSqlDateTime($intTimestamp)
+    {
+        $dt = DateTime::createFromFormat('U', $intTimestamp);
+        return $dt->format(self::DATETIME_FORMAT);
+    }
+
+    protected function _sqlDateTimeToTimestamp($strDateTime)
+    {
+        $dt = DateTime::createFromFormat(self::DATETIME_FORMAT, $strDateTime);
+        return $dt->getTimestamp();
     }
 
     protected function _save(Chaplin_Model_Field_Hash $hash)
