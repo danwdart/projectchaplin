@@ -59,7 +59,7 @@ abstract class Chaplin_Config_Abstract
             throw new Exception($strConfigFile);
         }
 
-        $strConfigClass = 'Zend_Config_'.$this->_getConfigType();
+        $strConfigClass = 'Zend_Config_'.ucwords($this->_getConfigType());
         
         if(!class_exists($strConfigClass)) {
             throw new Exception('Config class '.$strConfigClass.' does not exist');
