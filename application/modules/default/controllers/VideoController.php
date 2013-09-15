@@ -220,10 +220,17 @@ class VideoController extends Chaplin_Controller_Action_Api
         if(is_null($strVideoId)) {
             return $this->_redirect('/');
         }
+
+        $modelUser = Chaplin_Auth::getInstance()
+            ->hasIdentity()?
+        Chaplin_Auth::getInstance()
+            ->getIdentity()
+            ->getUser():
+        null;
         
         $modelVideo = Chaplin_Gateway::getInstance()
             ->getVideo()
-            ->getByVideoId($strVideoId);
+            ->getByVideoId($strVideoId, $modelUser);
         // read/etc/protect later?
         $strPath = realpath(APPLICATION_PATH.'/../public'.$modelVideo->getFilename());
         $this->getResponse()->setHeader(
@@ -330,9 +337,14 @@ class VideoController extends Chaplin_Controller_Action_Api
         return $this->_redirect('/');
         $identity = Chaplin_Auth::getInstance()
             ->getIdentity();
-        
-        $modelUser = $identity->getUser();
-        
+
+        $modelUser = Chaplin_Auth::getInstance()
+            ->hasIdentity()?
+        Chaplin_Auth::getInstance()
+            ->getIdentity()
+            ->getUser():
+        null;
+
         $ittVideos = Chaplin_Gateway::getInstance()
             ->getVideo()
             ->getByUserUnnamed($modelUser);
@@ -354,7 +366,7 @@ class VideoController extends Chaplin_Controller_Action_Api
         foreach($arrVideos as $strVideoId => $arrVideos) {
             $modelVideo = Chaplin_Gateway::getInstance()
                 ->getVideo()
-                ->getByVideoId($strVideoId);
+                ->getByVideoId($strVideoId, $modelUser);
             if($modelVideo->isMine()) {
                 $modelVideo->setFromAPIArray($arrVideos);
                 $modelVideo->save();
@@ -410,6 +422,13 @@ class VideoController extends Chaplin_Controller_Action_Api
     
     public function deleteAction()
     {
+        $modelUser = Chaplin_Auth::getInstance()
+            ->hasIdentity()?
+        Chaplin_Auth::getInstance()
+            ->getIdentity()
+            ->getUser():
+        null;
+
         if(!Chaplin_Auth::getInstance()->hasIdentity()) {
             return $this->_redirect('/login');
         }
@@ -421,7 +440,7 @@ class VideoController extends Chaplin_Controller_Action_Api
         
         $modelVideo = Chaplin_Gateway::getInstance()
             ->getVideo()
-            ->getByVideoId($strVideoId);
+            ->getByVideoId($strVideoId, $modelUser);
         
         if ($modelVideo->isMine() || 
             Chaplin_Auth::getInstance()->getIdentity()->getUser()->isGod()) {
