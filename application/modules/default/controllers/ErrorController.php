@@ -38,6 +38,11 @@ class ErrorController extends Zend_Controller_Action
                 $this->view->message = 'Page not found';
                 break;
             default:
+                if ($errors->exception instanceof Chaplin_Exception_NotFound) {
+                    $this->getResponse()->setHttpResponseCode(404);
+                    $this->view->message = 'Page not found';
+                    break;
+                }
                 // application error
                 $this->getResponse()->setHttpResponseCode(500);
                 $this->view->message = 'Application error';
@@ -46,7 +51,7 @@ class ErrorController extends Zend_Controller_Action
         
         // Log exception, if logger available
         if ($log = $this->getLog()) {
-            $log->crit($this->view->message, $errors->exception);
+            $log->crit($this->view->message . ': ' . $errors->exception->getMessage() . PHP_EOL . $errors->exception->getTraceAsString(), $errors->exception);
         }
         
         // conditionally display exceptions

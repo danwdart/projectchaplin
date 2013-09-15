@@ -22,7 +22,7 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class Chaplin_Dao_Exception_Video_NotFound extends Exception
+class Chaplin_Dao_Exception_Video_NotFound extends Chaplin_Exception_NotFound
 {
     const MESSAGE = 'Video by id (%s) not found.';
     
