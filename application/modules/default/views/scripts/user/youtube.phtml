@@ -31,7 +31,16 @@
 <a href="/video/watchyoutube/id/<?php echo $videoEntry->getVideoId();?>">
 <div class="thumb-wrapper">
 <div class="thumb-img">
-    <img src="<?php echo htmlentities($videoEntry->getVideoThumbnails()[0]['url']);?>" alt="View Video"/>
+    <img src="<?php
+    	$thumbnails = $videoEntry->getVideoThumbnails();
+    	echo htmlentities(
+    		(
+    			isset($thumbnails[0]) &&
+	    	 	isset($thumbnails[0]['url'])
+    		)?
+    		$thumbnails[0]['url']:
+    		null
+    	);?>" alt="View Video"/>
 </div>
 <p><?php echo $videoEntry->getTitle();?></p>
 </div>
@@ -49,7 +58,16 @@
 	<a href="/video/watchyoutube/id/<?php echo $videoEntry->getVideoId();?>">
 	<div class="thumb-wrapper">
 	<div class="thumb-img">
-	    <img src="<?php echo htmlentities($videoEntry->getVideoThumbnails()[0]['url']);?>" alt="View Video"/>
+	    <img src="<?php
+    	$thumbnails = $videoEntry->getVideoThumbnails();
+    	echo htmlentities(
+    		(
+    			isset($thumbnails[0]) &&
+	    	 	isset($thumbnails[0]['url'])
+    		)?
+    		$thumbnails[0]['url']:
+    		null
+    	);?>" alt="View Video"/>
 	</div>
 	<p><?php echo $videoEntry->getTitle();?></p>
 	</div>
