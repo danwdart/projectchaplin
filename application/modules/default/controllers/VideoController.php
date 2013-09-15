@@ -104,6 +104,14 @@ class VideoController extends Chaplin_Controller_Action_Api
         return $this->view->assign('formComment', $formComment);
     }
 
+    public function watchshortAction()
+    {
+        $strId   = bin2hex(base64_decode($this->_request->getParam('id')));
+        $strHost = Chaplin_Config_Servers::getInstance()
+            ->getVhost();
+        return $this->_redirect('https://'.$strHost.'/video/watch/id/'.$strId);
+    }
+
     public function testAction()
     {
          $modelVideo = Chaplin_Model_Video::create(
