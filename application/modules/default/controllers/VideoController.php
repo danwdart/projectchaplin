@@ -69,6 +69,8 @@ class VideoController extends Chaplin_Controller_Action_Api
             
         $this->view->assign('video', $modelVideo);
         $this->view->assign('ittComments', $ittComments);
+        $strShortHost = Chaplin_Config_Servers::getInstance()->getShort();
+        $this->view->assign('short', 'http://'.$strShortHost.'/'.base64_encode(hex2bin($strVideoId)));
         
         $formComment = new default_Form_Video_Comment();
                 

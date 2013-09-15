@@ -93,7 +93,7 @@ class Chaplin_Config_Servers
     /**
      * Gets the Virtual Host setting
      * Useful for sending email when
-     * we don't know the request URU
+     * we don't know the request URL
      *
      * @return string
      * @author Dan Dart
@@ -103,6 +103,21 @@ class Chaplin_Config_Servers
         return $this->_getValue(
             $this->_zendConfig->vhost,
             'vhost'
+        );
+    }
+
+    /**
+     * Gets the Shortened Virtual Host setting
+     * Useful for sending video URLs
+     *
+     * @return string
+     * @author Dan Dart
+     **/
+    public function getShort()
+    {
+        return $this->_getValue(
+            $this->_zendConfig->short,
+            'short'
         );
     }
 }
