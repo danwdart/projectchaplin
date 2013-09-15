@@ -70,7 +70,8 @@ class VideoController extends Chaplin_Controller_Action_Api
         $this->view->assign('video', $modelVideo);
         $this->view->assign('ittComments', $ittComments);
         $strShortHost = Chaplin_Config_Servers::getInstance()->getShort();
-        $this->view->assign('short', 'http://'.$strShortHost.'/'.base64_encode(hex2bin($strVideoId)));
+        $this->view->assign('short', 'http://'.$strShortHost.'/'.
+            str_replace('/','$',base64_encode(hex2bin($strVideoId))));
         
         $formComment = new default_Form_Video_Comment();
                 
@@ -107,6 +108,7 @@ class VideoController extends Chaplin_Controller_Action_Api
     public function watchshortAction()
     {
         $strId   = bin2hex(base64_decode($this->_request->getParam('id')));
+        $strId   = str_replace('$','/', $strId);
         $strHost = Chaplin_Config_Servers::getInstance()
             ->getVhost();
         return $this->_redirect('https://'.$strHost.'/video/watch/id/'.$strId);
