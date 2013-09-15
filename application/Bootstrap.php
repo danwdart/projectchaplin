@@ -112,6 +112,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         );
         $router->addRoute('product', $route);
         */
+
+        $route = new Zend_Controller_Router_Route(
+            'http://chapl.in/:id',
+            array(
+                'controller' => 'video',
+                'action' => 'watchshort',
+                'id' => null
+            )
+        );
+        $router->addRoute('watchshort', $route);
         $route = new Zend_Controller_Router_Route(
             'user/:id/:action',
             array(
