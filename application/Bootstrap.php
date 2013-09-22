@@ -113,15 +113,23 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $router->addRoute('product', $route);
         */
 
+        $chapli = new Zend_Controller_Router_Route_Hostname(
+            'chap.li',
+            array(
+                'controller' => 'video',
+                'action' => 'watchshort'
+            )
+        );
+
         $route = new Zend_Controller_Router_Route(
-            'http://chapl.in/:id',
+            '/:id',
             array(
                 'controller' => 'video',
                 'action' => 'watchshort',
                 'id' => null
             )
         );
-        $router->addRoute('watchshort', $route);
+        $router->addRoute('watchshort', $chapli->chain($route));
         $route = new Zend_Controller_Router_Route(
             'user/:id/:action',
             array(
