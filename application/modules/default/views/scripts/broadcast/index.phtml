@@ -40,7 +40,7 @@
 </div>
 <br/>
 <div id="status"></div>
-<script src="http://<?php echo $_SERVER['HTTP_HOST']?>:1337/socket.io/socket.io.js"></script>
+<script src="<?php echo $this->scheme; ?>://<?php echo $_SERVER['HTTP_HOST']?>:1337/socket.io/socket.io.js"></script>
 <script src="/js/video.js"></script>   
 <script src="/js/broadcast.js"></script>
 <link rel="stylesheet" type="text/css" href="/css/broadcast.css"/>

@@ -26,6 +26,7 @@ class BroadcastController extends Zend_Controller_Action
 {
     public function indexAction()
     {
+    	$this->view->scheme = Chaplin_Config_Chaplin::getInstance()->getScheme();
     }
 
     public function testAction()
