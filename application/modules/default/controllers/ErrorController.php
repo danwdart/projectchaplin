@@ -29,32 +29,23 @@ class ErrorController extends Zend_Controller_Action
     {
         $errors = $this->_getParam('error_handler');
         
-        switch ($errors->type) {
-            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
-            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
-            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
-                // 404 error -- controller or action not found
-                $this->getResponse()->setHttpResponseCode(404);
-                $this->view->message = 'Page not found';
-                break;
-            default:
-                if ($errors->exception instanceof Chaplin_Exception_NotFound) {
-                    $this->getResponse()->setHttpResponseCode(404);
-                    $this->view->message = 'Page not found';
-                    break;
-                }
-                // application error
-                $this->getResponse()->setHttpResponseCode(500);
-                $this->view->message = 'Application error';
-                break;
+        if (in_array($errors->type, [
+            Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE,
+            Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER,
+            Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION]) ||
+            $errors->exception instanceof Chaplin_Exception_NotFound
+        ) {
+            $this->getResponse()->setHttpResponseCode(404);
+            $this->view->message = 'Page not found';
+        } else {
+            // application error
+            $this->getResponse()->setHttpResponseCode(500);
+            $this->view->message = 'Application error';
+            if ($log = $this->getLog()) {
+                $log->crit($this->view->message . ': ' . $errors->exception->getMessage() . PHP_EOL . $errors->exception->getTraceAsString(), $errors->exception);
+            }
         }
         
-        // Log exception, if logger available
-        if ($log = $this->getLog()) {
-            $log->crit($this->view->message . ': ' . $errors->exception->getMessage() . PHP_EOL . $errors->exception->getTraceAsString(), $errors->exception);
-        }
-        
-        // conditionally display exceptions
         if ($this->getInvokeArg('displayExceptions') == true) {
             $this->view->exception = $errors->exception;
         }
