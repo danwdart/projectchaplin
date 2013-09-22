@@ -31,6 +31,7 @@
 <br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
 <br/><?php echo $this->video->getDescription(); ?>
 <p>Short URL: <input type="text" disabled value="<?php echo $this->short; ?>"/></p>
+<p><?php echo $this->twittershare; ?></p>
 <br/>
 <a class="atotext" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up">+1</a> /
 <a class="atotext" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down">-1</a> &nbsp;&nbsp;
