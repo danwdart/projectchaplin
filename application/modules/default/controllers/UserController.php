@@ -110,7 +110,13 @@ class UserController extends Chaplin_Controller_Action_Api
 		$yt = new Zend_Gdata_YouTube();
 
 		$this->view->strUsername = $strUsername;
-		$this->view->ittVideos = $yt->getUserUploads($strUsername);
+		try {
+            $this->view->ittVideos = $yt->getUserUploads($strUsername);
+        } catch (Zend_Gdata_App_HttpException $e) {
+            throw new Chaplin_Exception_NotFound('User by username '.$strUsername);
+        } catch (Zend_Uri_Exception $e) {
+            throw new Chaplin_Exception_NotFound('User by username '.$strUsername);
+        }
         $this->view->bHasUserFavourites = true;
         try {
             $this->view->ittFavourites = $yt->getUserFavorites($strUsername);
