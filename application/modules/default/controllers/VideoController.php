@@ -70,8 +70,19 @@ class VideoController extends Chaplin_Controller_Action_Api
         $this->view->assign('video', $modelVideo);
         $this->view->assign('ittComments', $ittComments);
         $strShortHost = Chaplin_Config_Servers::getInstance()->getShort();
-        $this->view->assign('short', 'http://'.$strShortHost.'/'.
-            str_replace('/','-',base64_encode(hex2bin($strVideoId))));
+        $strShortURL = 'http://'.$strShortHost.'/'.
+            str_replace('/','-',base64_encode(hex2bin($strVideoId)));
+        $this->view->assign('short', $strShortURL);
+
+        $strTwitterShare = '<iframe allowtransparency="true" frameborder="0" scrolling="no" src="'.
+        'https://platform.twitter.com/widgets/tweet_button.html'.
+        '?url='.urlencode($strShortURL).
+        '&dnt=true'.
+        '&hashtags=projectchaplin'.
+        '&text='.$this->view->strTitle.' : '.
+        '" style="width:130px; height:20px;"></iframe>';
+
+        $this->view->twittershare = $strTwitterShare;
         
         $formComment = new default_Form_Video_Comment();
                 
