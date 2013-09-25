@@ -268,15 +268,30 @@ class VideoController extends Chaplin_Controller_Action_Api
 
     public function voteAction()
     {
+        $strVideoId = $this->_request->getParam('id', null);
+        
+        $modelUser = Chaplin_Auth::getInstance()
+            ->getIdentity()
+            ->getUser();
+
+        $modelVideo = Chaplin_Gateway::getInstance()
+            ->getVideo()
+            ->getByVideoId($strVideoId, $modelUser);
+
         $this->_helper->layout()->disableLayout(); 
         $this->_helper->viewRenderer->setNoRender(true);
     
-        $strVideoId = $this->_request->getParam('id', null);
+        
+        $strVote = $this->_request->getParam('vote', null);
         if(is_null($strVideoId)) {
             return $this->_redirect('/');
         }
 
-        $strVote = $this->_request->getParam('vote', null);
+        if ('up' == $strVote) {
+            Chaplin_Gateway::getVote()->addVote($modelUser, $modelVideo, 1);
+        } elseif('down' == $strVote) {
+            Chaplin_Gateway::getVote()->addVote($modelUser, $modelVideo, 0);
+        }
     }
     
     public function uploadAction()

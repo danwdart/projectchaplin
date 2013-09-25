@@ -43,6 +43,9 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     const FIELD_BOUNCES = 'Bounces';
     const FIELD_PRIVACY = 'Privacy';
     const FIELD_OBJ_FEEDBACK = 'Feedback';
+    const FIELD_VOTESUP = 'VotesUp';
+    const FIELD_VOTESDOWN = 'VotesDown';
+    const FIELD_YOURVOTE = 'YourVote';
     const FIELD_ARRAY_TAGS = 'Tags';
     const FIELD_ARRAY_NOTTAGS = 'NotTags';
     const CHILD_ASSOC_COMMENTS = 'Comments';
@@ -66,8 +69,9 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         self::FIELD_PARTIALVIEWS    => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_BOUNCES         => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_PRIVACY         => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_ARRAY_TAGS      => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_ARRAY_NOTTAGS   => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_VOTESUP         => ['Class' => 'Chaplin_Model_Field_Readonly'],
+        self::FIELD_VOTESDOWN       => ['Class' => 'Chaplin_Model_Field_Readonly'],
+        self::FIELD_YOURVOTE       => ['Class' => 'Chaplin_Model_Field_Readonly'],
         self::CHILD_ASSOC_COMMENTS  => [
             'Class' => 'Chaplin_Model_Field_Collection',
             'Param' => 'Chaplin_Model_Video_Comment'
@@ -188,6 +192,21 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     public function getUsername()
     {
         return $this->_getField(self::FIELD_USERNAME, null);
+    }
+
+    public function getVotesUp()
+    {
+        return $this->_getField(self::FIELD_VOTESUP, 0);
+    }
+
+    public function getVotesDown()
+    {
+        return $this->_getField(self::FIELD_VOTESDOWN, 0);
+    }
+
+    public function getYourVote()
+    {
+        return $this->_getField(self::FIELD_YOURVOTE, null);
     }
 
     public function isMine()

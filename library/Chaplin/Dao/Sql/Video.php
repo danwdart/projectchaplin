@@ -53,12 +53,20 @@ class Chaplin_Dao_Sql_Video
     
     public function getByVideoId($strVideoId, Chaplin_Model_User $modelUser = null)
     {
-    	$strSql = 'SELECT * FROM %s WHERE %s = ? AND ('.
+        $strSql = 'select Videos.*, '.
+            '(SELECT COUNT(*) AS COUNT FROM Votes WHERE VideoId = ? AND Vote = 1) AS '.Chaplin_Model_Video::FIELD_VOTESUP.
+            ', (SELECT COUNT(*) AS COUNT FROM Votes WHERE VideoId = ? AND Vote = 0) AS '.Chaplin_Model_Video::FIELD_VOTESDOWN.
+            ', (SELECT Vote FROM Votes WHERE VideoId = ? AND Username = ? LIMIT 1) AS YourVote'.
+            ' FROM %s WHERE %s = ? AND ('.
             Chaplin_Model_Video::FIELD_PRIVACY.' = "'.Chaplin_Model_Video_Privacy::ID_PUBLIC.
             ((is_null($modelUser))? '")' : 
             '" OR '.
             Chaplin_Model_Video::FIELD_USERNAME .' = "'.$modelUser->getUsername().'")');
-        $arrRow = $this->_getAdapter()->fetchRow(sprintf($strSql, self::TABLE, self::PK), $strVideoId);
+
+        $arrRow = $this->_getAdapter()->fetchRow(
+            sprintf($strSql, self::TABLE, self::PK),
+            [$strVideoId, $strVideoId, $strVideoId, $modelUser->getUsername(), $strVideoId]
+        );
         if (false === $arrRow) {
             throw new Chaplin_Dao_Exception_Video_NotFound($strVideoId);
         }
