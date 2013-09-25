@@ -118,8 +118,9 @@ class VideoController extends Chaplin_Controller_Action_Api
 
     public function watchshortAction()
     {
-	$strId   = $this->_request->getParam('id');
+	    $strId   = $this->_request->getParam('id');
         $strId   = str_replace('-','/', $strId);
+        $strId   = str_replace(' ','+', $strId);
         $strId   = bin2hex(base64_decode($strId));
         $strHost = Chaplin_Config_Servers::getInstance()
             ->getVhost();
