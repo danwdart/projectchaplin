@@ -235,3 +235,20 @@ label, input[type=button], input[type=submit], button {
 #fun {
     display:none;
 }
+.br {   
+    animation:br;
+    animation-duration:2s;
+    -webkit-animation:br;
+    -webkit-animation-duration:2s;
+}
+
+@keyframes br
+{
+from {transform: rotate(0);}
+to {transform: rotate(360deg);}
+}
+@-webkit-keyframes br
+{
+from {-webkit-transform:rotate(0);}
+to {-webkit-transform: rotate(360deg);}
+}
