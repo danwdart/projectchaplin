@@ -24,8 +24,25 @@
 **/
 ?>
 <h1><?php echo $this->video->getTitle();?></h1>
-    <video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->video->getFilename().'?'.time();?>">
-    </video>
+<video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->video->getFilename().'?'.time();?>">
+</video>
+<span id="fun">
+<br/>Speed:
+	<input id="slower" type="button" value="&laquo; Slow Motion"/>
+	<input id="normalspeed" type="button" value="Normal Speed"/>
+	<input id="faster" type="button" value="Fast Forward &raquo;"/>
+<br/>Effects:
+	<button class="filter" value="none"/>None</button>
+    <button class="filter" value="blur"/>Blur</button>
+    <button class="filter" value="gray"/>Grey</button>
+    <button class="filter" value="sepia"/>Sepia</button>
+    <button class="filter" value="bright"/>Bright</button>
+    <button class="filter" value="highcontrast"/>Contrast</button>
+    <button class="filter" value="colour"/>Colourful</button>
+    <button class="filter" value="invert"/>Invert</button>
+    <button class="filter" value="saturate"/>Saturate</button>
+</span>
+<br/>
 <br/>Uploaded by: <a href="/user/<?php echo $this->video->getUsername(); ?>"><?php echo $this->video->getUsername(); ?></a>
 <br/>Uploaded on <?php echo date('d/m/Y H:i', $this->video->getTimeCreated());?> (<?php echo $this->video->getTimeAgo(); ?>)
 <br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
@@ -73,4 +90,5 @@ echo 'Login above to comment.'; endif;  ?>
 	</p>
 <?php endforeach; ?>
 </div>
+<script src="/js/k.js"></script>
 <script src="/js/video.js"></script>
