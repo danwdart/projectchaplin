@@ -232,19 +232,25 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
         // hacky
         if (60 > $diff) {
-            return $diff.' seconds'.$suffix;
+            return $diff.($diff==1?' second':' seconds').$suffix;
         } elseif (60*60 > $diff) {
-            return number_format(floor($diff/60)).' minutes'.$suffix;
+            $n = number_format(floor($diff/60));
+            return $n.($n==1?' minute':' minutes').$suffix;
         } elseif (60*60*24 > $diff) {
-            return number_format(floor(($diff/60)/60)).' hours'.$suffix;
+            $n = number_format(floor(($diff/60)/60));
+            return $n.($n==1?' hour':' hours').$suffix;
         } elseif (60*60*24*7 > $diff) {
-            return number_format(floor((($diff/60)/60)/24)).' days'.$suffix;
+            $n = number_format(floor((($diff/60)/60)/24));
+            return $n.($n==1?' day':' days').$suffix;
         } elseif (60*60*24*30 > $diff) {
-            return number_format(floor((($diff/60)/60)/24/7)).' weeks'.$suffix;
+            $n = number_format(floor((($diff/60)/60)/24/7));
+            return $n.($n==1?' week':' weeks').$suffix;
         } elseif (60*60*24*365 > $diff) {
-            return number_format(floor((($diff/60)/60)/24/30)).' months'.$suffix;
+            $n = number_format(floor((($diff/60)/60)/24/30));
+            return $n.($n==1?' month':' months').$suffix;
         } else {
-            return number_format(floor((($diff/60)/60)/24/365)).' years'.$suffix;
+            $n = number_format(floor((($diff/60)/60)/24/365));
+            return $n.($n==1?' year':' years').$suffix;
         }
     }
 
