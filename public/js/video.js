@@ -174,9 +174,3 @@ k.code = function() {
     $('#fun').show();
 };
 k.load();
-
-$('#search').keyup(function() {
-    if ('do a barrel roll' == $(this).val()) {
-        $('#video').addClass('br');
-    }
-})
