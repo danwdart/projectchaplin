@@ -57,3 +57,9 @@ CREATE TABLE IF NOT EXISTS Chaplin.Nodes (
     Name        VARCHAR(30) NOT NULL,
     Active      BOOL
 );
+CREATE TABLE IF NOT EXISTS Chaplin.Votes (
+    Username    VARCHAR(255) NOT NULL,
+    VideoId     VARCHAR(50) NOT NULL,
+    Vote        BOOL,
+    PRIMARY KEY (Username, VideoId)
+);

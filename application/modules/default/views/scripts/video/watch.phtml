@@ -31,10 +31,21 @@
 <br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
 <br/><?php echo $this->video->getDescription(); ?>
 <p>Short URL: <input type="text" disabled value="<?php echo $this->short; ?>"/></p>
+<p><strong>&uparrow; <?php echo $this->video->getVotesUp(); ?> / <?php echo $this->video->getVotesDown(); ?> &downarrow;</strong></p>
 <p><?php echo $this->twittershare; ?></p>
 <br/>
-<a class="atotext" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up">+1</a> /
-<a class="atotext" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down">-1</a> &nbsp;&nbsp;
+<?php if(Chaplin_Auth::getInstance()->hasIdentity()): 
+if (1 == $this->video->getYourVote()) :
+echo '+1';
+else:?>
+<a class="atotext" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up">+1</a>
+<?php endif; echo ' / ';
+if (0 == $this->video->getYourVote()) :
+echo '-1';
+else:?>
+<a class="atotext" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down">-1</a>
+<?php endif;?>&nbsp;&nbsp;
+<?php endif; ?>
 <a href="/video/download/id/<?php echo $this->video->getVideoId();?>">Download</a>
 <?php
 	if ($this->video->isMine()):
