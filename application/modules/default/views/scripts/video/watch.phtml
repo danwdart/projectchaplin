@@ -35,12 +35,12 @@
 <p><?php echo $this->twittershare; ?></p>
 <br/>
 <?php if(Chaplin_Auth::getInstance()->hasIdentity()): 
-if (1 == $this->video->getYourVote()) :
+if ('1' === $this->video->getYourVote()) :
 echo '+1';
 else:?>
 <a class="atotext" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up">+1</a>
 <?php endif; echo ' / ';
-if (0 == $this->video->getYourVote()) :
+if ('0' === $this->video->getYourVote()) :
 echo '-1';
 else:?>
 <a class="atotext" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down">-1</a>

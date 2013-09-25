@@ -269,7 +269,7 @@ class VideoController extends Chaplin_Controller_Action_Api
     public function voteAction()
     {
         $strVideoId = $this->_request->getParam('id', null);
-        
+
         $modelUser = Chaplin_Auth::getInstance()
             ->getIdentity()
             ->getUser();

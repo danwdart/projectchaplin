@@ -41,12 +41,14 @@ class Chaplin_Dao_Sql_Vote
 
 	public function addVote(Chaplin_Model_User $modelUser, Chaplin_Model_Video $modelVideo, $intVote)
 	{
-        $this->_getAdapter()->update(
-            self::TABLE,
-            ['vote' => $intVote],
-            [
-                'Username = ?' => $modelUser->getUsername(),
-                'VideoId = ?' => $modelVideo->getVideoId()
+        $this->_getAdapter()->query(
+            'INSERT INTO '.self::TABLE.' SET '.
+            'Vote = ?, Username = ?, VideoId = ? ON DUPLICATE KEY UPDATE Vote = ?',
+            [   
+                $intVote,
+                $modelUser->getUsername(),
+                $modelVideo->getVideoId(),
+                $intVote
             ]
         );
 	}
