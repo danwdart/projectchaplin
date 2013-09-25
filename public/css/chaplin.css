@@ -21,9 +21,12 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,latin-ext);
+
 * {
 	padding:0;
 	margin: 0;
+    font-family: 'Open Sans', sans-serif;
 }
 
 html, body {
@@ -119,7 +122,6 @@ header .right {
 .thumb-wrapper p {
     background-color: grey;
     font-size: 9pt;
-    font-family: script;
     text-align: center;
     color: white;
     padding:5px;
