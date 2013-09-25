@@ -43,30 +43,3 @@
     height: 300px;
     border: outset;
 }
-.none {
-    -webkit-filter: none;
-}
-.blur {
-    -webkit-filter: blur(3px);
-}
-.gray {
-    -webkit-filter: grayscale(1);
-}
-.sepia {
-    -webkit-filter: sepia(1);
-}
-.bright {
-    -webkit-filter: brightness(0.5);
-}
-.highcontrast {
-    -webkit-filter: contrast(5);
-}
-.colour {
-    -webkit-filter: hue-rotate(180deg);
-}
-.invert {
-    -webkit-filter: invert(1);
-}
-.saturate {
-    -webkit-filter: saturate(5);
-}
