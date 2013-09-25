@@ -27,7 +27,7 @@
     <video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->video->getFilename().'?'.time();?>">
     </video>
 <br/>Uploaded by: <a href="/user/<?php echo $this->video->getUsername(); ?>"><?php echo $this->video->getUsername(); ?></a>
-<br/>Uploaded on <?php echo date('d/m/Y H:i', $this->video->getTimeCreated());?>
+<br/>Uploaded on <?php echo date('d/m/Y H:i', $this->video->getTimeCreated());?> (<?php echo $this->video->getTimeAgo(); ?>)
 <br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
 <br/><?php echo $this->video->getDescription(); ?>
 <p>Short URL: <input type="text" disabled value="<?php echo $this->short; ?>"/></p>

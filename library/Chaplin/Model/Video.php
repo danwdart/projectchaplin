@@ -222,6 +222,32 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
             $this->getUsername();
     }
 
+    public function getTimeAgo()
+    {
+        $time = time();
+        $timefrom = $this->getTimeCreated();
+
+        $diff = $time - $timefrom;
+        $suffix = 0 < $diff ? ' ago' : ' in the future';
+
+        // hacky
+        if (60 > $diff) {
+            return $diff.' seconds'.$suffix;
+        } elseif (60*60 > $diff) {
+            return number_format(floor($diff/60)).' minutes'.$suffix;
+        } elseif (60*60*24 > $diff) {
+            return number_format(floor(($diff/60)/60)).' hours'.$suffix;
+        } elseif (60*60*24*7 > $diff) {
+            return number_format(floor((($diff/60)/60)/24)).' days'.$suffix;
+        } elseif (60*60*24*30 > $diff) {
+            return number_format(floor((($diff/60)/60)/24/7)).' weeks'.$suffix;
+        } elseif (60*60*24*365 > $diff) {
+            return number_format(floor((($diff/60)/60)/24/30)).' months'.$suffix;
+        } else {
+            return number_format(floor((($diff/60)/60)/24/365)).' years'.$suffix;
+        }
+    }
+
     public function delete()
     {
         $strFullPath = APPLICATION_PATH.'/public'.$this->getFilename();
