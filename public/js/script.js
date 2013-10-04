@@ -76,4 +76,11 @@ $(document).ready(function() {
         xhr.send(formdata);
         return false;
     });
+
+    // fun
+    $('#search').keyup(function() {
+        if ('do a barrel roll' == $(this).val()) {
+            $('#video, div.thumb-wrapper').addClass('br');
+        }
+    });
 });

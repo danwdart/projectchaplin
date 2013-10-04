@@ -118,8 +118,9 @@ class VideoController extends Chaplin_Controller_Action_Api
 
     public function watchshortAction()
     {
-	$strId   = $this->_request->getParam('id');
+	    $strId   = $this->_request->getParam('id');
         $strId   = str_replace('-','/', $strId);
+        $strId   = str_replace(' ','+', $strId);
         $strId   = bin2hex(base64_decode($strId));
         $strHost = Chaplin_Config_Servers::getInstance()
             ->getVhost();
@@ -268,15 +269,30 @@ class VideoController extends Chaplin_Controller_Action_Api
 
     public function voteAction()
     {
+        $strVideoId = $this->_request->getParam('id', null);
+
+        $modelUser = Chaplin_Auth::getInstance()
+            ->getIdentity()
+            ->getUser();
+
+        $modelVideo = Chaplin_Gateway::getInstance()
+            ->getVideo()
+            ->getByVideoId($strVideoId, $modelUser);
+
         $this->_helper->layout()->disableLayout(); 
         $this->_helper->viewRenderer->setNoRender(true);
     
-        $strVideoId = $this->_request->getParam('id', null);
+        
+        $strVote = $this->_request->getParam('vote', null);
         if(is_null($strVideoId)) {
             return $this->_redirect('/');
         }
 
-        $strVote = $this->_request->getParam('vote', null);
+        if ('up' == $strVote) {
+            Chaplin_Gateway::getVote()->addVote($modelUser, $modelVideo, 1);
+        } elseif('down' == $strVote) {
+            Chaplin_Gateway::getVote()->addVote($modelUser, $modelVideo, 0);
+        }
     }
     
     public function uploadAction()

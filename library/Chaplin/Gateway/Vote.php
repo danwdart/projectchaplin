@@ -1,3 +1,4 @@
+<?php
 /**
  * This file is part of Project Chaplin.
  *
@@ -21,25 +22,18 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-.buttons {
-    width: 15px;
-    height: 300px;
-    float:left;
-    display:block;
-}
-#broadcast {
-    width: 400px;
-    height: 300px;
-    border: outset;
-}
-#canvas {
-    display:none;
-    width: 400px;
-    height: 300px;
-    border: outset;
-}
-.clientvideo {
-    width: 400px;
-    height: 300px;
-    border: outset;
+class Chaplin_Gateway_Vote
+    extends Chaplin_Gateway_Abstract
+{
+    private $_daoVote;
+
+    public function __construct(Chaplin_Dao_Interface_Vote $daoVote)
+    {
+        $this->_daoVote = $daoVote;
+    }
+
+    public function addVote(Chaplin_Model_User $modelUser, Chaplin_Model_Video $modelVideo, $intVote)
+    {
+        return $this->_daoVote->addVote($modelUser, $modelVideo, $intVote);
+    }
 }
