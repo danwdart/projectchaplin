@@ -43,6 +43,9 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     const FIELD_BOUNCES = 'Bounces';
     const FIELD_PRIVACY = 'Privacy';
     const FIELD_OBJ_FEEDBACK = 'Feedback';
+    const FIELD_VOTESUP = 'VotesUp';
+    const FIELD_VOTESDOWN = 'VotesDown';
+    const FIELD_YOURVOTE = 'YourVote';
     const FIELD_ARRAY_TAGS = 'Tags';
     const FIELD_ARRAY_NOTTAGS = 'NotTags';
     const CHILD_ASSOC_COMMENTS = 'Comments';
@@ -66,8 +69,9 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         self::FIELD_PARTIALVIEWS    => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_BOUNCES         => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_PRIVACY         => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_ARRAY_TAGS      => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_ARRAY_NOTTAGS   => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_VOTESUP         => ['Class' => 'Chaplin_Model_Field_Readonly'],
+        self::FIELD_VOTESDOWN       => ['Class' => 'Chaplin_Model_Field_Readonly'],
+        self::FIELD_YOURVOTE       => ['Class' => 'Chaplin_Model_Field_Readonly'],
         self::CHILD_ASSOC_COMMENTS  => [
             'Class' => 'Chaplin_Model_Field_Collection',
             'Param' => 'Chaplin_Model_Video_Comment'
@@ -190,6 +194,21 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         return $this->_getField(self::FIELD_USERNAME, null);
     }
 
+    public function getVotesUp()
+    {
+        return $this->_getField(self::FIELD_VOTESUP, 0);
+    }
+
+    public function getVotesDown()
+    {
+        return $this->_getField(self::FIELD_VOTESDOWN, 0);
+    }
+
+    public function getYourVote()
+    {
+        return $this->_getField(self::FIELD_YOURVOTE, null);
+    }
+
     public function isMine()
     {
         if(!Chaplin_Auth::getInstance()->hasIdentity()) {
@@ -201,6 +220,38 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         }
         return Chaplin_Auth::getInstance()->getIdentity()->getUser()->getUsername() ==
             $this->getUsername();
+    }
+
+    public function getTimeAgo()
+    {
+        $time = time();
+        $timefrom = $this->getTimeCreated();
+
+        $diff = $time - $timefrom;
+        $suffix = 0 < $diff ? ' ago' : ' in the future';
+
+        // hacky
+        if (60 > $diff) {
+            return $diff.($diff==1?' second':' seconds').$suffix;
+        } elseif (60*60 > $diff) {
+            $n = number_format(floor($diff/60));
+            return $n.($n==1?' minute':' minutes').$suffix;
+        } elseif (60*60*24 > $diff) {
+            $n = number_format(floor(($diff/60)/60));
+            return $n.($n==1?' hour':' hours').$suffix;
+        } elseif (60*60*24*7 > $diff) {
+            $n = number_format(floor((($diff/60)/60)/24));
+            return $n.($n==1?' day':' days').$suffix;
+        } elseif (60*60*24*30 > $diff) {
+            $n = number_format(floor((($diff/60)/60)/24/7));
+            return $n.($n==1?' week':' weeks').$suffix;
+        } elseif (60*60*24*365 > $diff) {
+            $n = number_format(floor((($diff/60)/60)/24/30));
+            return $n.($n==1?' month':' months').$suffix;
+        } else {
+            $n = number_format(floor((($diff/60)/60)/24/365));
+            return $n.($n==1?' year':' years').$suffix;
+        }
     }
 
     public function delete()

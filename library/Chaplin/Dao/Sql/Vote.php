@@ -1,3 +1,4 @@
+<?php
 /**
  * This file is part of Project Chaplin.
  *
@@ -21,25 +22,46 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-.buttons {
-    width: 15px;
-    height: 300px;
-    float:left;
-    display:block;
-}
-#broadcast {
-    width: 400px;
-    height: 300px;
-    border: outset;
-}
-#canvas {
-    display:none;
-    width: 400px;
-    height: 300px;
-    border: outset;
-}
-.clientvideo {
-    width: 400px;
-    height: 300px;
-    border: outset;
+class Chaplin_Dao_Sql_Vote
+	extends Chaplin_Dao_Sql_Abstract
+	implements Chaplin_Dao_Interface_Vote
+{
+	const TABLE = 'Votes';
+
+    protected function _getTable()
+	{
+		return self::TABLE;
+	}
+
+    protected function _getPrimaryKey()
+    {
+        // Not single
+        return null;
+    }
+
+	public function addVote(Chaplin_Model_User $modelUser, Chaplin_Model_Video $modelVideo, $intVote)
+	{
+        $this->_getAdapter()->query(
+            'INSERT INTO '.self::TABLE.' SET '.
+            'Vote = ?, Username = ?, VideoId = ? ON DUPLICATE KEY UPDATE Vote = ?',
+            [   
+                $intVote,
+                $modelUser->getUsername(),
+                $modelVideo->getVideoId(),
+                $intVote
+            ]
+        );
+	}
+
+    protected function _sqlToModel(Array $arrSql)
+    {
+    }
+
+    protected function _modelToSql(Array $arrModel)
+    {
+    }
+
+    public function convertToModel($arrData)
+    {
+    }
 }

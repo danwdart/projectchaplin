@@ -22,6 +22,18 @@
  * @link       https://github.com/dandart/projectchaplin
 **/
 $(function() {
+    $('.filter').click(function() {
+        $('#video').attr('class', $(this).attr('value'));
+    });
+    $('#slower').click(function() {
+        $('#video')[0].playbackRate = 0.5;
+    });
+    $('#normalspeed').click(function() {
+        $('#video')[0].playbackRate = 1;
+    });
+    $('#faster').click(function() {
+        $('#video')[0].playbackRate = 2;
+    });
     $('a.atotext').click(function(e) {
         e.preventDefault();
         el = $(this);
@@ -155,3 +167,10 @@ $('.fullscreen').each(function(idx, elem) {
 $('.clicktoplay').each(function(idx, elem) {
     enableclicktoplay(elem);
 });
+
+// nothing important :P
+k = new k();
+k.code = function() {
+    $('#fun').show();
+};
+k.load();

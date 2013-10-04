@@ -24,17 +24,45 @@
 **/
 ?>
 <h1><?php echo $this->video->getTitle();?></h1>
-    <video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->video->getFilename().'?'.time();?>">
-    </video>
+<video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->video->getFilename().'?'.time();?>">
+</video>
+<span id="fun">
+<br/>Speed:
+	<input id="slower" type="button" value="&laquo; Slow Motion"/>
+	<input id="normalspeed" type="button" value="Normal Speed"/>
+	<input id="faster" type="button" value="Fast Forward &raquo;"/>
+<br/>Effects:
+	<button class="filter" value="none"/>None</button>
+    <button class="filter" value="blur"/>Blur</button>
+    <button class="filter" value="gray"/>Grey</button>
+    <button class="filter" value="sepia"/>Sepia</button>
+    <button class="filter" value="bright"/>Bright</button>
+    <button class="filter" value="highcontrast"/>Contrast</button>
+    <button class="filter" value="colour"/>Colourful</button>
+    <button class="filter" value="invert"/>Invert</button>
+    <button class="filter" value="saturate"/>Saturate</button>
+</span>
+<br/>
 <br/>Uploaded by: <a href="/user/<?php echo $this->video->getUsername(); ?>"><?php echo $this->video->getUsername(); ?></a>
-<br/>Uploaded on <?php echo date('d/m/Y H:i', $this->video->getTimeCreated());?>
+<br/>Uploaded on <?php echo date('d/m/Y H:i', $this->video->getTimeCreated());?> (<?php echo $this->video->getTimeAgo(); ?>)
 <br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
 <br/><?php echo $this->video->getDescription(); ?>
 <p>Short URL: <input type="text" disabled value="<?php echo $this->short; ?>"/></p>
+<p><strong>&uparrow; <?php echo $this->video->getVotesUp(); ?> / <?php echo $this->video->getVotesDown(); ?> &downarrow;</strong></p>
 <p><?php echo $this->twittershare; ?></p>
 <br/>
-<a class="atotext" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up">+1</a> /
-<a class="atotext" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down">-1</a> &nbsp;&nbsp;
+<?php if(Chaplin_Auth::getInstance()->hasIdentity()): 
+if ('1' === $this->video->getYourVote()) :
+echo '+1';
+else:?>
+<a class="atotext" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up">+1</a>
+<?php endif; echo ' / ';
+if ('0' === $this->video->getYourVote()) :
+echo '-1';
+else:?>
+<a class="atotext" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down">-1</a>
+<?php endif;?>&nbsp;&nbsp;
+<?php endif; ?>
 <a href="/video/download/id/<?php echo $this->video->getVideoId();?>">Download</a>
 <?php
 	if ($this->video->isMine()):
@@ -62,4 +90,5 @@ echo 'Login above to comment.'; endif;  ?>
 	</p>
 <?php endforeach; ?>
 </div>
+<script src="/js/k.js"></script>
 <script src="/js/video.js"></script>

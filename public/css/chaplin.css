@@ -21,9 +21,12 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,latin-ext);
+
 * {
 	padding:0;
 	margin: 0;
+    font-family: 'Open Sans', sans-serif;
 }
 
 html, body {
@@ -119,7 +122,6 @@ header .right {
 .thumb-wrapper p {
     background-color: grey;
     font-size: 9pt;
-    font-family: script;
     text-align: center;
     color: white;
     padding:5px;
@@ -203,4 +205,52 @@ label, input[type=button], input[type=submit], button {
 }
 
 @media all and (orientation:landscape) {
+}
+
+.none {
+    -webkit-filter: none;
+}
+.blur {
+    -webkit-filter: blur(3px);
+}
+.gray {
+    -webkit-filter: grayscale(1);
+}
+.sepia {
+    -webkit-filter: sepia(1);
+}
+.bright {
+    -webkit-filter: brightness(0.5);
+}
+.highcontrast {
+    -webkit-filter: contrast(5);
+}
+.colour {
+    -webkit-filter: hue-rotate(180deg);
+}
+.invert {
+    -webkit-filter: invert(1);
+}
+.saturate {
+    -webkit-filter: saturate(5);
+}
+#fun {
+    display:none;
+}
+.br {   
+    animation:br;
+    animation-duration:2s;
+    -webkit-animation:br;
+    -webkit-animation-duration:2s;
+}
+
+@keyframes br
+{
+from {transform: rotate(0);}
+to {transform: rotate(360deg);}
+}
+@-webkit-keyframes br
+{
+from {-webkit-transform:rotate(0);}
+to {-webkit-transform: rotate(360deg);}
 }

@@ -1,3 +1,4 @@
+<?php
 /**
  * This file is part of Project Chaplin.
  *
@@ -16,30 +17,30 @@
  *
  * @package    Project Chaplin
  * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
+ * @copyright  2013 Project Chaplin
  * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-.buttons {
-    width: 15px;
-    height: 300px;
-    float:left;
-    display:block;
-}
-#broadcast {
-    width: 400px;
-    height: 300px;
-    border: outset;
-}
-#canvas {
-    display:none;
-    width: 400px;
-    height: 300px;
-    border: outset;
-}
-.clientvideo {
-    width: 400px;
-    height: 300px;
-    border: outset;
-}
+class Chaplin_Model_Field_Readonly
+    extends Chaplin_Model_Field_Abstract
+{
+    private $_mixedValue;
+    
+    public function setFromData($mixedValue)
+    {
+        $this->_mixedValue = $mixedValue;
+    }       
+    
+    public function setValue($mixedValue)
+    {
+        throw new Exception('Access violation: tried to write to a read only field');
+    }
+        
+    public function getValue($mixedDefault)
+    {
+        return (is_null($this->_mixedValue))?
+            $mixedDefault:
+            $this->_mixedValue;
+    }
+}  
