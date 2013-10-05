@@ -46,7 +46,8 @@ class Chaplin_Dao_Sql_Video
             Chaplin_Model_Video::FIELD_PRIVACY.' = "'.Chaplin_Model_Video_Privacy::ID_PUBLIC.
             ((is_null($modelUser))? '"' : 
             '" OR '.
-            Chaplin_Model_Video::FIELD_USERNAME .' = "'.$modelUser->getUsername().'"');
+            Chaplin_Model_Video::FIELD_USERNAME .' = "'.$modelUser->getUsername().'"').
+            ' ORDER BY TimeCreated DESC';
         $arrRows = $this->_getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
 		return new Chaplin_Iterator_Dao_Sql_Rows($arrRows, $this);
 	}
