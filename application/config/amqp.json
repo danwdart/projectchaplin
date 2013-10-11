@@ -5,10 +5,18 @@
                 "Type": "topic",
                 "Queues": {
                     "convert": {
-                        "Keys": ["video.convert.#"]
+                        "Keys": ["video.convert.#"],
+			"Flags": {
+			    "Durable": true,
+			    "AutoDelete": false
+			}
                     },
                     "youtube": {
-                        "Keys": ["video.youtube.#"]
+                        "Keys": ["video.youtube.#"],
+			"Flags": {
+			    "Durable": true,
+			    "AutoDelete": false
+			}
                     },
                     "debug": {
                         "Keys": ["#"],
