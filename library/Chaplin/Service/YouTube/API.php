@@ -68,4 +68,31 @@ class Chaplin_Service_YouTube_API
 
         return '/uploads/'.basename($strFilename);
     }
+
+    public function importVideo(Chaplin_Model_User $modelUser)
+    {
+        $strVideoId = $this->_strURL;
+
+        $yt = new Zend_Gdata_YouTube();
+        $entryVideo = $yt->getVideoEntry($strVideoId);
+
+        $strTitle = $entryVideo->getVideoTitle();
+
+        $strPath = realpath(APPLICATION_PATH.'/../public/uploads');
+        $strVideoFile = $strPath.'/'.$strVideoId.'.webm';
+        $strRelaFile = '/uploads/'.$strVideoId.'.webm';
+        $strThumbnail = $this->downloadThumbnail($strPath);
+            
+        $modelVideo = Chaplin_Model_Video::create(
+            $modelUser,
+            $strRelaFile,
+            $strThumbnail,
+            $strTitle
+        );
+        $modelVideo->save();
+        
+        // msg
+        $modelYoutube = Chaplin_Model_Video_Youtube::create($modelVideo, $strVideoId);
+        Chaplin_Gateway::getInstance()->getVideo_Youtube()->save($modelYoutube);
+    }
 }

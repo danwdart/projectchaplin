@@ -61,6 +61,10 @@ class VideoController extends Chaplin_Controller_Action_Api
             ->getVideo()
             ->getByVideoId($strVideoId, $modelUser);
 
+        if ($this->_isAPICall()) {
+            return $this->view->assign($modelVideo->toArray());
+        }
+
         $this->view->strTitle = $modelVideo->getTitle();
 
         $ittComments = Chaplin_Gateway::getInstance()
@@ -154,7 +158,9 @@ class VideoController extends Chaplin_Controller_Action_Api
         $this->view->entryVideo = $entryVideo;
         // This won't work remotely
         if (in_array($this->_request->getClientIp(), ['127.0.0.1', '::1'])) {
-            $this->view->videoURL = Chaplin_Service::getInstance()->getYouTube($strVideoId)->getDownloadURL();
+            $this->view->videoURL = Chaplin_Service::getInstance()
+                ->getYouTube($strVideoId)
+                ->getDownloadURL();
             $this->view->isLocal = true;
         }
         $this->view->strScheme = Chaplin_Config_Chaplin::getInstance()->getScheme();
@@ -168,33 +174,12 @@ class VideoController extends Chaplin_Controller_Action_Api
             return $this->_redirect('/');
         }
 
-        // Get the YT information
-
-        $yt = new Zend_Gdata_YouTube();
-        $entryVideo = $yt->getVideoEntry($strVideoId);
-
-        $strTitle = $entryVideo->getVideoTitle();
-
-        $strPath = realpath(APPLICATION_PATH.'/../public/uploads');
-        $strVideoFile = $strPath.'/'.$strVideoId.'.webm';
-        $strRelaFile = '/uploads/'.$strVideoId.'.webm';
-        $strThumbnail = Chaplin_Service::getInstance()
-            ->getYouTube($strVideoId)
-            ->downloadThumbnail($strPath);
-
         $modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser();
-            
-        $modelVideo = Chaplin_Model_Video::create(
-            $modelUser,
-            $strRelaFile,
-            $strThumbnail,
-            $strTitle
-        );
-        $modelVideo->save();
-        
-        $modelYoutube = Chaplin_Model_Video_Youtube::create($modelVideo, $strVideoId);
-        Chaplin_Gateway::getInstance()->getVideo_Youtube()->save($modelYoutube);
 
+        Chaplin_Service::getInstance()
+            ->getYouTube($strVideoId)
+            ->importVideo($modelUser);
+        
         $this->_redirect('/video/watch/id/'.$modelVideo->getVideoId());
     }
 
@@ -210,6 +195,10 @@ class VideoController extends Chaplin_Controller_Action_Api
         $ittComments = Chaplin_Gateway::getInstance()
             ->getVideo_Comment()
             ->getByVideoId($strVideoId);
+
+        if ($this->_isAPICall()) {
+            return $this->view->assign($ittComments->toArray());
+        }
 
         $this->view->assign('comments', $ittComments);
     }
@@ -452,12 +441,6 @@ class VideoController extends Chaplin_Controller_Action_Api
         }
         
         return $this->_redirect('/video/watch/id/'.$strVideoId);
-    }
-    
-    public function youtubeAction()
-    {
-        $strURL = $this->_request->getQuery('url');
-         
     }
     
     public function deleteAction()

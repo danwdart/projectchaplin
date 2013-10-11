@@ -24,7 +24,7 @@
 **/
 class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
 {
-    const FIELD_NODEID = self::FIELD_ID;
+    const FIELD_NODEID = 'NodeId';
     const FIELD_IP = 'IP';
     const FIELD_NAME = 'Name';
     const FIELD_ACTIVE = 'Active';
@@ -45,6 +45,11 @@ class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
         $node->_setField(self::FIELD_NAME, $strName);
         $node->_setField(self::FIELD_ACTIVE, false);
         return $node;
+    }
+
+    public function getId()
+    {
+        return $this->getNodeId();
     }
 
     public function getNodeId()

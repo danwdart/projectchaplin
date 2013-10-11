@@ -24,7 +24,7 @@
 **/
 class Chaplin_Model_User extends Chaplin_Model_Field_Hash
 {
-    const FIELD_Username = '_id';
+    const FIELD_Username = 'Username';
     const FIELD_Password = 'Password';
     const FIELD_Nick = 'Nick';
     const FIELD_Email = 'Email';
@@ -55,6 +55,20 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
         $modelUser->_setField(self::FIELD_Username, self::encodeUsername($strUsername));
         $modelUser->setPassword($strPassword);
         return $modelUser;
+    }
+
+    public function getId()
+    {
+        return $this->_getField(self::FIELD_Username, null);
+    }
+
+    public function toArray()
+    {
+        $arrOut = parent::toArray();
+        unset($arrOut[self::FIELD_Password]);
+        unset($arrOut[self::FIELD_VALIDATION]);
+        unset($arrOut[self::FIELD_HASH]);
+        return $arrOut;
     }
 
     public static function encodeUsername($strUsername)

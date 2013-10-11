@@ -22,6 +22,11 @@ class Chaplin_Controller_Action_Helper_RestContextSwitch
         return parent::addActionContext('global', $contexts);
     }
 
+    public function getCurrentContext()
+    {
+        return $this->_currentContext;
+    }
+
     public function initContext($format = null)
     {
         $this->_currentContext = null;

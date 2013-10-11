@@ -39,6 +39,10 @@ class UserController extends Chaplin_Controller_Action_Api
 			$this->_redirect('/');
 		}
 
+        if ($this->_isAPICall()) {
+            return $this->view->assign($modelUser->toArray());
+        }
+
 		$this->view->bIsMe = Chaplin_Auth::getInstance()->hasIdentity() &&
 			Chaplin_Auth::getInstance()->getIdentity()->getUser()->getUsername() ==
 				$modelUser->getUsername();
@@ -125,4 +129,26 @@ class UserController extends Chaplin_Controller_Action_Api
             $this->view->bHasUserFavourites = false;
         }
 	}
+
+    public function downloadyoutubeAction()
+    {
+        $strUsername = $this->_request->getParam('id', null);
+
+        $yt = new Zend_Gdata_YouTube();
+        try {
+            $ittVideos = $yt->getUserUploads($strUsername);
+        } catch (Zend_Gdata_App_HttpException $e) {
+            throw new Chaplin_Exception_NotFound('User by username '.$strUsername);
+        } catch (Zend_Uri_Exception $e) {
+            throw new Chaplin_Exception_NotFound('User by username '.$strUsername);
+        }
+
+        // todo find out how to get all
+
+        foreach($ittVideos as $video) {
+            var_dump($video->getVideoId());
+        }
+
+        die();
+    }
 }

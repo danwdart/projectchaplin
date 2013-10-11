@@ -24,7 +24,7 @@
 **/
 class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 {
-    const FIELD_VIDEOID = self::FIELD_ID;
+    const FIELD_VIDEOID = 'VideoId';
     const FIELD_TIMECREATED = 'TimeCreated';
     const FIELD_USERNAME = 'Username';
     const FIELD_FILENAME = 'Filename';
@@ -94,6 +94,11 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         $video->_setField(self::FIELD_TITLE, $strTitle);
         $video->_setField(self::FIELD_PRIVACY, Chaplin_Model_Video_Privacy::ID_PUBLIC);
         return $video;
+    }
+
+    public function getId()
+    {
+        return $this->getVideoId();
     }
 
     public function setFromAPIArray(Array $arrVideo)

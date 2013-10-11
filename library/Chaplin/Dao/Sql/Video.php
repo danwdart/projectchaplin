@@ -78,12 +78,14 @@ class Chaplin_Dao_Sql_Video
 
     public function getBySearchTerms($strSearchTerms)
     {
-    	return [];
+        // todo fill in
+    	return new Chaplin_Iterator_Dao_Sql_Rows([], $this);
     }
     
     public function getByUser(Chaplin_Model_User $modelUser)
     {
-    	return [];
+        // todo fill in
+    	return new Chaplin_Iterator_Dao_Sql_Rows([], $this);
     }
             
     public function delete(Chaplin_Model_Video $modelVideo)

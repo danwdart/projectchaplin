@@ -89,6 +89,7 @@ abstract class Chaplin_Dao_Mongo_Abstract implements Chaplin_Dao_Interface
                     case 'Chaplin_Model_Field_Field':
                         $arrUpdate[$strPrefix.$strFieldName] = $this->_textToSafe($objField->getValue(null));
                         break;
+                    case 'Chaplin_Model_Field_Readonly':
                     case 'Chaplin_Model_Field_FieldId':
                         // Ids do not update
                         break;

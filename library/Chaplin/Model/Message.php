@@ -25,7 +25,7 @@
 class Chaplin_Model_Message
     extends Chaplin_Model_Field_Hash
 {
-    const FIELD_MESSAGEID = '_id';
+    const FIELD_MESSAGEID = 'MessageId';
     const FIELD_MAILTEMPLATE = 'MailTemplate';
     const FIELD_RECIPIENT = 'Recipient';
     const FIELD_SENDER = 'Sender';
@@ -68,6 +68,11 @@ class Chaplin_Model_Message
         $modelMessage->_setField(self::FIELD_DATE_TIMECREATED, time();
         $modelMessage->_setField(self::FIELD_PRIORITY, $intPriority);
         return $modelMessage;
+    }
+
+    public function getId()
+    {
+        return $this->_getField(self::FIELD_MESSAGEID, null);
     }
 
     public function save()

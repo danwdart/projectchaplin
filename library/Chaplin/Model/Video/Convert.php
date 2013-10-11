@@ -42,6 +42,11 @@ class Chaplin_Model_Video_Convert
         return $msgVideo;
     }
 
+    public function getId()
+    {
+        return $this->_getField(self::FIELD_VIDEOID, null);
+    }
+
     private function _getModelVideo()
     {
         if (is_null($this->_modelVideo)) {
