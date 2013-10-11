@@ -118,4 +118,13 @@ class Chaplin_Iterator_Dao_Sql_Rows implements Chaplin_Iterator_Interface
     {
         throw new Chaplin_Exception_NotImplemented();
     }
+
+    public function toArray()
+    {
+        $arrOut = [];
+        foreach($this as $item) {
+            $arrOut[] = $item->toArray();
+        }
+        return $arrOut;
+    }
 }

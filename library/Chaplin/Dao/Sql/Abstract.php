@@ -59,20 +59,12 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
 
     protected function _modelToSql(Array $arrModel)
     {
-        $arrSql = $arrModel;
-        if (isset($arrSql['_id'])) {
-            $arrSql[$this->_getPrimaryKey()] = $arrSql['_id'];
-            unset($arrSql['_id']);
-        }
-        return $arrSql;
+        return $arrModel;
     }
 
     protected function _sqlToModel(Array $arrSql)
     {
-        $arrModel = $arrSql;
-        $arrModel['_id'] = $arrModel[$this->_getPrimaryKey()];
-        unset($arrModel[$this->_getPrimaryKey()]);
-        return $arrModel;
+        return $arrSql;
     }
 
     private function _textToSafe($strText)
@@ -134,6 +126,8 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
                     case 'Chaplin_Model_Field_Field':
                     case 'Chaplin_Model_Field_FieldId':
                         $arrUpdate[$strFieldName] = $this->_textToSafe($objField->getValue(null));
+                        break;
+                    case 'Chaplin_Model_Field_Readonly':
                         break;
                     default:
                         throw new Exception('Unmanaged class: '.$strClass);

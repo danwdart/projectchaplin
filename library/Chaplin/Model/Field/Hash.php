@@ -25,9 +25,7 @@
 class Chaplin_Model_Field_Hash
     extends Chaplin_Model_Field_Abstract
     implements JsonSerializable
-{
-    const FIELD_ID = Chaplin_Dao_Mongo_Abstract::FIELD_Id;
-    
+{    
     protected $_arrFields = array();
     protected $_collFields = array();
     protected $_bIsNew = true;
@@ -39,7 +37,7 @@ class Chaplin_Model_Field_Hash
 
     public function getId()
     {
-        return $this->_getField(self::FIELD_ID, null);
+        throw new OutOfBoundsException('getId needs to be overridden!');
     }
 
     public static function createFromData(Chaplin_Dao_Interface $dao, Array $arrArray)
@@ -100,9 +98,14 @@ class Chaplin_Model_Field_Hash
         }
     }
 
-    public function jsonSerialize()
+    public function toArray()
     {
         return $this->_getModelArray($this->_collFields);
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->toArray();
     }
     
     private function _getModelArray(Array $arrFields)
@@ -112,6 +115,7 @@ class Chaplin_Model_Field_Hash
             $strClass = get_class($objField);
             switch($strClass) {
                 case 'Chaplin_Model_Field_Field':
+                case 'Chaplin_Model_Field_Readonly':
                 case 'Chaplin_Model_Field_FieldId':
                     $arrOut[$strFieldName] = $objField->getValue(null);
                     break;

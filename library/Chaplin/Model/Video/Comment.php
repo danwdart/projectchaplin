@@ -51,6 +51,11 @@ class Chaplin_Model_Video_Comment
         return $comment;
     }
 
+    public function getId()
+    {
+        return $this->_getField(self::FIELD_ID);
+    }
+
     public function getCommentId()
     {
         return $this->_getField(self::FIELD_ID, null);

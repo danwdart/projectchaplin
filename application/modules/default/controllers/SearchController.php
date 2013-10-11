@@ -49,11 +49,16 @@ class SearchController extends Chaplin_Controller_Action_Api
             // That's fine
         }
 
-    	$this->view->assign('strSearchTerm', $strSearchTerm);
-        $this->view->assign('ittVideos', Chaplin_Gateway::getInstance()
+        $ittVideos = Chaplin_Gateway::getInstance()
             ->getVideo()
-            ->getBySearchTerms($strSearchTerm)
-        );
+            ->getBySearchTerms($strSearchTerm);        
+
+        if ($this->_isAPICall()) {
+            return $this->view->assign($ittVideos->toArray());
+        }
+        
+        $this->view->assign('strSearchTerm', $strSearchTerm);
+        $this->view->assign('ittVideos', $ittVideos);
 
         // Retrieve Youtube results
 
@@ -68,6 +73,10 @@ class SearchController extends Chaplin_Controller_Action_Api
         try {
             $this->view->ytUser = $yt->getUserProfile($strSearchTerm);
         } catch (Exception $e) {}
+
+        //$dm = new Dailymotion();
+        //$result = $dm->get('/search/'.urlencode($strSearchTerm));
+        //die(var_dump($result));
 
         $this->view->videoFeed = $yt->getVideoFeed($query);
     }

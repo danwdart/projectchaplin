@@ -19,6 +19,14 @@ class Chaplin_Controller_Action_Api
 
         $this->_postInit();
     }
+    
+    protected function _isAPICall()
+    {
+        return 'json' == $this->_helper
+            ->getHelper('restContextSwitch')
+            ->getCurrentContext();
+    }
+
  
     protected function _postInit()
     {
