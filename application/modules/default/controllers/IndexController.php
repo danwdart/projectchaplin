@@ -33,10 +33,15 @@ class IndexController extends Chaplin_Controller_Action_Api
     		->getUser():
     	null;
 
-        $this->view->assign('ittFeaturedVideos', Chaplin_Gateway::getInstance()
+        $ittFeaturedVideos = Chaplin_Gateway::getInstance()
             ->getVideo()
-            ->getFeaturedVideos($modelUser)
-        );
+            ->getFeaturedVideos($modelUser);
+
+        if ($this->_isAPICall()) {
+            return $this->view->assign($ittFeaturedVideos->toArray());
+        }
+
+        $this->view->assign('ittFeaturedVideos', $ittFeaturedVideos);
     }
 }
 
