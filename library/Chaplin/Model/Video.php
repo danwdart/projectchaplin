@@ -128,7 +128,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
     public function getFilename()
     {
-        return $this->_getField(self::FIELD_FILENAME, null);
+        return $this->_strURLPrefix.$this->_getField(self::FIELD_FILENAME, null);
     }
     
     public function setFilename($strFilename)
@@ -151,7 +151,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
     public function getThumbnail()
     {
-        return $this->_getField(self::FIELD_THUMBNAIL, null);
+        return $this->_strURLPrefix.$this->_getField(self::FIELD_THUMBNAIL, null);
     }
     
     public function getDescription()

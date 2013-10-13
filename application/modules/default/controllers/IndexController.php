@@ -41,6 +41,12 @@ class IndexController extends Chaplin_Controller_Action_Api
             return $this->view->assign($ittFeaturedVideos->toArray());
         }
 
+        $ittNodes = Chaplin_Gateway::getInstance()
+            ->getNode()
+            ->getAllNodes();
+
+        $this->view->ittNodes = $ittNodes;
+        
         $this->view->assign('ittFeaturedVideos', $ittFeaturedVideos);
     }
 }

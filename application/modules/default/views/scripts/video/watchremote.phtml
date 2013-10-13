@@ -24,8 +24,7 @@
 **/
 ?>
 <h1><?php echo $this->video->getTitle();?></h1>
-<video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->node->getRoot().
-			  $this->video->getFilename().'?'.time();?>">
+<video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->video->getFilename().'?'.time();?>">
 </video>
 <br/> <!-- TODO get user on here? -->
 <br/>Uploaded by: <a href="<?php
