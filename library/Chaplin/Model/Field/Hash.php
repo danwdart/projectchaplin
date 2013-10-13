@@ -51,6 +51,17 @@ class Chaplin_Model_Field_Hash
         return $hash;
     }
 
+    public static function createFromAPIResponse(Array $arrAPI)
+    {
+        $hash = new static();
+        foreach($arrAPI as $strField => $mixedValue) {
+            $hash->_getFieldObject($strField)->setFromData($mixedValue);
+        }
+        $hash->_bIsNew = false;
+        
+        return $hash;
+    }
+
     public static function createFromIterator(Iterator $itt, Array $arrArray)
     {
         $hash = new static();

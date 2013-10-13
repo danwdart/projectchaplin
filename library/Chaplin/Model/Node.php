@@ -72,9 +72,14 @@ class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
         return $this->_getField(self::FIELD_ACTIVE, false);
     }
 
+    public function getRoot()
+    {
+        return 'http://'.$this->getIP();
+    }
+
     public function getStatusURL()
     {
-        return 'http://'.$this->getIP().'/admin/nodestatus?format=json';
+        return $this->getRoot().'/admin/nodestatus?format=json';
     }
 
     public function ping()
@@ -88,6 +93,22 @@ class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
             return true;
         }
         return false;
+    }
+
+    private function _get($url)
+    {
+        $strURL = $this->getRoot().$url;
+
+        return Chaplin_Service::getInstance()
+            ->getHttpClient()
+            ->getObject($strURL);
+    }
+
+    public function getVideoById($strVideoId)
+    {
+        // todo header
+        $arrVideo = $this->_get('/video/watch/id/'.$strVideoId.'?format=json');
+        return Chaplin_Model_Video::createFromAPIResponse($arrVideo);
     }
 
     public function delete()

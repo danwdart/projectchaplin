@@ -53,9 +53,14 @@ class Chaplin_Service_Http_Client
      * @return string
      * @author Dan Dart
     **/
-    public function getPageBody($strURL, $intLogPriority = null)
+    public function getPageBody($strURL, $intLogPriority = Zend_Log::ERR)
     {
         return $this->_objHttpClient->getPageBody($strURL, $intLogPriority);
+    }
+
+    public function getObject($strURL, $intLogPriority = Zend_Log::ERR)
+    {
+        return Zend_Json::decode($this->_objHttpClient->getPageBody($strURL, $intLogPriority));
     }
     /**
      * Use use the client to parse the page 
@@ -109,7 +114,7 @@ class Chaplin_Service_Http_Client
      * @return Chaplin_Cache_HttpClient
      * @author Dan Dart
     **/
-    public function getHttpResponse($strURL, $intLogPriority = null, $bCache = true)
+    public function getHttpResponse($strURL, $intLogPriority = Zend_Log::ERR, $bCache = true)
     {
         return $this->_objHttpClient->getHttpResponse($strURL, $intLogPriority, $bCache);
     }

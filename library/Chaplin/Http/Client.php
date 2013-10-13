@@ -64,7 +64,7 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
      * @throws Chaplin_Http_Exception_InvalidURL
      * @author Dan Dart
     **/
-    public function getPageBody($url, $intLogPriority = null)
+    public function getPageBody($url, $intLogPriority = Zend_Log::ERR)
     {
       // Make sure the URL has no spaces - re-encoding screws it up
       $url = str_replace(' ', '%20', $url);      
@@ -81,19 +81,19 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
       }
       catch(Zend_Uri_Exception $e)
       {
-          Shared_Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url);
+          Chaplin_Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url, $intLogPriority);
           throw new Chaplin_Http_Exception_InvalidURL($url, $e);
       }
       
       $httpResponse = $this->_zendHttpClient->request();
-      
+
       // Log if priority added - and if 200 don't log the body
       // Tim hates this - but is there another way?
       if (!is_null($intLogPriority)) {
         if (200 == $httpResponse->getStatus())
-          Shared_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
+          Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
         else
-          Shared_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
+          Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
       }
       
       if (!$httpResponse->isSuccessful())
@@ -103,6 +103,48 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
       
       return $this->_arrPageBody[$url];
     }
+
+    public function getObject($url, $intLogPriority = Zend_Log::ERR)
+    {
+      // Make sure the URL has no spaces - re-encoding screws it up
+      $url = str_replace(' ', '%20', $url);      
+    
+      if (isset($this->_arrPageBody[$url]))
+          return $this->_arrPageBody[$url];
+      try
+      {
+          $this->_zendHttpClient->setUri($url);
+          $this->_zendHttpClient->setHeaders('Accept', 'application/json');
+      }
+      catch(Zend_Http_Client_Exception $e)
+      {
+          throw new Chaplin_Http_Exception_InvalidURL($url, $e);
+      }
+      catch(Zend_Uri_Exception $e)
+      {
+          Chaplin_Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url, $intLogPriority);
+          throw new Chaplin_Http_Exception_InvalidURL($url, $e);
+      }
+      
+      $httpResponse = $this->_zendHttpClient->request();
+
+      // Log if priority added - and if 200 don't log the body
+      // Tim hates this - but is there another way?
+      if (!is_null($intLogPriority)) {
+        if (200 == $httpResponse->getStatus())
+          Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
+        else
+          Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
+      }
+      
+      if (!$httpResponse->isSuccessful())
+          throw new Chaplin_Http_Exception_Unsuccessful($url, $httpResponse->getStatus());
+          
+      $this->_arrPageBody[$url] = $this->_checkForMetaRedirect($url, $httpResponse->getBody());
+      
+      return $this->_arrPageBody[$url];
+    }
+
     
     public function getResponse($url)
     {
@@ -119,7 +161,7 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
           }
           catch(Zend_Uri_Exception $e)
           {
-              Shared_Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url);
+              Chaplin_Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url);
               throw new Chaplin_Http_Exception_InvalidURL($url, $e);
           }
 
@@ -129,9 +171,9 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
           // Tim hates this - but is there another way?
           if (!is_null($intLogPriority)) {
             if (200 == $httpResponse->getStatus())
-              Shared_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
+              Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
             else
-              Shared_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
+              Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
           }
 
           $this->_arrPageBody[$url] = $this->_checkForMetaRedirect($url, $httpResponse->getBody());
@@ -233,7 +275,7 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
     * @return Zend_Http_Response
     * @author Dan Dart
     **/
-    public function getHttpResponse($url, $intLogPriority = null)
+    public function getHttpResponse($url, $intLogPriority = Zend_Log::ERR)
     {
         // Make sure the URL has no spaces - re-encoding screws it up
         $url = str_replace(' ', '%20', $url);      
@@ -248,7 +290,7 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         }
         catch(Zend_Uri_Exception $e)
         {
-            Shared_Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url);
+            Chaplin_Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url);
             throw new Chaplin_Http_Exception_InvalidURL($url, $e);
         }
 
@@ -258,9 +300,9 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         // Tim hates this - but is there another way?
         if (!is_null($intLogPriority)) {
             if (200 == $httpResponse->getStatus()) {
-                Shared_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
+                Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
             } else {
-                Shared_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
+                Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
             }
         }
 

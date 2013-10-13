@@ -120,6 +120,35 @@ class VideoController extends Chaplin_Controller_Action_Api
         return $this->view->assign('formComment', $formComment);
     }
 
+    public function watchremoteAction()
+    {
+        $modelUser = Chaplin_Auth::getInstance()
+            ->hasIdentity()?
+        Chaplin_Auth::getInstance()
+            ->getIdentity()
+            ->getUser():
+        null;
+
+        $strVideoId = $this->_request->getParam('id', null);
+        if(is_null($strVideoId)) {
+            return $this->_redirect('/');
+        }
+        
+        $strNodeId = $this->_request->getParam('node', 0);
+
+        $modelNode = Chaplin_Gateway::getNode()
+            ->getByNodeId($strNodeId);
+
+        $this->view->node = $modelNode;
+
+        $modelVideo = $modelNode->getVideoById($strVideoId);
+
+        $this->view->strTitle = $modelVideo->getTitle();
+        // todo comments
+
+        $this->view->assign('video', $modelVideo);
+    }
+
     public function watchshortAction()
     {
 	    $strId   = $this->_request->getParam('id');
