@@ -98,17 +98,26 @@ class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
     private function _get($url)
     {
         $strURL = $this->getRoot().$url;
-
-        return Chaplin_Service::getInstance()
-            ->getHttpClient()
-            ->getObject($strURL);
+        try {
+            return Chaplin_Service::getInstance()
+                ->getHttpClient()
+                ->getObject($strURL);
+        } catch (Zend_Http_Client_Adapter_Exception $e) {
+            return [];
+        }
     }
 
     public function getVideoById($strVideoId)
     {
         // todo header
         $arrVideo = $this->_get('/video/watch/id/'.$strVideoId.'?format=json');
-        return Chaplin_Model_Video::createFromAPIResponse($arrVideo);
+        return Chaplin_Model_Video::createFromAPIResponse($arrVideo, $this->getRoot());
+    }
+
+    public function getFeaturedVideos()
+    {
+        $arrVideo = $this->_get('/?format=json');
+        return new Chaplin_Iterator_Api_ModelArray('Chaplin_Model_Video', $this->getRoot(), $arrVideo);
     }
 
     public function delete()

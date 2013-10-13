@@ -29,6 +29,8 @@ class Chaplin_Model_Field_Hash
     protected $_arrFields = array();
     protected $_collFields = array();
     protected $_bIsNew = true;
+    // Only used for API=based items
+    protected $_strURLPrefix;
 
     public function bIsNew()
     {
@@ -51,9 +53,10 @@ class Chaplin_Model_Field_Hash
         return $hash;
     }
 
-    public static function createFromAPIResponse(Array $arrAPI)
+    public static function createFromAPIResponse(Array $arrAPI, $strURLPrefix)
     {
         $hash = new static();
+        $hash->_strURLPrefix = $strURLPrefix;
         foreach($arrAPI as $strField => $mixedValue) {
             $hash->_getFieldObject($strField)->setFromData($mixedValue);
         }
