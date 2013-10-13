@@ -34,11 +34,21 @@ class Chaplin_Cache_Http_Client
         $this->setCache($cacheHttpClient);
     }
     
-    public function getPageBody($strURL, $intLogPriority = null)
+    public function getPageBody($strURL, $intLogPriority = Zend_Log::ERR)
     {
       $cacheKey   = $this->_getCacheKey(__METHOD__, $strURL);
       if (false === ($response = $this->_cacheLoadKey($cacheKey))) {
         $response   = $this->_objHttpClient->getPageBody($strURL, $intLogPriority);
+        $this->_cacheSaveKey($cacheKey, $response);
+      }
+      return $response;
+    }
+
+    public function getObject($strURL, $intLogPriority = Zend_Log::ERR)
+    {
+      $cacheKey   = $this->_getCacheKey(__METHOD__, $strURL);
+      if (false === ($response = $this->_cacheLoadKey($cacheKey))) {
+        $response   = $this->_objHttpClient->getObject($strURL, $intLogPriority);
         $this->_cacheSaveKey($cacheKey, $response);
       }
       return $response;
@@ -54,13 +64,13 @@ class Chaplin_Cache_Http_Client
         return $response;
     }
 
-    public function getHttpResponse($strURL, $intLogPriority = null, $bCache = true)
+    public function getHttpResponse($strURL, $intLogPriority = Zend_Log::ERR, $bCache = true)
     {
         if(!$bCache) {
             return $this->_objHttpClient->getHttpResponse($strURL, $intLogPriority);
         }
         
-        Shared_Log::getInstance()->log('Cache: trying to load ('.$strURL.')', $intLogPriority);
+        Chaplin_Log::getInstance()->log('Cache: trying to load ('.$strURL.')', $intLogPriority);
         $cacheKey = $this->_getCacheKey(__METHOD__, $strURL);
         if (false === ($response = $this->_cacheLoadKey($cacheKey))) {
             $response = $this->_objHttpClient->getHttpResponse($strURL, $intLogPriority);
@@ -68,7 +78,7 @@ class Chaplin_Cache_Http_Client
                 $this->_cacheSaveKey($cacheKey, $response);
             }
         }
-        Shared_Log::getInstance()->log('Cache: retrieved ('.$response->getBody().')', $intLogPriority);
+        Chaplin_Log::getInstance()->log('Cache: retrieved ('.$response->getBody().')', $intLogPriority);
         return $response;
     }
  
