@@ -171,6 +171,10 @@ class Chaplin_Dao_Amqp_Exchange
             $callback,
             $amqpQueue
         ) {
+            // We may want to move it if we want a redelivery if it failed to process
+            // But for now let's not to make it quick to ack and not timeout
+            $amqpQueue->ack($amqpEnvelope->getDeliveryTag());
+
             $strBody = $amqpEnvelope->getBody();
             try {
                 $arrData = Zend_Json::decode($strBody);
@@ -178,33 +182,31 @@ class Chaplin_Dao_Amqp_Exchange
                 echo 'Invalid Json: '.$strBody;
                 ob_flush();
                 flush();
-                return $amqpQueue->ack($amqpEnvelope->getDeliveryTag());;
+                return;
             }
             $strClass = $amqpEnvelope->getType();
             if (!class_exists($strClass)) {
                 echo 'Class does not exist: '.$strClass;
                 ob_flush();
                 flush();
-                return $amqpQueue->ack($amqpEnvelope->getDeliveryTag());;
+                return;
             }
 
             if (!is_array($arrData)) {
                 echo 'Not array: '.print_r($arrData, true);
                 ob_flush();
                 flush();
-                return $amqpQueue->ack($amqpEnvelope->getDeliveryTag());;
+                return;
             }
             $model = $strClass::createFromData($this, $arrData);
             try {
+                
                 $callback($model);
             } catch (Exception $e) {
-                echo 'Caught Exception: '.$e->getMessage().PHP_EOL;
-                ob_flush();
-                flush();
+                echo 'Caught Exception ('.get_class($e).'): '.$e->getMessage().PHP_EOL.$e->getTraceAsString().PHP_EOL;
             }
-
-            // Apparently in this version you have to manually ack
-            $amqpQueue->ack($amqpEnvelope->getDeliveryTag());
+            ob_flush();
+            flush();
         };
 
         // Make sure the exchange is created so there's something to listen on - DO NOT DELETE THIS
