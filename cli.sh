@@ -1,8 +1,8 @@
 #!/bin/bash
 case $1 in
     start)
-        php cli/cli.php cli youtube > youtube.log & 2>&1
-        php cli/cli.php cli convert > convert.log & 2>&2
+        php cli/cli.php cli youtube > logs/youtube.log & 2>&1
+        php cli/cli.php cli convert > logs/convert.log & 2>&2
         $0 log
         ;;
     stop)
@@ -13,7 +13,7 @@ case $1 in
         $0 stop
     ;;
     log)
-        tail -f youtube.log convert.log
+        tail -f logs/youtube.log logs/convert.log
     ;;
     *)
         echo "Usage: $0 start|stop|restart|log"
