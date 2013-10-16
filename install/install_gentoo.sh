@@ -1,5 +1,5 @@
 #!/bin/bash
-emerge apache PEAR-PEAR php mongodb pecl-mongo redis
+emerge apache PEAR-PEAR php pecl-mongo redis
 git clone git://github.com/nicolasff/phpredis.git
 cd phpredis
 phpize
