@@ -205,7 +205,7 @@ class VideoController extends Chaplin_Controller_Action_Api
 
         $modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser();
 
-        Chaplin_Service::getInstance()
+        $modelVideo = Chaplin_Service::getInstance()
             ->getYouTube($strVideoId)
             ->importVideo($modelUser);
         
