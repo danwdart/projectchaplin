@@ -94,5 +94,7 @@ class Chaplin_Service_YouTube_API
         // msg
         $modelYoutube = Chaplin_Model_Video_Youtube::create($modelVideo, $strVideoId);
         Chaplin_Gateway::getInstance()->getVideo_Youtube()->save($modelYoutube);
+
+        return $modelVideo;
     }
 }
