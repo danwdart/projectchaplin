@@ -181,10 +181,13 @@ class VideoController extends Chaplin_Controller_Action_Api
         }
 
         // Get the YT information
-
-        $yt = new Zend_Gdata_YouTube();
-        $entryVideo = $yt->getVideoEntry($strVideoId);
-        $this->view->entryVideo = $entryVideo;
+        try {
+            $yt = new Zend_Gdata_YouTube();
+            $entryVideo = $yt->getVideoEntry($strVideoId);
+            $this->view->entryVideo = $entryVideo;
+        } catch (Exception $e) {
+            throw new Chaplin_Exception_NotFound('Youtube Id = '.$strVideoId);
+        }
         // This won't work remotely
         if (in_array($this->_request->getClientIp(), ['127.0.0.1', '::1'])) {
             $this->view->videoURL = Chaplin_Service::getInstance()
