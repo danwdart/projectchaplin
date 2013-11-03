@@ -63,14 +63,11 @@ class Chaplin_Model_Video_Convert
             ->getVideo()
             ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
         
-        $modelVideo->setFilename($modelVideo->getFilename().'.webm');
-        $modelVideo->save();
-
         $strFullPath = APPLICATION_PATH.'/../public';
         
-        $strFilename = $strFullPath.$modelVideo->getFilename();
+        $strFilenameRawFullPath = $strFullPath.$modelVideo->getFilename();
         
-        echo 'Converting '.$strFilename.PHP_EOL;
+        echo 'Converting '.$strFilenameRawFullPath.PHP_EOL;
         ob_flush();
         flush();
         
@@ -79,19 +76,30 @@ class Chaplin_Model_Video_Convert
         $ret = 0;
     
         $strError = Chaplin_Service::getInstance()
-            ->getAVConv()
-            ->convertFile($strFilename, $strPathToWebm, $ret);
+            ->getEncoder()
+            ->convertFile($strFilenameRawFullPath, $strPathToWebm, $ret);
         
         if(0 != $ret) {
-            throw new Exception('Unable to convert: '.$strFilename);
+            throw new Exception('Unable to convert: '.$strFilenameRawFullPath);
         }
         
-        echo 'Converted '.$strFilename;
+        echo 'Converted '.$strFilenameRawFullPath;
         ob_flush();
         flush();
         
-        Chaplin_Gateway::getEmail()
-            ->videoFinished($modelVideo);
+        unlink($strFilenameRawFullPath);
+        
+        $modelVideo->setFilename($modelVideo->getFilename().'.webm');
+        $modelVideo->save();
+
+        try {
+            Chaplin_Gateway::getEmail()
+                ->videoFinished($modelVideo);
+        } catch (Exception $e) {
+            echo 'Video Finished Email could not be sent.';
+            ob_flush();
+            flush();
+        }
     }
     
     public function getRoutingKey()

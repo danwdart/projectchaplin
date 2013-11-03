@@ -84,6 +84,16 @@ class Chaplin_Model_Field_Hash
             $this->_collFields[$strField] = new $strClass($strParam);
         }
     }
+
+    public function __get($strProperty)
+    {
+        return $this->_getField($strProperty, null);
+    }
+
+    public function __set($strProperty, $strValue)
+    {
+        $this->_setField($strProperty, $strValue);
+    }
     
     public function getValue($mixedDefault)
     {

@@ -235,6 +235,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         $diff = $time - $timefrom;
         $suffix = 0 < $diff ? ' ago' : ' in the future';
 
+        $diff = abs($diff);
         // hacky
         if (60 > $diff) {
             return $diff.($diff==1?' second':' seconds').$suffix;
@@ -261,9 +262,9 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
     public function delete()
     {
-        $strFullPath = APPLICATION_PATH.'/public'.$this->getFilename();
+        $strFullPath = APPLICATION_PATH.'/../public'.$this->getFilename();
         unlink($strFullPath);
-        $strThumbnailPath = APPLICATION_PATH.'/public'.$this->getThumbnail();
+        $strThumbnailPath = APPLICATION_PATH.'/../public'.$this->getThumbnail();
         unlink($strThumbnailPath);
         return Chaplin_Gateway::getInstance()
             ->getVideo()

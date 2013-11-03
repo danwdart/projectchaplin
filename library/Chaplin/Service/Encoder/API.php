@@ -1,3 +1,4 @@
+<?php
 /**
  * This file is part of Project Chaplin.
  *
@@ -21,25 +22,38 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-#clients {
+class Chaplin_Service_Encoder_API
+{
+    const THUMBNAIL_DEFAULT_TIME = 0;
     
-}
-#broadcast {
-    width: 400px;
-    height: 300px;
-    border: outset;
-}
-#buttons {
-
-}
-#canvas {
-    display:none;
-    width: 400px;
-    height: 300px;
-    border: outset;
-}
-.clientvideo {
-    width: 400px;
-    height: 300px;
-    border: outset;
+    const CMD_CONVERT_FILE = 'ffmpeg -threads 9 -i "%s" "%s"';
+    const CMD_GET_THUMBNAIL = 'ffmpeg -i "%s" -f image2 -vframes 1 -ss %s "%s"'; 
+    
+    public function convertFile($strFile, $strOut, $ret)
+    {
+        //TODO: stream status
+        $strCommand = sprintf(
+            self::CMD_CONVERT_FILE,
+            $strFile,
+            $strOut
+        );
+        echo $strCommand.PHP_EOL;
+        ob_flush();
+        //die(var_dump($strCommand));
+        return system($strCommand, $ret);
+    }
+    
+    public function getThumbnail($strFile, $strOut, $ret)
+    {
+        $strCommand = sprintf(
+            self::CMD_GET_THUMBNAIL,
+            $strFile,
+            self::THUMBNAIL_DEFAULT_TIME,
+            $strOut
+        );
+        //echo $strCommand.PHP_EOL;
+        //ob_flush();
+        //die(var_dump($strCommand));
+        return system($strCommand, $ret);
+    }
 }

@@ -42,12 +42,7 @@ class Amqp_Exchange
     {
         return $this->_amqpExchange->bind($strDestExchangeName, $strSourceExchangeName, $strRoutingKey);
     }
-    
-    public function declareExchange()
-    {
-        return $this->_amqpExchange->declare();
-    }
-    
+        
     public function delete($intFlags)
     {
         return $this->_amqpExchange->delete($intFlags);

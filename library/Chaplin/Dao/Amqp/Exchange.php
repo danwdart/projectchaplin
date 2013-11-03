@@ -109,7 +109,6 @@ class Chaplin_Dao_Amqp_Exchange
         $exchange->setName($this->_strExchangeName);
         $exchange->setType($this->_arrExchange[self::CONFIG_TYPE]);
         $exchange->setFlags($intFlags);
-        $exchange->declareExchange();
         return $exchange;
     }
     
@@ -127,7 +126,6 @@ class Chaplin_Dao_Amqp_Exchange
         $exchange->setName($this->_strExchangeName);
         $exchange->setType($this->_arrExchange[self::CONFIG_TYPE]);
         $exchange->setFlags($intFlags);
-        $exchange->declareExchange();
         return $exchange;
     }
     
