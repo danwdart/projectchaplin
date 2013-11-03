@@ -22,23 +22,13 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class Chaplin_Service_AVConv_API
+interface Chaplin_Dao_Interface_Channel extends Chaplin_Dao_Interface
 {
-    private $_ffmpeg;
+    public function getAllChannels();
     
-    public function __construct()
-    {
-        $this->_ffmpeg = new stdObject();
-    }
+    public function getByChannelId($strChannelId);
     
-    public function convertFile($strFile, $strOut)
-    {
-        //TODO: stream status
-        system('avconv -i '.$strFile.' '.$strOut);
-    }
-    
-    public function getThumbnail($strFile, $strOut)
-    {
-        system('avconv -i '.$strFile.' 'n
-    }
+    public function delete(Chaplin_Model_Channel $modelChannel);
+
+    public function save(Chaplin_Model_Channel $modelChannel);
 }

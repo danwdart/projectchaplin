@@ -22,8 +22,8 @@
  * @link       https://github.com/dandart/projectchaplin
 **/
 $(function() {
-    $('.filter').click(function() {
-        $('#video').attr('class', $(this).attr('value'));
+    $('.effect').change(function() {
+        $('#video').attr('class', $(this).val());
     });
     $('#slower').click(function() {
         $('#video')[0].playbackRate = 0.5;

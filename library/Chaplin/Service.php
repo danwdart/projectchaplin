@@ -86,14 +86,9 @@ class Chaplin_Service
         return new Chaplin_Service_Http_Client($objCache);
     }
     
-    public function getFFMpeg()
+    public function getEncoder()
     {
-        return new Chaplin_Service_FFMpeg_API();
-    }
-    
-    public function getAVConv()
-    {
-        return new Chaplin_Service_AVConv_API();
+        return new Chaplin_Service_Encoder_API();
     }
 
     public function getYouTube($strURL)

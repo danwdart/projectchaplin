@@ -24,21 +24,21 @@
 **/
 ?>
 <div id="clients">
-    <video id="broadcast" class="fullscreen" autoplay style="display:block;float:left;"></video>
-    <div class="buttons">
-        <button class="filter" value="none"/>None</button>
-        <button class="filter" value="blur"/>Blur</button>
-        <button class="filter" value="gray"/>Grey</button>
-        <button class="filter" value="sepia"/>Sepia</button>
-        <button class="filter" value="bright"/>Bright</button>
-        <button class="filter" value="highcontrast"/>Contrast</button>
-        <button class="filter" value="colour"/>Colourful</button>
-        <button class="filter" value="invert"/>Invert</button>
-        <button class="filter" value="saturate"/>Saturate</button>
-    </div>
+    <video id="broadcast" class="fullscreen" autoplay></video>
+    <br/>
+    <select class="effect">
+        <option class="filter" value="none">-- Choose Effect --</option>
+        <option class="filter" value="blur">Blur</option>
+        <option class="filter" value="gray">Grey</option>
+        <option class="filter" value="sepia">Sepia</option>
+        <option class="filter" value="bright">Bright</option>
+        <option class="filter" value="highcontrast">Contrast</option>
+        <option class="filter" value="colour">Colourful</option>
+        <option class="filter" value="invert">Invert</option>
+        <option class="filter" value="saturate">Saturate</option>
+    </select>
     <canvas id="canvas" height="300" width="400"></canvas>
 </div>
-<br/>
 <div id="status"></div>
 <script src="<?php echo $this->scheme; ?>://<?php echo $_SERVER['HTTP_HOST']?>:1337/socket.io/socket.io.js"></script>
 <script src="/js/video.js"></script>   

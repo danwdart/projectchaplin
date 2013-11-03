@@ -24,31 +24,14 @@
 $(document).ready(function() {
     $('form.upload').submit(function() {
         $(window).bind('beforeunload', function(){ return 'Are you sure you want to leave? Files are currently uploading.'; });
-        elFiles = document.getElementById('Files-0');
-        //elFiles.addEventListener('change', function(e) {
-        
-        bar = document.createElement('div');
-        bar.style.width = '400px';
-        bar.style.height = '15px';
-        bar.style.border ="1px solid black";
-        bar.style.display='block';
-        bar.style.position='relative';
-        progressbar = document.createElement('div');
-        progressbar.style.height="100%";
-        progressbar.style.width="0%";
-        progressbar.style.backgroundColor = "blue";
-        bar.style.display='block';
-        bar.style.position='relative';
-        bar.appendChild(progressbar);
-        elFiles.parentNode.insertBefore(bar, elFiles.nextSibling);
-        
+        elFiles = document.getElementById('Files-0'); // could attach a change here
+        $('progress').show();        
         xhr = new XMLHttpRequest();
-        
         xhr.addEventListener('progress', function(e) {
                 var done = e.position || e.loaded,
                     total = e.totalSize || e.total;
                 //console.log('xhr progress: '+ (Math.floor(done/total*1000)/10) + '%');
-                progressbar.style.width = (Math.floor(done/total*1000)/10) + '%';
+                $('#progress').val(done/total);
             }, false);
             
         if (xhr.upload) {
@@ -56,7 +39,7 @@ $(document).ready(function() {
                 var done = e.position || e.loaded,
                     total = e.totalSize || e.total;
                 //console.log('xhr.upload progress: ' + done + ' / ' + total + ' = ' + (Math.floor(done/total*1000)/10) + '%');
-                progressbar.style.width = (Math.floor(done/total*1000)/10) + '%';
+                $('#progress').val(done/total);
             };
         }
         xhr.onreadystatechange = function(e) {

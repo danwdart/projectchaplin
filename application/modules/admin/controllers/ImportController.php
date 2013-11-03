@@ -94,7 +94,7 @@ class Admin_ImportController extends Zend_Controller_Action
             $ret = 0;
                 
             $strError = Chaplin_Service::getInstance()
-                ->getAVConv()
+                ->getEncoder()
                 ->getThumbnail($strFilename, $strPathToThumb, $ret);
             if(0 != $ret) {
                 die(var_dump($strError));

@@ -1,3 +1,4 @@
+<?php
 /**
  * This file is part of Project Chaplin.
  *
@@ -21,25 +22,38 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-#clients {
-    
-}
-#broadcast {
-    width: 400px;
-    height: 300px;
-    border: outset;
-}
-#buttons {
+class Chaplin_Gateway_Channel
+    extends Chaplin_Gateway_Abstract
+{
+    private $_daoChannel;
 
-}
-#canvas {
-    display:none;
-    width: 400px;
-    height: 300px;
-    border: outset;
-}
-.clientvideo {
-    width: 400px;
-    height: 300px;
-    border: outset;
+    public function __construct(Chaplin_Dao_Interface_Channel $daoChannel)
+    {
+        $this->_daoChannel = $daoChannel;
+    }
+
+    public function getAllChannels()
+    {
+        return $this->_daoChannel->getAllChannels();
+    }
+
+    public function getByChannelId($strChannelId)
+    {
+        return $this->_daoChannel->getByChannelId($strChannelId);
+    }
+    
+    public function delete(Chaplin_Model_Channel $modelChannel)
+    {
+        return $this->_daoChannel->delete($modelChannel);
+    }
+
+    public function deleteById($strId)
+    {
+        return $this->_daoChannel->deleteById($strId);
+    }
+
+    public function save(Chaplin_Model_Channel $modelChannel)
+    {
+        return $this->_daoChannel->save($modelChannel);
+    }
 }

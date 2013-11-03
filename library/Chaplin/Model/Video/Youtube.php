@@ -70,8 +70,14 @@ class Chaplin_Model_Video_Youtube
             ->getVideo()
             ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
 
-        Chaplin_Gateway::getEmail()
-            ->videoFinished($modelVideo);
+        try {
+            Chaplin_Gateway::getEmail()
+                ->videoFinished($modelVideo);
+        } catch (Exception $e) {
+            echo 'Video Finished Email could not be sent.';
+            ob_flush();
+            flush();
+        }
     }
     
     public function getRoutingKey()

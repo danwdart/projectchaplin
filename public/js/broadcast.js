@@ -22,8 +22,8 @@
  * @link       https://github.com/dandart/projectchaplin
 **/
 $(function() {
-    $('.filter').click(function() {
-        $('#broadcast').attr('class', $(this).attr('value'));
+    $('.effect').change(function() {
+        $('#broadcast').attr('class', $(this).val());
     });
     if ('undefined' == typeof io) {
         alert('Socket.io not loaded');
