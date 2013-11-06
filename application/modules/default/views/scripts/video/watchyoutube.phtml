@@ -24,10 +24,6 @@
 **/
 ?>
 <h1><?php echo $this->entryVideo->getVideoTitle();?></h1>
-<?php if ($this->isLocal) : ?>
-	<video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->videoURL;?>">
-	</video>
-<?php else : ?>
 	<iframe 
 		class="youtube-player"
 		type="text/html"
@@ -37,7 +33,6 @@
 		frameborder="0"
 	>
 	</iframe>
-<?php endif; ?>
 <h3>Uploaded on <?php echo date('d/m/Y H:i', strtotime($this->entryVideo->getPublished()));
 	$author = $this->entryVideo->getAuthor()[0];
 	$strUserUri = $author->getUri()->getText();

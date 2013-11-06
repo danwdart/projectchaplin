@@ -50,21 +50,21 @@ endif;
 	<a href="/"><h2><i class="fa fa-film"></i> Project Chaplin Video Sharing</h2></a>
 </div>
 <div class="right">
+    <form action="/search" method="get">
+        <input type="search" id="search" placeholder="Search for videos..."
+        <?php if (isset($this->strSearchTerm)) : echo 'value="'.$this->strSearchTerm.'"'; endif; ?> name="search"/>
+    </form>
+    &nbsp;&nbsp;
     <?php if($bIsLoggedIn): ?>
         <strong>
             <a href="/user/<?php echo $modelUser->getUsername();?>">
                 <?php echo $modelUser->getNick(); ?>
             </a> - 
             <?php echo $modelUser->getUserType()->getUserType();?>
-        </strong> |
+        </strong>
         <a href="/logout" class="btn btn-danger">Logout <i class="fa fa-sign-out"></i></a>
     <?php else: ?>
         <a href="/login" class="btn btn-success">Login <i class="fa fa-sign-in"></i></a>
-    <?php endif; ?>
-    <br/><br/><?php //ZF this shiz ?>
-    <form action="/search" method="get">
-        <input type="search" id="search" placeholder="Search for videos..."
-		<?php if (isset($this->strSearchTerm)) : echo 'value="'.$this->strSearchTerm.'"'; endif; ?> name="search"/>
-    </form>
+    <?php endif; ?>    
 </div>
 <div style="clear:both;"></div>
