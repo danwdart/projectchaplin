@@ -114,8 +114,8 @@ header .right input, header .right form {
 }
 
 main {
-    padding-top: 40px;
-    width: 90%;
+    padding: 40px 10px 0;
+    width: 100%;
     margin: 0 auto;
 }
 
@@ -133,14 +133,17 @@ main h1 {
 }
 
 .content-centre {
-    width: 80%;
+    width: 98%;
     margin: 0 auto;
+    text-align:center;
 }
 
 .thumb-wrapper {
-    float:left;
+    display:inline-block;
+    position:relative;
+    vertical-align:top;
     padding: 0px;
-    margin: 3px;
+    margin: 5px;
     height: 160px;
 }
 
@@ -164,7 +167,7 @@ main h1 {
     color: white;
     padding:5px;
     font-weight: 700;
-    width: 150px;
+    width: 100%;
     margin: 2px 0px;
 }
 
