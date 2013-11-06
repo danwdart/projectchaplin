@@ -71,6 +71,17 @@ header .middle {
 	text-align:center;
 }
 
+header .middle h2 {
+    padding: 0;
+    margin: 0;
+    font-weight:700;
+}
+
+header .middle a:hover {
+    cursor: default;
+    text-decoration: none;
+}
+
 header .right {
 	width: 30%;
 	text-align: right;

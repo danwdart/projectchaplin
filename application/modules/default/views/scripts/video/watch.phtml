@@ -60,22 +60,22 @@
 	<br/>
 	<?php if(Chaplin_Auth::getInstance()->hasIdentity()): 
 	if ('1' === $this->video->getYourVote()) :
-	echo '+1';
+	echo '<i class="fa fa-arrow-up"></i>';
 	else:?>
-	<a class="atotext" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up">+1</a>
+	<a class="atotext btn btn-default" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up"><i class="fa fa-arrow-up"></i></a>
 	<?php endif; echo ' / ';
 	if ('0' === $this->video->getYourVote()) :
-	echo '-1';
+	echo '<i class="fa fa-arrow-down"></i>';
 	else:?>
-	<a class="atotext" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down">-1</a>
+	<a class="atotext btn btn-default" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down"><i class="fa fa-arrow-down"></i></a>
 	<?php endif;?>&nbsp;&nbsp;
 	<?php endif; ?>
-	<a href="/video/download/id/<?php echo $this->video->getVideoId();?>">Download</a>
+	<a class="btn btn-primary" href="/video/download/id/<?php echo $this->video->getVideoId();?>"><i class="fa fa-download"></i> Download</a>
 	<?php
 		if ($this->video->isMine()):
 	?>
-	    | <a href="/video/delete/id/<?php echo $this->video->getVideoId();?>">Delete</a> | 
-	    <a href="/video/edit/id/<?php echo $this->video->getVideoId();?>">Edit</a>
+	    <a class="btn btn-danger" href="/video/delete/id/<?php echo $this->video->getVideoId();?>"><i class="fa fa-times-circle"></i> Delete</a> 
+	    <a class="btn btn-info" href="/video/edit/id/<?php echo $this->video->getVideoId();?>"><i class="fa fa-edit"></i> Edit</a>
 	<?php endif;?>
 	<br/>
 	<?php if(Chaplin_Auth::getInstance()->hasIdentity()): echo $this->formComment; else: 
