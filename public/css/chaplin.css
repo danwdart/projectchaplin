@@ -74,6 +74,7 @@ header .left {
 	width: 40%;
 	text-align:left;
 	float:left;
+    line-height:35px;
 }
 
 header .middle {
@@ -81,12 +82,11 @@ header .middle {
 	margin: 0 auto;
 	float:left;
 	text-align:center;
-    line-height:40px;
 }
 
-header .middle h2 {
+header .middle h2, header .middle i {
     font-size: 18pt;
-    line-height:40px;
+    line-height:35px;
     padding: 0;
     margin: 0;
     font-weight:700;
@@ -102,6 +102,7 @@ header .right {
 	text-align: right;
 	float:right;
     display:inline;
+    line-height: 35px;
 }
 
 header .right input, header .right form {
@@ -455,6 +456,18 @@ to {-webkit-transform: rotate(360deg);}
 @media (max-width: 430px) {
     header input {
         width: 50px;
+    }
+    .thumb-wrapper {
+        margin: 1px;
+        padding: 1px;
+        max-width:150px;
+    }
+    .thumb-img, .thumb-img img {
+        width: 150px;
+    }
+
+    .content-centre {
+        width: 99%;
     }
 }
 
