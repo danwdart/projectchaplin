@@ -61,6 +61,7 @@ a:hover {
 }
 
 header {
+    z-index:2;
     background-color: silver;
     height:40px;
     padding: 0 2px;
@@ -70,13 +71,13 @@ header {
 }
 
 header .left {
-	width: 30%;
+	width: 40%;
 	text-align:left;
 	float:left;
 }
 
 header .middle {
-	width: 38%;
+	width: 18%;
 	margin: 0 auto;
 	float:left;
 	text-align:center;
@@ -97,7 +98,7 @@ header .middle a:hover {
 }
 
 header .right {
-	width: 30%;
+	width: 40%;
 	text-align: right;
 	float:right;
     display:inline;
@@ -423,4 +424,50 @@ to {transform: rotate(360deg);}
 {
 from {-webkit-transform:rotate(0);}
 to {-webkit-transform: rotate(360deg);}
+}
+
+@media (max-width: 1000px) {
+    header input {
+        width: 100px;
+    }
+    header .right strong {
+        display:none;
+    }
+    header .left a, header .right a, header .middle h2 {
+        font-size: 0;
+    }
+    header .left a i, header .right a i, header .middle h2 i {
+        font-size: 16pt;
+        height:20px;
+    }
+    footer p, footer a {
+        font-size: 0;
+    }
+    footer p:after {
+        font-size: 8pt;
+        content: '© Chaplin, et al.';
+    }
+    #video, video, #videoarea {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 430px) {
+    header input {
+        width: 50px;
+    }
+}
+
+@media (max-width: 345px) {
+    header .left a, header .right a, header .middle h2 {
+        font-size: 0;
+        padding: 5px;
+    }
+    header .left a i, header .right a i, header .middle h2 i {
+        font-size: 10pt;
+        height: 0;
+    }
+    header input {
+        width: 40px;
+    }
 }
