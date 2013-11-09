@@ -106,6 +106,30 @@ $(function() {
         }
         return false;
     });
+
+    // detect mozilla/firefox
+    if ('undefined' === typeof window.MozBrowserFrame) {
+
+        $('.fullscreen').each(function(idx, elem) {
+            addfullscreen(elem);
+        });
+        $('.clicktoplay').each(function(idx, elem) {
+            enableclicktoplay(elem);
+        });
+    }
+
+    // nothing important :P
+    k = new k();
+    k.code = function() {
+        $('#fun').show();
+    };
+    k.load();
+
+    window.addEventListener('keyup', function(e) {
+        if (70 == e.keyCode) {
+            $('#videoarea').
+        }
+    })
 });
 
 function addfullscreen(elem) {
@@ -160,17 +184,3 @@ function enableclicktoplay(elem) {
         }
     });
 }
-
-$('.fullscreen').each(function(idx, elem) {
-    addfullscreen(elem);
-});
-$('.clicktoplay').each(function(idx, elem) {
-    enableclicktoplay(elem);
-});
-
-// nothing important :P
-k = new k();
-k.code = function() {
-    $('#fun').show();
-};
-k.load();
