@@ -207,6 +207,7 @@ footer {
 }
 
 #video {
+    width:640px;
 }
 
 #video::-webkit-media-controls-panel {
