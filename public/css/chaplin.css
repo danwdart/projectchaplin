@@ -28,6 +28,9 @@
 	padding:0;
 	margin: 0;
     font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizingL border-box;
 }
 
 html, body {
@@ -147,6 +150,7 @@ main h1 {
     padding: 0px;
     margin: 5px;
     height: 160px;
+    width: 160px;
 }
 
 .thumb-img {
@@ -203,7 +207,6 @@ footer {
 }
 
 #video {
-    width: 640px;
 }
 
 #video::-webkit-media-controls-panel {
