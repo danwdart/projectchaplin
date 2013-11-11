@@ -77,8 +77,11 @@ class SearchController extends Chaplin_Controller_Action_Api
         //$dm = new Dailymotion();
         //$result = $dm->get('/search/'.urlencode($strSearchTerm));
         //die(var_dump($result));
-
-        $this->view->videoFeed = $yt->getVideoFeed($query);
+        try {
+            $this->view->videoFeed = $yt->getVideoFeed($query);
+        } catch (Exception $e) {
+            $this->view->videoFeed = [];
+        }
     }
 
     public function youtubeAction()
