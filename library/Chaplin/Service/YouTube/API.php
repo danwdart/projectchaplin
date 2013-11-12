@@ -42,7 +42,7 @@ class Chaplin_Service_YouTube_API
     public function downloadVideo($strPathToSave)
     {
         $strCommandLine = APPLICATION_PATH.self::LOCATION.
-            " --prefer-free-formats -o ".
+            " --format=webm -o ".
             escapeshellarg($strPathToSave."/%(id)s.%(ext)s")." -- ".escapeshellarg($this->_strURL);
         echo $strCommandLine.PHP_EOL;
         ob_flush();
