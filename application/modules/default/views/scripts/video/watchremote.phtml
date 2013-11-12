@@ -24,20 +24,23 @@
 **/
 ?>
 <h1><?php echo $this->video->getTitle();?></h1>
-<video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->video->getFilename().'?'.time();?>">
-</video>
-<br/> <!-- TODO get user on here? -->
-<br/>Uploaded by: <a href="<?php
-	echo $this->node->getRoot()
-	?>/user/<?php
-	echo $this->video->getUsername();
-	?>"><?php
-	echo $this->video->getUsername();
-	?></a>
-<br/>Uploaded on <?php echo date('d/m/Y H:i', $this->video->getTimeCreated());?> (<?php echo $this->video->getTimeAgo(); ?>)
-<br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
-<br/><?php echo $this->video->getDescription(); ?>
-<p><strong>&uparrow; <?php echo $this->video->getVotesUp(); ?> / <?php echo $this->video->getVotesDown(); ?> &downarrow;</strong></p>
-<p><?php echo $this->twittershare; ?></p>
-<br/> <!-- todo remotely vote -->
+<div id="videoarea">
+	<video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->video->getFilename().'?'.time();?>">
+	</video>
+</div>
+<div id="infoarea">
+	<br/> <!-- TODO get user on here? -->
+	<br/>Uploaded by: <a href="<?php
+		echo $this->node->getRoot()
+		?>/user/<?php
+		echo $this->video->getUsername();
+		?>"><?php
+		echo $this->video->getUsername();
+		?></a>
+	<br/>Uploaded on <?php echo date('d/m/Y H:i', $this->video->getTimeCreated());?> (<?php echo $this->video->getTimeAgo(); ?>)
+	<br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
+	<br/><?php echo $this->video->getDescription(); ?>
+	<p><strong>&uparrow; <?php echo $this->video->getVotesUp(); ?> / <?php echo $this->video->getVotesDown(); ?> &downarrow;</strong></p>
+	<p><?php echo $this->twittershare; ?></p>
+</div>
 <script src="/js/video.js"></script>
