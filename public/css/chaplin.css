@@ -33,6 +33,18 @@
     -moz-box-sizingL border-box;
 }
 
+.ok {
+    color:green;
+}
+
+.warning {
+    color: orange;
+}
+
+.error {
+    color: red;
+}
+
 li {
     margin-left: 20px;
 }
