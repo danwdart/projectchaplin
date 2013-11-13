@@ -33,6 +33,12 @@ defined('APPLICATION_PATH')
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
+if (!file_exists(APPLICATION_PATH.'/../config/chaplin.ini') &&
+	(0 !== strpos($_SERVER['REQUEST_URI'], '/admin/setup'))) {
+	header('Location: /admin/setup');
+	exit();
+}
+
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
     realpath(APPLICATION_PATH . '/../library'),

@@ -33,6 +33,10 @@
     -moz-box-sizingL border-box;
 }
 
+li {
+    margin-left: 20px;
+}
+
 html, body {
     height:100%;
     padding: 0 !important;

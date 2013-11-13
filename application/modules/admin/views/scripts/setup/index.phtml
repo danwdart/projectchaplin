@@ -1,0 +1,46 @@
+<div class="widgetbox medium centre">
+	<div class="widgettitle">
+		Welcome!
+	</div>
+	<div id="step0" class="widgetbody" style="text-align:left; padding:30px">
+		<p>Welcome to Project Chaplin!</p>
+		<p>Thank you for choosing the newest addition to Internet video sharing.</p>
+		<p>Project Chaplin features:
+		<ul>
+			<li>A free software, open source licence as standard</li>
+			<li>No intrusive adverts</li>
+			<li>Inport videos from popular video sources</li>
+			<li>No restrictions on content by country, IP or government</li>
+			<li>Video downloading as standard</li>
+			<li>HTML5 WebM as standard</li>
+			<li>Live streaming (pluginless)</li>
+			<li>Federation through multiple servers</li>
+			<li>Live video effects including brightness and contrast</li>
+			<li>Easter eggs<a href="#" onclick='$(document).addClass("br");'>?</a></li>
+		</ul>
+		<p>In the pipeline are:
+		<ul>
+			<li>REST APIs</li>
+			<li>Blocking on public demand</li>
+			<li>Federated APIs</li>
+			<li>Public tagging of videos</li>
+			<li>Channel subscriptions</li>
+			<li>Individual profiles</li>
+			<li>Audio downloading</li>
+			<li><a href="https://github.com/dandart/projectchaplin/issues">See All</a></li>
+		</ul>
+		<p>Let's set up your install. It only takes a couple of minutes to get going.</p>
+		<p class="centre"><a href="#step1" class="switcher btn btn-success">Okay, let's go!</a></p>
+	</div>
+	<div id="step1" class="widgetbody" style="display:none;text-align:left; padding:30px">
+		<h2>Awesome!</h2>
+	</div>
+</div>
+<script>
+	$('a.switcher').click(function() {
+		var self = this;
+		$('.widgetbody').animate({height: 0}, 1000, function() {
+			$($(self).attr('href')).show().animate({height: '600px'}, 1000);
+		});
+	})
+</script>
