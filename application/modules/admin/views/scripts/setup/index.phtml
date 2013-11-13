@@ -1,3 +1,23 @@
+<?php
+	$checksOkay = true;
+	function check(&$checksOkay, $x, $errtxt)
+	{
+		$checksOkay = $checksOkay && $x;
+		return ($x)?'<span class="ok">OK</span>':'<span class="error">Not OK: '.$errtxt.'</span>';
+	}
+
+	function pdo_supports($type)
+	{
+		return in_array($type, PDO::getAvailableDrivers());
+	}
+
+	$check1 = check($checksOkay, 50500 <= PHP_VERSION_ID, 'version '.PHP_VERSION);
+	$check2 = check($checksOkay, class_exists('PDO'), 'PDO not installed');
+	$check3 = check($checksOkay, 0 < count(PDO::getAvailableDrivers()), 'No drivers available');
+	$check4 = check($checksOkay, class_exists('AMQPConnection'), 'AMQP not found');
+	$check5 = check($checksOkay, "0" == exec('ffmpeg -version 2>&1; echo $?'), 'Failed: ffmpeg not found');
+	$check6 = check($checksOkay, "0" == exec('npm --version 2>&1; echo $?'), 'Failed: npm not found');
+?>
 <div class="widgetbox medium centre">
 	<div class="widgettitle">
 		Welcome!
@@ -9,7 +29,7 @@
 		<ul>
 			<li>A free software, open source licence as standard</li>
 			<li>No intrusive adverts</li>
-			<li>Inport videos from popular video sources</li>
+			<li>Import videos from popular video sources</li>
 			<li>No restrictions on content by country, IP or government</li>
 			<li>Video downloading as standard</li>
 			<li>HTML5 WebM as standard</li>
@@ -34,13 +54,126 @@
 	</div>
 	<div id="step1" class="widgetbody" style="display:none;text-align:left; padding:30px">
 		<h2>Awesome!</h2>
+		<p>Let's check your plugins and extensions first.</p>
+		<p><strong>PHP >= 5.5</strong>: <?php echo $check1 ?></p>
+		<p><strong>PDO</strong>: <?php echo $check2 ?></p>
+		<p><strong>A PDO database extension is installed</strong>: <?php echo $check3 ?></p>
+		<p><strong>AMQP extension (for encoding and importing batch jobs)</strong>: <?php echo $check4 ?></p>
+		<p><strong>Compatible encoder present</strong>: <?php echo $check5 ?></p>
+		<p><strong>Node.js and npm</strong>: <?php echo $check6 ?></p>
+		<p></p>
+		<?php if ($checksOkay):?>
+			<p class="centre"><a href="#step2" class="switcher btn btn-success">Great! Let's continue!</a></p>
+		<?php else : ?>
+			<p class="centre warning">Sorry, not all of the dependencies are met. Please install the required packages.</p>
+		<?php endif;?>
+	</div>
+	<div id="step2" class="widgetbody" style="display:none;text-align:left; padding:30px">
+		<h2>Great!</h2>
+		<p>Let's set up your database. Please enter the details for your database server.</p>
+		<form id="sqlserver">
+			<p>
+				<label for="selSQLType">SQL Server Type (to add more, add to packages)</label>
+				<select id="selSQLType" name="adapter">
+				<?php if (pdo_supports('ibm')): ?>
+					<option value="Pdo_Ibm">IBM DB2</option>
+				<?php endif;
+				if (pdo_supports('sqlsrv')): ?>
+					<option value="Pdo_Mssql">MSSQL</option>
+				<?php endif;
+				if (pdo_supports('mysql')): ?>
+					<option value="Pdo_Mysql">MySQL / MariaDB</option>
+				<?php endif;
+				if (pdo_supports('oci')): ?>
+					<option value="Pdo_Oci">Oracle</option>
+				<?php endif;
+				if (pdo_supports('pgsql')): ?>
+					<option value="Pdo_Pgsql">PostgreSQL</option>
+				<?php endif;
+				if (pdo_supports('sqlite')): ?>
+					<option value="Pdo_Sqlite">SQLite</option>
+				<?php endif; ?>
+				</select>
+			</p>
+			<p>
+				<label for="strHost">Host: </label>
+				<input type="text" id="strHost" name="params[host]" value="localhost"/>
+			</p>
+			<p>
+				<label for="strUsername">Username (if applicable): </label>
+				<input type="text" id="strUsername" name="params[username]" placeholder="Username here"/>
+			</p>
+			<p>
+				<label for="strPassword">Password (if applicable): </label>
+				<input type="password" id="strPassword" name="params[password]" placeholder="Password here"/>
+			</p>
+			<p>
+				<label for="strDatabase">Database (if applicable): </label>
+				<input type="text" id="strDatabase" name="params[dbname]" placeholder="Database Name"/>
+			</p>
+			<p>
+				<label for="strSchema">Schema (if applicable): </label>
+				<input type="text" id="strSchema" name="params[schema]" placeholder="Schema Name"/>
+			</p>
+			<!-- TODO: Table Prefix -->
+		</form>
+		<a href="#"
+			data-output-element="testresult"
+			data-url="/admin/setup/sqltest"
+			data-form="sqlserver"
+			class="ajax btn btn-default">I want to test this</a>
+		<span id="testresult"></span>
+		<a href="#step3" class="switcher btn btn-success">Okay! Go ahead!</a>
+	</div>
+	<div id="step3" class="widgetbody" style="display:none;text-align:left; padding:30px">
+		<h2>Amazing!</h2>
+		<p>Let's set up your AMQP server.</p>
+		<form id="amqp">
+			<p>
+				<label for="strHost">Host: </label>
+				<input type="text" id="strHost" name="host" value="localhost"/>
+			</p>
+			<p>
+				<label for="strPort">Port: </label>
+				<input type="text" id="strPort" name="port" value="5672"/>
+			</p>
+			<p>
+				<label for="strUsername">Username: </label>
+				<input type="text" id="strUsername" name="username" value="guest" placeholder="Username here"/>
+			</p>
+			<p>
+				<label for="strPassword">Password: </label>
+				<input type="password" id="strPassword" name="password" value="guest" placeholder="Password here"/>
+			</p>
+		</form>
+		<a href="#"
+			data-output-element="amqpresult"
+			data-url="/admin/setup/amqptest"
+			data-form="amqp"
+			class="ajax btn btn-default">I want to test this</a>
+		<span id="amqpresult"></span>
+		<a href="#step4" class="switcher btn btn-success">Great! Next bit!</a>
+	</div>
+	<div id="step4" class="widgetbody" style="display:none;text-align:left; padding:30px">
+		<h2>Just a couple of steps to go</h2>
+		Oo-err! Looks like the developer left this unfinished!....
 	</div>
 </div>
 <script>
 	$('a.switcher').click(function() {
 		var self = this;
-		$('.widgetbody').animate({height: 0}, 1000, function() {
-			$($(self).attr('href')).show().animate({height: '600px'}, 1000);
+		$('.widgetbody').animate({height: 0, display: 'none', padding:'none'}, 1000, function() {
+			$($(self).attr('href')).show().animate({height: '600px', display: 'block', padding: '30px'}, 1000);
 		});
+	});
+	$('a.ajax').click(function() {
+		var self = this;
+		$.post(
+			$(self).attr('data-url'),
+			$('#'+$(self).attr('data-form')).serialize(),
+			function(data) {
+				$('#'+$(self).attr('data-output-element')).html(data);
+			}
+		);
 	})
 </script>

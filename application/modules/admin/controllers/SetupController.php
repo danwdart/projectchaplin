@@ -37,4 +37,37 @@ class Admin_SetupController extends Zend_Controller_Action
     {
 
     }
+
+    public function sqltestAction()
+    {
+        $arrPost = $this->_request->getPost();
+        $strAdapter = isset($arrPost['adapter'])?$arrPost['adapter']:null;
+        $arrParams = isset($arrPost['params'])?$arrPost['params']:array();
+
+        $this->_helper->layout()->disableLayout(); 
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        try {
+            $adapter = Zend_Db::factory($strAdapter, $arrParams);
+            // Make sure we get a PDO instance that tries to connect
+            $adapter->prepare('SELECT');
+            echo 'DB Connect Success!';
+        } catch (Exception $e) {
+            echo 'DB Connect failed! Reason: '.$e->getMessage();
+        }
+    }
+
+    public function amqptestAction()
+    {
+        $this->_helper->layout()->disableLayout(); 
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        try {
+            $amqp = new Amqp_Connection($this->_request->getPost());
+            $amqp->connect();
+            echo 'AMQP connection success!';
+        } catch (Exception $e) {
+            echo 'Sorry - the connection failed...';
+        }
+    }
 }
