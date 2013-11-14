@@ -70,4 +70,44 @@ class Admin_SetupController extends Zend_Controller_Action
             echo 'Sorry - the connection failed...';
         }
     }
+
+    public function smtptestAction()
+    {
+        $this->_helper->layout()->disableLayout(); 
+        $this->_helper->viewRenderer->setNoRender(true);
+        $arrSmtp = $this->_request->getPost();
+        $transport = new Zend_Mail_Transport_Smtp(
+            $arrSmtp['host'],
+            $arrSmtp['options']
+        );
+
+        // No SMTP tests exist atm
+    }
+
+    public function writeAction()
+    {
+        $this->_helper->layout()->disableLayout(); 
+        $this->_helper->viewRenderer->setNoRender(true);
+        $arrPost = array(
+            'default' => $this->_request->getPost(),
+            'production' => array(),
+            'staging' => array(),
+            'development' => array()
+        );
+
+        $config = new Zend_Config($arrPost, true);
+        $config->setExtend('production', 'default');
+        $config->setExtend('staging', 'production');
+        $config->setExtend('development', 'production');
+
+        $iniWriter = new Zend_Config_Writer_Ini();
+        $iniWriter->setConfig($config);
+        try {
+            $iniWriter->write(APPLICATION_PATH.'/../config/chaplin.ini');
+            echo 'File successfully written.';
+        } catch (Exception $e) {
+            echo '; Could not write file. Please copy and insert the following into the file /config/chaplin.ini'.PHP_EOL;
+            echo $iniWriter->render();
+        }
+    }
 }

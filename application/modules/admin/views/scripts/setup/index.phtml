@@ -123,6 +123,7 @@
 			data-form="sqlserver"
 			class="ajax btn btn-default">I want to test this</a>
 		<span id="testresult"></span>
+		<a href="#step1" class="switcher btn btn-default"><i class="fa fa-arrow-left"></i> Go back</a>
 		<a href="#step3" class="switcher btn btn-success">Okay! Go ahead!</a>
 	</div>
 	<div id="step3" class="widgetbody" style="display:none;text-align:left; padding:30px">
@@ -152,19 +153,145 @@
 			data-form="amqp"
 			class="ajax btn btn-default">I want to test this</a>
 		<span id="amqpresult"></span>
+		<a href="#step2" class="switcher btn btn-default"><i class="fa fa-arrow-left"></i> Go back</a>
 		<a href="#step4" class="switcher btn btn-success">Great! Next bit!</a>
 	</div>
 	<div id="step4" class="widgetbody" style="display:none;text-align:left; padding:30px">
 		<h2>Just a couple of steps to go</h2>
-		Oo-err! Looks like the developer left this unfinished!....
+		<p>Please provide details of your mail server for notifications. Usually the defaults will suffice.</p>
+		<form id="smtp">
+			<p>
+				<label for="strHost">Host: </label>
+				<input type="text" id="strHost" name="host" value="localhost"/>
+			</p>
+			<p>
+				<label for="strPort">Port: </label>
+				<input type="text" id="strPort" name="options[port]" value="25"/>
+			</p>
+			<p>
+				<label for="strUsername">Username: </label>
+				<input type="text" id="strUsername" name="options[username]" value="" placeholder="Username here"/>
+			</p>
+			<p>
+				<label for="strPassword">Password: </label>
+				<input type="password" id="strPassword" name="options[password]" value="" placeholder="Password here"/>
+			</p>
+			<p>
+				<input type="hidden" name="options[auth]" value="login"/>
+				SSL? 
+				<br/>
+				<label for="rdSSLYes">
+					<input type="radio" id="rdSSLYes" name="options[ssl]" value="tls"/> Yes
+				</label>
+				<br/>
+				<label for="rdSSLNo">
+					<input type="radio" id="rdSSLNo" name="options[ssl]" value=""/> No
+				</label>
+			</p>
+		</form>
+		<a href="#step3" class="switcher btn btn-default"><i class="fa fa-arrow-left"></i> Go back</a>
+		<a href="#step5" class="switcher btn btn-success">Great! Go on to the last step!</a>
+	</div>
+	<div id="step5" class="widgetbody" style="display:none;text-align:left; padding:30px">
+		<h2>What is your website address?</h2>
+		<form id="vhost">
+			<p>
+				<label for="vhAddress">Address: </label>
+				<input type="text" id="vhAddress" name="vhost" value="<?php echo $_SERVER['HTTP_HOST'] ?>" placeholder="URL here"/>
+			</p>
+			<p>
+				HTTPS? 
+				<br/>
+				<label for="vhSSLYes">
+					<input type="radio" id="vhSSLYes" name="ssl" value="true"/> Yes
+				</label>
+				<br/>
+				<label for="vhSSLNo">
+					<input type="radio" id="vhSSLNo" name="ssl" value="false"/> No
+				</label>
+			</p>
+			<p>
+				<label for="strShort">Short URL: </label>
+				<input type="text" id="strShort" name="short" value="" placeholder="Short URL"/>
+			</p>
+		</form>
+		<a href="#step6" id="commit" class="switcher ajax btn btn-success">Awesome! Let's write it!</a>
+	</div>
+	<div id="step6" class="widgetbody" style="display:none;text-align:left; padding:30px">
+		<h2>Your Settings</h2>
+		<textarea id="commitresult" cols="30" rows="10">Output will appear here</textarea>
+		<p><a href='/' class="btn btn-default">I'm ready, start using Chaplin</a></p>
 	</div>
 </div>
 <script>
+    $.fn.serializeObject = function(){
+        var self = this,
+            json = {},
+            push_counters = {},
+            patterns = {
+                "validate": /^[a-zA-Z][a-zA-Z0-9_]*(?:\[(?:\d*|[a-zA-Z0-9_]+)\])*$/,
+                "key":      /[a-zA-Z0-9_]+|(?=\[\])/g,
+                "push":     /^$/,
+                "fixed":    /^\d+$/,
+                "named":    /^[a-zA-Z0-9_]+$/
+            };
+
+
+        this.build = function(base, key, value){
+            base[key] = value;
+            return base;
+        };
+
+        this.push_counter = function(key){
+            if(push_counters[key] === undefined){
+                push_counters[key] = 0;
+            }
+            return push_counters[key]++;
+        };
+
+        $.each($(this).serializeArray(), function(){
+
+            // skip invalid keys
+            if(!patterns.validate.test(this.name)){
+                return;
+            }
+
+            var k,
+                keys = this.name.match(patterns.key),
+                merge = this.value,
+                reverse_key = this.name;
+
+            while((k = keys.pop()) !== undefined){
+
+                // adjust reverse_key
+                reverse_key = reverse_key.replace(new RegExp("\\[" + k + "\\]$"), '');
+
+                // push
+                if(k.match(patterns.push)){
+                    merge = self.build([], self.push_counter(reverse_key), merge);
+                }
+
+                // fixed
+                else if(k.match(patterns.fixed)){
+                    merge = self.build([], k, merge);
+                }
+
+                // named
+                else if(k.match(patterns.named)){
+                    merge = self.build({}, k, merge);
+                }
+            }
+
+            json = $.extend(true, json, merge);
+        });
+
+        return json;
+    };
+
 	$('a.switcher').click(function() {
 		var self = this;
-		$('.widgetbody').animate({height: 0, display: 'none', padding:'none'}, 1000, function() {
-			$($(self).attr('href')).show().animate({height: '600px', display: 'block', padding: '30px'}, 1000);
-		});
+		$('.widgetbody').hide();
+		$($(self).attr('href')).show();
 	});
 	$('a.ajax').click(function() {
 		var self = this;
@@ -176,4 +303,29 @@
 			}
 		);
 	})
+	$('#commit').click(function() {
+		vhost = $('#vhost').serializeObject();
+
+		$.post('/admin/setup/write',
+		{
+			locale: 'en_GB',
+			amqp: {
+				servers: {
+					read: $('#amqp').serializeObject(),
+					write: $('#amqp').serializeObject()
+				}
+			},
+			smtp: {
+				server: $('#smtp').serializeObject()
+			},
+			dbtype: 'sql',
+			sql: $('#sqlserver').serializeObject(),
+			vhost: vhost.vhost,
+			ssl: vhost.ssl,
+			short: vhost.short
+		}, function(data)
+		{
+			$('#commitresult').text(data);
+		}, 'json');
+	});
 </script>
