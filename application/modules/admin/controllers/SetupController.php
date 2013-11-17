@@ -95,6 +95,19 @@ class Admin_SetupController extends Zend_Controller_Action
             'development' => array()
         );
 
+        $schemaSql = file_get_contents(APPLICATION_PATH . '/../sql/schema.sql');
+    
+        $strAdapter = isset($arrPost['adapter'])?$arrPost['adapter']:null;
+        $arrParams = isset($arrPost['params'])?$arrPost['params']:array();
+
+        try {
+            $adapter = Zend_Db::factory($strAdapter, $arrParams);
+            $adapter->getConnection()->exec($schemaSql);
+        } catch (Exception $e) {
+            echo 'Error writing DB. Please refresh and try again.';
+            exit();
+        }
+
         $config = new Zend_Config($arrPost, true);
         $config->setExtend('production', 'default');
         $config->setExtend('staging', 'production');
