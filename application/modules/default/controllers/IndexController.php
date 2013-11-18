@@ -26,6 +26,7 @@ class IndexController extends Chaplin_Controller_Action_Api
 {
     public function indexAction()
     {
+        $this->view->strTitle = 'Home - Chaplin';
     	$modelUser = Chaplin_Auth::getInstance()
     		->hasIdentity()?
     	Chaplin_Auth::getInstance()

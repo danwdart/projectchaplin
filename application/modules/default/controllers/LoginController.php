@@ -26,6 +26,7 @@ class LoginController extends Zend_Controller_Action
 {
     public function indexAction()
     {
+        $this->view->strTitle = 'Login - Chaplin';
         $form = new default_Form_Login();
 
         if ($this->_helper->flashMessenger->hasMessages()) {
@@ -89,6 +90,7 @@ class LoginController extends Zend_Controller_Action
 
     public function registerAction()
     {
+        $this->view->strTitle = 'Register - Chaplin';
         $form = new default_Form_UserData_Create();
 
         if(!$this->_request->isPost()) {
@@ -140,6 +142,8 @@ class LoginController extends Zend_Controller_Action
 
     public function forgotAction()
     {
+        $this->view->strTitle = 'Forgot - Chaplin';
+
         $form = new default_Form_Forgot();
         if (!$this->_request->isPost()) {
             return $this->view->form = $form;
@@ -167,6 +171,7 @@ class LoginController extends Zend_Controller_Action
 
     public function validateAction()
     {
+        $this->view->strTitle = 'Validate - Chaplin';
         $strToken = $this->_request->getParam('token', null);
         if (empty($strToken)) {
             $this->_redirect('/login');
@@ -307,10 +312,5 @@ class LoginController extends Zend_Controller_Action
             echo 'Username: '.$arrResponse[$arrOauth['key_username']].'<br/>';
         if (isset($arrOauth['key_email']))
             echo 'Email: '.$arrResponse[$arrOauth['key_email']];
-    }
-
-    public function openidAction()
-    {
-
     }
 }
