@@ -53,6 +53,8 @@ class UserController extends Chaplin_Controller_Action_Api
 			return;
 		}
 
+        $this->view->strTitle = $modelUser->getNick().' - Chaplin';
+
         $form = new default_Form_UserData_Edit();
 
         $user = Chaplin_Auth::getInstance()->getIdentity()->getUser();
@@ -121,6 +123,7 @@ class UserController extends Chaplin_Controller_Action_Api
         } catch (Zend_Uri_Exception $e) {
             throw new Chaplin_Exception_NotFound('User by username '.$strUsername);
         }
+        $this->view->strTitle = $strUsername.' from YouTube - Chaplin';
         $this->view->bHasUserFavourites = true;
         try {
             $this->view->ittFavourites = $yt->getUserFavorites($strUsername);
