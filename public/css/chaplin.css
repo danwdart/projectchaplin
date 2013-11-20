@@ -297,7 +297,29 @@ form.fileimport div input[type="checkbox"] {
     top:5px;
     left: 0;
 }
-
+#users {
+    margin: 0;
+}
+#users th {
+    border: 2px outset;
+    width: 150px;
+}
+#users td {
+    border: 1px solid black;
+    padding: 4px;
+}
+.messages {
+/*    border: 2px outset #999999;  */
+    font-weight: bold;
+    margin: 0 auto;
+    padding: 5px 20px;
+    width: 200px;
+}
+.edit {
+    display:block;
+    height: 100%;
+    width:100%;
+}
 @media all and (orientation:portrait) {
 }
 
