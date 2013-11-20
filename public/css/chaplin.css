@@ -320,6 +320,31 @@ form.fileimport div input[type="checkbox"] {
     height: 100%;
     width:100%;
 }
+
+#twitterbutton {
+    width:130px;
+    height:20px;
+}
+.clearfix {
+    clear:both;
+}
+.profileinfo {
+    text-align:left;
+    height: 150px;
+}
+.largereset {
+    position:relative;
+    width: 1000px;
+}
+.text-sm {
+    font-size: 8pt;
+}
+.success {
+    color:green;
+}
+.failure {
+    color: red;
+}
 @media all and (orientation:portrait) {
 }
 
