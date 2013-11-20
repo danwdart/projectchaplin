@@ -25,6 +25,5 @@
         "irc": "irc://irc.megworld.co.uk/projectchaplin"
     },
     "require": {
-        "robmorgan/phinx": "*"
     }
 }
