@@ -124,12 +124,6 @@ $(function() {
         $('#fun').show();
     };
     k.load();
-
-    window.addEventListener('keyup', function(e) {
-        if (70 == e.keyCode) {
-            $('#videoarea').
-        }
-    })
 });
 
 function addfullscreen(elem) {
