@@ -40,12 +40,6 @@ class Chaplin_Model_Field_Collection
 		return $this->_bIsDirty;
 	}
 
-	public function addHash(Chaplin_Model_Field_Hash $hash)
-	{
-		$this->_collHashes[] = $hash;
-		$this->_bIsDirty = true;
-	}
-
 	public function valid()
 	{
 		return isset($this->_collHashes[$this->_intIndex]);

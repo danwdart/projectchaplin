@@ -63,3 +63,20 @@ CREATE TABLE IF NOT EXISTS Chaplin.Votes (
     Vote        BOOL,
     PRIMARY KEY (Username, VideoId)
 );
+CREATE TABLE IF NOT EXISTS Chaplin.Channels (
+    ChannelId   VARCHAR(50) NOT NULL PRIMARY KEY,
+    FullName    VARCHAR(255) NOT NULL,
+    Username    VARCHAR(255) NOT NULL,
+    Privacy     TINYINT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS Chaplin.Playlists (
+    PlaylistId  VARCHAR(50) NOT NULL PRIMARY KEY,
+    Username    VARCHAR(255) NOT NULL,
+    Name        VARCHAR(255) NOT NULL,
+    Privacy     TINYINT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS Chaplin.Playlist_Videos (
+    PlaylistId  VARCHAR(50) NOT NULL,
+    VideoId     VARCHAR(50) NOT NULL,
+    PRIMARY KEY (PlaylistId, VideoId)
+);

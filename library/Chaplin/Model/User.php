@@ -57,6 +57,11 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
         return $modelUser;
     }
 
+    protected function _getPK()
+    {
+        return self::FIELD_Username;
+    }
+
     public function getId()
     {
         return $this->_getField(self::FIELD_Username, null);

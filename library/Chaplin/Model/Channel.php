@@ -45,6 +45,11 @@ class Chaplin_Model_Channel
         return $modelChannel;
     }
 
+    protected function _getPK()
+    {
+        return self::FIELD_CHANNELID;
+    }
+
     public function getId()
     {
         return $this->_getField(self::FIELD_CHANNELID, null);

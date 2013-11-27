@@ -22,42 +22,11 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class Chaplin_Dao_Sql_Vote
-	extends Chaplin_Dao_Sql_Abstract
-	implements Chaplin_Dao_Interface_Vote
+interface Chaplin_Dao_Interface_Playlist_Video extends Chaplin_Dao_Interface
 {
-	const TABLE = 'Votes';
+	public function getAllVideos(Chaplin_Model_Playlist $modelPlaylist);
 
-    protected function _getTable()
-	{
-		return self::TABLE;
-	}
+    public function deleteById($strId);
 
-    protected function _getPrimaryKey()
-    {
-        // Not single
-        return null;
-    }
-
-	public function addVote(Chaplin_Model_User $modelUser, Chaplin_Model_Video $modelVideo, $intVote)
-	{
-        $this->_getAdapter()->query(
-            'INSERT INTO '.self::TABLE.' SET '.
-            'Vote = ?, Username = ?, VideoId = ? ON DUPLICATE KEY UPDATE Vote = ?',
-            [   
-                $intVote,
-                $modelUser->getUsername(),
-                $modelVideo->getVideoId(),
-                $intVote
-            ]
-        );
-	}
-
-    protected function _sqlToModel(Array $arrSql)
-    {
-    }
-
-    protected function _modelToSql(Array $arrModel)
-    {
-    }
+    public function addVideo($modelPlaylist, $modelVideo);
 }

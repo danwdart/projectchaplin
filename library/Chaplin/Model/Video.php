@@ -96,6 +96,11 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         return $video;
     }
 
+    protected function _getPK()
+    {
+        return self::FIELD_VIDEOID;
+    }
+
     public function getId()
     {
         return $this->getVideoId();

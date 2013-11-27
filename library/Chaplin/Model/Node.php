@@ -47,6 +47,11 @@ class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
         return $node;
     }
 
+    protected function _getPK()
+    {
+        return self::FIELD_NODEID;
+    }
+
     public function getId()
     {
         return $this->getNodeId();

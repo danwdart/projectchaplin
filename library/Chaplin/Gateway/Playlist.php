@@ -22,42 +22,38 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class Chaplin_Dao_Sql_Vote
-	extends Chaplin_Dao_Sql_Abstract
-	implements Chaplin_Dao_Interface_Vote
+class Chaplin_Gateway_Playlist
+    extends Chaplin_Gateway_Abstract
 {
-	const TABLE = 'Votes';
+    private $_daoPlaylist;
 
-    protected function _getTable()
-	{
-		return self::TABLE;
-	}
-
-    protected function _getPrimaryKey()
+    public function __construct(Chaplin_Dao_Interface_Playlist $daoPlaylist)
     {
-        // Not single
-        return null;
+        $this->_daoPlaylist = $daoPlaylist;
     }
 
-	public function addVote(Chaplin_Model_User $modelUser, Chaplin_Model_Video $modelVideo, $intVote)
-	{
-        $this->_getAdapter()->query(
-            'INSERT INTO '.self::TABLE.' SET '.
-            'Vote = ?, Username = ?, VideoId = ? ON DUPLICATE KEY UPDATE Vote = ?',
-            [   
-                $intVote,
-                $modelUser->getUsername(),
-                $modelVideo->getVideoId(),
-                $intVote
-            ]
-        );
-	}
-
-    protected function _sqlToModel(Array $arrSql)
+    public function getAllPlaylists()
     {
+        return $this->_daoPlaylist->getAllPlaylists();
     }
 
-    protected function _modelToSql(Array $arrModel)
+    public function getByPlaylistId($strPlaylistId)
     {
+        return $this->_daoPlaylist->getByPlaylistId($strPlaylistId);
+    }
+    
+    public function delete(Chaplin_Model_Playlist $modelPlaylist)
+    {
+        return $this->_daoPlaylist->delete($modelPlaylist);
+    }
+
+    public function deleteById($strId)
+    {
+        return $this->_daoPlaylist->deleteById($strId);
+    }
+
+    public function save(Chaplin_Model_Playlist $modelPlaylist)
+    {
+        return $this->_daoPlaylist->save($modelPlaylist);
     }
 }

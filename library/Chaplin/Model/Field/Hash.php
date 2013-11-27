@@ -22,7 +22,7 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class Chaplin_Model_Field_Hash
+abstract class Chaplin_Model_Field_Hash
     extends Chaplin_Model_Field_Abstract
     implements JsonSerializable
 {    
@@ -35,6 +35,13 @@ class Chaplin_Model_Field_Hash
     public function bIsNew()
     {
         return $this->_bIsNew;
+    }
+
+    abstract protected function _getPK();
+
+    public function setIdFromDB($intId)
+    {
+        $this->_getFieldObject($this->_getPK())->setFromData($intId);
     }
 
     public function getId()

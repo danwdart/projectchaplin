@@ -22,42 +22,49 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class Chaplin_Dao_Sql_Vote
-	extends Chaplin_Dao_Sql_Abstract
-	implements Chaplin_Dao_Interface_Vote
+class Chaplin_Dao_Sql_Playlist_Video
+    extends Chaplin_Dao_Sql_Abstract
+    implements Chaplin_Dao_Interface_Playlist_Video
 {
-	const TABLE = 'Votes';
+    const TABLE = 'Playlist_Videos';
 
     protected function _getTable()
-	{
-		return self::TABLE;
-	}
+    {
+        return self::TABLE;
+    }
 
     protected function _getPrimaryKey()
     {
-        // Not single
+        // NotX
         return null;
     }
 
-	public function addVote(Chaplin_Model_User $modelUser, Chaplin_Model_Video $modelVideo, $intVote)
-	{
-        $this->_getAdapter()->query(
-            'INSERT INTO '.self::TABLE.' SET '.
-            'Vote = ?, Username = ?, VideoId = ? ON DUPLICATE KEY UPDATE Vote = ?',
-            [   
-                $intVote,
-                $modelUser->getUsername(),
-                $modelVideo->getVideoId(),
-                $intVote
-            ]
-        );
-	}
-
-    protected function _sqlToModel(Array $arrSql)
+    public function getAllVideos(Chaplin_Model_Playlist $modelPlaylist)
     {
+        $strQuery = 'SELECT * FROM Videos WHERE VideoId IN '.
+            '(SELECT DISTINCT(VideoId) FROM %s WHERE PlaylistId = ?)';
+
+        $arrRows = $this->_getAdapter()->fetchAll(
+            sprintf($strQuery, self::TABLE),
+            $modelPlaylist->getPlaylistId()
+        );
+        return new Chaplin_Iterator_Dao_Sql_Rows($arrRows, new Chaplin_Dao_Sql_Video());
+    }
+    
+    public function deleteById($strId)
+    {
+        return $this->_deleteById($strId);
     }
 
-    protected function _modelToSql(Array $arrModel)
+    public function addVideo($modelPlaylist, $modelVideo)
     {
+        $strQuery = 'INSERT INTO %s (PlaylistId, VideoId) VALUES (?,?);';
+
+        $this->_getAdapter()->query(sprintf($strQuery, self::TABLE),
+            [
+                $modelPlaylist->getPlaylistId(),
+                $modelVideo->getVideoId()
+            ]
+        );
     }
 }

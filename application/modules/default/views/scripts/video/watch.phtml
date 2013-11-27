@@ -98,5 +98,22 @@
 	<?php endforeach; ?>
 	</div>
 </div>
+<?php if ($this->playlist) : ?>
+	<div class="content-header">
+    	Playlist: <?php echo $this->playlist->getName(); ?>
+	</div>
+	<div class="content-centre">
+		<?php foreach($this->playlistVideos as $modelVideo):?>
+			<a href="/video/watch/id/<?php echo $modelVideo->getVideoId();?>">
+				<div class="thumb-wrapper">
+					<div class="thumb-img">
+				    	<img src="<?php echo htmlentities($modelVideo->getThumbnail()).'?'.time();?>" alt="View Video"/>
+					</div>
+					<p><?php echo $modelVideo->getShortTitle();?></p>
+				</div>
+			</a>
+		<?php endforeach;?>
+	</div>
+<?php endif; ?>
 <script src="/js/k.js"></script>
 <script src="/js/video.js"></script>

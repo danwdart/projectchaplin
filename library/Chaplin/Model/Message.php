@@ -70,6 +70,11 @@ class Chaplin_Model_Message
         return $modelMessage;
     }
 
+    protected function _getPK()
+    {
+        return self::FIELD_MESSAGEID;
+    }
+
     public function getId()
     {
         return $this->_getField(self::FIELD_MESSAGEID, null);

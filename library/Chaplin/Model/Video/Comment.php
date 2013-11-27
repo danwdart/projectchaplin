@@ -37,6 +37,11 @@ class Chaplin_Model_Video_Comment
         self::FIELD_USERNAME => array('Class' => 'Chaplin_Model_Field_Field'),
         self::FIELD_COMMENT => array('Class' => 'Chaplin_Model_Field_Field')
     );
+
+    protected function _getPK()
+    {
+        return self::FIELD_COMMENTID;
+    }
     
     public static function create(
         Chaplin_Model_Video $modelVideo,

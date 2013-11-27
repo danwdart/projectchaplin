@@ -70,6 +70,18 @@ class VideoController extends Chaplin_Controller_Action_Api
         $this->view->twittershare = $strTwitterShare;
         
         $formComment = new default_Form_Video_Comment();
+
+        if ($this->_request->getQuery('playlist')) {
+            // todo GET
+            if (!is_null($modelUser)) {
+                $modelPlaylist = Chaplin_Model_Playlist::create($modelUser, 'Playlist 1');
+                $modelPlaylist->save();
+                $gwPlaylistVideo = Chaplin_Gateway::getPlaylist_Video();
+                $gwPlaylistVideo->addVideo($modelPlaylist, $modelVideo);
+                $this->view->playlist = $modelPlaylist;
+                $this->view->playlistVideos = $gwPlaylistVideo->getAllVideos($modelPlaylist);
+            }
+        }
                 
         if(!$this->_request->isPost()) {
             return $this->view->assign('formComment', $formComment);

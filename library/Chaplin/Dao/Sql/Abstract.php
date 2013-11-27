@@ -55,7 +55,10 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
 
     abstract protected function _getPrimaryKey();
 
-    abstract public function convertToModel($arrData);
+    public function convertToModel($arrData)
+    {
+        throw new MethodNotImplementedException(__METHOD__);
+    }
 
     protected function _modelToSql(Array $arrModel)
     {
@@ -98,6 +101,7 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
             $strWhere = $this->_getAdapter()->quoteInto($this->_getPrimaryKey().' = ?', $hash->getId());
             $this->_getAdapter()->update($strTable, $arrUpdate, $strWhere);
         }
+        //$hash->setIdFromDB($this->_getAdapter()->lastInsertId());
     }
 
     protected function _deleteWhere($strField, $strValue)
@@ -125,7 +129,9 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
                 switch($strClass) {
                     case 'Chaplin_Model_Field_Field':
                     case 'Chaplin_Model_Field_FieldId':
-                        $arrUpdate[$strFieldName] = $this->_textToSafe($objField->getValue(null));
+                        if (!is_null($objField->getValue(null))) {
+                            $arrUpdate[$strFieldName] = $this->_textToSafe($objField->getValue(null));
+                        }
                         break;
                     case 'Chaplin_Model_Field_Readonly':
                         break;
