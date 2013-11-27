@@ -219,7 +219,7 @@
 	</div>
 	<div id="step6" class="widgetbody" style="display:none;text-align:left; padding:30px">
 		<h2>Your Settings</h2>
-		<textarea id="commitresult" cols="30" rows="10">Output will appear here</textarea>
+		<textarea id="commitresult" cols="55" rows="10">Output will appear here</textarea>
 		<p><a href='/' class="btn btn-default">I'm ready, start using Chaplin</a></p>
 	</div>
 </div>
@@ -326,6 +326,6 @@
 		}, function(data)
 		{
 			$('#commitresult').text(data);
-		}, 'json');
+		});
 	});
 </script>
