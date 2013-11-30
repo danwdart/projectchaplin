@@ -104,10 +104,13 @@ class SearchController extends Chaplin_Controller_Action_Api
         $query = $yt->newVideoQuery();
         $query->videoQuery = urlencode($strSearchTerm);
         $query->startIndex = (is_null($intSkip))?0:(int)$intSkip;
-        $query->maxResults = (is_null($intLimit))?0:(int)$intLimit;
+        $query->maxResults = (is_null($intLimit))?50:(int)$intLimit;
         $query->orderBy = 'relevance';
- 
-        $this->view->videoFeed = $yt->getVideoFeed($query);
+        try {
+            $this->view->videoFeed = $yt->getVideoFeed($query);
+        } catch (Zend_Gdata_App_HttpException $e) {
+            $this->view->videoFeed = [];
+        }
     }
 }
 
