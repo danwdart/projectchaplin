@@ -78,7 +78,7 @@ class ServicesController extends Chaplin_Controller_Action_Api
 			'width' => 640,
 			'height' => 480,
 			'title' => $video->getTitle(),
-			'html' => '<video src="'.$vhost . $video->getFilename().'"></video>',
+			'html' => '<video src="'.$vhost . $video->getFilename().'" controls></video>',
 			'author_name' => $video->getUsername(),
 			'author_url' => $vhost.'/user/'.$video->getUsername(),
 			'provider_name' => 'Project Chaplin',
