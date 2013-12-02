@@ -65,4 +65,9 @@ class Chaplin_Config_Chaplin
     {
         return $this->isSSL()?'https':'http';
     }
+
+    public function getFullVhost()
+    {
+        return $this->getScheme().'://'.$this->getVhost();
+    }
 }
