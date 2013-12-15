@@ -36,6 +36,13 @@ class CliController extends Zend_Controller_Action
             ->convert();
     }       
 
+    public function importAction()
+    {
+        Chaplin_Gateway::getInstance()
+            ->getVideo_Import()
+            ->import();
+    }
+
     public function youtubeAction()
     {
         Chaplin_Gateway::getInstance()

@@ -114,6 +114,14 @@ class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
         return Chaplin_Model_Video::createFromAPIResponse($arrVideo, $this->getRoot());
     }
 
+    public function importVideoById($strVideoId)
+    {
+        $modelVideo = $this->getVideoById($strVideoId);
+        Chaplin_Service::getInstance()->getDownload()->importFromNode($this, $modelVideo);
+        $modelVideo->save();
+        return $modelVideo;
+    }
+
     public function getFeaturedVideos()
     {
         $arrVideo = $this->_get('/?format=json');

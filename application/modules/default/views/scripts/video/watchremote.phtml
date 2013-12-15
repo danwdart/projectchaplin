@@ -42,5 +42,10 @@
 	<br/><?php echo $this->video->getDescription(); ?>
 	<p><strong>&uparrow; <?php echo $this->video->getVotesUp(); ?> / <?php echo $this->video->getVotesDown(); ?> &downarrow;</strong></p>
 	<p><?php echo $this->twittershare; ?></p>
+	<p>
+		<a class="btn btn-success"
+			href="/video/importremote/node/<?php echo $this->node->getNodeId().'/id/'.$this->video->getVideoId();?>">
+			<i class="fa fa-download"></i> Import</a>
+	</p>
 </div>
 <script src="/js/video.js"></script>

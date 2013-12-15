@@ -30,7 +30,7 @@ class Chaplin_Model_Field_Field
     public function setFromData($mixedValue)
     {
         $this->_mixedValue = $mixedValue;
-    }       
+    }
     
     public function setValue($mixedValue)
     {

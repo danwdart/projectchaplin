@@ -6,17 +6,24 @@
                 "Queues": {
                     "convert": {
                         "Keys": ["video.convert.#"],
-			"Flags": {
-			    "Durable": true,
-			    "AutoDelete": false
-			}
+                			"Flags": {
+                			    "Durable": true,
+                			    "AutoDelete": false
+                			}
                     },
                     "youtube": {
                         "Keys": ["video.youtube.#"],
-			"Flags": {
-			    "Durable": true,
-			    "AutoDelete": false
-			}
+            			"Flags": {
+            			    "Durable": true,
+            			    "AutoDelete": false
+            			}
+                    },
+                    "import": {
+                        "Keys": ["video.import.#"],
+                        "Flags": {
+                            "Durable": true,
+                            "AutoDelete": false
+                        }
                     },
                     "debug": {
                         "Keys": ["#"],

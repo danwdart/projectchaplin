@@ -30,6 +30,12 @@ abstract class Chaplin_Model_Field_Abstract
     {
         return $this->_bIsDirty;
     }
+
+    public function setFromAPI($mixedValue)
+    {
+    	$this->setFromData($mixedValue);
+    	$this->_bIsDirty = true;
+    }
     
     abstract public function getValue($mixedDefault);
 }

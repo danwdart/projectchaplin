@@ -78,6 +78,11 @@ class Chaplin_Service
     {
         $this->_zendCache   = $zendCache;
     }
+
+    public function getDownload()
+    {
+        return new Chaplin_Service_Download_API();
+    }
     
     public function getHttpClient()
     {

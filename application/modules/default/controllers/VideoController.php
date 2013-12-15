@@ -180,6 +180,34 @@ class VideoController extends Chaplin_Controller_Action_Api
         $this->view->strTitle = $this->view->entryVideo->getTitle()->getText();
     }
 
+    public function importremoteAction()
+    {
+        $modelUser = Chaplin_Auth::getInstance()
+            ->hasIdentity()?
+        Chaplin_Auth::getInstance()
+            ->getIdentity()
+            ->getUser():
+        null;
+
+        $strVideoId = $this->_request->getParam('id', null);
+        if(is_null($strVideoId)) {
+            return $this->_redirect('/');
+        }
+        
+        $strNodeId = $this->_request->getParam('node', 0);
+
+        $modelNode = Chaplin_Gateway::getNode()
+            ->getByNodeId($strNodeId);
+
+        $this->view->node = $modelNode;
+
+        $modelVideo = $modelNode->getVideoById($strVideoId);
+        $modelVideo->save();
+        Chaplin_Model_Video_Import::create($modelVideo, $modelNode);
+
+        return $this->_redirect('/video/watch/id'.$modelVideo->getVideoId());
+    }
+
     public function importyoutubeAction()
     {
         $strVideoId = $this->_request->getParam('id', null);

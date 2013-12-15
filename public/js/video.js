@@ -170,7 +170,7 @@ function addfullscreen(elem) {
 }
 
 function enableclicktoplay(elem) {
-    elem.addEventListener('click', function() {
+    elem.addEventListener('click', function(e) {
         if(this.paused) {
             this.play();
         } else {

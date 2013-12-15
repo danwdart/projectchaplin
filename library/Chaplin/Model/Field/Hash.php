@@ -58,9 +58,9 @@ class Chaplin_Model_Field_Hash
         $hash = new static();
         $hash->_strURLPrefix = $strURLPrefix;
         foreach($arrAPI as $strField => $mixedValue) {
-            $hash->_getFieldObject($strField)->setFromData($mixedValue);
+            $hash->_getFieldObject($strField)->setFromAPI($mixedValue);
         }
-        $hash->_bIsNew = false;
+        $hash->_bIsNew = true;
         
         return $hash;
     }

@@ -23,11 +23,11 @@
  * @link       https://github.com/dandart/projectchaplin
 **/
 class Chaplin_Model_Field_Collection
+	extends Chaplin_Model_Field_Abstract
 	implements Iterator, Countable
 {
 	private $_intIndex = 0;
 	private $_strHashType = null;
-	private $_bIsDirty = false;
 	private $_collHashes = array();
 
 	public function __construct($strHashType)
