@@ -178,14 +178,15 @@ main h1 {
 }
 
 .footerpush {
-    height: 25px;
+    height: 35px;
     clear:both;
 }
 
 footer {
+    vertical-align: middle;
 	width:100%;
     background-color: white;
-	height: 20px;
+	height: 30px;
     position:fixed;
     padding:2px;
     bottom:0;
@@ -521,10 +522,6 @@ to {-webkit-transform: rotate(360deg);}
     }
     footer p, footer a {
         font-size: 0;
-    }
-    footer p:after {
-        font-size: 8pt;
-        content: '© Chaplin, et al.';
     }
     #video, video, #videoarea {
         max-width: 100%;
