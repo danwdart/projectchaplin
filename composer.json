@@ -1,5 +1,5 @@
 {
-    "name": "Project Chaplin",
+    "name": "dandart/projectchaplin",
     "description": "Federated social video sharing",
     "version": "dev-master",
     "type": "project",
@@ -24,6 +24,25 @@
         "email": "chaplin@dandart.co.uk",
         "irc": "irc://irc.megworld.co.uk/projectchaplin"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/dandart/amqp"
+        }
+    ],
     "require": {
+        "zendframework/zendframework1": "dev-master",
+        "dandart/amqp": "dev-master",
+        "mockery/mockery": "dev-master",
+        "hamcrest/hamcrest-php": "dev-master",
+        "mustache/mustache": "dev-master",
+        "dailymotion/sdk": "dev-master"
+    },
+    "autoload": {
+        "classmap": [
+            "application/",
+            "library/",
+            "test/"
+        ]
     }
 }
