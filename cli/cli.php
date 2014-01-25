@@ -22,6 +22,8 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
+require '../vendor/autoload.php';
+
 set_time_limit(0);
 
 // Define path to application directory

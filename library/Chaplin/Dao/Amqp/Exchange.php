@@ -65,7 +65,7 @@ class Chaplin_Dao_Amqp_Exchange
             $arrReadConfig = Chaplin_Config_Servers::getInstance()
             ->getConfigConnectionRead();
 
-            self::$_amqpConnectionRead = new Amqp_Connection($arrReadConfig);
+            self::$_amqpConnectionRead = new Amqp\Connection($arrReadConfig);
             if (!self::$_amqpConnectionRead->isConnected()) {
                 self::$_amqpConnectionRead->connect();
             }
@@ -83,7 +83,7 @@ class Chaplin_Dao_Amqp_Exchange
             $arrWriteConfig = Chaplin_Config_Servers::getInstance()
             ->getConfigConnectionWrite();
 
-            self::$_amqpConnectionWrite = new Amqp_Connection($arrWriteConfig);
+            self::$_amqpConnectionWrite = new Amqp\Connection($arrWriteConfig);
             if (!self::$_amqpConnectionWrite->isConnected()) {
                 self::$_amqpConnectionWrite->connect();
             }
@@ -103,9 +103,9 @@ class Chaplin_Dao_Amqp_Exchange
             $this->_arrExchange[self::CONFIG_FLAGS]:
             array();
             
-        $intFlags = Amqp_Flags::getFlags($arrFlags);
-        $amqpChannel = new Amqp_Channel($amqpConnection);
-        $exchange = new Amqp_Exchange($amqpChannel);
+        $intFlags = Amqp\Flags::getFlags($arrFlags);
+        $amqpChannel = new Amqp\Channel($amqpConnection);
+        $exchange = new Amqp\Exchange($amqpChannel);
         $exchange->setName($this->_strExchangeName);
         $exchange->setType($this->_arrExchange[self::CONFIG_TYPE]);
         $exchange->setFlags($intFlags);
@@ -121,9 +121,9 @@ class Chaplin_Dao_Amqp_Exchange
             $this->_arrExchange[self::CONFIG_FLAGS]:
             array();
             
-        $intFlags = Amqp_Flags::getFlags($arrFlags);
-        $amqpChannel = new Amqp_Channel($amqpConnection);
-        $exchange = new Amqp_Exchange($amqpChannel);
+        $intFlags = Amqp\Flags::getFlags($arrFlags);
+        $amqpChannel = new Amqp\Channel($amqpConnection);
+        $exchange = new Amqp\Exchange($amqpChannel);
         $exchange->setName($this->_strExchangeName);
         $exchange->setType($this->_arrExchange[self::CONFIG_TYPE]);
         $exchange->setFlags($intFlags);
@@ -156,17 +156,17 @@ class Chaplin_Dao_Amqp_Exchange
             $arrQueue[self::CONFIG_FLAGS]:
             array();
             
-        $intFlags = Amqp_Flags::getFlags($arrFlags);
+        $intFlags = Amqp\Flags::getFlags($arrFlags);
         $amqpConnection = $this->_getReadConnection();
         
-        $amqpChannel = new Amqp_Channel($amqpConnection);
-        $amqpQueue = new Amqp_Queue($amqpChannel);
+        $amqpChannel = new Amqp\Channel($amqpConnection);
+        $amqpQueue = new Amqp\Queue($amqpChannel);
         $amqpQueue->setName($strQueue);
         $amqpQueue->setFlags($intFlags);
         $amqpQueue->declareQueue();
         
         $localCallback  = function(
-            Amqp_Envelope $amqpEnvelope
+            Amqp\Envelope $amqpEnvelope
         ) use (
             $callback,
             $amqpQueue
