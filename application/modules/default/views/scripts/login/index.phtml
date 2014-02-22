@@ -23,7 +23,7 @@
  * @link       https://github.com/dandart/projectchaplin
 **/
 ?>
-<div style="clear:both;"></div>
+<div class="clearfix"></div>
 <br/>
 <div class="widgetbox medium centre">
 <div class="widgettitle centre space">
@@ -37,27 +37,7 @@
 	endif;
 	echo $this->form; ?>
 </div>
-<div class="widgettitle centre space">
-    OAuth Login:
 </div>
-<div class="widgetbody centre space">
-Login with:<br/>
-<a href="/login/oauth/provider/google">Google</a> |
-<a href="/login/oauth/provider/facebook">Facebook</a> |
-<a href="/login/oauth/provider/twitter">Twitter</a> |
-<a href="/login/oauth/provider/identica">Identica</a>
-</div>
-</div>
-<style>
-.messages {
-/*    border: 2px outset #999999;  */
-    font-weight: bold;
-    margin: 0 auto;
-    padding: 5px 20px;
-    width: 200px;
-}
-</style>
-
 <script>
 $(document).ready(function() {
     $('#username').focus();

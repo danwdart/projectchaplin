@@ -30,19 +30,12 @@ $bIsMe = $this->modelUser
 		<h3><?php echo $strNick;?></h3>
 	</div>
 	<div class="widgettitle">Profile Information</div>
-	<div class="widgetbody space" style="text-align:left; height: 150px;" <?php if ($this->bIsMe):?>contenteditable<?php endif; ?>>
+	<div class="widgetbody space" class="profileinfo" <?php if ($this->bIsMe):?>contenteditable<?php endif; ?>>
 		Some information about <?php echo $strNick;?> here. <?php echo $strNick;?> is cool. <?php echo $strNick;?> makes the best sandwiches.
 	</div>
 	<?php if ($this->bIsMe) : ?>
 	<div class="widgettitle">Custom CSS</div>
-	<div class="widgetbody space" style="text-align:left; height: 150px;">
-		<style>
-			.edit {
-				display:block;
-				height: 100%;
-				width:100%;
-			}
-		</style>
+	<div class="widgetbody space" class="profileinfo">
 		<style class="edit" contenteditable>
 			#secret {
 				display:none;

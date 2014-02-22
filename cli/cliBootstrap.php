@@ -24,15 +24,6 @@
 **/
 class cliBootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
-    protected function _initAutoload()
-    {
-        $autoloader = Zend_Loader_Autoloader::getInstance();
-        $autoloader->registerNamespace('Chaplin_');
-        $autoloader->registerNamespace('Amqp_');
-        $autoloader->registerNamespace('Mongo_');
-        $autoloader->registerNamespace('Mustache_');
-    }
-
     protected function _initSmtp()
     {
         $configSmtp = Chaplin_Config_Servers::getInstance();

@@ -80,11 +80,11 @@ $(function() {
             type: parent.attr('method'),
             data: parent.serialize(),
             success: function() {
-                parent.append('<span class="success" style="color:green;">Comment posted... </span>');
+                parent.append('<span class="success">Comment posted... </span>');
                 parent.children('.success').fadeOut(3000, function() {$(this).remove();});
             },
             failure: function() {
-                parent.append('<span class="failure" style="color:red;">Sorry, we couldn\'t post your comment.</span>');
+                parent.append('<span class="failure">Sorry, we couldn\'t post your comment.</span>');
             }
         });
         parentrel = parent.attr('rel');
@@ -124,12 +124,6 @@ $(function() {
         $('#fun').show();
     };
     k.load();
-
-    window.addEventListener('keyup', function(e) {
-        if (70 == e.keyCode) {
-            $('#videoarea').
-        }
-    })
 });
 
 function addfullscreen(elem) {
