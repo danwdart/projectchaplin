@@ -24,17 +24,6 @@
 **/
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
-    protected function _initAutoload()
-    {
-        $autoloader = Zend_Loader_Autoloader::getInstance();
-        $autoloader->registerNamespace('Chaplin_');
-        $autoloader->registerNamespace('Amqp_');
-        $autoloader->registerNamespace('FFMpeg\\');
-        $autoloader->registerNamespace('Monolog\\');
-        $autoloader->registerNamespace('Mustache_');
-        $autoloader->registerNamespace('Dailymotion');
-    }
-
     protected function _initAcl()
     {
         $acl = new Zend_Acl();

@@ -36,7 +36,7 @@ class Default_Bootstrap extends Zend_Application_Module_Bootstrap
     {    
         //$acl = $this->getApplication()->getResource('acl');     
         $acl = Zend_Registry::get('acl');
-        
+
         $acl->add(new Zend_Acl_Resource('default/index'));
         $acl->add(new Zend_Acl_Resource('default/broadcast'));
         $acl->add(new Zend_Acl_Resource('default/error'));
@@ -44,6 +44,7 @@ class Default_Bootstrap extends Zend_Application_Module_Bootstrap
         $acl->add(new Zend_Acl_Resource('default/manifest'));
         $acl->add(new Zend_Acl_Resource('default/messages'));
         $acl->add(new Zend_Acl_Resource('default/search'));
+        $acl->add(new Zend_Acl_Resource('default/services'));
         $acl->add(new Zend_Acl_Resource('default/video'));
         $acl->add(new Zend_Acl_Resource('default/user'));
              
@@ -54,6 +55,7 @@ class Default_Bootstrap extends Zend_Application_Module_Bootstrap
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/manifest');
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_USER, 'default/messages');
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/search');
+        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/services');
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/user');
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_USER, 'default/video');
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/video', 'watch');

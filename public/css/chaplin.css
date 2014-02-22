@@ -194,14 +194,15 @@ main h1 {
 }
 
 .footerpush {
-    height: 25px;
+    height: 35px;
     clear:both;
 }
 
 footer {
+    vertical-align: middle;
 	width:100%;
     background-color: white;
-	height: 20px;
+	height: 30px;
     position:fixed;
     padding:2px;
     bottom:0;
@@ -287,6 +288,80 @@ label, input[type=button], input[type=submit], button {
     cursor: pointer;
 }
 
+form.fileimport div {
+    padding: 2px;
+    padding-left: 15px;
+    display: inline-block;
+    position:relative;
+    width: 200px;
+    height: 20px;
+    margin: 4px;
+    overflow: hidden;
+    font-size: 8pt;
+}
+
+form.fileimport div input:checked {
+    color:red;
+}
+
+form.fileimport div label {
+    width: 100%;
+    height: 100%;
+}
+
+form.fileimport div input[type="checkbox"] {
+    position: absolute;
+    top:5px;
+    left: 0;
+}
+#users {
+    margin: 0;
+}
+#users th {
+    border: 2px outset;
+    width: 150px;
+}
+#users td {
+    border: 1px solid black;
+    padding: 4px;
+}
+.messages {
+/*    border: 2px outset #999999;  */
+    font-weight: bold;
+    margin: 0 auto;
+    padding: 5px 20px;
+    width: 200px;
+}
+.edit {
+    display:block;
+    height: 100%;
+    width:100%;
+}
+
+#twitterbutton {
+    width:130px;
+    height:20px;
+}
+.clearfix {
+    clear:both;
+}
+.profileinfo {
+    text-align:left;
+    height: 150px;
+}
+.largereset {
+    position:relative;
+    width: 1000px;
+}
+.text-sm {
+    font-size: 8pt;
+}
+.success {
+    color:green;
+}
+.failure {
+    color: red;
+}
 @media all and (orientation:portrait) {
 }
 
@@ -463,10 +538,6 @@ to {-webkit-transform: rotate(360deg);}
     }
     footer p, footer a {
         font-size: 0;
-    }
-    footer p:after {
-        font-size: 8pt;
-        content: '© Chaplin, et al.';
     }
     #video, video, #videoarea {
         max-width: 100%;

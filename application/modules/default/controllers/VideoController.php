@@ -24,25 +24,6 @@
 **/
 class VideoController extends Chaplin_Controller_Action_Api
 {
-    public function demoAction()
-    {
-        $modelUser = Chaplin_Auth::getInstance()
-            ->hasIdentity()?
-        Chaplin_Auth::getInstance()
-            ->getIdentity()
-            ->getUser():
-        null;
-
-        $modelVideo = Chaplin_Model_Video::create(
-            $modelUser,
-            '',
-            '',
-            'demo'
-        );
-        $modelVideo->save();
-        $this->_redirect('/');
-    }
-
     public function watchAction()
     {
         $modelUser = Chaplin_Auth::getInstance()
@@ -78,13 +59,13 @@ class VideoController extends Chaplin_Controller_Action_Api
             str_replace('/','-',base64_encode(hex2bin($strVideoId)));
         $this->view->assign('short', $strShortURL);
 
-        $strTwitterShare = '<iframe allowtransparency="true" frameborder="0" scrolling="no" src="'.
+        $strTwitterShare = '<iframe id="tweetbutton" allowtransparency="true" frameborder="0" scrolling="no" src="'.
         'https://platform.twitter.com/widgets/tweet_button.html'.
         '?url='.urlencode($strShortURL).
         '&dnt=true'.
         '&hashtags=projectchaplin'.
         '&text='.$this->view->strTitle.' : '.
-        '" style="width:130px; height:20px;"></iframe>';
+        '"></iframe>';
 
         $this->view->twittershare = $strTwitterShare;
         
@@ -436,6 +417,7 @@ class VideoController extends Chaplin_Controller_Action_Api
     
     public function editAction()
     {
+        $this->view->strTitle = 'Edit Video - Chaplin';
         $modelUser = Chaplin_Auth::getInstance()
             ->hasIdentity()?
         Chaplin_Auth::getInstance()

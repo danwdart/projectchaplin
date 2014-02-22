@@ -1,9 +1,3 @@
-[submodule "submodules/mustache.php"]
-	path = submodules/mustache.php
-	url = git@github.com:dandart/mustache.php.git
 [submodule "submodules/youtube-dl"]
 	path = submodules/youtube-dl
 	url = git://github.com/rg3/youtube-dl.git
-[submodule "submodules/dailymotion-sdk-php"]
-	path = submodules/dailymotion-sdk-php
-	url = https://github.com/dailymotion/dailymotion-sdk-php.git

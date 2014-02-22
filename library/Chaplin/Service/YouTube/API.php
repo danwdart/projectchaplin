@@ -43,7 +43,7 @@ class Chaplin_Service_YouTube_API
     {
         $strCommandLine = APPLICATION_PATH.self::LOCATION.
             " --format=webm -o ".
-            escapeshellarg($strPathToSave."/%(id)s.%(ext)s")." -- ".escapeshellarg($this->_strURL);
+            escapeshellarg($strPathToSave."/%(id)s.%(ext)s")." -- ".escapeshellarg($this->_strURL).' 2>&1';
         echo $strCommandLine.PHP_EOL;
         ob_flush();
         flush();
