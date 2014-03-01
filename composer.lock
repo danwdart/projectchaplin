@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dailymotion/dailymotion-sdk-php.git",
-                "reference": "af217bfde6effdede20afb9a9c5c6e93a23e0c80"
+                "reference": "60b65047b65c4ca52343dc8cfa8fc4c013f95995"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dailymotion/dailymotion-sdk-php/zipball/af217bfde6effdede20afb9a9c5c6e93a23e0c80",
-                "reference": "af217bfde6effdede20afb9a9c5c6e93a23e0c80",
+                "url": "https://api.github.com/repos/dailymotion/dailymotion-sdk-php/zipball/60b65047b65c4ca52343dc8cfa8fc4c013f95995",
+                "reference": "60b65047b65c4ca52343dc8cfa8fc4c013f95995",
                 "shasum": ""
             },
             "type": "library",
@@ -36,7 +36,7 @@
                 "dailymotion",
                 "sdk"
             ],
-            "time": "2013-08-30 10:55:09"
+            "time": "2014-02-20 11:17:15"
         },
         {
             "name": "dandart/amqp",
@@ -136,12 +136,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "0163f082dee93c895497571afd458a04c48b0b7a"
+                "reference": "6a6fc18508e270cd5a5acaee7492e4e4a303fce6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/0163f082dee93c895497571afd458a04c48b0b7a",
-                "reference": "0163f082dee93c895497571afd458a04c48b0b7a",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/6a6fc18508e270cd5a5acaee7492e4e4a303fce6",
+                "reference": "6a6fc18508e270cd5a5acaee7492e4e4a303fce6",
                 "shasum": ""
             },
             "require": {
@@ -150,6 +150,7 @@
             },
             "require-dev": {
                 "hamcrest/hamcrest-php": "~1.1",
+                "phpunit/phpunit": "4.0.*",
                 "satooshi/php-coveralls": "dev-master"
             },
             "type": "library",
@@ -193,7 +194,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2014-01-19 20:55:32"
+            "time": "2014-02-26 10:59:49"
         },
         {
             "name": "mustache/mustache",
@@ -246,16 +247,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf1.git",
-                "reference": "f24c8ae1402bfbaee1fac36fcfa9c2cbc0dcef3e"
+                "reference": "3a5de7cc1260d9b5de14b7819183b3b9eb8d6fa3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf1/zipball/f24c8ae1402bfbaee1fac36fcfa9c2cbc0dcef3e",
-                "reference": "f24c8ae1402bfbaee1fac36fcfa9c2cbc0dcef3e",
+                "url": "https://api.github.com/repos/zendframework/zf1/zipball/3a5de7cc1260d9b5de14b7819183b3b9eb8d6fa3",
+                "reference": "3a5de7cc1260d9b5de14b7819183b3b9eb8d6fa3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.11"
+            },
+            "require-dev": {
+                "phpunit/dbunit": "1.3.*",
+                "phpunit/phpunit": "3.7.*"
             },
             "type": "library",
             "extra": {
@@ -281,7 +286,7 @@
                 "ZF1",
                 "framework"
             ],
-            "time": "2014-01-25 11:26:49"
+            "time": "2014-02-21 09:56:29"
         }
     ],
     "packages-dev": [
