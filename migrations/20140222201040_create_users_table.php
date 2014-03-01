@@ -15,8 +15,8 @@ class CreateUsersTable extends AbstractMigration
             ->addColumn('Nick', 'string', ['limit' => 30])
             ->addColumn('Email', 'string')
             ->addColumn('Hash', 'string', ['limit' => 20])
-            ->addColumn('Validation', 'string', ['limit' => 32])
-            ->addColumn('UserTypeId', 'tinyint')
+            ->addColumn('Validation', 'string', ['limit' => 32, 'default' => null])
+            ->addColumn('UserTypeId', 'integer')
             ->create();
     }
 }

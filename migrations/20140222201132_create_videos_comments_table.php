@@ -4,32 +4,16 @@ use Phinx\Migration\AbstractMigration;
 
 class CreateVideosCommentsTable extends AbstractMigration
 {
-    /**
-     * Change Method.
-     *
-     * More information on this method is available here:
-     * http://docs.phinx.org/en/latest/migrations.html#the-change-method
-     *
-     * Uncomment this method if you would like to use it.
-     *
     public function change()
     {
-    }
-    */
-    
-    /**
-     * Migrate Up.
-     */
-    public function up()
-    {
-    
-    }
-
-    /**
-     * Migrate Down.
-     */
-    public function down()
-    {
-
+    	$this->table('Videos_Comments', [
+            'id' => false,
+            'primary_key' => 'CommentId'
+        ])
+        	->addColumn('CommentId', 'string', ['size' => 50])
+        	->addColumn('VideoId', 'string', ['size' => 50])
+        	->addColumn('Username', 'string', ['size' => 50])
+        	->addColumn('Comment', 'text')
+        	->create();
     }
 }

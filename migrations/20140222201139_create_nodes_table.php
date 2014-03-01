@@ -4,32 +4,16 @@ use Phinx\Migration\AbstractMigration;
 
 class CreateNodesTable extends AbstractMigration
 {
-    /**
-     * Change Method.
-     *
-     * More information on this method is available here:
-     * http://docs.phinx.org/en/latest/migrations.html#the-change-method
-     *
-     * Uncomment this method if you would like to use it.
-     *
     public function change()
     {
-    }
-    */
-    
-    /**
-     * Migrate Up.
-     */
-    public function up()
-    {
-    
-    }
-
-    /**
-     * Migrate Down.
-     */
-    public function down()
-    {
-
+    	$this->table('Nodes', [
+            'id' => false,
+            'primary_key' => 'NodeId'
+        ])
+        	->addColumn('NodeId', 'string', ['size' => 50])
+        	->addColumn('IP', 'string', ['size' => 29])
+        	->addColumn('Name', 'string', ['size' => 30])
+        	->addColumn('Active', 'bool')
+        	->create();
     }
 }
