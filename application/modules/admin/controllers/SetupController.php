@@ -98,6 +98,10 @@ class Admin_SetupController extends Zend_Controller_Action
         $schemaSql = file_get_contents(APPLICATION_PATH . '/../sql/schema.sql');
     
         $strAdapter = isset($arrPost['adapter'])?$arrPost['adapter']:null;
+        if (is_null($strAdapter)) {
+            echo 'Did you forget to choose an adapter?';
+            exit;
+        }
         $arrParams = isset($arrPost['params'])?$arrPost['params']:array();
 
         try {

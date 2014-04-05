@@ -63,7 +63,7 @@ class LoginController extends Zend_Controller_Action
         $auth = Chaplin_Auth::getInstance();
         $auth->authenticate($adapter);
         if(!$auth->hasIdentity()) {
-            $form->password->addError('Wrong username or password. Want to try again?');
+            $form->password->addError('Wrong username or password.');
             $form->markAsError();
             return $this->view->assign('form', $form);
         }

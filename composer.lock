@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dailymotion/dailymotion-sdk-php.git",
-                "reference": "60b65047b65c4ca52343dc8cfa8fc4c013f95995"
+                "reference": "a81fadbb6c8e80052f7131d1b2852a001d604a09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dailymotion/dailymotion-sdk-php/zipball/60b65047b65c4ca52343dc8cfa8fc4c013f95995",
-                "reference": "60b65047b65c4ca52343dc8cfa8fc4c013f95995",
+                "url": "https://api.github.com/repos/dailymotion/dailymotion-sdk-php/zipball/a81fadbb6c8e80052f7131d1b2852a001d604a09",
+                "reference": "a81fadbb6c8e80052f7131d1b2852a001d604a09",
                 "shasum": ""
             },
             "type": "library",
@@ -36,7 +36,7 @@
                 "dailymotion",
                 "sdk"
             ],
-            "time": "2014-02-20 11:17:15"
+            "time": "2014-03-10 14:40:27"
         },
         {
             "name": "dandart/amqp",
@@ -137,12 +137,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/robmorgan/phinx.git",
-                "reference": "fcb59098332f468c11f8cca08e1655a285317f58"
+                "reference": "7699310216e345b626e3926e564a5015142a397a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/fcb59098332f468c11f8cca08e1655a285317f58",
-                "reference": "fcb59098332f468c11f8cca08e1655a285317f58",
+                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/7699310216e345b626e3926e564a5015142a397a",
+                "reference": "7699310216e345b626e3926e564a5015142a397a",
                 "shasum": ""
             },
             "require": {
@@ -173,7 +173,8 @@
                 {
                     "name": "Rob Morgan",
                     "email": "robbym@gmail.com",
-                    "homepage": "http://robmorgan.id.au"
+                    "homepage": "http://robmorgan.id.au",
+                    "role": "Lead Developer"
                 }
             ],
             "description": "Phinx makes it ridiculously easy to manage the database migrations for your PHP app.",
@@ -185,11 +186,11 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2014-02-18 21:18:57"
+            "time": "2014-04-05 11:03:59"
         },
         {
             "name": "symfony/class-loader",
-            "version": "v2.4.2",
+            "version": "v2.4.3",
             "target-dir": "Symfony/Component/ClassLoader",
             "source": {
                 "type": "git",
@@ -241,17 +242,17 @@
         },
         {
             "name": "symfony/config",
-            "version": "v2.4.2",
+            "version": "v2.4.3",
             "target-dir": "Symfony/Component/Config",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Config.git",
-                "reference": "d81bd01eac1514c10dcb3b11eaa9048d6b87dd1f"
+                "reference": "e98693981385224bd31667e56204f311d9e0f98e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Config/zipball/d81bd01eac1514c10dcb3b11eaa9048d6b87dd1f",
-                "reference": "d81bd01eac1514c10dcb3b11eaa9048d6b87dd1f",
+                "url": "https://api.github.com/repos/symfony/Config/zipball/e98693981385224bd31667e56204f311d9e0f98e",
+                "reference": "e98693981385224bd31667e56204f311d9e0f98e",
                 "shasum": ""
             },
             "require": {
@@ -287,21 +288,21 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "http://symfony.com",
-            "time": "2014-01-07 13:28:54"
+            "time": "2014-03-26 11:35:33"
         },
         {
             "name": "symfony/console",
-            "version": "v2.4.2",
+            "version": "v2.4.3",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "940f217cbc3c8a33e5403e7c595495c4884400fe"
+                "reference": "ef20f1f58d7f693ee888353962bd2db336e3bbcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/940f217cbc3c8a33e5403e7c595495c4884400fe",
-                "reference": "940f217cbc3c8a33e5403e7c595495c4884400fe",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/ef20f1f58d7f693ee888353962bd2db336e3bbcb",
+                "reference": "ef20f1f58d7f693ee888353962bd2db336e3bbcb",
                 "shasum": ""
             },
             "require": {
@@ -342,21 +343,21 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2014-02-11 13:52:09"
+            "time": "2014-03-01 17:35:04"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.4.2",
+            "version": "v2.4.3",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "7e65abb06d3b38f4be89266fe3fb4a759544e713"
+                "reference": "b717952487176a993e9b12a08b87beae25ae419c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/7e65abb06d3b38f4be89266fe3fb4a759544e713",
-                "reference": "7e65abb06d3b38f4be89266fe3fb4a759544e713",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/b717952487176a993e9b12a08b87beae25ae419c",
+                "reference": "b717952487176a993e9b12a08b87beae25ae419c",
                 "shasum": ""
             },
             "require": {
@@ -391,21 +392,21 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "http://symfony.com",
-            "time": "2014-01-07 13:28:54"
+            "time": "2014-03-26 11:55:03"
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.4.2",
+            "version": "v2.4.3",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "bb6ddaf8956139d1b8c360b4b713ed0138e876b3"
+                "reference": "77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/bb6ddaf8956139d1b8c360b4b713ed0138e876b3",
-                "reference": "bb6ddaf8956139d1b8c360b4b713ed0138e876b3",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd",
+                "reference": "77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd",
                 "shasum": ""
             },
             "require": {
@@ -440,7 +441,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-01-07 13:28:54"
+            "time": "2014-03-12 18:29:58"
         },
         {
             "name": "zendframework/zendframework1",
@@ -448,12 +449,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf1.git",
-                "reference": "3a5de7cc1260d9b5de14b7819183b3b9eb8d6fa3"
+                "reference": "6fb5c4bbad0421fa59c678d1aee85fda98da2386"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf1/zipball/3a5de7cc1260d9b5de14b7819183b3b9eb8d6fa3",
-                "reference": "3a5de7cc1260d9b5de14b7819183b3b9eb8d6fa3",
+                "url": "https://api.github.com/repos/zendframework/zf1/zipball/6fb5c4bbad0421fa59c678d1aee85fda98da2386",
+                "reference": "6fb5c4bbad0421fa59c678d1aee85fda98da2386",
                 "shasum": ""
             },
             "require": {
@@ -487,7 +488,7 @@
                 "ZF1",
                 "framework"
             ],
-            "time": "2014-02-21 09:56:29"
+            "time": "2014-04-03 13:42:25"
         }
     ],
     "packages-dev": [
@@ -541,12 +542,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "619f304b0ebc52489f11b47e88c3c17f95bf9958"
+                "reference": "2739e3062557253b1eddb7c32b49936d5882333f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/619f304b0ebc52489f11b47e88c3c17f95bf9958",
-                "reference": "619f304b0ebc52489f11b47e88c3c17f95bf9958",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/2739e3062557253b1eddb7c32b49936d5882333f",
+                "reference": "2739e3062557253b1eddb7c32b49936d5882333f",
                 "shasum": ""
             },
             "require": {
@@ -599,7 +600,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2014-02-17 21:56:53"
+            "time": "2014-03-30 21:04:41"
         }
     ],
     "aliases": [

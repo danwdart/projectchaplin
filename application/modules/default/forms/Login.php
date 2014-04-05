@@ -22,6 +22,18 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
+class Zend_Form_Element_Html extends Zend_Form_Element_Xhtml {
+    /**
+     * Default form view helper to use for rendering
+     * @var string
+     */
+    public $helper = 'formNote';
+
+    public function isValid($value, $context = null) {
+        return true;
+    }
+}
+
 class default_Form_Login extends Zend_Form
 {
     public function init()
@@ -30,18 +42,38 @@ class default_Form_Login extends Zend_Form
         $this->setMethod('post');
         $this->setAction('/login?redirect=' . $this->_redirect_url);
 
+        $face = new Zend_Form_Element_Html('icon');
+        $face->setValue('<div class="face"></div>');
+        $face->removeDecorator('Label');
+        $this->addElement($face);
+
         $username = new Zend_Form_Element_Text('username');
-        $username->setLabel('Username:');
+        $username->setAttrib('placeholder', 'Username');
+        $username->removeDecorator('Label');
+        $username->setAttrib('required', 'true');
 
         $password = new Zend_Form_Element_Password('password');
-        $password->setLabel('Password:');
+        $password->setAttrib('placeholder', 'Password');
+        $password->removeDecorator('Label');
+        $password->setAttrib('required', 'true');
 
         $submit = new Zend_Form_Element_Submit('Login');
-        $register = new Zend_Form_Element_Submit('Register');
-        $forgot = new Zend_Form_Element_Submit('Forgot');
-        $forgot->setLabel('Forgot Password');
 
-        $this->addElements(array($username, $password, $submit, $register, $forgot));
+        $submit->removeDecorator('DtDdWrapper');
+
+        $this->addElements(array($username, $password));
+
+        $tag = new Zend_Form_Element_Html('forgotPassword');
+        $tag->setValue('<a href="/login/forgot">I don\'t know my password</a>');
+        $tag->removeDecorator('Label');
+        $this->addElement($tag);
+
+        $this->addElement($submit);
+
+        $tag2 = new Zend_Form_Element_Html('register');
+        $tag2->setValue('<a href="/login/register">No account? Register here</a>');
+        $tag2->removeDecorator('Label');
+        $this->addElement($tag2);
 
     }
 }
