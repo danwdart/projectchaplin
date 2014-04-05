@@ -28,14 +28,14 @@
 </div>
 <div class="content-centre">
 <?php foreach($this->ittVideos as $modelVideo):?>
-<a href="/video/watch/id/<?php echo $modelVideo->getVideoId();?>">
-<div class="thumb-wrapper">
-<div class="thumb-img">
-    <img src="<?php echo htmlentities($modelVideo->getThumbnail());?>" alt="View Video"/>
+<div class="video">
+	<a href="/video/watch/id/<?php echo $modelVideo->getVideoId();?>">
+		<div class="thumb-wrapper">
+    		<img class="thumb-img" src="<?php echo htmlentities($modelVideo->getThumbnail());?>" alt="View Video"/>
+		</div>
+		<p><?php echo $modelVideo->getShortTitle();?></p>
+	</a>
 </div>
-<p><?php echo $modelVideo->getShortTitle();?></p>
-</div>
-</a>
 <?php endforeach;?>
 </div>
 <div class="clearfix"></div>
@@ -44,14 +44,14 @@
 <?php if ($this->ytUser) : ?>
 	<h2>Found YouTube user <?php echo $this->strSearchTerm; ?></h2>
 	<div class="content-centre">
-		<a href="/user/youtube/id/<?php echo $this->strSearchTerm; ?>">
-			<div class="thumb-wrapper">
-				<div class="thumb-img">
-    				<img src="<?php echo htmlentities($this->ytUser->getThumbnail()->getUrl());?>" alt="View User"/>
-				</div>
+		<div class="video">
+			<a href="/user/youtube/id/<?php echo $this->strSearchTerm; ?>">
+				<div class="thumb-wrapper">
+	    			<img class="thumb-img" src="<?php echo htmlentities($this->ytUser->getThumbnail()->getUrl());?>" alt="View User"/>
+	    		</div>
 				<p><?php echo $this->ytUser->getUsername();?></p>
-			</div>
-		</a>
+			</a>
+		</div>
 	</div>
 	<div class="clearfix"></div>
 <?php endif; ?>
@@ -59,18 +59,18 @@
 <h2>YouTube results for: <?php echo $this->strSearchTerm; ?></h2>
 <div class="content-centre" id="youtubevids">
 <?php foreach($this->videoFeed as $ytVideo):?>
-<a href="/video/watchyoutube/id/<?php echo $ytVideo->getVideoId(); ?>">
-<div class="thumb-wrapper">
+<div class="video">
+	<a href="/video/watchyoutube/id/<?php echo $ytVideo->getVideoId(); ?>">
+		<div class="thumb-wrapper">
 <?php
 $arrThumbnails = $ytVideo->getVideoThumbnails();
 if (isset($arrThumbnails[0])) :?>
-<div class="thumb-img">
-    <img src="<?php echo htmlentities($arrThumbnails[0]['url']);?>" alt="View Video"/>
-</div>
+    		<img class="thumb-img" src="<?php echo htmlentities($arrThumbnails[0]['url']);?>" alt="View Video"/>
 <?php endif;?>
-<p><?php echo $ytVideo->getVideoTitle();?></p>
+		</div>
+		<p><?php echo $ytVideo->getVideoTitle();?></p>
+	</a>
 </div>
-</a>
 <?php endforeach;?>
 
 </div>

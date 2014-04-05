@@ -86,7 +86,7 @@ class UserController extends Chaplin_Controller_Action_Api
 
         if(!$user->verifyPassword($oldpassword))
         {
-            $form->oldpassword->addError('Old Password does not match. Want to try again?');
+            $form->oldpassword->addError('Incorrect old password.');
             return $this->view->assign('form', $form);
         }
         // @TODO add valid email
