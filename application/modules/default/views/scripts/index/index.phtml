@@ -24,14 +24,14 @@
 **/
 ?>
 <div class="content-header">
-    Latest Videos:
+    Latest Videos
 </div>
 <div class="content-centre">
 <?php foreach($this->ittFeaturedVideos as $modelVideo):?>
 <a href="/video/watch/id/<?php echo $modelVideo->getVideoId();?>">
-	<div class="thumb-wrapper">
-		<div class="thumb-img">
-	    	<img src="<?php echo htmlentities($modelVideo->getThumbnail()).'?'.time();?>" alt="View Video"/>
+	<div class="video">
+		<div class="thumb-wrapper">
+		    <img class="thumb-img" src="<?php echo htmlentities($modelVideo->getThumbnail()).'?'.time();?>" alt="View Video"/>
 		</div>
 		<p><?php echo $modelVideo->getShortTitle();?></p>
 	</div>
@@ -41,15 +41,15 @@
 <?php if (!$this->ittNodes->isEmpty()) : ?>
 <div class="clearfix"></div>
 <div class="content-header">
-    Videos from other nodes:
+    Videos from other nodes
 </div>
 <div class="content-centre">
 <?php foreach($this->ittNodes as $modelNode) :
 foreach($modelNode->getFeaturedVideos() as $modelVideo):?>
 <a href="/video/watchremote/node/<?php echo $modelNode->getNodeId()?>/id/<?php echo $modelVideo->getVideoId();?>">
-	<div class="thumb-wrapper">
-		<div class="thumb-img">
-	    	<img src="<?php echo htmlentities($modelVideo->getThumbnail()).'?'.time();?>" alt="View Video"/>
+	<div class="video">
+		<div class="thumb-wrapper">
+		    <img class="thumb-img" src="<?php echo htmlentities($modelVideo->getThumbnail()).'?'.time();?>" alt="View Video"/>
 		</div>
 		<p><?php echo $modelVideo->getShortTitle();?></p>
 	</div>

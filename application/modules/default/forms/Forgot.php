@@ -29,9 +29,13 @@ class default_Form_Forgot extends Zend_Form
         $this->setMethod('post');
 
         $username = new Zend_Form_Element_Text('username');
-        $username->setLabel('Username:');
+        $username->setAttrib('placeholder', 'Username');
+        $username->removeDecorator('Label');
+        $username->setAttrib('required', 'true');
 
-        $submit = new Zend_Form_Element_Submit('Submit');
+        $submit = new Zend_Form_Element_Submit('Login');
+
+        $submit->removeDecorator('DtDdWrapper');
 
         $this->addElements(array($username, $submit));
     }

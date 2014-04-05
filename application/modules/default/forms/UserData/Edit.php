@@ -28,24 +28,31 @@ class default_Form_UserData_Edit extends Zend_Form
     { 
         $this->setMethod('post');
         $username = new Zend_Form_Element_Text('username');
-        $username->setLabel('Username:');
+        $username->setAttrib('placeholder', 'Username');
+        $username->removeDecorator('Label');
 
         $oldpassword = new Zend_Form_Element_Password('oldpassword');
-        $oldpassword->setLabel('Old Password:');
+        $oldpassword->setAttrib('placeholder', 'Old password');
+        $oldpassword->removeDecorator('Label');
 
         $password = new Zend_Form_Element_Password('password');
-        $password->setLabel('Password:');
+        $password->setAttrib('placeholder', 'New password');
+        $password->removeDecorator('Label');
 
         $password2 = new Zend_Form_Element_Password('password2');
-        $password2->setLabel('Repeat Password:');
+        $password2->setAttrib('placeholder', 'New password (again)');
+        $password2->removeDecorator('Label');
 
         $fullname = new Zend_Form_Element_Text('fullname');
-        $fullname->setLabel('Full Name:');
+        $fullname->setAttrib('placeholder', 'Full name');
+        $fullname->removeDecorator('Label');
 
         $email = new Zend_Form_Element_Text('email');
-        $email->setLabel('Email Address:');
+        $email->setAttrib('placeholder', 'Email address');
+        $email->removeDecorator('Label');
 
-        $register = new Zend_Form_Element_Submit('Save');
+        $register = new Zend_Form_Element_Submit('Update');
+        $register->removeDecorator('DtDdWrapper');
 
         $this->addElements(array($username, $oldpassword, $password, $password2, $fullname, $email, $register));
     }
