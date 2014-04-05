@@ -30,10 +30,12 @@ class default_Form_UserData_Create extends Zend_Form
         $this->setAction('/login/register');
 
         $username = new Zend_Form_Element_Text('username');
-        $username->setLabel('Username:');
+        $username->setAttrib('placeholder', 'Username');
+        $username->removeDecorator('Label');
 
         $password = new Zend_Form_Element_Password('password');
-        $password->setLabel('Password:');
+        $password->setAttrib('placeholder', 'Password');
+        $password->removeDecorator('Label');
         $password->addValidators(array(
             new Zend_Validate_StringLength(array(
                 'min' => 6
@@ -41,7 +43,8 @@ class default_Form_UserData_Create extends Zend_Form
         ));
         
         $password2 = new Zend_Form_Element_Password('password2');
-        $password2->setLabel('Repeat Password:');
+        $password2->setAttrib('placeholder', 'Password (again)');
+        $password2->removeDecorator('Label');
         $password2->addValidators(array(
             new Zend_Validate_StringLength(array(
                 'min' => 6
@@ -52,12 +55,16 @@ class default_Form_UserData_Create extends Zend_Form
         ));
 
         $fullname = new Zend_Form_Element_Text('fullname');
-        $fullname->setLabel('Full Name:');
+        $fullname->setAttrib('placeholder', 'Full name');
+        $fullname->removeDecorator('Label');
 
         $email = new Zend_Form_Element_Text('email');
-        $email->setLabel('Email Address:');
+        $email->setAttrib('placeholder', 'Email address');
+        $email->removeDecorator('Label');
 
         $register = new Zend_Form_Element_Submit('Register');
+        $register->removeDecorator('DtDdWrapper');
+        $register->removeDecorator('Label');
 
         $this->addElements(array($username, $password, $password2, $fullname, $email, $register));
     }
