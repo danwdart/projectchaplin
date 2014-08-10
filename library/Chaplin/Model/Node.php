@@ -89,13 +89,19 @@ class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
 
     public function ping()
     {
-        $response = Chaplin_Service::getInstance()
-            ->getHttpClient()
-            ->getHttpResponse($this->getStatusURL(), null, false);
-        if(200 == $response->getStatus()) {
-            $this->_setField(self::FIELD_ACTIVE, true);
+        try {
+            $response = Chaplin_Service::getInstance()
+                ->getHttpClient()
+                ->getHttpResponse($this->getStatusURL(), null, false);
+            if(200 == $response->getStatus()) {
+                $this->_setField(self::FIELD_ACTIVE, true);
+                $this->save();
+                return true;
+            }
+        } catch (Exception $e) {
+            $this->_setField(self::FIELD_ACTIVE, false);
             $this->save();
-            return true;
+            return false;
         }
         return false;
     }

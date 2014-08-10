@@ -25,32 +25,61 @@
 $strNick = $this->modelUser->getNick();
 $bIsMe = $this->modelUser
 ?>
-<div class="widgetbox centre medium">
-	<div class="widgettitle">
-		<h3><?php echo $strNick;?></h3>
-	</div>
-	<div class="widgettitle">Profile Information</div>
-	<div class="widgetbody space" class="profileinfo" <?php if ($this->bIsMe):?>contenteditable<?php endif; ?>>
-		Some information about <?php echo $strNick;?> here. <?php echo $strNick;?> is cool. <?php echo $strNick;?> makes the best sandwiches.
-	</div>
+
+<h3 class="profiletitle">
+	<div class="face"></div>
+	<?php echo $strNick;?>'s profile
+</h3>
+
+<div class="widgetbox centre medium profile">
 	<?php if ($this->bIsMe) : ?>
-	<div class="widgettitle">Custom CSS</div>
-	<div class="widgetbody space" class="profileinfo">
-		<style class="edit" contenteditable>
-			#secret {
-				display:none;
-			}
-		</style>
-	</div>
+		<div class="widgettitle">Write about yourself</div>
+	<?php else : ?>
+		<div class="widgettitle">Profile information</div>
 	<?php endif; ?>
-</div>
+
+	<div class="widgetbody space" style="">
+		<?php if ($this->bIsMe):?>
+			<textarea>
+		<?php else : ?>
+			<p>
+		<?php endif; ?>
+Some information about <?php echo $strNick;?> here. <?php echo $strNick;?> is cool. <?php echo $strNick;?> makes the best sandwiches.
+		<?php if ($this->bIsMe):?>
+			</textarea>
+		<?php else : ?>
+			</p>
+		<?php endif; ?>
+	</div>
+
 <?php if ($this->bIsMe) : ?>
-<div class="widgetbox centre medium">
-<div class="widgettitle centre space">
-    Change your details:
+
+	<div class="widgettitle">Custom CSS</div>
+	<div class="widgetbody space" style="">
+
+<pre contenteditable>#secret{
+	display:none !important;
+}
+
+#foo.bar{
+	&:after{
+		display:inline-block;
+		content:'baz';
+	}
+}</pre>
+
+	</div>
+
+	<div class="widgettitle centre space">
+	    Update your details
+	</div>
+	<div class="widgetbody centre space">
+	    <?php echo $this->form; ?>
+	</div>
 </div>
-<div class="widgetbody centre space">
-    <?php echo $this->form; ?>
+
+<?php else : ?>
+
 </div>
-</div>
+
 <?php endif; ?>

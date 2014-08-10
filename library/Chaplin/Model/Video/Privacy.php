@@ -53,4 +53,14 @@ class Chaplin_Model_Video_Privacy
 	{
 		return self::$_arrInfo[$this->_strId][self::FIELD_DESC];
 	}
+
+	public function isPublic()
+	{
+		return self::ID_PUBLIC == $this->_strId;
+	}
+
+	public function isPrivate()
+	{
+		return self::ID_PRIVATE == $this->_strId;
+	}
 }

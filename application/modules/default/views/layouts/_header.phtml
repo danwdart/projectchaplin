@@ -24,47 +24,80 @@
 **/
 $bIsLoggedIn = false;
 if(Chaplin_Auth::getInstance()->hasIdentity()) :
-    $modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser();
-    $bIsLoggedIn = true;
+	$modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser();
+	$bIsLoggedIn = true;
 endif;
 ?>
+
+<div class="wrap">
+	<a href="/"><div class="logo">
+		Chaplin
+	</div></a>
+	<div class="right">
+		<a href="/video/upload" class="upload button"><i class="fa fa-upload"></i> Upload</a>
+		<a href="/broadcast" class="broadcast button"><i class="fa fa-video-camera"></i> Broadcast</a>
+		
+		
+		
+		<span class="dropdown">
+			<a href="#" class="btn btn-transparent dropdown-toggle" data-toggle="dropdown">
+				<?php if($bIsLoggedIn): ?>
+					<span class="username">
+						<?php echo $modelUser->getNick(); ?>
+					</span>
+					<?php //echo $modelUser->getUserType()->getUserType();?>
+				<?php else: ?>
+					<span class="username nobold">
+						Not logged in
+					</span>
+				<?php endif; ?> 
+				<span class="caret"></span></a>
+			<ul class="dropdown-menu pull-right" role="menu">
+				
+				<?php if($bIsLoggedIn): ?>
+					<li>
+						<a href="/user/<?php echo $modelUser->getUsername();?>"><i class="fa fa-user"></i> Profile</a>
+					</li>
+					<li>
+						<a href="/logout"><i class="fa fa-sign-out"></i> Logout</a>
+					</li>
+				<?php else: ?>
+					<li>
+						<a href="/login"><i class="fa fa-sign-in"></i> Login</a>
+					</li>
+				<?php endif; ?> 
+
+				<?php //if ($bIsLoggedIn && $modelUser->isGod()) :?>
+					<li class="divider"></li>
+					<li>
+						<a href="/admin/import"><i class="fa fa-download"></i> Import</a>
+					</li>
+					<li>
+						<a href="/admin/user"><i class="fa fa-user"></i> Users</a>
+					</li>
+					<li>
+						<a href="/admin/node"><i class="fa fa-sitemap"></i> Nodes</a>
+					</li>
+					<li>
+						<a href="/admin/events"><i class="fa fa-rss"></i> Events</a>
+					</li>
+				<?php //endif; ?>
+			</ul>
+
+		</span>   
+	</div>
+	<form class="search" action="/search" method="get">
+		<input type="search" id="search" required placeholder="Search for videos..."
+		<?php if (isset($this->strSearchTerm)) : echo 'value="'.$this->strSearchTerm.'"'; endif; ?> name="search"/>
+		<button type="submit">
+
+		</button>
+	</form>
+</div>
 
 
 
 <div class="left">
-    <a href="/video/upload" class="btn btn-info"><i class="fa fa-upload"></i> Upload</a>
-    <a href="/broadcast" class="btn btn-primary"><i class="fa fa-video-camera"></i> Broadcast</a>
-    <?php if ($bIsLoggedIn && $modelUser->isGod()) :?>
-    <span class="dropdown">
-    <a href="#" class="btn btn-info dropdown-toggle" data-toggle="dropdown"><i class="fa fa-more"></i> More <span class="caret"></span></a>
-    <ul class="dropdown-menu" role="menu">
-        <li><a href="/admin/import" class="btn btn-default"><i class="fa fa-download"></i> Import</a></li>
-        <li><a href="/admin/user" class="btn btn-default"><i class="fa fa-user"></i> Users</a></li>
-        <li><a href="/admin/node" class="btn btn-default"><i class="fa fa-sitemap"></i> Nodes</a></li>
-        <li><a href="/admin/events" class="btn btn-default"><i class="fa fa-rss"></i> Events</a></li>
-    </ul>
-    </span>
-    <?php endif; ?>
-</div>
-<div class="middle">
-	<a href="/"><h2><i class="fa fa-film"></i> Chaplin</h2></a>
-</div>
-<div class="right">
-    <form action="/search" method="get">
-        <input type="search" id="search" placeholder="Search for videos..."
-        <?php if (isset($this->strSearchTerm)) : echo 'value="'.$this->strSearchTerm.'"'; endif; ?> name="search"/>
-    </form>
-    &nbsp;&nbsp;
-    <?php if($bIsLoggedIn): ?>
-        <strong>
-            <a href="/user/<?php echo $modelUser->getUsername();?>">
-                <?php echo $modelUser->getNick(); ?>
-            </a> - 
-            <?php echo $modelUser->getUserType()->getUserType();?>
-        </strong>
-        <a href="/logout" class="btn btn-danger">Logout <i class="fa fa-sign-out"></i></a>
-    <?php else: ?>
-        <a href="/login" class="btn btn-success">Login <i class="fa fa-sign-in"></i></a>
-    <?php endif; ?>    
+	
 </div>
 <div class="clearfix"></div>
