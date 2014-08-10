@@ -63,7 +63,7 @@ class Admin_SetupController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender(true);
 
         try {
-            $amqp = new Amqp_Connection($this->_request->getPost());
+            $amqp = new Amqp\Connection($this->_request->getPost());
             $amqp->connect();
             echo 'AMQP connection success!';
         } catch (Exception $e) {
@@ -97,12 +97,21 @@ class Admin_SetupController extends Zend_Controller_Action
 
         $schemaSql = file_get_contents(APPLICATION_PATH . '/../sql/schema.sql');
     
-        $strAdapter = isset($arrPost['adapter'])?$arrPost['adapter']:null;
+        $arrDefault = $arrPost['default'];
+
+        if (!isset($arrDefault['sql'])) {
+            echo 'No SQL settings exist.';
+            exit;
+        }
+
+        $arrSql = $arrDefault['sql'];
+
+        $strAdapter = isset($arrSql['adapter'])?$arrSql['adapter']:null;
         if (is_null($strAdapter)) {
             echo 'Did you forget to choose an adapter?';
             exit;
         }
-        $arrParams = isset($arrPost['params'])?$arrPost['params']:array();
+        $arrParams = isset($arrSql['params'])?$arrSql['params']:array();
 
         try {
             $adapter = Zend_Db::factory($strAdapter, $arrParams);
