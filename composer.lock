@@ -1,7 +1,8 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
     "hash": "0e971e9ac9a09f930c1514136fa65fd6",
     "packages": [
@@ -11,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dailymotion/dailymotion-sdk-php.git",
-                "reference": "a81fadbb6c8e80052f7131d1b2852a001d604a09"
+                "reference": "22d6409fd69b627a75c15174eb301c67444c4744"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dailymotion/dailymotion-sdk-php/zipball/a81fadbb6c8e80052f7131d1b2852a001d604a09",
-                "reference": "a81fadbb6c8e80052f7131d1b2852a001d604a09",
+                "url": "https://api.github.com/repos/dailymotion/dailymotion-sdk-php/zipball/22d6409fd69b627a75c15174eb301c67444c4744",
+                "reference": "22d6409fd69b627a75c15174eb301c67444c4744",
                 "shasum": ""
             },
             "type": "library",
@@ -36,7 +37,7 @@
                 "dailymotion",
                 "sdk"
             ],
-            "time": "2014-03-10 14:40:27"
+            "time": "2014-07-28 09:34:04"
         },
         {
             "name": "dandart/amqp",
@@ -44,12 +45,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dandart/amqp.git",
-                "reference": "149234c850a1f0d04e21012a38f238b43775cb4c"
+                "reference": "99da428de85106681982033e69bc3df699b2d7d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dandart/amqp/zipball/149234c850a1f0d04e21012a38f238b43775cb4c",
-                "reference": "149234c850a1f0d04e21012a38f238b43775cb4c",
+                "url": "https://api.github.com/repos/dandart/amqp/zipball/99da428de85106681982033e69bc3df699b2d7d8",
+                "reference": "99da428de85106681982033e69bc3df699b2d7d8",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +85,7 @@
                 "source": "https://github.com/dandart/amqp/tree/master",
                 "issues": "https://github.com/dandart/amqp/issues"
             },
-            "time": "2014-01-25 23:18:08"
+            "time": "2014-07-28 10:37:05"
         },
         {
             "name": "mustache/mustache",
@@ -92,12 +93,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/mustache.php.git",
-                "reference": "996c944fa2ddedddfaf0d276b913809d6a32fd85"
+                "reference": "1430ca884912eaba2b3830856b45685733b16789"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/mustache.php/zipball/996c944fa2ddedddfaf0d276b913809d6a32fd85",
-                "reference": "996c944fa2ddedddfaf0d276b913809d6a32fd85",
+                "url": "https://api.github.com/repos/bobthecow/mustache.php/zipball/1430ca884912eaba2b3830856b45685733b16789",
+                "reference": "1430ca884912eaba2b3830856b45685733b16789",
                 "shasum": ""
             },
             "require": {
@@ -129,7 +130,7 @@
                 "mustache",
                 "templating"
             ],
-            "time": "2014-01-09 00:36:09"
+            "time": "2014-06-20 19:34:49"
         },
         {
             "name": "robmorgan/phinx",
@@ -137,12 +138,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/robmorgan/phinx.git",
-                "reference": "7699310216e345b626e3926e564a5015142a397a"
+                "reference": "8ca9b50b85e389abd20b2e682ea7ae8eba69270c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/7699310216e345b626e3926e564a5015142a397a",
-                "reference": "7699310216e345b626e3926e564a5015142a397a",
+                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/8ca9b50b85e389abd20b2e682ea7ae8eba69270c",
+                "reference": "8ca9b50b85e389abd20b2e682ea7ae8eba69270c",
                 "shasum": ""
             },
             "require": {
@@ -186,21 +187,21 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2014-04-05 11:03:59"
+            "time": "2014-08-10 10:59:29"
         },
         {
             "name": "symfony/class-loader",
-            "version": "v2.4.3",
+            "version": "v2.5.3",
             "target-dir": "Symfony/Component/ClassLoader",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ClassLoader.git",
-                "reference": "d36352a610b33da398349807d63b8a792310ba7e"
+                "reference": "25b74b67d455268415d7d34b41f8b7df4cb33ba4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ClassLoader/zipball/d36352a610b33da398349807d63b8a792310ba7e",
-                "reference": "d36352a610b33da398349807d63b8a792310ba7e",
+                "url": "https://api.github.com/repos/symfony/ClassLoader/zipball/25b74b67d455268415d7d34b41f8b7df4cb33ba4",
+                "reference": "25b74b67d455268415d7d34b41f8b7df4cb33ba4",
                 "shasum": ""
             },
             "require": {
@@ -212,7 +213,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.5-dev"
                 }
             },
             "autoload": {
@@ -226,33 +227,31 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony ClassLoader Component",
             "homepage": "http://symfony.com",
-            "time": "2014-02-11 13:52:09"
+            "time": "2014-07-09 09:05:48"
         },
         {
             "name": "symfony/config",
-            "version": "v2.4.3",
+            "version": "v2.5.3",
             "target-dir": "Symfony/Component/Config",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Config.git",
-                "reference": "e98693981385224bd31667e56204f311d9e0f98e"
+                "reference": "8d044668c7ccb4ade684e368d910e3aadcff6f6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Config/zipball/e98693981385224bd31667e56204f311d9e0f98e",
-                "reference": "e98693981385224bd31667e56204f311d9e0f98e",
+                "url": "https://api.github.com/repos/symfony/Config/zipball/8d044668c7ccb4ade684e368d910e3aadcff6f6c",
+                "reference": "8d044668c7ccb4ade684e368d910e3aadcff6f6c",
                 "shasum": ""
             },
             "require": {
@@ -262,7 +261,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.5-dev"
                 }
             },
             "autoload": {
@@ -276,48 +275,48 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony Config Component",
             "homepage": "http://symfony.com",
-            "time": "2014-03-26 11:35:33"
+            "time": "2014-08-05 09:00:40"
         },
         {
             "name": "symfony/console",
-            "version": "v2.4.3",
+            "version": "v2.5.3",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "ef20f1f58d7f693ee888353962bd2db336e3bbcb"
+                "reference": "cd2d1e4bac2206b337326b0140ff475fe9ad5f63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/ef20f1f58d7f693ee888353962bd2db336e3bbcb",
-                "reference": "ef20f1f58d7f693ee888353962bd2db336e3bbcb",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/cd2d1e4bac2206b337326b0140ff475fe9ad5f63",
+                "reference": "cd2d1e4bac2206b337326b0140ff475fe9ad5f63",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
+                "psr/log": "~1.0",
                 "symfony/event-dispatcher": "~2.1"
             },
             "suggest": {
+                "psr/log": "For using the console logger",
                 "symfony/event-dispatcher": ""
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.5-dev"
                 }
             },
             "autoload": {
@@ -331,33 +330,31 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony Console Component",
             "homepage": "http://symfony.com",
-            "time": "2014-03-01 17:35:04"
+            "time": "2014-08-05 09:00:40"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.4.3",
+            "version": "v2.5.3",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "b717952487176a993e9b12a08b87beae25ae419c"
+                "reference": "c1309b0ee195ad264a4314435bdaecdfacb8ae9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/b717952487176a993e9b12a08b87beae25ae419c",
-                "reference": "b717952487176a993e9b12a08b87beae25ae419c",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/c1309b0ee195ad264a4314435bdaecdfacb8ae9c",
+                "reference": "c1309b0ee195ad264a4314435bdaecdfacb8ae9c",
                 "shasum": ""
             },
             "require": {
@@ -366,7 +363,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.5-dev"
                 }
             },
             "autoload": {
@@ -380,33 +377,31 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "http://symfony.com",
-            "time": "2014-03-26 11:55:03"
+            "time": "2014-07-09 09:05:48"
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.4.3",
+            "version": "v2.5.3",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd"
+                "reference": "5a75366ae9ca8b4792cd0083e4ca4dff9fe96f1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd",
-                "reference": "77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/5a75366ae9ca8b4792cd0083e4ca4dff9fe96f1f",
+                "reference": "5a75366ae9ca8b4792cd0083e4ca4dff9fe96f1f",
                 "shasum": ""
             },
             "require": {
@@ -415,7 +410,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.5-dev"
                 }
             },
             "autoload": {
@@ -429,19 +424,17 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-03-12 18:29:58"
+            "time": "2014-08-05 09:00:40"
         },
         {
             "name": "zendframework/zendframework1",
@@ -449,12 +442,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zf1.git",
-                "reference": "6fb5c4bbad0421fa59c678d1aee85fda98da2386"
+                "reference": "f7a5fd3c2b1b3a32a2c0caceccfbac4ca2823e60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf1/zipball/6fb5c4bbad0421fa59c678d1aee85fda98da2386",
-                "reference": "6fb5c4bbad0421fa59c678d1aee85fda98da2386",
+                "url": "https://api.github.com/repos/zendframework/zf1/zipball/f7a5fd3c2b1b3a32a2c0caceccfbac4ca2823e60",
+                "reference": "f7a5fd3c2b1b3a32a2c0caceccfbac4ca2823e60",
                 "shasum": ""
             },
             "require": {
@@ -488,7 +481,7 @@
                 "ZF1",
                 "framework"
             ],
-            "time": "2014-04-03 13:42:25"
+            "time": "2014-07-31 13:49:33"
         }
     ],
     "packages-dev": [
@@ -542,12 +535,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "2739e3062557253b1eddb7c32b49936d5882333f"
+                "reference": "eb1b9506b0f80a9d7d1b69841ff2ea53bb127297"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/2739e3062557253b1eddb7c32b49936d5882333f",
-                "reference": "2739e3062557253b1eddb7c32b49936d5882333f",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/eb1b9506b0f80a9d7d1b69841ff2ea53bb127297",
+                "reference": "eb1b9506b0f80a9d7d1b69841ff2ea53bb127297",
                 "shasum": ""
             },
             "require": {
@@ -556,8 +549,8 @@
             },
             "require-dev": {
                 "hamcrest/hamcrest-php": "~1.1",
-                "phpunit/phpunit": "4.0.*",
-                "satooshi/php-coveralls": "dev-master"
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~0.7@dev"
             },
             "type": "library",
             "extra": {
@@ -600,12 +593,10 @@
                 "test double",
                 "testing"
             ],
-            "time": "2014-03-30 21:04:41"
+            "time": "2014-08-08 12:49:13"
         }
     ],
-    "aliases": [
-
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "zendframework/zendframework1": 20,
@@ -616,10 +607,7 @@
         "mockery/mockery": 20,
         "hamcrest/hamcrest-php": 20
     },
-    "platform": [
-
-    ],
-    "platform-dev": [
-
-    ]
+    "prefer-stable": false,
+    "platform": [],
+    "platform-dev": []
 }
