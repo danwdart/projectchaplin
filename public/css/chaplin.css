@@ -22,8 +22,212 @@
  * @link       https://github.com/dandart/projectchaplin
 **/
 
-@import
 * {
+	padding:0;
+	margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizingL border-box;
+}
+
+.ok {
+    color:green;
+}
+
+.warning {
+    color: orange;
+}
+
+.error {
+    color: red;
+}
+
+li {
+    margin-left: 20px;
+}
+
+html, body {
+    height:100%;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+#contentwrapper {
+    position:relative;
+    height:100%;
+    width:100%;
+}
+
+header {
+	height: 25px;
+	border-width: 0 0 1px 0;
+	padding: 5px;
+}
+
+a {
+	color: #555;
+	font-weight: 700;
+	text-decoration: none;
+	font-size: 11pt;
+}
+
+a:hover {
+	color: #666;
+	text-decoration: underline;
+}
+
+header {
+    z-index:2;
+    background-color: silver;
+    height:40px;
+    padding: 0 2px;
+    position:fixed;
+    width:100%;
+    top: 0px;
+}
+
+header .left {
+	width: 40%;
+	text-align:left;
+	float:left;
+    line-height:35px;
+}
+
+header .middle {
+	width: 18%;
+	margin: 0 auto;
+	float:left;
+	text-align:center;
+}
+
+header .middle h2, header .middle i {
+    font-size: 18pt;
+    line-height:35px;
+    padding: 0;
+    margin: 0;
+    font-weight:700;
+}
+
+header .middle a:hover {
+    cursor: default;
+    text-decoration: none;
+}
+
+header .right {
+	width: 40%;
+	text-align: right;
+	float:right;
+    display:inline;
+    line-height: 35px;
+}
+
+header .right input, header .right form {
+    display:inline;
+}
+
+#search {
+    text-align:left;
+    max-width: 100%;
+    margin-right:2px;
+}
+
+main {
+    padding: 40px 10px 0;
+    width: 100%;
+    margin: 0 auto;
+}
+
+main h1 {
+    margin: 0 auto;
+    text-align:center;
+    font-weight: 200;
+}
+
+.content-header {
+    margin: 15px auto;
+    text-align:center;
+    font-size: 24pt;
+    font-weight: 100;
+}
+
+.content-centre {
+    width: 98%;
+    margin: 0 auto;
+    text-align:center;
+}
+
+.thumb-wrapper {
+    display:inline-block;
+    position:relative;
+    vertical-align:top;
+    padding: 0px;
+    margin: 5px;
+    height: 160px;
+    width: 160px;
+}
+
+.thumb-img {
+    height: 120px;
+    background-color: black;
+}
+
+.thumb-img img {
+    width: 160px;
+    padding: auto;
+    horizontal-align:middle;
+    max-width:240px;
+    max-height: 180px;
+}
+
+.thumb-wrapper p {
+    background-color: grey;
+    font-size: 9pt;
+    text-align: center;
+    color: white;
+    padding:5px;
+    font-weight: 700;
+    width: 100%;
+    margin: 2px 0px;
+}
+
+.footerpush {
+    height: 35px;
+    clear:both;
+}
+
+footer {
+    vertical-align: middle;
+	width:100%;
+    background-color: white;
+	height: 30px;
+    position:fixed;
+    padding:2px;
+    bottom:0;
+    left:0;
+	text-align: center;
+	font-size: 10pt;
+}
+
+#videoarea {
+    border: 5px outset #ccc;
+    width: 640px;
+    margin: 0 auto;
+}
+
+#infoarea {
+    padding: 5px;
+    width: 640px;
+    margin: 0 auto;
+}
+
+#video {
+    width:640px;
+}
+
+#video::-webkit-media-controls-panel {
+    -webkit-appearance: none;
+=======
   outline: none;
 }
 body {
