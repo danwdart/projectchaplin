@@ -152,17 +152,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initSession()
     {
         $configSessions = Chaplin_Config_Sessions::getInstance();
-        $configServers = Chaplin_Config_Servers::getInstance();
-        if ($configServers->getRedisSettings()) {
-            $strRegistryKey = $configServers->getRedisSettings()->registrykey;
-            $intTimeout = (int)$configServers->getRedisSettings()->timeout;
-            $arrServers = $configServers->getRedisSettings()->servers->toArray();
-            $redis = new Redis();
-            $strHost = $arrServers[0]['host'];
-            $strPort = $arrServers[0]['port'];
-            $redis->connect($strHost, $strPort, $intTimeout);
-            Zend_Registry::set($strRegistryKey, $redis);
-        }
         if (!is_null($configSessions->getSaveHandler())) {
             Zend_Session::setSaveHandler($configSessions->getSaveHandler());
         }

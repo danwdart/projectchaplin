@@ -34,7 +34,7 @@ class Chaplin_Config_Servers
 
     protected function _getConfigFile()
     {
-        return realpath(APPLICATION_PATH.'/../config/servers.ini');
+        return realpath(APPLICATION_PATH.'/../config/chaplin.ini');
     }
     
     public function getRedisSettings()

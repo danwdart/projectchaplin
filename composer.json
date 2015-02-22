@@ -33,10 +33,13 @@
     "require": {
         "zendframework/zendframework1": "dev-master",
         "dandart/amqp": "dev-master",
-        "mockery/mockery": "dev-master",
-        "hamcrest/hamcrest-php": "dev-master",
         "mustache/mustache": "dev-master",
-        "dailymotion/sdk": "dev-master"
+        "dailymotion/sdk": "dev-master",
+        "robmorgan/phinx": "dev-master"
+    },
+    "require-dev": {
+        "mockery/mockery": "dev-master",
+        "hamcrest/hamcrest-php": "dev-master"
     },
     "autoload": {
         "classmap": [

@@ -22,34 +22,14 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-/**
- * This file was almost completely stolen from Zend Framework, licensed under MIT.
- */
-
-// Include classmap
-require '../vendor/autoload.php';
-
-// Define path to application directory
-defined('APPLICATION_PATH')
-    || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
-
-// Define application environment
-defined('APPLICATION_ENV')
-    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
-
-if (!file_exists(APPLICATION_PATH.'/../config/chaplin.ini') &&
-	(0 !== strpos($_SERVER['REQUEST_URI'], '/admin/setup'))) {
-	header('Location: /admin/setup');
-	exit();
-}
-
-/** Zend_Application */
-require_once 'Zend/Application.php';
-
-// Create application, bootstrap, and run
-$application = new Zend_Application(
-    APPLICATION_ENV,
-    APPLICATION_PATH . '/config/application.ini'
-);
-$application->bootstrap()
-            ->run();
+?>
+<div class="left">
+    &nbsp;
+</div>
+<div class="middle">
+    <a href="/"><h2><i class="fa fa-film"></i> Chaplin</h2></a>
+</div>
+<div class="right">
+    &nbsp;
+</div>
+<div style="clear:both;"></div>
