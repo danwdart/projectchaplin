@@ -72,7 +72,7 @@ $front->registerPlugin($errorHandler, 100);
 $error = $front->getPlugin('Zend_Controller_Plugin_ErrorHandler');
 $error->setErrorHandler(
     array(
-        'controller'	=> 'error',
+        'controller'	=> 'clierror',
         'action'		=> 'error'
     )
 );
