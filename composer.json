@@ -38,8 +38,7 @@
         "robmorgan/phinx": "dev-master"
     },
     "require-dev": {
-        "mockery/mockery": "dev-master",
-        "hamcrest/hamcrest-php": "dev-master"
+        "mockery/mockery": "dev-master"
     },
     "autoload": {
         "classmap": [

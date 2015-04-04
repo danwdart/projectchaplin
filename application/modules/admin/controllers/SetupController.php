@@ -117,7 +117,7 @@ class Admin_SetupController extends Zend_Controller_Action
             $adapter = Zend_Db::factory($strAdapter, $arrParams);
             $adapter->getConnection()->exec($schemaSql);
         } catch (Exception $e) {
-            echo 'Error writing DB. Please refresh and try again.';
+            echo 'Error writing DB: '.$e->getMessage().' Please refresh and try again.';
             exit();
         }
 
