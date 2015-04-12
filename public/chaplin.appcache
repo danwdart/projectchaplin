@@ -1,0 +1,34 @@
+CACHE MANIFEST
+# 3181-Di-29
+
+CACHE:
+/index.php
+/css/broadcast.css
+/css/chaplin.css
+/ext/bootstrap/css/bootstrap-theme.min.css
+/ext/bootstrap/css/bootstrap.min.css
+/ext/bootstrap/js/bootstrap.min.js
+/ext/fontawesome/css/font-awesome.min.css
+/ext/fontawesome/fonts/FontAwesome.otf
+/ext/fontawesome/fonts/fontawesome-webfont.eot
+/ext/fontawesome/fonts/fontawesome-webfont.svg
+/ext/fontawesome/fonts/fontawesome-webfont.ttf
+/ext/fontawesome/fonts/fontawesome-webfont.woff
+/img/icon.png
+/img/icon.svg
+/img/logo.png
+/img/logo.svg
+/img/search.png
+/img/search.svg
+/js/broadcast.js
+/js/jquery.js
+/js/k.js
+/js/script.js
+/js/search.js
+/js/video.js
+
+NETWORK:
+*
+
+FALLBACK:
+# dynamic static
