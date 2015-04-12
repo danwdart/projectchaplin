@@ -71,6 +71,7 @@ class SearchController extends Chaplin_Controller_Action_Api
         $query->startIndex = 0;
         $query->maxResults = 50;
         $query->orderBy = 'relevance';
+        $query->setParam('license', 'cc');
 
         try {
             $this->view->ytUser = $yt->getUserProfile($strSearchTerm);
