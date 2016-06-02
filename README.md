@@ -1,5 +1,5 @@
 # Project Chaplin 
-a YouTube clone
+an open source, self-hosted video sharing service
 
 ## Current features
 * AGPLv3 License
@@ -8,6 +8,8 @@ a YouTube clone
 * Video downloading as standard
 * HTML5 WebM as standard
 * Live streaming (pluginless)
+* Brightness/Contrast controls
+* Easter eggs?
 
 ## Future features
 * No staff blocking, auto-blocking only on public demand
@@ -17,7 +19,6 @@ a YouTube clone
 * Individual show subscription
 * CSS profiles
 * Download audio
-* Brightness/Contrast controls
 * Scrape from other public APIs
 
 ## Join us!
