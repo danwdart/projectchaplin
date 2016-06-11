@@ -1,4 +1,4 @@
-# Project Chaplin 
+# Project Chaplin
 an open source, self-hosted video sharing service
 
 ## Current features
@@ -20,6 +20,13 @@ an open source, self-hosted video sharing service
 * CSS profiles
 * Download audio
 * Scrape from other public APIs
+
+## Recommended way to install
+Try using Docker for a fast install:
+
+`docker run --link mysql:mysql --link redis:redis --link rabbitmq:rabbitmq -p 80:80 -p 1337:1337 -d --rm -v $PWD:/var/www dandart/projectchaplin`
+
+This will install the dependencies and let you use your local pull as a volume. To upgrade at any time just git pull.
 
 ## Join us!
 We are currently looking for developers and designers to help this open source project.
