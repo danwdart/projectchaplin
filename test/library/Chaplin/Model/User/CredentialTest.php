@@ -26,6 +26,8 @@ class Chaplin_Model_User_CredentialTest extends Zend_Test_PHPUnit_ControllerTest
 {
     public function testCreate()
     {
+        $this->markTestSkipped('Credentials not actively maintained and deprecated');
+
         $strServiceName = 'ServiceName';
         $strServiceURL = 'ServiceURL';
         $strAccessToken = 'AccessToken';
