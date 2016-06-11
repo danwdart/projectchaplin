@@ -113,9 +113,6 @@ $(function() {
         $('.fullscreen').each(function(idx, elem) {
             addfullscreen(elem);
         });
-        $('.clicktoplay').each(function(idx, elem) {
-            enableclicktoplay(elem);
-        });
     }
 
     // nothing important :P
@@ -167,14 +164,4 @@ function addfullscreen(elem) {
     elem.addEventListener('mozfullscreenchange', changefullscreenauto);
     elem.addEventListener('webkitfullscreenchange', changefullscreenauto);
     elem.addEventListener('fullscreenchange', changefullscreenauto);
-}
-
-function enableclicktoplay(elem) {
-    elem.addEventListener('click', function() {
-        if(this.paused) {
-            this.play();
-        } else {
-            this.pause();
-        }
-    });
 }
