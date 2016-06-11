@@ -28,11 +28,16 @@
         {
             "type": "vcs",
             "url": "https://github.com/dandart/amqp"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/dandart/multiorm"
         }
     ],
     "require": {
         "zendframework/zendframework1": "dev-master",
         "dandart/amqp": "dev-master",
+        "dandart/multiorm": "dev-master",
         "mustache/mustache": "dev-master",
         "dailymotion/sdk": "dev-master",
         "robmorgan/phinx": "dev-master"
