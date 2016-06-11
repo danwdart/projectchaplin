@@ -26,6 +26,8 @@ class Chaplin_Dao_Mongo_UserTest extends Zend_Test_PHPUnit_ControllerTestCase
 {
     public function testGetByUsernameAndPassword()
     {
+        $this->markTestSkipped('Not actively maintaining Mongo');
+
         $strUsername = 'Username';
         $strPassword = 'Password';
 
@@ -54,6 +56,8 @@ class Chaplin_Dao_Mongo_UserTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     public function testGetByUsernameAndPasswordThrowsException()
     {
+        $this->markTestSkipped('Not actively maintaining Mongo');
+
         $strUsername = 'Username';
         $strPassword = 'Password';
 
@@ -81,11 +85,13 @@ class Chaplin_Dao_Mongo_UserTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     public function testSave()
     {
+        $this->markTestSkipped('Not actively maintaining Mongo');
+        
         $strUsername = 'Username';
         $strPassword = 'Password';
 
         $modelUser = Chaplin_Model_User::create($strUsername, $strPassword);
-        
+
         $arrCriteria = array(
             Chaplin_Model_User::FIELD_Username => Chaplin_Model_User::encodeUsername($strUsername),
         );
@@ -97,7 +103,7 @@ class Chaplin_Dao_Mongo_UserTest extends Zend_Test_PHPUnit_ControllerTestCase
             ),
             '$addToSet' => array()
         );
-        
+
         $mockCollection = \Mockery::mock('Mongo_Collection')
                                   ->shouldReceive('updateArray')
                                    ->with($arrCriteria, $arrQuery)
