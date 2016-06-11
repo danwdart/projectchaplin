@@ -27,10 +27,10 @@ class Chaplin_Service_YouTube_API
     const LOCATION = '/../external/youtube-dl';
 
     private $_strURL;
-    
+
     public function __construct($strURL)
     {
-        $this->_strURL = $strURL;        
+        $this->_strURL = $strURL;
     }
 
     public function getDownloadURL()
@@ -38,7 +38,7 @@ class Chaplin_Service_YouTube_API
         $strCommandLine = APPLICATION_PATH.self::LOCATION.' --prefer-free-formats -g -- '.escapeshellarg($this->_strURL);
         return exec($strCommandLine);
     }
-    
+
     public function downloadVideo($strPathToSave)
     {
         $strCommandLine = APPLICATION_PATH.self::LOCATION.
@@ -52,7 +52,7 @@ class Chaplin_Service_YouTube_API
 
     public function downloadThumbnail($strPathToSave)
     {
-        $yt = new Zend_Gdata_YouTube();
+        $yt = new \ZendGData\YouTube();
         $entryVideo = $yt->getVideoEntry($this->_strURL);
 
         $strFilename = $strPathToSave.'/'.$entryVideo->getVideoId().'.webm.png';
@@ -73,7 +73,7 @@ class Chaplin_Service_YouTube_API
     {
         $strVideoId = $this->_strURL;
 
-        $yt = new Zend_Gdata_YouTube();
+        $yt = new \ZendGData\YouTube();
         $entryVideo = $yt->getVideoEntry($strVideoId);
 
         $strTitle = $entryVideo->getVideoTitle();
@@ -82,7 +82,7 @@ class Chaplin_Service_YouTube_API
         $strVideoFile = $strPath.'/'.$strVideoId.'.webm';
         $strRelaFile = '/uploads/'.$strVideoId.'.webm';
         $strThumbnail = $this->downloadThumbnail($strPath);
-            
+
         $modelVideo = Chaplin_Model_Video::create(
             $modelUser,
             $strRelaFile,
@@ -90,7 +90,7 @@ class Chaplin_Service_YouTube_API
             $strTitle
         );
         $modelVideo->save();
-        
+
         // msg
         $modelYoutube = Chaplin_Model_Video_Youtube::create($modelVideo, $strVideoId);
         Chaplin_Gateway::getInstance()->getVideo_Youtube()->save($modelYoutube);
