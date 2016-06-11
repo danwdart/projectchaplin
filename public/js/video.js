@@ -34,6 +34,13 @@ $(function() {
     $('#faster').click(function() {
         $('#video')[0].playbackRate = 2;
     });
+    $('.infinite').on('click', (ev) => {
+        let $btn = $(ev.currentTarget);
+
+        $btn.toggleClass('active');
+        $('#video').attr('loop', $btn.hasClass('active'));
+
+    });
     $('a.atotext').click(function(e) {
         e.preventDefault();
         el = $(this);

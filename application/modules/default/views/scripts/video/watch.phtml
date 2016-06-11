@@ -57,6 +57,7 @@ $vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
 	</span>
 </div>
 <div id="infoarea">
+    <button class="infinite btn btn-primary"><i class="fa fa-refresh"></i> Loop</button>
 	<br/>
 	<br/>Uploaded by: <a href="/user/<?php echo $this->video->getUsername(); ?>"><?php echo $this->video->getUsername(); ?></a>
 	<br/>Uploaded on <?php echo date('d/m/Y H:i', $this->video->getTimeCreated());?> (<?php echo $this->video->getTimeAgo(); ?>)
@@ -66,7 +67,7 @@ $vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
 	<p><strong>&uparrow; <?php echo $this->video->getVotesUp(); ?> / <?php echo $this->video->getVotesDown(); ?> &downarrow;</strong></p>
 	<p><?php echo $this->twittershare; ?></p>
 	<br/>
-	<?php if(Chaplin_Auth::getInstance()->hasIdentity()): 
+	<?php if(Chaplin_Auth::getInstance()->hasIdentity()):
 	if ('1' === $this->video->getYourVote()) :
 	echo '<i class="fa fa-arrow-up"></i>';
 	else:?>
@@ -82,11 +83,11 @@ $vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
 	<?php
 		if ($this->video->isMine()):
 	?>
-	    <a class="btn btn-danger" href="/video/delete/id/<?php echo $this->video->getVideoId();?>"><i class="fa fa-times-circle"></i> Delete</a> 
+	    <a class="btn btn-danger" href="/video/delete/id/<?php echo $this->video->getVideoId();?>"><i class="fa fa-times-circle"></i> Delete</a>
 	    <a class="btn btn-info" href="/video/edit/id/<?php echo $this->video->getVideoId();?>"><i class="fa fa-edit"></i> Edit</a>
 	<?php endif;?>
 	<br/>
-	<?php if(Chaplin_Auth::getInstance()->hasIdentity()): echo $this->formComment; else: 
+	<?php if(Chaplin_Auth::getInstance()->hasIdentity()): echo $this->formComment; else:
 	echo 'Login above to comment.'; endif;  ?>
 	<br/>
 	<div id="comments" rel="/video/comments/id/<?php echo $this->video->getVideoId();?>">
@@ -94,10 +95,10 @@ $vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
 		<p>
 			<i>
 				<?php echo $modelComment->getUsername();?>
-			</i> said: 
+			</i> said:
 			<?php echo $modelComment->getComment();?>
 			<?php if ($modelComment->isMine()): ?>
-				<a class="ajax" href="/video/deletecomment/id/<?php echo $modelComment->getCommentId(); ?>" 
+				<a class="ajax" href="/video/deletecomment/id/<?php echo $modelComment->getCommentId(); ?>"
 					rel="comments">
 				(X)
 				</a>
