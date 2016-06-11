@@ -808,7 +808,7 @@ form.fileimport div input[type="checkbox"] {
     }
     to {
         margin: 0 0 0 200px;
-        transform: rotate(-30deg);   
+        transform: rotate(-30deg);
     }
 }
 
@@ -819,7 +819,7 @@ form.fileimport div input[type="checkbox"] {
     }
     to {
         margin: 0 0 0 200px;
-        -webkit-transform: rotate(-30deg);   
+        -webkit-transform: rotate(-30deg);
     }
 }
 
@@ -898,7 +898,7 @@ form.fileimport div input[type="checkbox"] {
 #fun {
     display:none;
 }
-.br {   
+.br {
     animation:br;
     animation-duration:2s;
     -webkit-animation:br;
@@ -972,4 +972,8 @@ to {-webkit-transform: rotate(360deg);}
     header input {
         width: 40px;
     }
+}
+
+progress {
+    display: none;
 }
