@@ -22,7 +22,10 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class SearchController extends Chaplin_Controller_Action_Api    
+use ZendGData\YouTube;
+use ZendGData\App\Youtube\HttpException;
+
+class SearchController extends Chaplin_Controller_Action_Api
 {
     public function indexAction()
     {
@@ -53,18 +56,18 @@ class SearchController extends Chaplin_Controller_Action_Api
 
         $ittVideos = Chaplin_Gateway::getInstance()
             ->getVideo()
-            ->getBySearchTerms($strSearchTerm);        
+            ->getBySearchTerms($strSearchTerm);
 
         if ($this->_isAPICall()) {
             return $this->view->assign($ittVideos->toArray());
         }
-        
+
         $this->view->assign('strSearchTerm', $strSearchTerm);
         $this->view->assign('ittVideos', $ittVideos);
 
         // Retrieve Youtube results
 
-        $yt = new Zend_Gdata_YouTube();
+        $yt = new YouTube();
         $yt->setMajorProtocolVersion(2);
         $query = $yt->newVideoQuery();
         $query->videoQuery = urlencode($strSearchTerm);
@@ -101,7 +104,7 @@ class SearchController extends Chaplin_Controller_Action_Api
 
         // Retrieve Youtube results
 
-        $yt = new Zend_Gdata_YouTube();
+        $yt = new YouTube();
         $query = $yt->newVideoQuery();
         $query->videoQuery = urlencode($strSearchTerm);
         $query->startIndex = (is_null($intSkip))?0:(int)$intSkip;
@@ -109,9 +112,8 @@ class SearchController extends Chaplin_Controller_Action_Api
         $query->orderBy = 'relevance';
         try {
             $this->view->videoFeed = $yt->getVideoFeed($query);
-        } catch (Zend_Gdata_App_HttpException $e) {
+        } catch (HttpException $e) {
             $this->view->videoFeed = [];
         }
     }
 }
-

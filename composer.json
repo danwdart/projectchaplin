@@ -40,7 +40,8 @@
         "dandart/multiorm": "dev-master",
         "mustache/mustache": "dev-master",
         "dailymotion/sdk": "dev-master",
-        "robmorgan/phinx": "dev-master"
+        "robmorgan/phinx": "dev-master",
+        "zendframework/zendgdata": "^2.0"
     },
     "require-dev": {
         "mockery/mockery": "dev-master"

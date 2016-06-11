@@ -68,16 +68,16 @@ class UserController extends Chaplin_Controller_Action_Api
         }
 
         $post = $this->_request->getPost();
-          
+
         if(!$form->isValid($post)) {
             return $this->view->assign('form', $form);
         }
-            
+
         if(!isset($post['Save'])) {
             $form->Save->addError('Invalid Request');
             return $this->view->assign('form', $form);
         }
-        
+
         $oldpassword = $post['oldpassword'];
         $password = $post['password'];
         $password2 = $post['password2'];
@@ -113,12 +113,12 @@ class UserController extends Chaplin_Controller_Action_Api
 	{
 		$strUsername = $this->_request->getParam('id', null);
 
-		$yt = new Zend_Gdata_YouTube();
+		$yt = new ZendGData\YouTube();
 
 		$this->view->strUsername = $strUsername;
 		try {
             $this->view->ittVideos = $yt->getUserUploads($strUsername);
-        } catch (Zend_Gdata_App_HttpException $e) {
+        } catch (\ZendGData\App\HttpException $e) {
             throw new Chaplin_Exception_NotFound('User by username '.$strUsername);
         } catch (Zend_Uri_Exception $e) {
             throw new Chaplin_Exception_NotFound('User by username '.$strUsername);
@@ -127,7 +127,7 @@ class UserController extends Chaplin_Controller_Action_Api
         $this->view->bHasUserFavourites = true;
         try {
             $this->view->ittFavourites = $yt->getUserFavorites($strUsername);
-        } catch (Zend_Gdata_App_HttpException $e) {
+        } catch (\ZendGData\App\HttpException $e) {
             // We weren't allowed to view their favourites
             $this->view->bHasUserFavourites = false;
         }
@@ -137,10 +137,10 @@ class UserController extends Chaplin_Controller_Action_Api
     {
         $strUsername = $this->_request->getParam('id', null);
 
-        $yt = new Zend_Gdata_YouTube();
+        $yt = new \ZendGData\YouTube();
         try {
             $ittVideos = $yt->getUserUploads($strUsername);
-        } catch (Zend_Gdata_App_HttpException $e) {
+        } catch (\ZendGData\App\HttpException $e) {
             throw new Chaplin_Exception_NotFound('User by username '.$strUsername);
         } catch (Zend_Uri_Exception $e) {
             throw new Chaplin_Exception_NotFound('User by username '.$strUsername);
