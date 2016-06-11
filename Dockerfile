@@ -12,9 +12,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git curl software-properti
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:ondrej/php
 RUN DEBIAN_FRONTEND=noninteractive apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 nodejs build-essential libapache2-mod-php php-xml php-mbstring php-mysql php-cli php-mcrypt php-curl
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 nodejs build-essential libapache2-mod-php php-xml php-mbstring php-mysql php-cli php-mcrypt php-curl php-amqp php-zip ffmpeg
 RUN npm -g install forever
 RUN a2enmod rewrite
+RUN a2enmod headers
 RUN a2dissite 000-default
 RUN a2ensite projectchaplin
 CMD ./composer.phar install && npm install && ./cli.sh start && /usr/sbin/apache2ctl -D FOREGROUND
