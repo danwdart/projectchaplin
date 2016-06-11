@@ -178,7 +178,7 @@
 			</p>
 			<p>
 				<input type="hidden" name="options[auth]" value="login"/>
-				SSL? 
+				SSL?
 				<br/>
 				<label for="rdSSLYes">
 					<input type="radio" id="rdSSLYes" name="options[ssl]" value="tls"/> Yes
@@ -200,7 +200,7 @@
 				<input type="text" id="vhAddress" name="vhost" value="<?php echo $_SERVER['HTTP_HOST'] ?>" placeholder="URL here"/>
 			</p>
 			<p>
-				HTTPS? 
+				HTTPS?
 				<br/>
 				<label for="vhSSLYes">
 					<input type="radio" id="vhSSLYes" name="ssl" value="true"/> Yes
@@ -215,12 +215,13 @@
 				<input type="text" id="strShort" name="short" value="" placeholder="Short URL"/>
 			</p>
 		</form>
-		<a href="#step6" id="commit" class="switcher ajax btn btn-success">Awesome! Let's write it!</a>
+		<a href="#step6" class="switcher ajax btn btn-success commit">Awesome! Let's write it!</a>
 	</div>
 	<div id="step6" class="widgetbody" style="display:none;text-align:left; padding:30px">
 		<h2>Your Settings</h2>
 		<textarea id="commitresult" cols="55" rows="10">Output will appear here</textarea>
-		<p><a href='/' class="btn btn-default">I'm ready, start using Chaplin</a></p>
+        <p><a href="#" class="commit btn btn-default">Retry</a></p>
+		<p><a href='/' class="btn btn-success">I'm ready, start using Chaplin</a></p>
 	</div>
 </div>
 <script>
@@ -303,7 +304,7 @@
 			}
 		);
 	})
-	$('#commit').click(function() {
+	$('.commit').click(function() {
 		vhost = $('#vhost').serializeObject();
 
 		$.post('/admin/setup/write',
