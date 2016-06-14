@@ -128,18 +128,18 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     {
         return $this->_strURLPrefix.$this->_getField(self::FIELD_FILENAME, null);
     }
-    
+
     public function setFilename($strFilename)
     {
         return $this->_setField(self::FIELD_FILENAME, $strFilename);
     }
-    
+
     public function getFilenameRoot()
     {
         $arrPathInfo = pathinfo($this->getFilename());
         return $arrPathInfo['filename'];
     }
-    
+
     public function getSuggestedTitle()
     {
         return ('' == $this->getTitle())?
@@ -151,12 +151,12 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     {
         return $this->_strURLPrefix.$this->_getField(self::FIELD_THUMBNAIL, null);
     }
-    
+
     public function getDescription()
     {
         return $this->_getField(self::FIELD_DESCRIPTION, null);
     }
-    
+
     public function setDescription($strDescription)
     {
         return $this->_setField(self::FIELD_DESCRIPTION, $strDescription);
@@ -165,6 +165,11 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     public function getComments()
     {
         return $this->_getField(self::CHILD_ASSOC_COMMENTS, array());
+    }
+
+    public function setLicence($strLicence)
+    {
+        return $this->_setField(self::FIELD_LICENCE, $strLicence);
     }
 
     public function getLicenceId()
