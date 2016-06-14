@@ -151,6 +151,8 @@ class Chaplin_Service_YouTube_API
             $strThumbnail,
             $strTitle
         );
+        // All YouTube imports are CC-BY
+        $modelVideo->setLicence(Chaplin_Model_Video_Licence::ID_CCBY);
         $modelVideo->save();
 
         // msg
