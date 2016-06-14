@@ -44,7 +44,7 @@ class Admin_SetupController extends Zend_Controller_Action
         $strAdapter = isset($arrPost['adapter'])?$arrPost['adapter']:null;
         $arrParams = isset($arrPost['params'])?$arrPost['params']:array();
 
-        $this->_helper->layout()->disableLayout(); 
+        $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
         try {
@@ -59,7 +59,7 @@ class Admin_SetupController extends Zend_Controller_Action
 
     public function amqptestAction()
     {
-        $this->_helper->layout()->disableLayout(); 
+        $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
         try {
@@ -73,7 +73,7 @@ class Admin_SetupController extends Zend_Controller_Action
 
     public function smtptestAction()
     {
-        $this->_helper->layout()->disableLayout(); 
+        $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $arrSmtp = $this->_request->getPost();
         $transport = new Zend_Mail_Transport_Smtp(
@@ -86,7 +86,7 @@ class Admin_SetupController extends Zend_Controller_Action
 
     public function writeAction()
     {
-        $this->_helper->layout()->disableLayout(); 
+        $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $arrPost = array(
             'default' => $this->_request->getPost(),
@@ -96,7 +96,7 @@ class Admin_SetupController extends Zend_Controller_Action
         );
 
         $schemaSql = file_get_contents(APPLICATION_PATH . '/../sql/schema.sql');
-    
+
         $arrDefault = $arrPost['default'];
 
         if (!isset($arrDefault['sql'])) {

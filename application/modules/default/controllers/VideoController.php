@@ -141,19 +141,6 @@ class VideoController extends Chaplin_Controller_Action_Api
         return $this->_redirect('https://'.$strHost.'/video/watch/id/'.$strId);
     }
 
-    public function testAction()
-    {
-         $modelVideo = Chaplin_Model_Video::create(
-            Zend_Auth::getInstance()->getIdentity()->getUser(),
-            '',
-            '',
-            'Test Video'
-        );
-        $modelVideo->save();
-
-        $this->_redirect('/video/watch/id/'.$modelVideo->getVideoId());
-    }
-
     public function watchyoutubeAction()
     {
         $strVideoId = $this->_request->getParam('id', null);
@@ -163,8 +150,8 @@ class VideoController extends Chaplin_Controller_Action_Api
 
         // Get the YT information
         try {
-            $yt = new \ZendGData\YouTube();
-            $entryVideo = $yt->getVideoEntry($strVideoId);
+            $ytService = Chaplin_Service::getInstance()->getYouTube();
+            $entryVideo = $ytService->getVideoById($strVideoId);
             $this->view->entryVideo = $entryVideo;
         } catch (Exception $e) {
             throw new Chaplin_Exception_NotFound('Youtube Id = '.$strVideoId);
@@ -172,12 +159,12 @@ class VideoController extends Chaplin_Controller_Action_Api
         // This won't work remotely
         if (in_array($this->_request->getClientIp(), ['127.0.0.1', '::1'])) {
             $this->view->videoURL = Chaplin_Service::getInstance()
-                ->getYouTube($strVideoId)
-                ->getDownloadURL();
+                ->getYouTube()
+                ->getDownloadURL($strVideoId);
             $this->view->isLocal = true;
         }
         $this->view->strScheme = Chaplin_Config_Chaplin::getInstance()->getScheme();
-        $this->view->strTitle = $this->view->entryVideo->getTitle()->getText();
+        $this->view->strTitle = $this->view->entryVideo->getSnippet()->title;
     }
 
     public function importyoutubeAction()
@@ -190,8 +177,8 @@ class VideoController extends Chaplin_Controller_Action_Api
         $modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser();
 
         $modelVideo = Chaplin_Service::getInstance()
-            ->getYouTube($strVideoId)
-            ->importVideo($modelUser);
+            ->getYouTube()
+            ->importVideo($modelUser, $strVideoId);
 
         $this->_redirect('/video/watch/id/'.$modelVideo->getVideoId());
     }

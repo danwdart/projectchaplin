@@ -28,7 +28,7 @@ class Chaplin_Service
     {
         self::$_instance = $service;
     }
- 
+
     private static $_instance;
     public static function getInstance()
     {
@@ -37,7 +37,7 @@ class Chaplin_Service
         return self::$_instance;
     }
     private function __construct() {}
-    private function __clone() {}   
+    private function __clone() {}
 
     private $_zendCache;
     private function getCache()
@@ -73,26 +73,26 @@ class Chaplin_Service
         }
         return $this->_zendCache;
     }
-    
+
     public function setCache(Zend_Cache $zendCache)
     {
         $this->_zendCache   = $zendCache;
     }
-    
+
     public function getHttpClient()
     {
         $objClient = new Chaplin_Http_Client();
         $objCache  = new Chaplin_Cache_Http_Client($objClient, $this->getCache());
         return new Chaplin_Service_Http_Client($objCache);
     }
-    
+
     public function getEncoder()
     {
         return new Chaplin_Service_Encoder_API();
     }
 
-    public function getYouTube($strURL)
+    public function getYouTube()
     {
-        return new Chaplin_Service_YouTube_API($strURL);
+        return new Chaplin_Service_YouTube_API();
     }
 }

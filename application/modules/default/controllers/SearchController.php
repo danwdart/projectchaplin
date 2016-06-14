@@ -22,8 +22,6 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-use ZendGData\YouTube;
-use ZendGData\App\Youtube\HttpException;
 
 class SearchController extends Chaplin_Controller_Action_Api
 {
@@ -67,27 +65,17 @@ class SearchController extends Chaplin_Controller_Action_Api
 
         // Retrieve Youtube results
 
-        $yt = new YouTube();
-        $yt->setMajorProtocolVersion(2);
-        $query = $yt->newVideoQuery();
-        $query->videoQuery = urlencode($strSearchTerm);
-        $query->startIndex = 0;
-        $query->maxResults = 50;
-        $query->orderBy = 'relevance';
-        $query->setParam('license', 'cc');
+        $serviceYouTube = Chaplin_Service::getInstance()->getYouTube();
 
-        try {
-            $this->view->ytUser = $yt->getUserProfile($strSearchTerm);
-        } catch (Exception $e) {}
+        $ytUser = $serviceYouTube->getUserProfile($strSearchTerm);
+        $videoFeed = $serviceYouTube->search($strSearchTerm);
+
+        $this->view->ytUser = $ytUser;
 
         //$dm = new Dailymotion();
         //$result = $dm->get('/search/'.urlencode($strSearchTerm));
         //die(var_dump($result));
-        try {
-            $this->view->videoFeed = $yt->getVideoFeed($query);
-        } catch (Exception $e) {
-            $this->view->videoFeed = [];
-        }
+        $this->view->videoFeed = $videoFeed;
     }
 
     public function youtubeAction()
@@ -104,16 +92,9 @@ class SearchController extends Chaplin_Controller_Action_Api
 
         // Retrieve Youtube results
 
-        $yt = new YouTube();
-        $query = $yt->newVideoQuery();
-        $query->videoQuery = urlencode($strSearchTerm);
-        $query->startIndex = (is_null($intSkip))?0:(int)$intSkip;
-        $query->maxResults = (is_null($intLimit))?50:(int)$intLimit;
-        $query->orderBy = 'relevance';
-        try {
-            $this->view->videoFeed = $yt->getVideoFeed($query);
-        } catch (HttpException $e) {
-            $this->view->videoFeed = [];
-        }
+        $serviceYouTube = Chaplin_Service::getInstance()->getYouTube();
+        $videoFeed = $serviceYouTube->search($strSearchTerm, $intSkip, $intLimit);
+
+        $this->view->videoFeed = $videoFeed;
     }
 }

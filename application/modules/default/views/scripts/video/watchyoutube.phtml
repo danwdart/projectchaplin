@@ -23,35 +23,35 @@
  * @link       https://github.com/dandart/projectchaplin
 **/
 ?>
-<h1><?php echo $this->entryVideo->getVideoTitle();?></h1>
+<h1><?php echo $this->entryVideo->getSnippet()->title;?></h1>
 <div id="videoarea">
-	<iframe 
+	<iframe
 		class="youtube-player"
 		type="text/html"
 		width="640"
 		height="385"
-		src="<?php echo $this->strScheme; ?>://www.youtube.com/embed/<?php echo $this->entryVideo->getVideoId(); ?>"
+		src="<?php echo $this->strScheme; ?>://www.youtube.com/embed/<?php echo $this->entryVideo->id; ?>"
 		frameborder="0"
 	>
 	</iframe>
 </div>
 <div id="infoarea">
-	<h3>Uploaded on <?php echo date('d/m/Y H:i', strtotime($this->entryVideo->getPublished()));
-		$author = $this->entryVideo->getAuthor()[0];
-		$strUserUri = $author->getUri()->getText();
-		$strUsername = substr(strrchr($strUserUri, '/'),1);
-		$strName = $author->getName();
-	?> by <a href="/user/youtube/id/<?php echo $strUsername; ?>"><?php echo $strName; ?></a>
+	<h3>Uploaded on <?php echo date('d/m/Y H:i', strtotime($this->entryVideo->getSnippet()->publishedAt));
+		$author = $this->entryVideo->getSnippet()->channelTitle;
+		$strUserUri = $this->entryVideo->getSnippet()->channelId;
+        $strChannelId = $this->entryVideo->getSnippet()->channelId;
+		$strName =  $this->entryVideo->getSnippet()->channelTitle;
+	?> by <a href="/user/youtube/id/<?php echo $strChannelId; ?>"><?php echo $strName; ?></a>
 	</h3>
 	<br/>
-	<span class="text-sm"><?php echo str_replace("\n", '<br/>', $this->entryVideo->getVideoDescription()); ?></span>
+	<span class="text-sm"><?php echo str_replace("\n", '<br/>', $this->entryVideo->getSnippet()->description); ?></span>
 	<br/>
-	<a class="btn btn-success" href="/video/importyoutube/id/<?php echo $this->entryVideo->getVideoId();?>"><i class="fa fa-download"></i> Import</a>
+	<a class="btn btn-success" href="/video/importyoutube/id/<?php echo $this->entryVideo->id;?>"><i class="fa fa-download"></i> Import</a>
 	<?php if ($this->isLocal) : ?>
 	<a class="btn btn-primary" href="<?php echo $this->videoURL;?>"><i class="fa fa-download"></i> Download</a>
 	<?php endif; ?>
 	<br/>
-	<?php if(Chaplin_Auth::getInstance()->hasIdentity()): echo $this->formComment; else: 
+	<?php if(Chaplin_Auth::getInstance()->hasIdentity()): echo $this->formComment; else:
 	echo 'Login above to comment.'; endif;  ?>
 </div>
 <script src="/js/video.js"></script>

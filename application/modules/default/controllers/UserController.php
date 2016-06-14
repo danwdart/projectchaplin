@@ -113,45 +113,11 @@ class UserController extends Chaplin_Controller_Action_Api
 	{
 		$strUsername = $this->_request->getParam('id', null);
 
-		$yt = new ZendGData\YouTube();
+        $serviceYouTube = Chaplin_Service::getInstance()->getYouTube();
 
-		$this->view->strUsername = $strUsername;
-		try {
-            $this->view->ittVideos = $yt->getUserUploads($strUsername);
-        } catch (\ZendGData\App\HttpException $e) {
-            throw new Chaplin_Exception_NotFound('User by username '.$strUsername);
-        } catch (Zend_Uri_Exception $e) {
-            throw new Chaplin_Exception_NotFound('User by username '.$strUsername);
-        }
-        $this->view->strTitle = $strUsername.' from YouTube - Chaplin';
-        $this->view->bHasUserFavourites = true;
-        try {
-            $this->view->ittFavourites = $yt->getUserFavorites($strUsername);
-        } catch (\ZendGData\App\HttpException $e) {
-            // We weren't allowed to view their favourites
-            $this->view->bHasUserFavourites = false;
-        }
+		$this->view->ittVideos = $serviceYouTube->getUserUploads($strUsername);
+
+        $this->view->strTitle = $this->view->ittVideos[0]->getSnippet()->channelTitle.
+            ' from YouTube - Chaplin';
 	}
-
-    public function downloadyoutubeAction()
-    {
-        $strUsername = $this->_request->getParam('id', null);
-
-        $yt = new \ZendGData\YouTube();
-        try {
-            $ittVideos = $yt->getUserUploads($strUsername);
-        } catch (\ZendGData\App\HttpException $e) {
-            throw new Chaplin_Exception_NotFound('User by username '.$strUsername);
-        } catch (Zend_Uri_Exception $e) {
-            throw new Chaplin_Exception_NotFound('User by username '.$strUsername);
-        }
-
-        // todo find out how to get all
-
-        foreach($ittVideos as $video) {
-            var_dump($video->getVideoId());
-        }
-
-        die();
-    }
 }
