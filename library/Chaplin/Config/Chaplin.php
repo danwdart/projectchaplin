@@ -36,7 +36,7 @@ class Chaplin_Config_Chaplin
     {
         return realpath(APPLICATION_PATH.'/../config/chaplin.ini');
     }
-    
+
     public function getLocale()
     {
         return $this->_getValue(
@@ -69,5 +69,13 @@ class Chaplin_Config_Chaplin
     public function getFullVhost()
     {
         return $this->getScheme().'://'.$this->getVhost();
+    }
+
+    public function getYouTubeAPIKey()
+    {
+        return $this->_getValue(
+            $this->_zendConfig->youtube->youtubeapi,
+            ''
+        );
     }
 }

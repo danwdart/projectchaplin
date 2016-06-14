@@ -24,54 +24,17 @@
 **/
 ?>
 <div class="content-header">
-    Videos for user <?php echo $this->strUsername; ?>
+    Videos for user <?php echo $this->ittVideos[0]->getSnippet()->channelTitle; ?>
 </div>
 <div class="content-centre">
 <?php foreach($this->ittVideos as $videoEntry):?>
-<a href="/video/watchyoutube/id/<?php echo $videoEntry->getVideoId();?>">
+<a href="/video/watchyoutube/id/<?php echo $videoEntry->id->videoId;?>">
 <div class="thumb-wrapper">
 <div class="thumb-img">
-    <img src="<?php
-    	$thumbnails = $videoEntry->getVideoThumbnails();
-    	echo htmlentities(
-    		(
-    			isset($thumbnails[0]) &&
-	    	 	isset($thumbnails[0]['url'])
-    		)?
-    		$thumbnails[0]['url']:
-    		null
-    	);?>" alt="View Video"/>
+    <img src="<?php echo htmlentities($videoEntry->getSnippet()->thumbnails->high->url);?>" alt="View Video"/>
 </div>
-<p><?php echo $videoEntry->getTitle();?></p>
+<p><?php echo $videoEntry->getSnippet()->title;?></p>
 </div>
 </a>
 <?php endforeach;?>
 </div>
-<div class="clearfix"></div>
-<br/>
-<?php if ($this->bHasUserFavourites) : ?>
-<div class="content-header">
-	    Favourites for user <?php echo $this->strUsername; ?>
-	</div>
-	<div class="content-centre">
-	<?php foreach($this->ittFavourites as $videoEntry):?>
-	<a href="/video/watchyoutube/id/<?php echo $videoEntry->getVideoId();?>">
-	<div class="thumb-wrapper">
-	<div class="thumb-img">
-	    <img src="<?php
-    	$thumbnails = $videoEntry->getVideoThumbnails();
-    	echo htmlentities(
-    		(
-    			isset($thumbnails[0]) &&
-	    	 	isset($thumbnails[0]['url'])
-    		)?
-    		$thumbnails[0]['url']:
-    		null
-    	);?>" alt="View Video"/>
-	</div>
-	<p><?php echo $videoEntry->getTitle();?></p>
-	</div>
-	</a>
-	<?php endforeach;?>
-	</div>
-<?php endif; ?>

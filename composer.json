@@ -41,7 +41,8 @@
         "mustache/mustache": "dev-master",
         "dailymotion/sdk": "dev-master",
         "robmorgan/phinx": "dev-master",
-        "zendframework/zendgdata": "^2.0"
+        "zendframework/zendgdata": "^2.0",
+        "google/apiclient": "^2.0"
     },
     "require-dev": {
         "mockery/mockery": "dev-master"

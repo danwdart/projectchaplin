@@ -42,14 +42,14 @@
 <br/>
 
 <?php if ($this->ytUser) : ?>
-	<h2>Found YouTube user <?php echo $this->strSearchTerm; ?></h2>
+	<h2>Found YouTube user <?php echo $this->ytUser->getSnippet()->title; ?></h2>
 	<div class="content-centre">
 		<div class="video">
-			<a href="/user/youtube/id/<?php echo $this->strSearchTerm; ?>">
+			<a href="/user/youtube/id/<?php echo $this->ytUser->id; ?>">
 				<div class="thumb-wrapper">
-	    			<img class="thumb-img" src="<?php echo htmlentities($this->ytUser->getThumbnail()->getUrl());?>" alt="View User"/>
+	    			<img class="thumb-img" src="<?php echo $this->ytUser->getSnippet()->thumbnails->high->url;?>" alt="View User"/>
 	    		</div>
-				<p><?php echo $this->ytUser->getUsername();?></p>
+				<p><?php echo $this->ytUser->getSnippet()->title;?></p>
 			</a>
 		</div>
 	</div>
@@ -58,17 +58,13 @@
 <rr/>
 <h2>YouTube results for: <?php echo $this->strSearchTerm; ?></h2>
 <div class="content-centre" id="youtubevids">
-<?php foreach($this->videoFeed as $ytVideo):?>
+<?php foreach($this->videoFeed->items as $ytVideo): ?>
 <div class="video">
-	<a href="/video/watchyoutube/id/<?php echo $ytVideo->getVideoId(); ?>">
+	<a href="/video/watchyoutube/id/<?php echo $ytVideo->getId()->videoId; ?>">
 		<div class="thumb-wrapper">
-<?php
-$arrThumbnails = $ytVideo->getVideoThumbnails();
-if (isset($arrThumbnails[0])) :?>
-    		<img class="thumb-img" src="<?php echo htmlentities($arrThumbnails[0]['url']);?>" alt="View Video"/>
-<?php endif;?>
+    		<img class="thumb-img" src="<?php echo htmlentities($ytVideo->getSnippet()->getThumbnails()->high->url);?>" alt="View Video"/>
 		</div>
-		<p><?php echo $ytVideo->getVideoTitle();?></p>
+		<p><?php echo $ytVideo->getSnippet()->getTitle();?></p>
 	</a>
 </div>
 <?php endforeach;?>
