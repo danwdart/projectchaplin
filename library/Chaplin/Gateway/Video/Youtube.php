@@ -11,6 +11,7 @@ class Chaplin_Gateway_Video_Youtube
 
     public function youtube()
     {
+        echo 'Listening on youtube';
       $queueName = 'youtube';
       $callback = function(Chaplin_Model_Video_Youtube $msg) {
           $msg->process();
