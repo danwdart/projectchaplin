@@ -12,10 +12,16 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git curl software-properti
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:ondrej/php
 RUN DEBIAN_FRONTEND=noninteractive apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 nodejs build-essential libapache2-mod-php php-xml php-mbstring php-mysql php-cli php-mcrypt php-curl php-amqp php-zip ffmpeg
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git apache2 nodejs build-essential libapache2-mod-php php-xml php-mbstring php-mysql php-cli php-mcrypt php-curl php-amqp php-zip ffmpeg python
 RUN npm -g install forever
 RUN a2enmod rewrite
 RUN a2enmod headers
 RUN a2dissite 000-default
 RUN a2ensite projectchaplin
-CMD ./composer.phar install && npm install && ./cli.sh start && /usr/sbin/apache2ctl -D FOREGROUND
+RUN git clone https://github.com/dandart/projectchaplin.git /var/www
+RUN curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /var/www/external/youtube-dl
+RUN chmod +x /var/www/external/youtube-dl
+RUN ./composer.phar install
+RUN npm install
+RUN chown -R www-data:www-data public/uploads
+CMD ./cli.sh start && /usr/sbin/apache2ctl -D FOREGROUND
