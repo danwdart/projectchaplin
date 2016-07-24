@@ -22,7 +22,7 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-require '../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 set_time_limit(0);
 

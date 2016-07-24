@@ -1,12 +1,10 @@
 #!/bin/bash
 case $1 in
     start)
-        cd cli
-        php cli.php cli youtube > logs/youtube.log & 2>&1
+        php cli/cli.php cli youtube > logs/youtube.log & 2>&1
         echo $! > ../youtube.pid
-        php cli.php cli convert > logs/convert.log & 2>&1
+        php cli/cli.php cli convert > logs/convert.log & 2>&1
         echo $! > ../convert.pid
-        cd ..
         node node/server.js > logs/node.log & 2>&1
         echo $! > node.pid
         ;;
