@@ -41,7 +41,7 @@ class Chaplin_Model_Video_Youtube
         $msgTest->_setField(self::FIELD_YTID, $strYouTubeId);
         return $msgTest;
     }
-    
+
     private function _getYouTubeId()
     {
         return $this->_getField(self::FIELD_YTID, null);
@@ -52,16 +52,16 @@ class Chaplin_Model_Video_Youtube
         echo 'Downloading '.$this->_getYouTubeId().PHP_EOL;
         ob_flush();
         flush();
-        
+
         $strPathToDownloadTo = realpath(APPLICATION_PATH.'/../public/uploads');
 
         $strOut = Chaplin_Service::getInstance()
-            ->getYoutube($this->_getYouTubeId())
-            ->downloadVideo($strPathToDownloadTo);
+            ->getYoutube()
+            ->downloadVideo($this->_getYouTubeId(), $strPathToDownloadTo);
 
         echo $strOut;
         ob_flush();
-        flush();        
+        flush();
         echo 'Downloaded '.$this->_getYouTubeId().PHP_EOL;
         ob_flush();
         flush();
@@ -79,7 +79,7 @@ class Chaplin_Model_Video_Youtube
             flush();
         }
     }
-    
+
     public function getRoutingKey()
     {
         return 'video.youtube.'.$this->_getYouTubeId();
@@ -89,4 +89,4 @@ class Chaplin_Model_Video_Youtube
     {
         return 'Video';
     }
-}    
+}
