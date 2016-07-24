@@ -1,5 +1,4 @@
 FROM ubuntu:latest
-VOLUME ["/var/www"]
 WORKDIR /var/www
 ADD apache/projectchaplin.conf /etc/apache2/sites-available/projectchaplin.conf
 EXPOSE 80 1337
@@ -18,10 +17,11 @@ RUN a2enmod rewrite
 RUN a2enmod headers
 RUN a2dissite 000-default
 RUN a2ensite projectchaplin
-RUN git clone https://github.com/dandart/projectchaplin.git /var/www
-RUN curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /var/www/external/youtube-dl
-RUN chmod +x /var/www/external/youtube-dl
-RUN ./composer.phar install
-RUN npm install
-RUN chown -R www-data:www-data public/uploads
-CMD ./cli.sh start && /usr/sbin/apache2ctl -D FOREGROUND
+RUN cd /var && rm -rf /var/www && git clone https://github.com/dandart/projectchaplin.git /var/www
+RUN cd /var/www && ./composer.phar install
+RUN cd /var/www && npm install
+RUN chown -R www-data:www-data /var/www/public/uploads
+RUN chown -R www-data:www-data /var/www/config/
+RUN chown -R www-data:www-data /var/www/logs/
+VOLUME ["/var/www"]
+CMD /usr/sbin/apache2ctl -D FOREGROUND
