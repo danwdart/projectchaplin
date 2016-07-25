@@ -345,7 +345,9 @@ class VideoController extends Chaplin_Controller_Action_Api
                 $modelUser,
                 $strRelaPath.$strRelaFile,
                 $strRelaPath.$strRelaThumb,
-                $strTitle
+                $strTitle,
+                '',
+                ''
             );
             $modelVideo->save();
 
