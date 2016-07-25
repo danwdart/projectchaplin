@@ -1,0 +1,28 @@
+version: "2"
+services:
+    projectchaplin:
+        image: dandart/projectchaplin:latest
+        ports:
+            - "80:80"
+            - "1337:1337"
+        volumes:
+            - /var/www
+        links:
+            - redis:redis
+            - mysql:mysql
+            - rabbitmq:rabbitmq
+        depends_on:
+            - redis
+            - mysql
+            - rabbitmq
+    redis:
+        image: redis
+    mysql:
+        image: mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: testtest123
+            MYSQL_DATABASE: chaplin
+            MYSQL_USER: chaplin
+            MYSQL_PASSWORD: chaplin
+    rabbitmq:
+        image: rabbitmq
