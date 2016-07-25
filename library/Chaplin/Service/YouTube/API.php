@@ -139,6 +139,7 @@ class Chaplin_Service_YouTube_API
         $entryVideo = $this->getVideoById($strVideoId);
 
         $strTitle = $entryVideo->getSnippet()->title;
+        $strDescription = $entryVideo->getSnippet()->description;
 
         $strPath = realpath(APPLICATION_PATH.'/../public/uploads');
         $strVideoFile = $strPath.'/'.$strVideoId.'.webm';
@@ -149,7 +150,9 @@ class Chaplin_Service_YouTube_API
             $modelUser,
             $strRelaFile,
             $strThumbnail,
-            $strTitle
+            $strTitle,
+            $strDescription,
+            $strURL
         );
         // All YouTube imports are CC-BY
         $modelVideo->setLicence(Chaplin_Model_Video_Licence::ID_CCBY);

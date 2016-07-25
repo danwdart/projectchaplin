@@ -31,6 +31,8 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     const FIELD_THUMBNAIL = 'Thumbnail';
     const FIELD_TITLE = 'Title';
     const FIELD_DESCRIPTION = 'Description';
+    const FIELD_UPLOADER = 'Uploader';
+    const FIELD_SOURCE = 'Source';
     const FIELD_LICENCE = 'Licence';
     const FIELD_LENGTH = 'Length';
     const FIELD_WIDTH = 'Width';
@@ -58,6 +60,8 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         self::FIELD_THUMBNAIL       => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_TITLE           => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_DESCRIPTION     => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_UPLOADER        => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_SOURCE          => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_LICENCE         => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_LENGTH          => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_WIDTH           => ['Class' => 'Chaplin_Model_Field_Field'],
@@ -82,7 +86,10 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         Chaplin_Model_User $modelUser,
         $strFilename, // form element?
         $strThumbURL,
-        $strTitle
+        $strTitle,
+        $strDescription,
+        $strUploader,
+        $strSource
     ) {
         $video = new self();
         $video->_bIsNew = true;
@@ -93,6 +100,9 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         $video->_setField(self::FIELD_THUMBNAIL, $strThumbURL);
         $video->_setField(self::FIELD_TITLE, $strTitle);
         $video->_setField(self::FIELD_PRIVACY, Chaplin_Model_Video_Privacy::ID_PUBLIC);
+        $video->_setField(self::FIELD_DESCRIPTION, $strDescription);
+        $video->_setField(self::FIELD_UPLOADER, $strUploader);
+        $video->_setField(self::FIELD_SOURCE, $strSource);
         return $video;
     }
 
