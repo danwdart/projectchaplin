@@ -130,9 +130,11 @@ class Admin_SetupController extends Zend_Controller_Action
         $iniWriter->setConfig($config);
         try {
             $iniWriter->write(APPLICATION_PATH.'/../config/chaplin.ini');
-            echo 'File successfully written.';
+            echo 'File successfully written. Starting application.';
+            // Now start everything
+            system(APPLICATION_PATH.'/../cli.sh start');
         } catch (Exception $e) {
-            echo '; Could not write file. Please copy and insert the following into the file /config/chaplin.ini'.PHP_EOL;
+            echo '; Could not write file. Please either allow permissions to config/chaplin.ini to your web user and retry or copy and insert the following into the file /config/chaplin.ini, and then start the servers using ./cli.sh start :'.PHP_EOL;
             echo $iniWriter->render();
         }
     }
