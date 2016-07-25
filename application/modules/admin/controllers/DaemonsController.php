@@ -24,7 +24,6 @@
 **/
 class Admin_DaemonsController extends Zend_Controller_Action
 {
-
     public function startAction()
     {
         system('nohup '.APPLICATION_PATH.'/../cli.sh start 2>&1');

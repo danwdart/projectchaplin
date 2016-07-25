@@ -14,15 +14,15 @@ case $1 in
         echo All services started
         ;;
     stop)
-        kill $(cat $YPID) && rm $YPID
-        kill $(cat $CPID) && rm $CPID
-        kill $(cat $NPID) && rm $NPID
+        kill $(cat $YPID 2>/dev/null) 2>/dev/null ; rm $YPID 2>/dev/null
+        kill $(cat $CPID 2>/dev/null) 2>/dev/null ; rm $CPID 2>/dev/null
+        kill $(cat $NPID 2>/dev/null) 2>/dev/null ; rm $NPID 2>/dev/null
         echo All services stopped
     ;;
     status)
-        if [[ "2" == "$(ps aux | grep $(cat $YPID) | wc -l)"]] &&
-            [["2" == "$(ps aux | grep $(cat $CPID) | wc -l)"]] &&
-            [["2" -eq "$(ps aux | grep $(cat $NPID) | wc -l)" ]]
+        if [[ "0" -eq "$(kill -0 $(cat $YPID) 2>&1 | wc -l)" ]] &&
+            [[ "0" -eq "$(kill -0 $(cat $CPID) 2>&1 | wc -l)" ]] &&
+            [[ "0" -eq "$(kill -0 $(cat $NPID) 2>&1 | wc -l)" ]]
         then
             echo All listeners running.
             exit 0
@@ -32,7 +32,7 @@ case $1 in
         fi
     ;;
     status-youtube)
-        if [[ "2" == "$(ps aux | grep $(cat youtube.pid) | wc -l)" ]]
+        if [[ "0" == "$(kill -0 $(cat $YPID) 2>&1 | wc -l)" ]]
         then
             echo YouTube listener running.
             exit 0
@@ -42,7 +42,7 @@ case $1 in
         fi
     ;;
     status-convert)
-        if [[ "2" == "$(ps aux | grep $(cat convert.pid) | wc -l)" ]]
+        if [[ "0" == "$(kill -0 $(cat $CPID) 2>&1 | wc -l)" ]]
         then
             echo Convert listener running.
             exit 0
@@ -52,7 +52,7 @@ case $1 in
         fi
     ;;
     status-node)
-        if [[ "2" -eq "$(ps aux | grep $(cat node.pid) | wc -l)" ]]
+        if [[ "0" -eq "$(kill -0 $(cat $NPID) 2>&1 | wc -l)" ]]
         then
             echo Node listener running.
             exit 0
