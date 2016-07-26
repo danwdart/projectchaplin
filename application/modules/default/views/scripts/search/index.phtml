@@ -55,6 +55,20 @@
 	</div>
 	<div class="clearfix"></div>
 <?php endif; ?>
+<?php if ($this->vimeoUser) : ?>
+	<h2>Found Vimeo user <?php echo $this->vimeoUser['name']; ?></h2>
+	<div class="content-centre">
+		<div class="video">
+			<a href="/user/vimeo/id/<?php echo substr($this->vimeoUser['uri'], 8); ?>">
+				<div class="thumb-wrapper">
+	    			<img class="thumb-img" src="" alt="View User"/>
+	    		</div>
+				<p><?php echo $this->vimeoUser['name'];?></p>
+			</a>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+<?php endif; ?>
 <br/>
 <h2>YouTube results for: <?php echo $this->strSearchTerm; ?></h2>
 <div class="content-centre" id="youtubevids">

@@ -120,4 +120,16 @@ class UserController extends Chaplin_Controller_Action_Api
         $this->view->strTitle = $this->view->ittVideos[0]->getSnippet()->channelTitle.
             ' from YouTube - Chaplin';
 	}
+
+    public function vimeoAction()
+	{
+		$strUsername = $this->_request->getParam('id', null);
+
+        $serviceVimeo = Chaplin_Service::getInstance()->getVimeo();
+
+		$this->view->ittVideos = $serviceVimeo->getUserUploads($strUsername);
+
+        $this->view->strTitle = $this->view->ittVideos['data'][0]['user']['name'].
+            ' from Vimeo - Chaplin';
+	}
 }

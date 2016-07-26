@@ -58,14 +58,28 @@ class Chaplin_Service_Vimeo_API
     {
         $configChaplin = Chaplin_Config_Chaplin::getInstance();
 
+        $configVimeo = $configChaplin->getVimeo();
 
+        $lib = new Vimeo($configVimeo->client_id, $configVimeo->client_secret);
+        $token = $lib->clientCredentials(['public']);
+        $lib->setToken($token['body']['access_token']);
+
+        $ret = $lib->request('/users', ['query' => $strSearchTerm], 'GET')['body']['data'];
+        if (isset($ret[0]) && strtolower($strSearchTerm) == strtolower($ret[0]['name'])) return $ret[0];
+        return null;
     }
 
     public function getUserUploads($strChannelId)
     {
         $configChaplin = Chaplin_Config_Chaplin::getInstance();
 
+        $configVimeo = $configChaplin->getVimeo();
 
+        $lib = new Vimeo($configVimeo->client_id, $configVimeo->client_secret);
+        $token = $lib->clientCredentials(['public']);
+        $lib->setToken($token['body']['access_token']);
+
+        return $lib->request('/users/'.$strChannelId.'/videos', [], 'GET')['body'];
     }
 
     public function getDownloadURL($strURL)
