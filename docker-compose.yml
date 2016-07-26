@@ -1,0 +1,22 @@
+projectchaplin:
+    image: projectchaplin:latest
+    ports:
+        - "80:80"
+        - "1337:1337"
+    volumes:
+        - /var/www
+    links:
+        - redis:redis
+        - mysql:mysql
+        - rabbitmq:rabbitmq
+redis:
+    image: hypriot/rpi-redis
+mysql:
+    image: hypriot/rpi-mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: testtest123
+        MYSQL_DATABASE: chaplin
+        MYSQL_USER: chaplin
+        MYSQL_PASSWORD: chaplin
+rabbitmq:
+    image: sysrun/rpi-rabbitmq

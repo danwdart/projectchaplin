@@ -1,10 +1,10 @@
-FROM ubuntu:latest
+FROM ioft/armhf-ubuntu
 WORKDIR /var/www
 ADD apache/projectchaplin.conf /etc/apache2/sites-available/projectchaplin.conf
 EXPOSE 80 1337
-ENV LC_ALL=en_GB.UTF-8
-ENV LANG=en_GB.UTF-8
-ENV REDIS_PORT=6379
+ENV LC_ALL en_GB.UTF-8
+ENV LANG en_GB.UTF-8
+ENV REDIS_PORT 6379
 RUN locale-gen en_GB.UTF-8
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y dist-upgrade
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git curl software-properties-common
