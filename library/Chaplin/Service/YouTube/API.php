@@ -152,6 +152,7 @@ class Chaplin_Service_YouTube_API
             $strThumbnail,
             $strTitle,
             $strDescription,
+            '', // uploader
             $strURL
         );
         // All YouTube imports are CC-BY

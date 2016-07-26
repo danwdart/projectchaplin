@@ -36,6 +36,12 @@ class Admin_DaemonsController extends Zend_Controller_Action
         exit();
     }
 
+    public function restartAction()
+    {
+        system('nohup '.APPLICATION_PATH.'/../cli.sh restart 2>&1');
+        exit();
+    }
+
     public function statusAction()
     {
         system('nohup '.APPLICATION_PATH.'/../cli.sh status 2>&1');
@@ -45,6 +51,12 @@ class Admin_DaemonsController extends Zend_Controller_Action
     public function statusYoutubeAction()
     {
         system('nohup '.APPLICATION_PATH.'/../cli.sh status-youtube 2>&1');
+        exit();
+    }
+
+    public function statusVimeoAction()
+    {
+        system('nohup '.APPLICATION_PATH.'/../cli.sh status-vimeo 2>&1');
         exit();
     }
 
