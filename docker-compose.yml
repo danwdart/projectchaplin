@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 projectchaplin:
     image: projectchaplin:latest
     ports:

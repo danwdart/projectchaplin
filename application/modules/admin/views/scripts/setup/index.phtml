@@ -229,8 +229,19 @@
 		<h2>Your Settings</h2>
 		<textarea id="commitresult" cols="55" rows="10">Output will appear here</textarea>
         <p><a href="#" class="commit btn btn-default">Retry</a></p>
-		<p><a href='/' class="btn btn-success">I'm ready, start using Chaplin</a></p>
+		<p><a href='#step8' class="btn btn-success">I'm ready, start using Chaplin</a></p>
 	</div>
+    <div id="step8" class="widgetbody" style="display:none;text-align:left; padding:30px">
+        <h2>Admin account</h2>
+        <p>Let's create an admin account to perform administrative actions.</p>
+        <form id="admin">
+            <input type="text" id="username" name="username" value="" placeholder="Username"/>
+            <input type="password" id="password" name="password" value="" placeholder="Password"/>
+            <input type="text" id="fullname" name="fullname" value="" placeholder="Full Name"/>
+            <input type="text" id="email" name="email" value="" placeholder="Email Address"/>
+        </form>
+        <p><a href="/" class="btn btn-success">Create account</a></p>
+    </div>
 </div>
 <script>
     $.fn.serializeObject = function(){
