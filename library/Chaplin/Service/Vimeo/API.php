@@ -22,7 +22,9 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class Chaplin_Service_YouTube_API
+use Vimeo\Vimeo;
+
+class Chaplin_Service_Vimeo_API
 {
     const LOCATION = '/../external/youtube-dl';
 
@@ -30,70 +32,54 @@ class Chaplin_Service_YouTube_API
     {
         $configChaplin = Chaplin_Config_Chaplin::getInstance();
 
-        $client = new Google_Client();
-        $client->setDeveloperKey($configChaplin->getYouTubeAPIKey());
+        $configVimeo = $configChaplin->getVimeo();
 
-        $youtube = new Google_Service_YouTube($client);
+        $lib = new Vimeo($configVimeo->client_id, $configVimeo->client_secret);
+        $token = $lib->clientCredentials(['public']);
+        $lib->setToken($token['body']['access_token']);
 
-        return $youtube->search->listSearch('id,snippet', [
-            'q' => $strSearchTerm,
-            //'pageToken' => $page,
-            'maxResults' => $intLimit,
-            'order' => 'relevance',
-            'videoLicense' => 'creativeCommon',
-            'type' => 'video',
-        ]);
+        return $lib->request('/videos', ['query' => $strSearchTerm, 'filter' => 'CC'], 'GET')['body'];
     }
 
     public function getVideoById($strId)
     {
         $configChaplin = Chaplin_Config_Chaplin::getInstance();
 
-        $client = new Google_Client();
-        $client->setDeveloperKey($configChaplin->getYouTubeAPIKey());
+        $configVimeo = $configChaplin->getVimeo();
 
-        $youtube = new Google_Service_YouTube($client);
+        $lib = new Vimeo($configVimeo->client_id, $configVimeo->client_secret);
+        $token = $lib->clientCredentials(['public']);
+        $lib->setToken($token['body']['access_token']);
 
-        $list = $youtube->videos->listVideos('id,snippet', [
-            'id' => $strId
-        ]);
-
-        return 0 < $list->pageInfo->totalResults ? $list->items[0] : null;
+        return $lib->request('/videos/'.$strId, [], 'GET')['body'];
     }
 
     public function getUserProfile($strSearchTerm)
     {
         $configChaplin = Chaplin_Config_Chaplin::getInstance();
 
-        $client = new Google_Client();
-        $client->setDeveloperKey($configChaplin->getYouTubeAPIKey());
+        $configVimeo = $configChaplin->getVimeo();
 
-        $youtube = new Google_Service_YouTube($client);
+        $lib = new Vimeo($configVimeo->client_id, $configVimeo->client_secret);
+        $token = $lib->clientCredentials(['public']);
+        $lib->setToken($token['body']['access_token']);
 
-        $list = $youtube->channels->listChannels('id,snippet', [
-            'forUsername' => $strSearchTerm
-        ]);
-
-        return 0 < $list->pageInfo->totalResults ? $list->items[0] : null;
+        $ret = $lib->request('/users', ['query' => $strSearchTerm], 'GET')['body']['data'];
+        if (isset($ret[0]) && strtolower($strSearchTerm) == strtolower($ret[0]['name'])) return $ret[0];
+        return null;
     }
 
     public function getUserUploads($strChannelId)
     {
         $configChaplin = Chaplin_Config_Chaplin::getInstance();
 
-        $client = new Google_Client();
-        $client->setDeveloperKey($configChaplin->getYouTubeAPIKey());
+        $configVimeo = $configChaplin->getVimeo();
 
-        $youtube = new Google_Service_YouTube($client);
+        $lib = new Vimeo($configVimeo->client_id, $configVimeo->client_secret);
+        $token = $lib->clientCredentials(['public']);
+        $lib->setToken($token['body']['access_token']);
 
-        return $youtube->search->listSearch('id,snippet', [
-            'channelId' => $strChannelId,
-            //'pageToken' => $page,
-            'maxResults' => 50,
-            'order' => 'relevance',
-            'videoLicense' => 'creativeCommon',
-            'type' => 'video',
-        ])->items;
+        return $lib->request('/users/'.$strChannelId.'/videos', [], 'GET')['body'];
     }
 
     public function getDownloadURL($strURL)
@@ -108,9 +94,9 @@ class Chaplin_Service_YouTube_API
     public function downloadVideo($strURL, $strPathToSave)
     {
         $strCommandLine = APPLICATION_PATH.self::LOCATION.
-            " --format=webm -o ".
+            " --recode-video webm -o ".
             escapeshellarg($strPathToSave."/%(id)s.%(ext)s").
-            " -- ".escapeshellarg($strURL).
+            " -- ".escapeshellarg('https://vimeo.com/'.$strURL).
             ' 2>&1';
         echo $strCommandLine.PHP_EOL;
         ob_flush();
@@ -122,9 +108,9 @@ class Chaplin_Service_YouTube_API
     {
         $entryVideo = $this->getVideoById($strVideoId);
 
-        $strFilename = $strPathToSave.'/'.$entryVideo->id.'.webm.png';
+        $strFilename = $strPathToSave.'/'.$strVideoId.'.webm.png';
 
-        $strURL =  $entryVideo->getSnippet()->thumbnails->high->url;
+        $strURL =  $entryVideo['pictures']['sizes'][3]['link'];
 
         $strImage = file_get_contents($strURL);
         file_put_contents($strFilename, $strImage);
@@ -138,8 +124,8 @@ class Chaplin_Service_YouTube_API
 
         $entryVideo = $this->getVideoById($strVideoId);
 
-        $strTitle = $entryVideo->getSnippet()->title;
-        $strDescription = $entryVideo->getSnippet()->description;
+        $strTitle = $entryVideo['name'];
+        $strDescription = $entryVideo['description'];
 
         $strPath = realpath(APPLICATION_PATH.'/../public/uploads');
         $strVideoFile = $strPath.'/'.$strVideoId.'.webm';
@@ -156,12 +142,15 @@ class Chaplin_Service_YouTube_API
             $strURL
         );
         // All YouTube imports are CC-BY
-        $modelVideo->setLicence(Chaplin_Model_Video_Licence::ID_CCBY);
+        $modelVideo->setLicence(
+            Chaplin_Model_Video_Licence::createWithVimeoId($entryVideo['license'])
+            ->getId()
+        );
         $modelVideo->save();
 
         // msg
-        $modelYoutube = Chaplin_Model_Video_Youtube::create($modelVideo, $strVideoId);
-        Chaplin_Gateway::getInstance()->getVideo_Youtube()->save($modelYoutube);
+        $modelYoutube = Chaplin_Model_Video_Vimeo::create($modelVideo, $strVideoId);
+        Chaplin_Gateway::getInstance()->getVideo_Vimeo()->save($modelYoutube);
 
         return $modelVideo;
     }

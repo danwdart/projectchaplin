@@ -95,4 +95,9 @@ class Chaplin_Service
     {
         return new Chaplin_Service_YouTube_API();
     }
+
+    public function getVimeo()
+    {
+        return new Chaplin_Service_Vimeo_API();
+    }
 }

@@ -78,4 +78,12 @@ class Chaplin_Config_Chaplin
             ''
         );
     }
+
+    public function getVimeo()
+    {
+        return $this->_getValue(
+            $this->_zendConfig->vimeo,
+            []
+        );
+    }
 }

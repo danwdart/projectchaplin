@@ -42,7 +42,8 @@
         "dailymotion/sdk": "dev-master",
         "robmorgan/phinx": "dev-master",
         "zendframework/zendgdata": "^2.0",
-        "google/apiclient": "^2.0"
+        "google/apiclient": "^2.0",
+        "vimeo/vimeo-api": "^1.2"
     },
     "require-dev": {
         "mockery/mockery": "dev-master"

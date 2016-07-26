@@ -64,18 +64,26 @@ class SearchController extends Chaplin_Controller_Action_Api
         $this->view->assign('ittVideos', $ittVideos);
 
         // Retrieve Youtube results
+        $service = Chaplin_Service::getInstance();
 
-        $serviceYouTube = Chaplin_Service::getInstance()->getYouTube();
+        $serviceYouTube = $service->getYouTube();
+        $serviceVimeo = $service->getVimeo();
 
         $ytUser = $serviceYouTube->getUserProfile($strSearchTerm);
         $videoFeed = $serviceYouTube->search($strSearchTerm);
 
+        $vimeoFeed = $serviceVimeo->search($strSearchTerm);
+
+        $vimeoUser = $serviceVimeo->getUserProfile($strSearchTerm);
+
+        $this->view->vimeoUser = $vimeoUser;
         $this->view->ytUser = $ytUser;
 
         //$dm = new Dailymotion();
         //$result = $dm->get('/search/'.urlencode($strSearchTerm));
         //die(var_dump($result));
         $this->view->videoFeed = $videoFeed;
+        $this->view->vimeoFeed = $vimeoFeed;
     }
 
     public function youtubeAction()

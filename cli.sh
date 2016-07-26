@@ -2,11 +2,14 @@
 cd $(dirname $0)
 CPID=/tmp/convert.pid
 YPID=/tmp/youtube.pid
+VPID=/tmp/vimeo.pid
 NPID=/tmp/node.pid
 case $1 in
     start)
         php cli/cli.php cli youtube > logs/youtube.log 2>&1 &
         echo $! > $YPID
+        php cli/cli.php cli vimeo > logs/vimeo.log 2>&1 &
+        echo $! > $VPID
         php cli/cli.php cli convert > logs/convert.log 2>&1 &
         echo $! > $CPID
         node node/server.js > logs/node.log 2>&1 &
@@ -15,12 +18,14 @@ case $1 in
         ;;
     stop)
         kill $(cat $YPID 2>/dev/null) 2>/dev/null ; rm $YPID 2>/dev/null
+        kill $(cat $VPID 2>/dev/null) 2>/dev/null ; rm $VPID 2>/dev/null
         kill $(cat $CPID 2>/dev/null) 2>/dev/null ; rm $CPID 2>/dev/null
         kill $(cat $NPID 2>/dev/null) 2>/dev/null ; rm $NPID 2>/dev/null
         echo All services stopped
     ;;
     status)
         if [[ "0" -eq "$(kill -0 $(cat $YPID) 2>&1 | wc -l)" ]] &&
+            [[ "0" -eq "$(kill -0 $(cat $VPID) 2>&1 | wc -l)" ]] &&
             [[ "0" -eq "$(kill -0 $(cat $CPID) 2>&1 | wc -l)" ]] &&
             [[ "0" -eq "$(kill -0 $(cat $NPID) 2>&1 | wc -l)" ]]
         then
@@ -38,6 +43,16 @@ case $1 in
             exit 0
         else
             echo YouTube listener not running.
+            exit 1
+        fi
+    ;;
+    status-vimeo)
+        if [[ "0" == "$(kill -0 $(cat $VPID) 2>&1 | wc -l)" ]]
+        then
+            echo Vimeo listener running.
+            exit 0
+        else
+            echo Vimeo listener not running.
             exit 1
         fi
     ;;
@@ -66,9 +81,9 @@ case $1 in
         $0 start
     ;;
     log)
-        tail -f logs/youtube.log logs/convert.log logs/node.log
+        tail -f logs/youtube.log logs/convert.log logs/node.log logs/vimeo.log
     ;;
     *)
-        echo "Usage: $0 start|stop|restart|status|status-youtube|status-convert|status-node|log"
+        echo "Usage: $0 start|stop|restart|status|status-youtube|status-convert|status-vimeo|status-node|log"
     ;;
 esac
