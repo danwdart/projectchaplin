@@ -64,11 +64,15 @@ class SearchController extends Chaplin_Controller_Action_Api
         $this->view->assign('ittVideos', $ittVideos);
 
         // Retrieve Youtube results
+        $service = Chaplin_Service::getInstance();
 
-        $serviceYouTube = Chaplin_Service::getInstance()->getYouTube();
+        $serviceYouTube = $service->getYouTube();
+        $serviceVimeo = $service->getVimeo();
 
         $ytUser = $serviceYouTube->getUserProfile($strSearchTerm);
         $videoFeed = $serviceYouTube->search($strSearchTerm);
+
+        $vimeoFeed = $serviceVimeo->search($strSearchTerm);
 
         $this->view->ytUser = $ytUser;
 
@@ -76,6 +80,7 @@ class SearchController extends Chaplin_Controller_Action_Api
         //$result = $dm->get('/search/'.urlencode($strSearchTerm));
         //die(var_dump($result));
         $this->view->videoFeed = $videoFeed;
+        $this->view->vimeoFeed = $vimeoFeed;
     }
 
     public function youtubeAction()

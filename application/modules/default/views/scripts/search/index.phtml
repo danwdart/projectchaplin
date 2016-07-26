@@ -55,7 +55,7 @@
 	</div>
 	<div class="clearfix"></div>
 <?php endif; ?>
-<rr/>
+<br/>
 <h2>YouTube results for: <?php echo $this->strSearchTerm; ?></h2>
 <div class="content-centre" id="youtubevids">
 <?php foreach($this->videoFeed->items as $ytVideo): ?>
@@ -65,6 +65,20 @@
     		<img class="thumb-img" src="<?php echo htmlentities($ytVideo->getSnippet()->getThumbnails()->high->url);?>" alt="View Video"/>
 		</div>
 		<p><?php echo $ytVideo->getSnippet()->getTitle();?></p>
+	</a>
+</div>
+<?php endforeach;?>
+</div>
+<div class="clearfix"></div>
+<h2>Vimeo results for: <?php echo $this->strSearchTerm; ?></h2>
+<div class="content-centre" id="youtubevids">
+<?php foreach($this->vimeoFeed['body']['data'] as $arrVideo): ?>
+<div class="video">
+	<a href="/video/watchvimeo/id/<?php echo $arrVideo['resource_key']; ?>">
+		<div class="thumb-wrapper">
+    		<img class="thumb-img" src="<?php echo htmlentities($arrVideo['pictures']['sizes'][3]['link']);?>" alt="View Video"/>
+		</div>
+		<p><?php echo $arrVideo['name'];?></p>
 	</a>
 </div>
 <?php endforeach;?>
