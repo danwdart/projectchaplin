@@ -42,23 +42,23 @@ class Chaplin_Dao_Amqp_Exchange
         if (is_null($strExchangeName)) {
             throw new Exception('Cannot create with blank exchange name');
         }
-        
+
         $this->_strExchangeName = $strExchangeName;
 
         $arrExchanges = Chaplin_Config_Amqp::getInstance()
             ->getConfigArray();
-        
+
         if (!isset($arrExchanges[$strExchangeName]) ||
             !is_array($arrExchanges[$strExchangeName])) {
             throw new Exception($strExchangeName.' exchange not found');
         }
-        
+
         $this->_arrExchange = $arrExchanges[$strExchangeName];
 
         if (!isset($this->_arrExchange[self::CONFIG_TYPE]))
             throw new Canddi_Dao_Exception_Message_ExchangeTypeEmpty();
     }
-    
+
     private static function _getReadConnection()
     {
         if (is_null(self::$_amqpConnectionRead)) {
@@ -73,10 +73,10 @@ class Chaplin_Dao_Amqp_Exchange
                 throw new Exception('Connection exception');
             }
         }
-        
+
         return self::$_amqpConnectionRead;
     }
-    
+
     private static function _getWriteConnection()
     {
         if (is_null(self::$_amqpConnectionWrite)) {
@@ -91,10 +91,10 @@ class Chaplin_Dao_Amqp_Exchange
                 throw new Exception('Connection exception');
             }
         }
-        
+
         return self::$_amqpConnectionWrite;
     }
-    
+
     private function _getReadExchange()
     {
         $amqpConnection = self::_getReadConnection();
@@ -102,7 +102,7 @@ class Chaplin_Dao_Amqp_Exchange
         $arrFlags = (isset($this->_arrExchange[self::CONFIG_FLAGS]))?
             $this->_arrExchange[self::CONFIG_FLAGS]:
             array();
-            
+
         $intFlags = Amqp\Flags::getFlags($arrFlags);
         $amqpChannel = new Amqp\Channel($amqpConnection);
         $exchange = new Amqp\Exchange($amqpChannel);
@@ -112,7 +112,7 @@ class Chaplin_Dao_Amqp_Exchange
         $exchange->declareExchange();
         return $exchange;
     }
-    
+
     private function _getWriteExchange()
     {
         $amqpConnection = self::_getWriteConnection();
@@ -120,7 +120,7 @@ class Chaplin_Dao_Amqp_Exchange
         $arrFlags = (isset($this->_arrExchange[self::CONFIG_FLAGS]))?
             $this->_arrExchange[self::CONFIG_FLAGS]:
             array();
-            
+
         $intFlags = Amqp\Flags::getFlags($arrFlags);
         $amqpChannel = new Amqp\Channel($amqpConnection);
         $exchange = new Amqp\Exchange($amqpChannel);
@@ -130,7 +130,7 @@ class Chaplin_Dao_Amqp_Exchange
         $exchange->declareExchange();
         return $exchange;
     }
-    
+
     /**
     *  Provides the queue listening functionality
     *  @param: $queueName
@@ -155,26 +155,22 @@ class Chaplin_Dao_Amqp_Exchange
         $arrFlags = (isset($arrQueue[self::CONFIG_FLAGS]))?
             $arrQueue[self::CONFIG_FLAGS]:
             array();
-            
+
         $intFlags = Amqp\Flags::getFlags($arrFlags);
         $amqpConnection = $this->_getReadConnection();
-        
+
         $amqpChannel = new Amqp\Channel($amqpConnection);
         $amqpQueue = new Amqp\Queue($amqpChannel);
         $amqpQueue->setName($strQueue);
         $amqpQueue->setFlags($intFlags);
         $amqpQueue->declareQueue();
-        
+
         $localCallback  = function(
             Amqp\Envelope $amqpEnvelope
         ) use (
             $callback,
             $amqpQueue
         ) {
-            // We may want to move it if we want a redelivery if it failed to process
-            // But for now let's not to make it quick to ack and not timeout
-            $amqpQueue->ack($amqpEnvelope->getDeliveryTag());
-
             $strBody = $amqpEnvelope->getBody();
             try {
                 $arrData = Zend_Json::decode($strBody);
@@ -200,8 +196,10 @@ class Chaplin_Dao_Amqp_Exchange
             }
             $model = $strClass::createFromData($this, $arrData);
             try {
-                
+
                 $callback($model);
+
+                $amqpQueue->ack($amqpEnvelope->getDeliveryTag());
             } catch (Exception $e) {
                 echo 'Caught Exception ('.get_class($e).'): '.$e->getMessage().PHP_EOL.$e->getTraceAsString().PHP_EOL;
             }
@@ -216,7 +214,7 @@ class Chaplin_Dao_Amqp_Exchange
             $strRoutingKey = is_null($strQueueKey)?'#':$strQueueKey;
             $amqpQueue->bind($this->_strExchangeName, $strRoutingKey);
         }
-        
+
         $amqpQueue->consume($localCallback, $intFlags);
     }
 
@@ -228,7 +226,7 @@ class Chaplin_Dao_Amqp_Exchange
     {
         $this->_getWriteExchange()
             ->publish(
-                Zend_Json::encode($message), 
+                Zend_Json::encode($message),
                 $strRoutingKey,
                 AMQP_NOPARAM,
                 [
