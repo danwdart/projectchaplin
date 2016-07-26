@@ -74,6 +74,9 @@ class SearchController extends Chaplin_Controller_Action_Api
 
         $vimeoFeed = $serviceVimeo->search($strSearchTerm);
 
+        $vimeoUser = $serviceVimeo->getUserProfile($strSearchTerm);
+
+        $this->view->vimeoUser = $vimeoUser;
         $this->view->ytUser = $ytUser;
 
         //$dm = new Dailymotion();
