@@ -183,6 +183,48 @@ class VideoController extends Chaplin_Controller_Action_Api
         $this->_redirect('/video/watch/id/'.$modelVideo->getVideoId());
     }
 
+    public function watchvimeoAction()
+    {
+        $strVideoId = $this->_request->getParam('id', null);
+        if(is_null($strVideoId)) {
+            return $this->_redirect('/');
+        }
+
+        // Get the YT information
+        try {
+            $vimeoService = Chaplin_Service::getInstance()->getVimeo();
+            $entryVideo = $vimeoService->getVideoById($strVideoId);
+            $this->view->entryVideo = $entryVideo;
+        } catch (Exception $e) {
+            throw new Chaplin_Exception_NotFound('Vimeo Id = '.$strVideoId);
+        }
+        // This won't work remotely
+        if (in_array($this->_request->getClientIp(), ['127.0.0.1', '::1'])) {
+            $this->view->videoURL = Chaplin_Service::getInstance()
+                ->getVimeo()
+                ->getDownloadURL($strVideoId);
+            $this->view->isLocal = true;
+        }
+        $this->view->strScheme = Chaplin_Config_Chaplin::getInstance()->getScheme();
+        $this->view->strTitle = $this->view->entryVideo['name'];
+    }
+
+    public function importvimeoAction()
+    {
+        $strVideoId = $this->_request->getParam('id', null);
+        if(is_null($strVideoId)) {
+            return $this->_redirect('/');
+        }
+
+        $modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser();
+
+        $modelVideo = Chaplin_Service::getInstance()
+            ->getVimeo()
+            ->importVideo($modelUser, $strVideoId);
+
+        $this->_redirect('/video/watch/id/'.$modelVideo->getVideoId());
+    }
+
     public function commentsAction()
     {
         $this->_helper->layout()->disableLayout();

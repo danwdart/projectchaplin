@@ -28,19 +28,26 @@ class CliController extends Zend_Controller_Action
     {
         $this->_helper->viewRenderer->setNoRender(true);
     }
-    
+
     public function convertAction()
     {
         Chaplin_Gateway::getInstance()
             ->getVideo_Convert()
             ->convert();
-    }       
+    }
 
     public function youtubeAction()
     {
         Chaplin_Gateway::getInstance()
             ->getVideo_Youtube()
             ->youtube();
+    }
+
+    public function vimeoAction()
+    {
+        Chaplin_Gateway::getInstance()
+            ->getVideo_Vimeo()
+            ->vimeo();
     }
 
     public function httpAction()
@@ -80,7 +87,7 @@ class CliController extends Zend_Controller_Action
             echo $strText.PHP_EOL;
             $closureSend('Echo: ('.$strText.')'.PHP_EOL);
             ob_flush();
-            flush(); 
+            flush();
         });
     }
 
@@ -166,11 +173,11 @@ class CliController extends Zend_Controller_Action
                 $socket->write('PING '.time().PHP_EOL);
                 sleep(5);
             });
-        });        
+        });
 
         Chaplin_Socket_Listen_Client::setOnDisconnect(function($socket) use ($listener) {
         });
-       
+
         $listener->listen();
     }
 }

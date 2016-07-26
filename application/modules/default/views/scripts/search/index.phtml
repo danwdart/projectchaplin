@@ -72,9 +72,9 @@
 <div class="clearfix"></div>
 <h2>Vimeo results for: <?php echo $this->strSearchTerm; ?></h2>
 <div class="content-centre" id="youtubevids">
-<?php foreach($this->vimeoFeed['body']['data'] as $arrVideo): ?>
+<?php foreach($this->vimeoFeed['data'] as $arrVideo): ?>
 <div class="video">
-	<a href="/video/watchvimeo/id/<?php echo $arrVideo['resource_key']; ?>">
+	<a href="/video/watchvimeo/id/<?php echo substr($arrVideo['uri'], 8); ?>">
 		<div class="thumb-wrapper">
     		<img class="thumb-img" src="<?php echo htmlentities($arrVideo['pictures']['sizes'][3]['link']);?>" alt="View Video"/>
 		</div>

@@ -22,8 +22,8 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class Chaplin_Gateway_Video_Convert
-  extends Chaplin_Gateway_Abstract
+class Chaplin_Gateway_Video_Vimeo
+    extends Chaplin_Gateway_Abstract
 {
 	private $_daoExchange;
 
@@ -32,17 +32,18 @@ class Chaplin_Gateway_Video_Convert
 		$this->_daoExchange = $daoExchange;
 	}
 
-	public function convert()
-  {
-      $queueName = 'convert';
-  		$callback = function(Chaplin_Model_Video_Convert $msg) {
-  		    $msg->process();
-  		};
-  		$this->_daoExchange->listen($queueName, $callback);
-  }
+    public function vimeo()
+    {
+        echo 'Listening on vimeo';
+      $queueName = 'vimeo';
+      $callback = function(Chaplin_Model_Video_Vimeo $msg) {
+          $msg->process();
+      };
+      $this->_daoExchange->listen($queueName, $callback);
+    }
 
-  public function save(Chaplin_Model_Video_Convert $modelConvert)
-  {
-      return $this->_daoExchange->save($modelConvert);
-  }
+    public function save(Chaplin_Model_Video_Vimeo $modelVimeo)
+    {
+        return $this->_daoExchange->save($modelVimeo);
+    }
 }
