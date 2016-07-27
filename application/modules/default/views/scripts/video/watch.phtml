@@ -61,7 +61,13 @@ $vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
 	<br/>
 	<br/>Uploaded by: <a href="/user/<?php echo $this->video->getUsername(); ?>"><?php echo $this->video->getUsername(); ?></a>
 	<br/>Uploaded on <?php echo date('d/m/Y H:i', $this->video->getTimeCreated());?> (<?php echo $this->video->getTimeAgo(); ?>)
-	<br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
+    <?php if ($this->video->getSource()): ?>
+    <br/>Original source: <a href="https://youtube.com/watch?v=<?php echo $this->video->getSource(); ?>" target="_blank">Source Video</a>
+    <?php endif; ?>
+    <?php if ($this->video->getUploader()): ?>
+    <br/>Original author: <?php echo $this->video->getUploader(); ?>
+    <?php endif; ?>
+    <br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
 	<br/><?php echo $this->video->getDescription(); ?>
 	<p>Short URL: <input type="text" disabled value="<?php echo $this->short; ?>"/></p>
 	<p><strong>&uparrow; <?php echo $this->video->getVotesUp(); ?> / <?php echo $this->video->getVotesDown(); ?> &downarrow;</strong></p>
