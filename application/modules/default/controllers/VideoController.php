@@ -130,6 +130,22 @@ class VideoController extends Chaplin_Controller_Action_Api
         $this->view->assign('video', $modelVideo);
     }
 
+    public function importremoteAction()
+    {
+        $strVideoId = $this->_request->getParam('id', null);
+        if(is_null($strVideoId)) {
+            return $this->_redirect('/');
+        }
+
+        $modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser();
+
+        $modelVideo = Chaplin_Service::getInstance()
+            ->getRemote()
+            ->importVideo($modelUser, $strVideoId);
+
+        $this->_redirect('/video/watch/id/'.$modelVideo->getVideoId());
+    }
+
     public function watchshortAction()
     {
 	    $strId   = $this->_request->getParam('id');

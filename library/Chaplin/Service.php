@@ -100,4 +100,9 @@ class Chaplin_Service
     {
         return new Chaplin_Service_Vimeo_API();
     }
+
+    public function getRemote()
+    {
+        return new Chaplin_Service_Remote_API();
+    }
 }
