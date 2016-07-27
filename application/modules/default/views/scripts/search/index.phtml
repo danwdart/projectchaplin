@@ -39,8 +39,6 @@
 <?php endforeach;?>
 </div>
 <div class="clearfix"></div>
-<br/>
-
 <?php if ($this->ytUser) : ?>
 	<h2>Found YouTube user <?php echo $this->ytUser->getSnippet()->title; ?></h2>
 	<div class="content-centre">
@@ -69,7 +67,6 @@
 	</div>
 	<div class="clearfix"></div>
 <?php endif; ?>
-<br/>
 <h2>YouTube results for: <?php echo $this->strSearchTerm; ?></h2>
 <div class="content-centre" id="youtubevids">
 <?php foreach($this->videoFeed->items as $ytVideo): ?>

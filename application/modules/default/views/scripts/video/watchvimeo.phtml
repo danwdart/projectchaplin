@@ -25,7 +25,18 @@
 ?>
 <h1><?php echo $this->entryVideo['name'];?></h1>
 <div id="videoarea">
-	<?php echo $this->entryVideo['embed']['html']; ?>
+    <iframe id="video"
+        src="https://player.vimeo.com/video/<?php
+            echo substr($this->entryVideo['uri'], 8);
+        ?>?byline=0&portrait=0"
+        width="720"
+        height="405"
+        frameborder="0"
+        webkitallowfullscreen
+        mozallowfullscreen
+        allowfullscreen
+    >
+    </iframe>
 </div>
 <div id="infoarea">
 	<h3>Uploaded on <?php echo date('d/m/Y H:i', strtotime($this->entryVideo['created_time']));

@@ -33,10 +33,10 @@ $vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
 
 <h1><?php echo $this->video->getTitle();?></h1>
 <div id="videoarea">
-	<video id="video" controls class="clicktoplay fullscreen"
-		src="<?php echo $this->video->getFilename().'?'.time();?>">
+	<video id="video" controls poster="<?php echo $this->video->getFilename().'.png?'.time();?>">
+        <source src="<?php echo $this->video->getFilename().'?'.time();?>"/>
 	</video>
-	<span id="fun">
+	<div id="fun">
 		<button id="slower">&laquo; Slow Motion</button>
 		<button id="normalspeed">Normal Speed</button>
 		<button id="faster">Fast Forward &raquo;</button>
@@ -54,14 +54,20 @@ $vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
 		    <option class="filter" value="br">Barrel Roll!</option>
 		    <option class="filter" value="drunk">Drunk!</option>
 		</select>
-	</span>
+	</div>
 </div>
 <div id="infoarea">
     <button class="infinite btn btn-primary"><i class="fa fa-refresh"></i> Loop</button>
 	<br/>
 	<br/>Uploaded by: <a href="/user/<?php echo $this->video->getUsername(); ?>"><?php echo $this->video->getUsername(); ?></a>
 	<br/>Uploaded on <?php echo date('d/m/Y H:i', $this->video->getTimeCreated());?> (<?php echo $this->video->getTimeAgo(); ?>)
-	<br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
+    <?php if ($this->video->getSource()): ?>
+    <br/>Original source: <a href="https://youtube.com/watch?v=<?php echo $this->video->getSource(); ?>" target="_blank">Source Video</a>
+    <?php endif; ?>
+    <?php if ($this->video->getUploader()): ?>
+    <br/>Original author: <?php echo $this->video->getUploader(); ?>
+    <?php endif; ?>
+    <br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
 	<br/><?php echo $this->video->getDescription(); ?>
 	<p>Short URL: <input type="text" disabled value="<?php echo $this->short; ?>"/></p>
 	<p><strong>&uparrow; <?php echo $this->video->getVotesUp(); ?> / <?php echo $this->video->getVotesDown(); ?> &downarrow;</strong></p>
