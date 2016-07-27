@@ -210,7 +210,7 @@ footer {
 
 #infoarea {
     padding: 5px;
-    width: 640px;
+    width: 720px;
     margin: 0 auto;
 }
 
@@ -219,7 +219,7 @@ footer {
 }
 
 #video {
-    width:640px;
+    width: 720px;
     text-align: center;
     border: 5px outset;
 }
