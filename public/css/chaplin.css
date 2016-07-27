@@ -133,19 +133,18 @@ header .right input, header .right form {
 }
 
 main {
-    padding: 40px 10px 0;
+    padding: 10px;
     width: 100%;
     margin: 0 auto;
 }
 
 main h1 {
-    margin: 0 auto;
+    margin: 10px auto;
     text-align:center;
     font-weight: 200;
 }
 
 .content-header {
-    margin: 15px auto;
     text-align:center;
     font-size: 24pt;
     font-weight: 100;
@@ -422,8 +421,6 @@ body #contentwrapper main .content-header {
   font-family: 'Proxima Nova', 'Helvetica', Arial, sans-serif;
   font-weight: 400;
   font-size: 24px;
-  padding: 10px 0px;
-  padding-top: 30px;
 }
 body #contentwrapper main .content-centre {
   text-align: left;
