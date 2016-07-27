@@ -26,12 +26,14 @@
 <h1><?php echo $this->entryVideo->getSnippet()->title;?></h1>
 <div id="videoarea">
 	<iframe
+        id="video"
 		class="youtube-player"
 		type="text/html"
-		width="640"
-		height="385"
-		src="<?php echo $this->strScheme; ?>://www.youtube.com/embed/<?php echo $this->entryVideo->id; ?>"
+		width="720"
+		height="405"
+		src="https://www.youtube.com/embed/<?php echo $this->entryVideo->id; ?>"
 		frameborder="0"
+        allowfullscreen
 	>
 	</iframe>
 </div>
