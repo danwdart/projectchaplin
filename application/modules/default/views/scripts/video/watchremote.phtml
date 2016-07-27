@@ -25,7 +25,8 @@
 ?>
 <h1><?php echo $this->video->getTitle();?></h1>
 <div id="videoarea">
-	<video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->video->getFilename().'?'.time();?>">
+    <video id="video" controls poster="<?php echo $this->video->getFilename().'.png?'.time();?>">
+        <source src="<?php echo $this->video->getFilename().'?'.time();?>"/>
 	</video>
 </div>
 <div id="infoarea">

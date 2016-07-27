@@ -34,7 +34,7 @@ $(function() {
         alert('Socket undefined');
         return;
     }
-    
+
     function addclient(id) {
         if (id == socket.id) {
             return;
@@ -48,7 +48,6 @@ $(function() {
         img.setAttribute('height', "300");
         img.setAttribute('width',"400");
         img.setAttribute('id', id);
-        addfullscreen(img);
         document.getElementById('clients').appendChild(img);
     }
 
@@ -75,12 +74,12 @@ $(function() {
         img.setAttribute('src', data.src);
     });
 
-    navigator.getUserMedia_ = 
+    navigator.getUserMedia_ =
         navigator.getUserMedia ||
-        navigator.webkitGetUserMedia || 
+        navigator.webkitGetUserMedia ||
         navigator.mozGetUserMedia ||
         navigator.msGetUserMedia;
-        
+
     if('undefined' == typeof navigator.getUserMedia_) {
         $('#status').html('getUserMedia is not supported in your browser. This is an experimental feature.<br/>To turn this on, this is media.navigator.enabled and media.navigator.permission.disabled');
         clients =  document.getElementById('clients');
@@ -92,12 +91,12 @@ $(function() {
         {
             video: true,
             audio: false
-        },                
+        },
         function (stream) {
     	    var domURL = window.URL || window.webkitURL;
         	document.getElementById('broadcast').src =
     	        domURL ? domURL.createObjectURL(stream) : stream;
-    	        
+
     	    var video = document.getElementById('broadcast');
             var canvas = document.getElementById('canvas');
             var ctx = canvas.getContext('2d');

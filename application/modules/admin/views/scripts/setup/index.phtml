@@ -215,7 +215,7 @@
 				<input type="text" id="strShort" name="short" value="" placeholder="Short URL"/>
 			</p>
 		</form>
-		<a href="#step6" class="switcher ajax btn btn-success">Done</a>
+		<a href="#step6" class="switcher ajax btn btn-success">Next</a>
 	</div>
     <div id="step6" class="widgetbody" style="display:none;text-align:left; padding:30px">
         <h2>YouTube credentials</h2>
@@ -223,9 +223,18 @@
         <form id="youtube">
             <input type="text" id="strYouTubeAPI" name="youtubeapi" value="" placeholder="YouTube API Key"/>
         </form>
-        <a href="#step7" class="switcher ajax btn btn-success commit">Let's go!</a>
+        <a href="#step7" class="switcher ajax btn btn-success">Next</a>
     </div>
-	<div id="step7" class="widgetbody" style="display:none;text-align:left; padding:30px">
+    <div id="step7" class="widgetbody" style="display:none;text-align:left; padding:30px">
+        <h2>Vimeo credentials</h2>
+        <p>If you wish to use Vimeo searching, you will need to provide a Vimeo API key which you can get from << LINK >>. Enter it here:</p>
+        <form id="vimeo">
+            <input type="text" id="strVimeoClientId" name="cliemt_id" value="" placeholder="Client ID"/>
+            <input type="text" id="strVimeoClientSecret" name="client_secret" value="" placeholder="Client Secret"/>
+        </form>
+        <a href="#step8" class="switcher ajax btn btn-success commit">Let's go!</a>
+    </div>
+	<div id="step8" class="widgetbody" style="display:none;text-align:left; padding:30px">
 		<h2>Your Settings</h2>
 		<textarea id="commitresult" cols="55" rows="10">Output will appear here</textarea>
         <p><a href="#" class="commit btn btn-default">Retry</a></p>
