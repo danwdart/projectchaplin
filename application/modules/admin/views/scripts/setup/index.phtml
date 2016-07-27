@@ -122,9 +122,9 @@
 			data-url="/admin/setup/sqltest"
 			data-form="sqlserver"
 			class="ajax btn btn-default">I want to test this</a>
-		<span id="testresult"></span>
-		<a href="#step1" class="switcher btn btn-default"><i class="fa fa-arrow-left"></i> Go back</a>
-		<a href="#step3" class="switcher btn btn-success">Okay! Go ahead!</a>
+		<div id="testresult"></div>
+		<a href="#step1" class="switcher btn btn-default">Back</a>
+		<a href="#step3" class="switcher btn btn-success">Next</a>
 	</div>
 	<div id="step3" class="widgetbody" style="display:none;text-align:left; padding:30px">
 		<h2>Amazing!</h2>
@@ -152,9 +152,9 @@
 			data-url="/admin/setup/amqptest"
 			data-form="amqp"
 			class="ajax btn btn-default">I want to test this</a>
-		<span id="amqpresult"></span>
-		<a href="#step2" class="switcher btn btn-default"><i class="fa fa-arrow-left"></i> Go back</a>
-		<a href="#step4" class="switcher btn btn-success">Great! Next bit!</a>
+		<div id="amqpresult"></div>
+		<a href="#step2" class="switcher btn btn-default">Back</a>
+		<a href="#step4" class="switcher btn btn-success">Next</a>
 	</div>
 	<div id="step4" class="widgetbody" style="display:none;text-align:left; padding:30px">
 		<h2>Just a couple of steps to go</h2>
@@ -189,8 +189,8 @@
 				</label>
 			</p>
 		</form>
-		<a href="#step3" class="switcher btn btn-default"><i class="fa fa-arrow-left"></i> Go back</a>
-		<a href="#step5" class="switcher btn btn-success">Great! Go on to the last step!</a>
+		<a href="#step3" class="switcher btn btn-default">Back</a>
+		<a href="#step5" class="switcher btn btn-success">Next</a>
 	</div>
 	<div id="step5" class="widgetbody" style="display:none;text-align:left; padding:30px">
 		<h2>What is your website address?</h2>
@@ -215,7 +215,8 @@
 				<input type="text" id="strShort" name="short" value="" placeholder="Short URL"/>
 			</p>
 		</form>
-		<a href="#step6" class="switcher ajax btn btn-success">Next</a>
+        <a href="#step4" class="switcher btn btn-default">Back</a>
+		<a href="#step6" class="switcher btn btn-success">Next</a>
 	</div>
     <div id="step6" class="widgetbody" style="display:none;text-align:left; padding:30px">
         <h2>YouTube credentials</h2>
@@ -223,20 +224,23 @@
         <form id="youtube">
             <input type="text" id="strYouTubeAPI" name="youtubeapi" value="" placeholder="YouTube API Key"/>
         </form>
-        <a href="#step7" class="switcher ajax btn btn-success">Next</a>
+        <a href="#step5" class="switcher btn btn-default">Back</a>
+        <a href="#step7" class="switcher btn btn-success">Next</a>
     </div>
     <div id="step7" class="widgetbody" style="display:none;text-align:left; padding:30px">
         <h2>Vimeo credentials</h2>
         <p>If you wish to use Vimeo searching, you will need to provide a Vimeo API key which you can get from << LINK >>. Enter it here:</p>
         <form id="vimeo">
-            <input type="text" id="strVimeoClientId" name="cliemt_id" value="" placeholder="Client ID"/>
+            <input type="text" id="strVimeoClientId" name="client_id" value="" placeholder="Client ID"/>
             <input type="text" id="strVimeoClientSecret" name="client_secret" value="" placeholder="Client Secret"/>
         </form>
+        <a href="#step6" class="switcher btn btn-default">Back</a>
         <a href="#step8" class="switcher ajax btn btn-success commit">Let's go!</a>
     </div>
 	<div id="step8" class="widgetbody" style="display:none;text-align:left; padding:30px">
 		<h2>Your Settings</h2>
-		<textarea id="commitresult" cols="55" rows="10">Output will appear here</textarea>
+		<textarea id="commitresult" cols="30" rows="10">Output will appear here</textarea>
+        <a href="#step7" class="switcher btn btn-default">Back</a>
         <p><a href="#" class="commit btn btn-default">Retry</a></p>
 		<p><a href='/' class="btn btn-success">I'm ready, start using Chaplin</a></p>
 	</div>
@@ -306,22 +310,23 @@
         return json;
     };
 
-	$('a.switcher').click(function() {
-		var self = this;
+	$('a.switcher').click((ev) => {
+        ev.preventDefault();
+		var self = ev.currentTarget;
 		$('.widgetbody').hide();
 		$($(self).attr('href')).show();
 	});
-	$('a.ajax').click(function() {
-		var self = this;
+	$('a.ajax').click((ev) => {
+        ev.preventDefault();
+		var self = ev.currentTarget;
 		$.post(
 			$(self).attr('data-url'),
 			$('#'+$(self).attr('data-form')).serialize(),
-			function(data) {
-				$('#'+$(self).attr('data-output-element')).html(data);
-			}
+			data => $('#'+$(self).attr('data-output-element')).html(data)
 		);
 	})
-	$('.commit').click(function() {
+	$('.commit').click((ev) => {
+        ev.preventDefault();
 		vhost = $('#vhost').serializeObject();
 
 		$.post('/admin/setup/write',
@@ -341,10 +346,8 @@
 			vhost: vhost.vhost,
 			ssl: vhost.ssl,
 			short: vhost.short,
-            youtube: $('#youtube').serializeObject()
-		}, function(data)
-		{
-			$('#commitresult').text(data);
-		});
+            youtube: $('#youtube').serializeObject(),
+            vimeo: $('#vimeo').serializeObject()
+		}, data => $('#commitresult').text(data));
 	});
 </script>
