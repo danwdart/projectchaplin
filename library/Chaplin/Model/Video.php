@@ -172,6 +172,16 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         return $this->_setField(self::FIELD_DESCRIPTION, $strDescription);
     }
 
+    public function getSource()
+    {
+        return $this->_getField(self::FIELD_SOURCE, null);
+    }
+
+    public function getUploader()
+    {
+        return $this->_getField(self::FIELD_UPLOADER, null);
+    }
+
     public function getComments()
     {
         return $this->_getField(self::CHILD_ASSOC_COMMENTS, array());
