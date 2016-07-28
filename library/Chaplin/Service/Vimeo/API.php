@@ -94,12 +94,14 @@ class Chaplin_Service_Vimeo_API
         return null;
     }
 
-    public function getUserUploads($strChannelId)
+    public function getUserUploads($strChannelId, $intPage = 1)
     {
         $lib = $this->_getLib();
         if (!$lib) return null;
 
-        return $lib->request('/users/'.$strChannelId.'/videos', [], 'GET')['body'];
+        return $lib->request('/users/'.$strChannelId.'/videos', [
+            'page' => $intPage
+        ], 'GET')['body'];
     }
 
     public function getDownloadURL($strURL)

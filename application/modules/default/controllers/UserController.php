@@ -115,6 +115,9 @@ class UserController extends Chaplin_Controller_Action_Api
         if ($strPageToken) {
             $this->_helper->layout()->disableLayout();
             $this->_helper->viewRenderer('youtube-partial');
+        } else {
+            $this->view->strTitle = $this->view->ittVideos->items[0]->getSnippet()->channelTitle.
+                ' from YouTube - Chaplin';
         }
 
 		$strUsername = $this->_request->getParam('id', null);
@@ -122,20 +125,28 @@ class UserController extends Chaplin_Controller_Action_Api
         $serviceYouTube = Chaplin_Service::getInstance()->getYouTube();
 
 		$this->view->ittVideos = $serviceYouTube->getUserUploads($strUsername, $strPageToken);
-
-        $this->view->strTitle = $this->view->ittVideos->items[0]->getSnippet()->channelTitle.
-            ' from YouTube - Chaplin';
 	}
 
     public function vimeoAction()
 	{
+        $strPage = $this->_request->getQuery('page', 1);
+        if (1 < $strPage) {
+            $this->_helper->layout()->disableLayout();
+            $this->_helper->viewRenderer('vimeo-partial');
+        } else {
+            $this->view->strTitle = isset($this->view->ittVideos['data'][0])?
+                $this->view->ittVideos['data'][0]['user']['name'].
+                    ' from Vimeo - Chaplin':
+                'Videos from Vimeo - Chaplin';
+        }
+
+        $intPage = intval($strPage);
+
 		$strUsername = $this->_request->getParam('id', null);
 
         $serviceVimeo = Chaplin_Service::getInstance()->getVimeo();
 
-		$this->view->ittVideos = $serviceVimeo->getUserUploads($strUsername);
+		$this->view->ittVideos = $serviceVimeo->getUserUploads($strUsername, $intPage);
 
-        $this->view->strTitle = $this->view->ittVideos['data'][0]['user']['name'].
-            ' from Vimeo - Chaplin';
 	}
 }
