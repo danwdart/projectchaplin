@@ -24,7 +24,11 @@
 **/
 ?>
 <div class="content-header">
+    <?php if (isset($this->ittVideos->items[0])): ?>
     Videos for user <?php echo $this->ittVideos->items[0]->getSnippet()->channelTitle; ?>
+    <?php else: ?>
+    Videos
+    <?php endif; ?>
 </div>
 <div class="content-centre">
 <?php foreach($this->ittVideos->items as $videoEntry):?>
