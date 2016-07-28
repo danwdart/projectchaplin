@@ -46,7 +46,8 @@
 	?> by <a href="/user/vimeo/id/<?php echo $strUserUri; ?>"><?php echo $strName; ?></a>
 	</h3>
 	<br/>
-	<span class="text-sm"><?php echo str_replace("\n", '<br/>', $this->entryVideo['description']); ?></span>
+	<span class="text-sm"><?php echo str_replace("\n", '<br/>',
+        (new \Misd\Linkify\Linkify())->process($this->entryVideo['description'])); ?></span>
 	<br/>
 	<a class="btn btn-success" href="/video/importvimeo/id/<?php echo substr($this->entryVideo['uri'], 8);?>"><i class="fa fa-download"></i> Import</a>
 	<?php if ($this->isLocal) : ?>
