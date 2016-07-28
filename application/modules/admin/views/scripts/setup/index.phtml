@@ -17,6 +17,9 @@
 	$check4 = check($checksOkay, class_exists('AMQPConnection'), 'AMQP not found');
 	$check5 = check($checksOkay, "0" == exec('ffmpeg -version 2>&1; echo $?'), 'Failed: ffmpeg not found');
 	$check6 = check($checksOkay, "0" == exec('npm --version 2>&1; echo $?'), 'Failed: npm not found');
+    $check7 = check($checksOkay, is_writable(APPLICATION_PATH.'/../public/uploads'), 'Failed: public/uploads not writable');
+    $check8 = check($checksOkay, is_writable(APPLICATION_PATH.'/../temp'), 'Failed: temp not writable');
+    $check9 = check($checksOkay, is_writable(APPLICATION_PATH.'/../config'), 'Failed: config not writable');
 ?>
 <div class="widgetbox medium centre">
 	<div class="widgettitle">
@@ -61,6 +64,9 @@
 		<p><strong>AMQP extension (for encoding and importing batch jobs)</strong>: <?php echo $check4 ?></p>
 		<p><strong>Compatible encoder present</strong>: <?php echo $check5 ?></p>
 		<p><strong>Node.js and npm</strong>: <?php echo $check6 ?></p>
+        <p><strong>public/uploads directory writable</strong> <?php echo $check7 ?></p>
+        <p><strong>temp directory writable</strong> <?php echo $check8 ?></p>
+        <p><strong>config directory writable</strong> <?php echo $check9 ?></p>
 		<p></p>
 		<?php if ($checksOkay):?>
 			<p class="centre"><a href="#step2" class="switcher btn btn-success">Great! Let's continue!</a></p>

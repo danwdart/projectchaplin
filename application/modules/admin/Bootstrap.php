@@ -24,14 +24,6 @@
 **/
 class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 {
-    // Load the local models and forms
-    protected function _initModuleAutoloader()
-    {
-        $this->_resourceLoader = new Zend_Application_Module_Autoloader(array(
-            'namespace' => 'default',
-            'basePath'  => APPLICATION_PATH . '/modules/admin',
-        ));
-    }
     protected function _initAcl()
     {
         $acl = Zend_Registry::get('acl');

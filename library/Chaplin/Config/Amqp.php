@@ -34,9 +34,9 @@ class Chaplin_Config_Amqp
 
     protected function _getConfigFile()
     {
-        return realpath(APPLICATION_PATH.'/config/amqp.json');
+        return APPLICATION_PATH.'/config/amqp.json';
     }
-    
+
     public function getConfigArray()
     {
         return $this->_getValue($this->_zendConfig->exchanges, 'exchanges')->toArray();
