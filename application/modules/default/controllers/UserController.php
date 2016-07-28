@@ -111,13 +111,19 @@ class UserController extends Chaplin_Controller_Action_Api
 
 	public function youtubeAction()
 	{
+        $strPageToken = $this->_request->getQuery('pageToken', null);
+        if ($strPageToken) {
+            $this->_helper->layout()->disableLayout();
+            $this->_helper->viewRenderer('youtube-partial');
+        }
+
 		$strUsername = $this->_request->getParam('id', null);
 
         $serviceYouTube = Chaplin_Service::getInstance()->getYouTube();
 
-		$this->view->ittVideos = $serviceYouTube->getUserUploads($strUsername);
+		$this->view->ittVideos = $serviceYouTube->getUserUploads($strUsername, $strPageToken);
 
-        $this->view->strTitle = $this->view->ittVideos[0]->getSnippet()->channelTitle.
+        $this->view->strTitle = $this->view->ittVideos->items[0]->getSnippet()->channelTitle.
             ' from YouTube - Chaplin';
 	}
 
