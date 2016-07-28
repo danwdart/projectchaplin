@@ -163,6 +163,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
     protected function _initSmtp()
     {
+        // Don't initialise on setup - configs don't exist yet
+        if (0 === strpos($_SERVER['REQUEST_URI'], '/admin/setup')) return;
+
         $configSmtp = Chaplin_Config_Servers::getInstance();
         $arrSmtp = $configSmtp->getSmtpSettings();
         $transport = new Zend_Mail_Transport_Smtp(
@@ -177,7 +180,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         try {
             parent::_bootstrap($resource);
         } catch(Exception $e) {
-            echo '<h1>'.$e->getMessage().'</h1>';
+            echo '<pre>'.$e->getMessage().PHP_EOL.$e->getTraceAsString().'</pre>';
         }
     }
 
@@ -186,7 +189,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
        try {
            parent::run();
        } catch(Exception $e) {
-           echo '<h1>'.$e->getMessage().'</h1>';
+           echo '<pre>'.$e->getMessage().PHP_EOL.$e->getTraceAsString().'</pre>';
        }
     }
 }

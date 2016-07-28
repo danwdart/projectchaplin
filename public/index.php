@@ -43,9 +43,6 @@ if (!file_exists(APPLICATION_PATH.'/../config/chaplin.ini') &&
 	exit();
 }
 
-/** Zend_Application */
-require_once 'Zend/Application.php';
-
 // Create application, bootstrap, and run
 $application = new Zend_Application(
     APPLICATION_ENV,

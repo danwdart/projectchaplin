@@ -34,9 +34,9 @@ class Chaplin_Config_Gateways
 
     protected function _getConfigFile()
     {
-        return realpath(APPLICATION_PATH.'/config/gateways.ini');
+        return APPLICATION_PATH.'/config/gateways.ini';
     }
-    
+
     public function getDaoType($strGatewayType)
     {
         return $this->_zendConfig->gateways->$strGatewayType->type;
@@ -44,7 +44,7 @@ class Chaplin_Config_Gateways
 
     public function getDaoName($strGatewayType)
     {
-        return $this->_zendConfig->gateways->$strGatewayType->name;   
+        return $this->_zendConfig->gateways->$strGatewayType->name;
     }
 
     public function getParam($strGatewayType)

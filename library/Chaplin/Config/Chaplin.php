@@ -34,7 +34,7 @@ class Chaplin_Config_Chaplin
 
     protected function _getConfigFile()
     {
-        return realpath(APPLICATION_PATH.'/../config/chaplin.ini');
+        return APPLICATION_PATH.'/../config/chaplin.ini';
     }
 
     public function getLocale()

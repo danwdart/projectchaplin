@@ -34,9 +34,9 @@ class Chaplin_Config_Servers
 
     protected function _getConfigFile()
     {
-        return realpath(APPLICATION_PATH.'/../config/chaplin.ini');
+        return APPLICATION_PATH.'/../config/chaplin.ini';
     }
-    
+
     public function getRedisSettings()
     {
         return $this->_zendConfig->phpredis;
@@ -47,7 +47,7 @@ class Chaplin_Config_Servers
         return $this->_getValue(
             $this->_zendConfig->amqp,
             'amqp'
-        )->toArray();   
+        )->toArray();
     }
 
     public function getConfigConnectionRead()
@@ -57,7 +57,7 @@ class Chaplin_Config_Servers
             'amqp.servers.read'
         )->toArray();
     }
-    
+
     public function getConfigConnectionWrite()
     {
         return $this->_getValue(
@@ -71,7 +71,7 @@ class Chaplin_Config_Servers
         return $this->_getValue(
             $this->_zendConfig->smtp,
             'smtp'
-        )->toArray();      
+        )->toArray();
     }
 
     public function getSqlSettings()
@@ -79,7 +79,7 @@ class Chaplin_Config_Servers
         return $this->_getValue(
             $this->_zendConfig->sql,
             'sql'
-        );   
+        );
     }
 
     public function getMongoSettings()
