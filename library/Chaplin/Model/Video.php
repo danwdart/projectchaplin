@@ -22,6 +22,8 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
+use Misd\Linkify\Linkify;
+
 class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 {
     const FIELD_VIDEOID = 'VideoId';
@@ -164,7 +166,12 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
     public function getDescription()
     {
-        return $this->_getField(self::FIELD_DESCRIPTION, null);
+        return str_replace(
+            "\n", "<br/>",
+            (new Linkify())->process(
+                $this->_getField(self::FIELD_DESCRIPTION, null)
+            )
+        );
     }
 
     public function setDescription($strDescription)
