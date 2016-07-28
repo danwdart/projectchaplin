@@ -24,18 +24,22 @@
 **/
 class Chaplin_Service
 {
+    const LIFETIME_SECS = 1800;
+    
     public static function inject(Chaplin_Service $service)
     {
         self::$_instance = $service;
     }
 
     private static $_instance;
+
     public static function getInstance()
     {
         if (is_null(self::$_instance))
             self::$_instance   = new Chaplin_Service();
         return self::$_instance;
     }
+
     private function __construct() {}
     private function __clone() {}
 
@@ -45,7 +49,7 @@ class Chaplin_Service
         if (is_null($this->_zendCache)) {
             //@TODO - probably put this in a config file
             $frontendOptions = [
-                'lifetime' => null,
+                'lifetime' => self::LIFETIME_SECS,
                 'automatic_serialization' => true
             ];
             if (Zend_Registry::isRegistered(
