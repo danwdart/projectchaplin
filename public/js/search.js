@@ -38,9 +38,9 @@ $(function() {
             return $.getUrlVars()[name];
         }
     });
-    intSkip = 50;
-	$(window).scroll(function () {
-        if (0 < $(this).scrollTop() + $(this).innerHeight() - $('#content').innerHeight() - $('footer').height()) {
+
+    var intSkip = 50,
+    	moreYoutube = () =>{
             $.ajax({
                 url: '/search/youtube/?search='+$.getUrlVar('search')+'&limit=50&skip='+intSkip,
                 success: function(data) {
@@ -48,6 +48,5 @@ $(function() {
                     intSkip += 50;
                 }
             });
-        }
-    });
+        };
 });
