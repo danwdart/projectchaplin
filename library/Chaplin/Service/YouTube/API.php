@@ -26,42 +26,109 @@ class Chaplin_Service_YouTube_API
 {
     const LOCATION = '/../external/youtube-dl';
 
-    private $_strURL;
-    
-    public function __construct($strURL)
+    public function search($strSearchTerm, $page = 0, $intLimit = 50)
     {
-        $this->_strURL = $strURL;        
+        $configChaplin = Chaplin_Config_Chaplin::getInstance();
+
+        $client = new Google_Client();
+        $client->setDeveloperKey($configChaplin->getYouTubeAPIKey());
+
+        $youtube = new Google_Service_YouTube($client);
+
+        return $youtube->search->listSearch('id,snippet', [
+            'q' => $strSearchTerm,
+            //'pageToken' => $page,
+            'maxResults' => $intLimit,
+            'order' => 'relevance',
+            'videoLicense' => 'creativeCommon',
+            'type' => 'video',
+        ]);
     }
 
-    public function getDownloadURL()
+    public function getVideoById($strId)
     {
-        $strCommandLine = APPLICATION_PATH.self::LOCATION.' --prefer-free-formats -g -- '.escapeshellarg($this->_strURL);
+        $configChaplin = Chaplin_Config_Chaplin::getInstance();
+
+        $client = new Google_Client();
+        $client->setDeveloperKey($configChaplin->getYouTubeAPIKey());
+
+        $youtube = new Google_Service_YouTube($client);
+
+        $list = $youtube->videos->listVideos('id,snippet', [
+            'id' => $strId
+        ]);
+
+        return 0 < $list->pageInfo->totalResults ? $list->items[0] : null;
+    }
+
+    public function getUserProfile($strSearchTerm)
+    {
+        $configChaplin = Chaplin_Config_Chaplin::getInstance();
+
+        $client = new Google_Client();
+        $client->setDeveloperKey($configChaplin->getYouTubeAPIKey());
+
+        $youtube = new Google_Service_YouTube($client);
+
+        $list = $youtube->channels->listChannels('id,snippet', [
+            'forUsername' => $strSearchTerm
+        ]);
+
+        return 0 < $list->pageInfo->totalResults ? $list->items[0] : null;
+    }
+
+    public function getUserUploads($strChannelId, $strPageToken = null)
+    {
+        $configChaplin = Chaplin_Config_Chaplin::getInstance();
+
+        $client = new Google_Client();
+        $client->setDeveloperKey($configChaplin->getYouTubeAPIKey());
+
+        $youtube = new Google_Service_YouTube($client);
+
+        $arrRequest = [
+            'channelId' => $strChannelId,
+            'maxResults' => 50,
+            'order' => 'relevance',
+            'videoLicense' => 'creativeCommon',
+            'type' => 'video',
+        ];
+
+        if ($strPageToken)
+            $arrRequest['pageToken'] = $strPageToken;
+
+        return $youtube->search->listSearch('id,snippet', $arrRequest);
+    }
+
+    public function getDownloadURL($strURL)
+    {
+        $strCommandLine = APPLICATION_PATH.
+            self::LOCATION.
+            ' --prefer-free-formats -g -- '.
+            escapeshellarg($strURL);
         return exec($strCommandLine);
     }
-    
-    public function downloadVideo($strPathToSave)
+
+    public function downloadVideo($strURL, $strPathToSave)
     {
         $strCommandLine = APPLICATION_PATH.self::LOCATION.
             " --format=webm -o ".
-            escapeshellarg($strPathToSave."/%(id)s.%(ext)s")." -- ".escapeshellarg($this->_strURL).' 2>&1';
+            escapeshellarg($strPathToSave."/%(id)s.%(ext)s").
+            " -- ".escapeshellarg($strURL).
+            ' 2>&1';
         echo $strCommandLine.PHP_EOL;
         ob_flush();
         flush();
         system($strCommandLine);
     }
 
-    public function downloadThumbnail($strPathToSave)
+    public function downloadThumbnail($strVideoId, $strPathToSave)
     {
-        $yt = new Zend_Gdata_YouTube();
-        $entryVideo = $yt->getVideoEntry($this->_strURL);
+        $entryVideo = $this->getVideoById($strVideoId);
 
-        $strFilename = $strPathToSave.'/'.$entryVideo->getVideoId().'.webm.png';
+        $strFilename = $strPathToSave.'/'.$entryVideo->id.'.webm.png';
 
-        $arrThumbnails = $entryVideo->getVideoThumbnails();
-        if (!isset($arrThumbnails[0])) {
-            throw new Exception('No thumbnails?');
-        }
-        $strURL = $arrThumbnails[0]['url'];
+        $strURL =  $entryVideo->getSnippet()->thumbnails->high->url;
 
         $strImage = file_get_contents($strURL);
         file_put_contents($strFilename, $strImage);
@@ -69,28 +136,33 @@ class Chaplin_Service_YouTube_API
         return '/uploads/'.basename($strFilename);
     }
 
-    public function importVideo(Chaplin_Model_User $modelUser)
+    public function importVideo(Chaplin_Model_User $modelUser, $strURL)
     {
-        $strVideoId = $this->_strURL;
+        $strVideoId = $strURL;
 
-        $yt = new Zend_Gdata_YouTube();
-        $entryVideo = $yt->getVideoEntry($strVideoId);
+        $entryVideo = $this->getVideoById($strVideoId);
 
-        $strTitle = $entryVideo->getVideoTitle();
+        $strTitle = $entryVideo->getSnippet()->title;
+        $strDescription = $entryVideo->getSnippet()->description;
 
         $strPath = realpath(APPLICATION_PATH.'/../public/uploads');
         $strVideoFile = $strPath.'/'.$strVideoId.'.webm';
         $strRelaFile = '/uploads/'.$strVideoId.'.webm';
-        $strThumbnail = $this->downloadThumbnail($strPath);
-            
+        $strThumbnail = $this->downloadThumbnail($strVideoId, $strPath);
+
         $modelVideo = Chaplin_Model_Video::create(
             $modelUser,
             $strRelaFile,
             $strThumbnail,
-            $strTitle
+            $strTitle,
+            $strDescription,
+            '', // uploader
+            $strURL
         );
+        // All YouTube imports are CC-BY
+        $modelVideo->setLicence(Chaplin_Model_Video_Licence::ID_CCBY);
         $modelVideo->save();
-        
+
         // msg
         $modelYoutube = Chaplin_Model_Video_Youtube::create($modelVideo, $strVideoId);
         Chaplin_Gateway::getInstance()->getVideo_Youtube()->save($modelYoutube);

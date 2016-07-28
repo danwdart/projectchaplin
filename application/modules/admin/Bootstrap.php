@@ -26,29 +26,32 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 {
     // Load the local models and forms
     protected function _initModuleAutoloader()
-    {    
+    {
         $this->_resourceLoader = new Zend_Application_Module_Autoloader(array(
             'namespace' => 'default',
             'basePath'  => APPLICATION_PATH . '/modules/admin',
-        ));  
-    }    
+        ));
+    }
     protected function _initAcl()
-    {    
+    {
         $acl = Zend_Registry::get('acl');
-        {   
-            $acl->add(new Zend_Acl_Resource('admin/events')); 
-            $acl->add(new Zend_Acl_Resource('admin/import'));
-            $acl->add(new Zend_Acl_Resource('admin/node'));
-            $acl->add(new Zend_Acl_Resource('admin/nodestatus'));
-            $acl->add(new Zend_Acl_Resource('admin/error'));
-            $acl->add(new Zend_Acl_Resource('admin/user'));
-            
-            $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_MINION, 'admin/events');
-            $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/import');     
-            $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/node');
-            $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'admin/nodestatus');            
-            $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/error');
-            $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/user');
-        }
+
+        $acl->add(new Zend_Acl_Resource('admin/events'));
+        $acl->add(new Zend_Acl_Resource('admin/import'));
+        $acl->add(new Zend_Acl_Resource('admin/node'));
+        $acl->add(new Zend_Acl_Resource('admin/nodestatus'));
+        $acl->add(new Zend_Acl_Resource('admin/error'));
+        $acl->add(new Zend_Acl_Resource('admin/user'));
+        $acl->add(new Zend_Acl_Resource('admin/setup'));
+        $acl->add(new Zend_Acl_Resource('admin/daemons'));
+
+        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'admin/setup');
+        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_MINION, 'admin/events');
+        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/import');
+        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/daemons');
+        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/node');
+        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'admin/nodestatus');
+        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/error');
+        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/user');
     }
 }

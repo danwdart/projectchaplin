@@ -25,10 +25,12 @@
 ?>
 <h1><?php echo $this->video->getTitle();?></h1>
 <div id="videoarea">
-	<video id="video" class="clicktoplay fullscreen" controls src="<?php echo $this->video->getFilename().'?'.time();?>">
+    <video id="video" controls poster="<?php echo $this->video->getFilename().'.png?'.time();?>">
+        <source src="<?php echo $this->video->getFilename().'?'.time();?>"/>
 	</video>
 </div>
 <div id="infoarea">
+    <button class="infinite btn btn-primary"><i class="fa fa-refresh"></i> Loop</button>
 	<br/> <!-- TODO get user on here? -->
 	<br/>Uploaded by: <a href="<?php
 		echo $this->node->getRoot()

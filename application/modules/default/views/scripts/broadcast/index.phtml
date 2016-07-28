@@ -24,7 +24,7 @@
 **/
 ?>
 <div id="clients">
-    <video id="broadcast" class="fullscreen" autoplay></video>
+    <video id="broadcast" autoplay></video>
     <br/>
     <select class="effect">
         <option class="filter" value="none">-- Choose Effect --</option>
@@ -41,6 +41,6 @@
 </div>
 <div id="status"></div>
 <script src="<?php echo $this->scheme; ?>://<?php echo $_SERVER['HTTP_HOST']?>:1337/socket.io/socket.io.js"></script>
-<script src="/js/video.js"></script>   
+<script src="/js/video.js"></script>
 <script src="/js/broadcast.js"></script>
 <link rel="stylesheet" type="text/css" href="/css/broadcast.css"/>

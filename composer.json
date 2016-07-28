@@ -28,15 +28,26 @@
         {
             "type": "vcs",
             "url": "https://github.com/dandart/amqp"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/dandart/multiorm"
         }
     ],
     "require": {
         "zendframework/zendframework1": "dev-master",
         "dandart/amqp": "dev-master",
-        "mockery/mockery": "dev-master",
-        "hamcrest/hamcrest-php": "dev-master",
+        "dandart/multiorm": "dev-master",
         "mustache/mustache": "dev-master",
-        "dailymotion/sdk": "dev-master"
+        "dailymotion/sdk": "dev-master",
+        "robmorgan/phinx": "dev-master",
+        "zendframework/zendgdata": "^2.0",
+        "google/apiclient": "^2.0",
+        "vimeo/vimeo-api": "^1.2",
+        "misd/linkify": "^1.1"
+    },
+    "require-dev": {
+        "mockery/mockery": "dev-master"
     },
     "autoload": {
         "classmap": [

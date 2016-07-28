@@ -22,13 +22,13 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class Chaplin_Model_User_Credential extends Chaplin_Model_Abstract_Child
+class Chaplin_Model_User_Credential extends Chaplin_Model_Field_Collection
 {
     const FIELD_ServiceName = 'ServiceName';
     const FIELD_ServiceURL  = 'ServiceURL';
     const FIELD_AccessToken = 'AccessToken';
 
-    protected static $_arrFields = array(
+    protected $_arrFields = array(
         self::FIELD_ServiceName => 'Chaplin_Model_Field_Field',
         self::FIELD_ServiceURL  => 'Chaplin_Model_Field_Field',
         self::FIELD_AccessToken => 'Chaplin_Model_Field_Field'

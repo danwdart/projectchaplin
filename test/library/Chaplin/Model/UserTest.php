@@ -31,7 +31,7 @@ class Chaplin_Model_UserTest extends Zend_Test_PHPUnit_ControllerTestCase
         $modelUser = Chaplin_Model_User::create($strUsername, $strPassword);
         $this->assertEquals(strtolower($strUsername), $modelUser->getUsername());
     }
-    
+
     public function testGetSetNick()
     {
         $strUsername = 'Username';

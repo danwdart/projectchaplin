@@ -33,10 +33,10 @@ $vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
 
 <h1><?php echo $this->video->getTitle();?></h1>
 <div id="videoarea">
-	<video id="video" controls class="clicktoplay fullscreen"
-		src="<?php echo $this->video->getFilename().'?'.time();?>">
+	<video id="video" controls poster="<?php echo $this->video->getFilename().'.png?'.time();?>">
+        <source src="<?php echo $this->video->getFilename().'?'.time();?>"/>
 	</video>
-	<span id="fun">
+	<div id="fun">
 		<button id="slower">&laquo; Slow Motion</button>
 		<button id="normalspeed">Normal Speed</button>
 		<button id="faster">Fast Forward &raquo;</button>
@@ -54,19 +54,26 @@ $vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
 		    <option class="filter" value="br">Barrel Roll!</option>
 		    <option class="filter" value="drunk">Drunk!</option>
 		</select>
-	</span>
+	</div>
 </div>
 <div id="infoarea">
+    <button class="infinite btn btn-primary"><i class="fa fa-refresh"></i> Loop</button>
 	<br/>
 	<br/>Uploaded by: <a href="/user/<?php echo $this->video->getUsername(); ?>"><?php echo $this->video->getUsername(); ?></a>
 	<br/>Uploaded on <?php echo date('d/m/Y H:i', $this->video->getTimeCreated());?> (<?php echo $this->video->getTimeAgo(); ?>)
-	<br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
+    <?php if ($this->video->getSource()): ?>
+    <br/>Original source: <a href="https://youtube.com/watch?v=<?php echo $this->video->getSource(); ?>" target="_blank">Source Video</a>
+    <?php endif; ?>
+    <?php if ($this->video->getUploader()): ?>
+    <br/>Original author: <?php echo $this->video->getUploader(); ?>
+    <?php endif; ?>
+    <br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
 	<br/><?php echo $this->video->getDescription(); ?>
 	<p>Short URL: <input type="text" disabled value="<?php echo $this->short; ?>"/></p>
 	<p><strong>&uparrow; <?php echo $this->video->getVotesUp(); ?> / <?php echo $this->video->getVotesDown(); ?> &downarrow;</strong></p>
 	<p><?php echo $this->twittershare; ?></p>
 	<br/>
-	<?php if(Chaplin_Auth::getInstance()->hasIdentity()): 
+	<?php if(Chaplin_Auth::getInstance()->hasIdentity()):
 	if ('1' === $this->video->getYourVote()) :
 	echo '<i class="fa fa-arrow-up"></i>';
 	else:?>
@@ -82,11 +89,11 @@ $vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
 	<?php
 		if ($this->video->isMine()):
 	?>
-	    <a class="btn btn-danger" href="/video/delete/id/<?php echo $this->video->getVideoId();?>"><i class="fa fa-times-circle"></i> Delete</a> 
+	    <a class="btn btn-danger" href="/video/delete/id/<?php echo $this->video->getVideoId();?>"><i class="fa fa-times-circle"></i> Delete</a>
 	    <a class="btn btn-info" href="/video/edit/id/<?php echo $this->video->getVideoId();?>"><i class="fa fa-edit"></i> Edit</a>
 	<?php endif;?>
 	<br/>
-	<?php if(Chaplin_Auth::getInstance()->hasIdentity()): echo $this->formComment; else: 
+	<?php if(Chaplin_Auth::getInstance()->hasIdentity()): echo $this->formComment; else:
 	echo 'Login above to comment.'; endif;  ?>
 	<br/>
 	<div id="comments" rel="/video/comments/id/<?php echo $this->video->getVideoId();?>">
@@ -94,10 +101,10 @@ $vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
 		<p>
 			<i>
 				<?php echo $modelComment->getUsername();?>
-			</i> said: 
+			</i> said:
 			<?php echo $modelComment->getComment();?>
 			<?php if ($modelComment->isMine()): ?>
-				<a class="ajax" href="/video/deletecomment/id/<?php echo $modelComment->getCommentId(); ?>" 
+				<a class="ajax" href="/video/deletecomment/id/<?php echo $modelComment->getCommentId(); ?>"
 					rel="comments">
 				(X)
 				</a>

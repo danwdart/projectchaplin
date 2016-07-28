@@ -22,9 +22,211 @@
  * @link       https://github.com/dandart/projectchaplin
 **/
 
-@import
 * {
-  outline: none;
+	padding:0;
+	margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.ok {
+    color:green;
+}
+
+.warning {
+    color: orange;
+}
+
+.error {
+    color: red;
+}
+
+li {
+    margin-left: 20px;
+}
+
+html, body {
+    height:100%;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+#contentwrapper {
+    position:relative;
+    height:100%;
+    width:100%;
+}
+
+header {
+	height: 25px;
+	border-width: 0 0 1px 0;
+	padding: 5px;
+}
+
+a {
+	color: #555;
+	font-weight: 700;
+	text-decoration: none;
+	font-size: 11pt;
+}
+
+a:hover {
+	color: #666;
+	text-decoration: underline;
+}
+
+header {
+    z-index:2;
+    background-color: silver;
+    height:40px;
+    padding: 0 2px;
+    position:fixed;
+    width:100%;
+    top: 0px;
+}
+
+header .left {
+	width: 40%;
+	text-align:left;
+	float:left;
+    line-height:35px;
+}
+
+header .middle {
+	width: 18%;
+	margin: 0 auto;
+	float:left;
+	text-align:center;
+}
+
+header .middle h2, header .middle i {
+    font-size: 18pt;
+    line-height:35px;
+    padding: 0;
+    margin: 0;
+    font-weight:700;
+}
+
+header .middle a:hover {
+    cursor: default;
+    text-decoration: none;
+}
+
+header .right {
+	width: 40%;
+	text-align: right;
+	float:right;
+    display:inline;
+    line-height: 35px;
+}
+
+header .right input, header .right form {
+    display:inline;
+}
+
+#search {
+    text-align:left;
+    max-width: 100%;
+    margin-right:2px;
+}
+
+main {
+    padding: 10px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+main h1 {
+    margin: 10px auto;
+    text-align:center;
+    font-weight: 200;
+}
+
+.content-header {
+    text-align:center;
+    font-size: 24pt;
+    font-weight: 100;
+}
+
+.content-centre {
+    width: 98%;
+    margin: 0 auto;
+    text-align:center;
+}
+
+.thumb-wrapper {
+    display:inline-block;
+    position:relative;
+    vertical-align:top;
+    padding: 0px;
+    margin: 5px;
+    height: 160px;
+    width: 160px;
+}
+
+.thumb-img {
+    height: 120px;
+    background-color: black;
+}
+
+.thumb-img img {
+    width: 160px;
+    padding: auto;
+    horizontal-align:middle;
+    max-width:240px;
+    max-height: 180px;
+}
+
+.thumb-wrapper p {
+    background-color: grey;
+    font-size: 9pt;
+    text-align: center;
+    color: white;
+    padding:5px;
+    font-weight: 700;
+    width: 100%;
+    margin: 2px 0px;
+}
+
+.footerpush {
+    height: 35px;
+    clear:both;
+}
+
+footer {
+    vertical-align: middle;
+	width:100%;
+    background-color: white;
+	height: 30px;
+    position:fixed;
+    padding:2px;
+    bottom:0;
+    left:0;
+	text-align: center;
+	font-size: 10pt;
+}
+
+#infoarea {
+    padding: 5px;
+    width: 720px;
+    margin: 0 auto;
+}
+
+#videoarea {
+    text-align: center;
+}
+
+#video {
+    width: 720px;
+    text-align: center;
+    border: 5px outset;
+}
+
+#video::-webkit-media-controls-panel {
+    -webkit-appearance: none;
+    outline: none;
 }
 body {
   background: #ffffff;
@@ -32,25 +234,22 @@ body {
   padding: 0px;
 }
 body #contentwrapper {
-  padding: 0px 10px;
-  padding-top: 60px;
-  max-width: 1024px;
-  margin: 0 auto;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+    padding: 0px 10px;
+    padding-top: 60px;
+    max-width: 1024px;
+    margin: 0 auto;
 }
 body #contentwrapper header {
-  width: 100%;
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  height: 60px;
-  background: #f0f0f0;
-  color: #000;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid #dedede;
-  z-index: 99999;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 60px;
+    background: #f0f0f0;
+    color: #000;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #dedede;
+    z-index: 99999;
 }
 body #contentwrapper header .wrap {
   margin: 0 auto;
@@ -222,8 +421,6 @@ body #contentwrapper main .content-header {
   font-family: 'Proxima Nova', 'Helvetica', Arial, sans-serif;
   font-weight: 400;
   font-size: 24px;
-  padding: 10px 0px;
-  padding-top: 30px;
 }
 body #contentwrapper main .content-centre {
   text-align: left;
@@ -559,30 +756,39 @@ form.fileimport div input[type="checkbox"] {
 }
 
 .none {
+    filter: none;
     -webkit-filter: none;
 }
 .blur {
+    filter: blur(3px);
     -webkit-filter: blur(3px);
 }
 .gray {
+    filter: grayscale(1);
     -webkit-filter: grayscale(1);
 }
 .sepia {
+    filter: sepia(1);
     -webkit-filter: sepia(1);
 }
 .bright {
+    filter: brightness(0.5);
     -webkit-filter: brightness(0.5);
 }
 .highcontrast {
+    filter: contrast(5);
     -webkit-filter: contrast(5);
 }
 .colour {
+    filter: hue-rotate(180deg);
     -webkit-filter: hue-rotate(180deg);
 }
 .invert {
+    filter: invert(1);
     -webkit-filter: invert(1);
 }
 .saturate {
+    filter: saturate(5);
     -webkit-filter: saturate(5);
 }
 
@@ -604,7 +810,7 @@ form.fileimport div input[type="checkbox"] {
     }
     to {
         margin: 0 0 0 200px;
-        transform: rotate(-30deg);   
+        transform: rotate(-30deg);
     }
 }
 
@@ -615,7 +821,7 @@ form.fileimport div input[type="checkbox"] {
     }
     to {
         margin: 0 0 0 200px;
-        -webkit-transform: rotate(-30deg);   
+        -webkit-transform: rotate(-30deg);
     }
 }
 
@@ -694,7 +900,7 @@ form.fileimport div input[type="checkbox"] {
 #fun {
     display:none;
 }
-.br {   
+.br {
     animation:br;
     animation-duration:2s;
     -webkit-animation:br;
@@ -768,4 +974,8 @@ to {-webkit-transform: rotate(360deg);}
     header input {
         width: 40px;
     }
+}
+
+progress {
+    display: none;
 }
