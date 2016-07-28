@@ -114,7 +114,7 @@ class Chaplin_Model_Message
         $strTemplateHtml = file_get_contents($strPathToTemplateHtml);
         $strTemplateText = file_get_contents($strPathToTemplateText);
         $m = new Mustache_Engine;
-        
+
         $strMessageHtml = $m->render(
             $strTemplateHtml,
             $this->_getField(self::FIELD_PARAMS, array())
@@ -136,7 +136,7 @@ class Chaplin_Model_Message
     }
 
     abstract public function getType();
-    
+
     public function getRoutingKey()
     {
         return 'message.'.
