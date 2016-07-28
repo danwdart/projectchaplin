@@ -73,8 +73,9 @@ class Chaplin_Model_Video_Vimeo
         try {
             Chaplin_Gateway::getEmail()
                 ->videoFinished($modelVideo);
+            echo '"Video Finished" email successfully sent.'.PHP_EOL;
         } catch (Exception $e) {
-            echo 'Video Finished Email could not be sent.';
+            echo '"Video Finished" email could not be sent because '.$e->getMessage().PHP_EOL.$e->getTraceAsString();
             ob_flush();
             flush();
         }

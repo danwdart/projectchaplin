@@ -68,7 +68,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ),
             Chaplin_Model_User_Helper_UserType::TYPE_MINION
         );
-        
+
         $this->bootstrap('frontController');
         $this->frontController->registerPlugin(new Chaplin_Controller_Plugin_Acl($acl));
         Zend_View_Helper_Navigation_HelperAbstract::setDefaultAcl($acl);
@@ -82,13 +82,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Controller_Action_HelperBroker::addPrefix('Chaplin_Controller_Action_Helper');
         $this->frontController->registerPlugin(new Chaplin_Controller_Plugin_Api());
     }
-    
+
     protected function _initIniValues()
     {
         ini_set('post_max_size', '2000M');
         ini_set('upload_max_filesize', '2000M');
     }
-    
+
     protected function _initRoutes()
     {
         $router = Zend_Controller_Front::getInstance()->getRouter();
@@ -138,7 +138,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             )
         );
         $router->addRoute('logout', $route);
-        
+
         $route = new Zend_Controller_Router_Route_Static(
             'userinfo',
             array(
@@ -148,7 +148,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         );
         $router->addRoute('userinfo', $route);
     }
-    
+
     protected function _initSession()
     {
         $configSessions = Chaplin_Config_Sessions::getInstance();
@@ -161,6 +161,17 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Session::start();
     }
 
+    protected function _initSmtp()
+    {
+        $configSmtp = Chaplin_Config_Servers::getInstance();
+        $arrSmtp = $configSmtp->getSmtpSettings();
+        $transport = new Zend_Mail_Transport_Smtp(
+            $arrSmtp['server']['host'],
+            $arrSmtp['server']['options']
+        );
+        Zend_Mail::setDefaultTransport($transport);
+    }
+
     protected function _bootstrap($resource = null)
     {
         try {
@@ -168,7 +179,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         } catch(Exception $e) {
             echo '<h1>'.$e->getMessage().'</h1>';
         }
-    } 
+    }
 
     public function run()
     {
