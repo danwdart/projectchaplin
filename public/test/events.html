@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<h1>This is a page.</h1>
+<h2>Who'd have thought it?</h2>
+<textarea style="position: fixed; top: 130px; left: 20px; height: 300px; width: 300px"></textarea>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+<p>Some text to scroll.</p>
+
+<script>
+var theEvts = [],
+	evts = [],
+	where = null;
+for (i in window) {
+	var evt = i;
+	if (0 == evt.indexOf('on')
+		&& -1 === evt.indexOf('device')
+		) {
+		theEvts.push(evt.substring(2));
+	}
+}
+for (i in theEvts) {
+	var evtName = theEvts[i],
+		fn = function(e) {
+			evts.push(e.type);
+			if (null != where) {
+				where.value = evts.join('\n');
+				where.scrollTop = where.scrollHeight;
+			}
+		};
+	window.addEventListener(evtName, fn);
+}
+window.addEventListener('DOMContentLoaded', function() {
+	where = document.querySelector('textarea');
+	where.value = evts.join('\n');
+	where.scrollTop = where.scrollHeight;
+});
+</script>
+</html>

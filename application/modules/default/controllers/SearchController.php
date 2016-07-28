@@ -22,7 +22,8 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class SearchController extends Chaplin_Controller_Action_Api    
+
+class SearchController extends Chaplin_Controller_Action_Api
 {
     public function indexAction()
     {
@@ -53,37 +54,36 @@ class SearchController extends Chaplin_Controller_Action_Api
 
         $ittVideos = Chaplin_Gateway::getInstance()
             ->getVideo()
-            ->getBySearchTerms($strSearchTerm);        
+            ->getBySearchTerms($strSearchTerm);
 
         if ($this->_isAPICall()) {
             return $this->view->assign($ittVideos->toArray());
         }
-        
+
         $this->view->assign('strSearchTerm', $strSearchTerm);
         $this->view->assign('ittVideos', $ittVideos);
 
         // Retrieve Youtube results
+        $service = Chaplin_Service::getInstance();
 
-        $yt = new Zend_Gdata_YouTube();
-        $yt->setMajorProtocolVersion(2);
-        $query = $yt->newVideoQuery();
-        $query->videoQuery = urlencode($strSearchTerm);
-        $query->startIndex = 0;
-        $query->maxResults = 50;
-        $query->orderBy = 'relevance';
+        $serviceYouTube = $service->getYouTube();
+        $serviceVimeo = $service->getVimeo();
 
-        try {
-            $this->view->ytUser = $yt->getUserProfile($strSearchTerm);
-        } catch (Exception $e) {}
+        $ytUser = $serviceYouTube->getUserProfile($strSearchTerm);
+        $videoFeed = $serviceYouTube->search($strSearchTerm);
+
+        $vimeoFeed = $serviceVimeo->search($strSearchTerm);
+
+        $vimeoUser = $serviceVimeo->getUserProfile($strSearchTerm);
+
+        $this->view->vimeoUser = $vimeoUser;
+        $this->view->ytUser = $ytUser;
 
         //$dm = new Dailymotion();
         //$result = $dm->get('/search/'.urlencode($strSearchTerm));
         //die(var_dump($result));
-        try {
-            $this->view->videoFeed = $yt->getVideoFeed($query);
-        } catch (Exception $e) {
-            $this->view->videoFeed = [];
-        }
+        $this->view->videoFeed = $videoFeed;
+        $this->view->vimeoFeed = $vimeoFeed;
     }
 
     public function youtubeAction()
@@ -100,17 +100,9 @@ class SearchController extends Chaplin_Controller_Action_Api
 
         // Retrieve Youtube results
 
-        $yt = new Zend_Gdata_YouTube();
-        $query = $yt->newVideoQuery();
-        $query->videoQuery = urlencode($strSearchTerm);
-        $query->startIndex = (is_null($intSkip))?0:(int)$intSkip;
-        $query->maxResults = (is_null($intLimit))?50:(int)$intLimit;
-        $query->orderBy = 'relevance';
-        try {
-            $this->view->videoFeed = $yt->getVideoFeed($query);
-        } catch (Zend_Gdata_App_HttpException $e) {
-            $this->view->videoFeed = [];
-        }
+        $serviceYouTube = Chaplin_Service::getInstance()->getYouTube();
+        $videoFeed = $serviceYouTube->search($strSearchTerm, $intSkip, $intLimit);
+
+        $this->view->videoFeed = $videoFeed;
     }
 }
-

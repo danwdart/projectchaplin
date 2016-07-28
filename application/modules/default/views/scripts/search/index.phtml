@@ -28,50 +28,72 @@
 </div>
 <div class="content-centre">
 <?php foreach($this->ittVideos as $modelVideo):?>
-<a href="/video/watch/id/<?php echo $modelVideo->getVideoId();?>">
-<div class="thumb-wrapper">
-<div class="thumb-img">
-    <img src="<?php echo htmlentities($modelVideo->getThumbnail());?>" alt="View Video"/>
+<div class="video">
+	<a href="/video/watch/id/<?php echo $modelVideo->getVideoId();?>">
+		<div class="thumb-wrapper">
+    		<img class="thumb-img" src="<?php echo htmlentities($modelVideo->getThumbnail());?>" alt="View Video"/>
+		</div>
+		<p><?php echo $modelVideo->getShortTitle();?></p>
+	</a>
 </div>
-<p><?php echo $modelVideo->getShortTitle();?></p>
-</div>
-</a>
 <?php endforeach;?>
 </div>
 <div class="clearfix"></div>
-<br/>
-
 <?php if ($this->ytUser) : ?>
-	<h2>Found YouTube user <?php echo $this->strSearchTerm; ?></h2>
+	<h2>Found YouTube user <?php echo $this->ytUser->getSnippet()->title; ?></h2>
 	<div class="content-centre">
-		<a href="/user/youtube/id/<?php echo $this->strSearchTerm; ?>">
-			<div class="thumb-wrapper">
-				<div class="thumb-img">
-    				<img src="<?php echo htmlentities($this->ytUser->getThumbnail()->getUrl());?>" alt="View User"/>
-				</div>
-				<p><?php echo $this->ytUser->getUsername();?></p>
-			</div>
-		</a>
+		<div class="video">
+			<a href="/user/youtube/id/<?php echo $this->ytUser->id; ?>">
+				<div class="thumb-wrapper">
+	    			<img class="thumb-img" src="<?php echo $this->ytUser->getSnippet()->thumbnails->high->url;?>" alt="View User"/>
+	    		</div>
+				<p><?php echo $this->ytUser->getSnippet()->title;?></p>
+			</a>
+		</div>
 	</div>
 	<div class="clearfix"></div>
 <?php endif; ?>
-<rr/>
+<?php if ($this->vimeoUser) : ?>
+	<h2>Found Vimeo user <?php echo $this->vimeoUser['name']; ?></h2>
+	<div class="content-centre">
+		<div class="video">
+			<a href="/user/vimeo/id/<?php echo substr($this->vimeoUser['uri'], 8); ?>">
+				<div class="thumb-wrapper">
+	    			<img class="thumb-img" src="" alt="View User"/>
+	    		</div>
+				<p><?php echo $this->vimeoUser['name'];?></p>
+			</a>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+<?php endif; ?>
 <h2>YouTube results for: <?php echo $this->strSearchTerm; ?></h2>
 <div class="content-centre" id="youtubevids">
-<?php foreach($this->videoFeed as $ytVideo):?>
-<a href="/video/watchyoutube/id/<?php echo $ytVideo->getVideoId(); ?>">
-<div class="thumb-wrapper">
-<?php
-$arrThumbnails = $ytVideo->getVideoThumbnails();
-if (isset($arrThumbnails[0])) :?>
-<div class="thumb-img">
-    <img src="<?php echo htmlentities($arrThumbnails[0]['url']);?>" alt="View Video"/>
+<?php foreach($this->videoFeed->items as $ytVideo): ?>
+<div class="video">
+	<a href="/video/watchyoutube/id/<?php echo $ytVideo->getId()->videoId; ?>">
+		<div class="thumb-wrapper">
+    		<img class="thumb-img" src="<?php echo htmlentities($ytVideo->getSnippet()->getThumbnails()->high->url);?>" alt="View Video"/>
+		</div>
+		<p><?php echo $ytVideo->getSnippet()->getTitle();?></p>
+	</a>
 </div>
-<?php endif;?>
-<p><?php echo $ytVideo->getVideoTitle();?></p>
-</div>
-</a>
 <?php endforeach;?>
-
+</div>
+<div class="clearfix"></div>
+<h2>Vimeo results for: <?php echo $this->strSearchTerm; ?></h2>
+<div class="content-centre" id="youtubevids">
+<?php if (isset($this->vimeoFeed['data'])):
+foreach($this->vimeoFeed['data'] as $arrVideo): ?>
+<div class="video">
+	<a href="/video/watchvimeo/id/<?php echo substr($arrVideo['uri'], 8); ?>">
+		<div class="thumb-wrapper">
+    		<img class="thumb-img" src="<?php echo htmlentities($arrVideo['pictures']['sizes'][3]['link']);?>" alt="View Video"/>
+		</div>
+		<p><?php echo $arrVideo['name'];?></p>
+	</a>
+</div>
+<?php endforeach;
+endif;?>
 </div>
 <script src="/js/search.js"></script>

@@ -23,16 +23,16 @@
  * @link       https://github.com/dandart/projectchaplin
 **/
 foreach($this->videoFeed as $ytVideo):?>
+<div class="video">
 <a href="/video/watchyoutube/id/<?php echo $ytVideo->getVideoId(); ?>">
 <div class="thumb-wrapper">
 <?php
 $arrThumbnails = $ytVideo->getVideoThumbnails();
 if (isset($arrThumbnails[0])) :?>
-<div class="thumb-img">
-    <img src="<?php echo htmlentities($arrThumbnails[0]['url']);?>" alt="View Video"/>
-</div>
+    <img class="thumb-img" src="<?php echo htmlentities($arrThumbnails[0]['url']);?>" alt="View Video"/>
 <?php endif;?>
-<p><?php echo $ytVideo->getVideoTitle();?></p>
 </div>
+<p><?php echo $ytVideo->getVideoTitle();?></p>
 </a>
+</div>
 <?php endforeach;?>

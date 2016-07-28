@@ -22,6 +22,8 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
+use Misd\Linkify\Linkify;
+
 class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 {
     const FIELD_VIDEOID = 'VideoId';
@@ -31,6 +33,8 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     const FIELD_THUMBNAIL = 'Thumbnail';
     const FIELD_TITLE = 'Title';
     const FIELD_DESCRIPTION = 'Description';
+    const FIELD_UPLOADER = 'Uploader';
+    const FIELD_SOURCE = 'Source';
     const FIELD_LICENCE = 'Licence';
     const FIELD_LENGTH = 'Length';
     const FIELD_WIDTH = 'Width';
@@ -58,6 +62,8 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         self::FIELD_THUMBNAIL       => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_TITLE           => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_DESCRIPTION     => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_UPLOADER        => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_SOURCE          => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_LICENCE         => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_LENGTH          => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_WIDTH           => ['Class' => 'Chaplin_Model_Field_Field'],
@@ -82,7 +88,10 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         Chaplin_Model_User $modelUser,
         $strFilename, // form element?
         $strThumbURL,
-        $strTitle
+        $strTitle,
+        $strDescription,
+        $strUploader,
+        $strSource
     ) {
         $video = new self();
         $video->_bIsNew = true;
@@ -93,6 +102,9 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         $video->_setField(self::FIELD_THUMBNAIL, $strThumbURL);
         $video->_setField(self::FIELD_TITLE, $strTitle);
         $video->_setField(self::FIELD_PRIVACY, Chaplin_Model_Video_Privacy::ID_PUBLIC);
+        $video->_setField(self::FIELD_DESCRIPTION, $strDescription);
+        $video->_setField(self::FIELD_UPLOADER, $strUploader);
+        $video->_setField(self::FIELD_SOURCE, $strSource);
         return $video;
     }
 
@@ -121,27 +133,25 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
     public function getShortTitle()
     {
-        return 25 > strlen($this->getTitle()) ?
-            $this->getTitle():
-            substr($this->getTitle(), 0, 25).'...';
+        return $this->getTitle();
     }
 
     public function getFilename()
     {
         return $this->_strURLPrefix.$this->_getField(self::FIELD_FILENAME, null);
     }
-    
+
     public function setFilename($strFilename)
     {
         return $this->_setField(self::FIELD_FILENAME, $strFilename);
     }
-    
+
     public function getFilenameRoot()
     {
         $arrPathInfo = pathinfo($this->getFilename());
         return $arrPathInfo['filename'];
     }
-    
+
     public function getSuggestedTitle()
     {
         return ('' == $this->getTitle())?
@@ -153,20 +163,40 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     {
         return $this->_strURLPrefix.$this->_getField(self::FIELD_THUMBNAIL, null);
     }
-    
+
     public function getDescription()
     {
-        return $this->_getField(self::FIELD_DESCRIPTION, null);
+        return str_replace(
+            "\n", "<br/>",
+            (new Linkify())->process(
+                $this->_getField(self::FIELD_DESCRIPTION, null)
+            )
+        );
     }
-    
+
     public function setDescription($strDescription)
     {
         return $this->_setField(self::FIELD_DESCRIPTION, $strDescription);
     }
 
+    public function getSource()
+    {
+        return $this->_getField(self::FIELD_SOURCE, null);
+    }
+
+    public function getUploader()
+    {
+        return $this->_getField(self::FIELD_UPLOADER, null);
+    }
+
     public function getComments()
     {
         return $this->_getField(self::CHILD_ASSOC_COMMENTS, array());
+    }
+
+    public function setLicence($strLicence)
+    {
+        return $this->_setField(self::FIELD_LICENCE, $strLicence);
     }
 
     public function getLicenceId()

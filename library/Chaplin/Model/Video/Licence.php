@@ -70,6 +70,11 @@ class Chaplin_Model_Video_Licence
 		return $arrOut;
 	}
 
+    public static function createWithVimeoId($id)
+    {
+        return new self('cc'.(is_null($id)?'0':str_replace('-', '', $id)));
+    }
+
 	public function __construct($strId)
 	{
 		if (!isset(self::$_arrInfo[$strId])) {
@@ -78,6 +83,11 @@ class Chaplin_Model_Video_Licence
 
 		$this->_strId = $strId;
 	}
+
+    public function getId()
+    {
+        return $this->_strId;
+    }
 
 	public function getText()
 	{

@@ -22,7 +22,7 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-require '../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 set_time_limit(0);
 
@@ -72,7 +72,7 @@ $front->registerPlugin($errorHandler, 100);
 $error = $front->getPlugin('Zend_Controller_Plugin_ErrorHandler');
 $error->setErrorHandler(
     array(
-        'controller'	=> 'error',
+        'controller'	=> 'clierror',
         'action'		=> 'error'
     )
 );

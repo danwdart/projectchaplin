@@ -37,6 +37,12 @@ defined('APPLICATION_PATH')
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
+if (!file_exists(APPLICATION_PATH.'/../config/chaplin.ini') &&
+	(0 !== strpos($_SERVER['REQUEST_URI'], '/admin/setup'))) {
+	header('Location: /admin/setup');
+	exit();
+}
+
 /** Zend_Application */
 require_once 'Zend/Application.php';
 

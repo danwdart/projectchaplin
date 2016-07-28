@@ -38,7 +38,7 @@ class Admin_ImportController extends Zend_Controller_Action
 		}
 
 		if(!$form->isValid($this->_request->getPost())) {
-			return $this->view->assign('form', $form);	
+			return $this->view->assign('form', $form);
 		}
 
 		$strDirectory = $form->Directory->getValue();
@@ -74,45 +74,47 @@ class Admin_ImportController extends Zend_Controller_Action
 
 
             $strPathToThumb = $strFilename.'.png';
-            
+
             $strRelaFile = basename($strFilename);
-            
+
             $strPath = realpath(APPLICATION_PATH.'/../public/uploads');
             $strFullStoredPath = $strPath.'/'.$strRelaFile;
 
 
             copy($strFilename, $strFullStoredPath);
-       
+
 
             $strRelaThumb = basename($strPathToThumb);
-            
+
             $arrPathInfo = pathinfo($strFilename);
             $strTitle = $arrPathInfo['filename'];
-            
+
             $strRelaPath = '/uploads/';
-            
+
             $ret = 0;
-                
+
             $strError = Chaplin_Service::getInstance()
                 ->getEncoder()
                 ->getThumbnail($strFilename, $strPathToThumb, $ret);
             if(0 != $ret) {
                 die(var_dump($strError));
             }
-            
+
             // Put this somewhere else
             //unlink($strFilename);
-            
+
             $modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser();
-            
+
             $modelVideo = Chaplin_Model_Video::create(
                 $modelUser,
                 $strRelaPath.$strRelaFile,
                 $strRelaPath.$strRelaThumb,
-                $strTitle
+                $strTitle,
+                '',
+                ''
             );
             $modelVideo->save();
-            
+
             $modelConvert = Chaplin_Model_Video_Convert::create($modelVideo);
             Chaplin_Gateway::getInstance()->getVideo_Convert()->save($modelConvert);
 		}

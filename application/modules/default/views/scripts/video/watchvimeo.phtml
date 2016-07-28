@@ -1,0 +1,60 @@
+<?php
+/**
+ * This file is part of Project Chaplin.
+ *
+ * Project Chaplin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Project Chaplin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @package    Project Chaplin
+ * @author     Dan Dart
+ * @copyright  2012-2013 Project Chaplin
+ * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version    git
+ * @link       https://github.com/dandart/projectchaplin
+**/
+?>
+<h1><?php echo $this->entryVideo['name'];?></h1>
+<div id="videoarea">
+    <iframe id="video"
+        src="https://player.vimeo.com/video/<?php
+            echo substr($this->entryVideo['uri'], 8);
+        ?>?byline=0&portrait=0"
+        width="720"
+        height="405"
+        frameborder="0"
+        webkitallowfullscreen
+        mozallowfullscreen
+        allowfullscreen
+    >
+    </iframe>
+</div>
+<div id="infoarea">
+	<h3>Uploaded on <?php echo date('d/m/Y H:i', strtotime($this->entryVideo['created_time']));
+		$author = $this->entryVideo['user']['name'];
+		$strUserUri = substr($this->entryVideo['user']['uri'], 7);
+		$strName =  $this->entryVideo['user']['name'];
+	?> by <a href="/user/vimeo/id/<?php echo $strUserUri; ?>"><?php echo $strName; ?></a>
+	</h3>
+	<br/>
+	<span class="text-sm"><?php echo str_replace("\n", '<br/>',
+        (new \Misd\Linkify\Linkify())->process($this->entryVideo['description'])); ?></span>
+	<br/>
+	<a class="btn btn-success" href="/video/importvimeo/id/<?php echo substr($this->entryVideo['uri'], 8);?>"><i class="fa fa-download"></i> Import</a>
+	<?php if ($this->isLocal) : ?>
+	<a class="btn btn-primary" href="<?php echo $this->videoURL;?>"><i class="fa fa-download"></i> Download</a>
+	<?php endif; ?>
+	<br/>
+	<?php if(Chaplin_Auth::getInstance()->hasIdentity()): echo $this->formComment; else:
+	echo 'Login above to comment.'; endif;  ?>
+</div>
+<script src="/js/video.js"></script>

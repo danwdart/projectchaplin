@@ -43,7 +43,7 @@ class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
         $node->_setField(self::FIELD_NODEID, md5(uniqid()));
         $node->_setField(self::FIELD_IP, $strIP);
         $node->_setField(self::FIELD_NAME, $strName);
-        $node->_setField(self::FIELD_ACTIVE, false);
+        $node->_setField(self::FIELD_ACTIVE, 0);
         return $node;
     }
 
@@ -84,13 +84,19 @@ class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
 
     public function ping()
     {
-        $response = Chaplin_Service::getInstance()
-            ->getHttpClient()
-            ->getHttpResponse($this->getStatusURL(), null, false);
-        if(200 == $response->getStatus()) {
-            $this->_setField(self::FIELD_ACTIVE, true);
+        try {
+            $response = Chaplin_Service::getInstance()
+                ->getHttpClient()
+                ->getHttpResponse($this->getStatusURL(), null, 0);
+            if(200 == $response->getStatus()) {
+                $this->_setField(self::FIELD_ACTIVE, 1);
+                $this->save();
+                return true;
+            }
+        } catch (Exception $e) {
+            $this->_setField(self::FIELD_ACTIVE, 0);
             $this->save();
-            return true;
+            return false;
         }
         return false;
     }

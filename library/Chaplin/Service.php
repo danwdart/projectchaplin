@@ -24,20 +24,24 @@
 **/
 class Chaplin_Service
 {
+    const LIFETIME_SECS = 1800;
+
     public static function inject(Chaplin_Service $service)
     {
         self::$_instance = $service;
     }
- 
+
     private static $_instance;
+
     public static function getInstance()
     {
         if (is_null(self::$_instance))
             self::$_instance   = new Chaplin_Service();
         return self::$_instance;
     }
+
     private function __construct() {}
-    private function __clone() {}   
+    private function __clone() {}
 
     private $_zendCache;
     private function getCache()
@@ -45,7 +49,7 @@ class Chaplin_Service
         if (is_null($this->_zendCache)) {
             //@TODO - probably put this in a config file
             $frontendOptions = [
-                'lifetime' => null,
+                'lifetime' => self::LIFETIME_SECS,
                 'automatic_serialization' => true
             ];
             if (Zend_Registry::isRegistered(
@@ -73,7 +77,7 @@ class Chaplin_Service
         }
         return $this->_zendCache;
     }
-    
+
     public function setCache(Zend_Cache $zendCache)
     {
         $this->_zendCache   = $zendCache;
@@ -83,21 +87,26 @@ class Chaplin_Service
     {
         return new Chaplin_Service_Download_API();
     }
-    
+
     public function getHttpClient()
     {
         $objClient = new Chaplin_Http_Client();
         $objCache  = new Chaplin_Cache_Http_Client($objClient, $this->getCache());
         return new Chaplin_Service_Http_Client($objCache);
     }
-    
+
     public function getEncoder()
     {
         return new Chaplin_Service_Encoder_API();
     }
 
-    public function getYouTube($strURL)
+    public function getYouTube()
     {
-        return new Chaplin_Service_YouTube_API($strURL);
+        return new Chaplin_Service_YouTube_API();
+    }
+
+    public function getVimeo()
+    {
+        return new Chaplin_Service_Vimeo_API();
     }
 }

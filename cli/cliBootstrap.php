@@ -40,7 +40,7 @@ class cliBootstrap extends Zend_Application_Bootstrap_Bootstrap
         try {
             parent::_bootstrap($resource);
         } catch(Exception $e) {
-            echo $e->getException();
+            echo $e->getMessage();
             flush();
         }
     }
@@ -49,10 +49,9 @@ class cliBootstrap extends Zend_Application_Bootstrap_Bootstrap
         try {
             parent::run();
         } catch(Exception $e) {
-            echo $e->getException();
+            echo $e->getMessage();
             ob_flush();
             flush();
         }
     }
 }
-

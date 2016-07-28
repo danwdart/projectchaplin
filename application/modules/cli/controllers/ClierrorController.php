@@ -22,7 +22,7 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class ErrorController extends Zend_Controller_Action
+class ClierrorController extends Zend_Controller_Action
 {
     public function preDispatch()
     {

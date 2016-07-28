@@ -26,17 +26,17 @@
 <div class="clearfix"></div>
 <br/>
 <div class="widgetbox medium centre">
-<div class="widgettitle centre space">
-    Please enter credentials:
-</div>
-<div class="widgetbody centre space">
-	<?php if ($this->messages) :
-		foreach($this->messages as $strMessage):
-			echo '<span class="green">'.$strMessage.'</span>';
-		endforeach;
-	endif;
-	echo $this->form; ?>
-</div>
+	<div class="widgettitle centre space">
+	    Login to Project Chaplin
+	</div>
+	<div class="widgetbody centre space">
+		<?php if ($this->messages) :
+			foreach($this->messages as $strMessage):
+				echo '<span class="green">'.$strMessage.'</span>';
+			endforeach;
+		endif;
+		echo $this->form; ?>
+	</div>
 </div>
 <script>
 $(document).ready(function() {

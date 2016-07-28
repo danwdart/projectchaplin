@@ -68,16 +68,16 @@ class UserController extends Chaplin_Controller_Action_Api
         }
 
         $post = $this->_request->getPost();
-          
+
         if(!$form->isValid($post)) {
             return $this->view->assign('form', $form);
         }
-            
+
         if(!isset($post['Save'])) {
             $form->Save->addError('Invalid Request');
             return $this->view->assign('form', $form);
         }
-        
+
         $oldpassword = $post['oldpassword'];
         $password = $post['password'];
         $password2 = $post['password2'];
@@ -86,7 +86,7 @@ class UserController extends Chaplin_Controller_Action_Api
 
         if(!$user->verifyPassword($oldpassword))
         {
-            $form->oldpassword->addError('Old Password does not match. Want to try again?');
+            $form->oldpassword->addError('Incorrect old password.');
             return $this->view->assign('form', $form);
         }
         // @TODO add valid email
@@ -111,47 +111,35 @@ class UserController extends Chaplin_Controller_Action_Api
 
 	public function youtubeAction()
 	{
-		$strUsername = $this->_request->getParam('id', null);
+        $strPageToken = $this->_request->getQuery('pageToken', null);
+        $strUsername = $this->_request->getParam('id', null);
+        $serviceYouTube = Chaplin_Service::getInstance()->getYouTube();
+        $this->view->ittVideos = $serviceYouTube->getUserUploads($strUsername, $strPageToken);
 
-		$yt = new Zend_Gdata_YouTube();
-
-		$this->view->strUsername = $strUsername;
-		try {
-            $this->view->ittVideos = $yt->getUserUploads($strUsername);
-        } catch (Zend_Gdata_App_HttpException $e) {
-            throw new Chaplin_Exception_NotFound('User by username '.$strUsername);
-        } catch (Zend_Uri_Exception $e) {
-            throw new Chaplin_Exception_NotFound('User by username '.$strUsername);
-        }
-        $this->view->strTitle = $strUsername.' from YouTube - Chaplin';
-        $this->view->bHasUserFavourites = true;
-        try {
-            $this->view->ittFavourites = $yt->getUserFavorites($strUsername);
-        } catch (Zend_Gdata_App_HttpException $e) {
-            // We weren't allowed to view their favourites
-            $this->view->bHasUserFavourites = false;
+        if ($strPageToken) {
+            $this->_helper->layout()->disableLayout();
+            $this->_helper->viewRenderer('youtube-partial');
+        } else {
+            $this->view->strTitle = $this->view->ittVideos->items[0]->getSnippet()->channelTitle.
+                ' from YouTube - Chaplin';
         }
 	}
 
-    public function downloadyoutubeAction()
-    {
-        $strUsername = $this->_request->getParam('id', null);
+    public function vimeoAction()
+	{
+        $strPage = $this->_request->getQuery('page', 1);
+        $intPage = intval($strPage);
 
-        $yt = new Zend_Gdata_YouTube();
-        try {
-            $ittVideos = $yt->getUserUploads($strUsername);
-        } catch (Zend_Gdata_App_HttpException $e) {
-            throw new Chaplin_Exception_NotFound('User by username '.$strUsername);
-        } catch (Zend_Uri_Exception $e) {
-            throw new Chaplin_Exception_NotFound('User by username '.$strUsername);
+		$strUsername = $this->_request->getParam('id', null);
+        $serviceVimeo = Chaplin_Service::getInstance()->getVimeo();
+
+		$this->view->ittVideos = $serviceVimeo->getUserUploads($strUsername, $intPage);
+        if (1 < $strPage) {
+            $this->_helper->layout()->disableLayout();
+            $this->_helper->viewRenderer('vimeo-partial');
+        } else {
+            $this->view->strTitle = $this->view->ittVideos['data'][0]['user']['name'].
+                    ' from Vimeo - Chaplin';
         }
-
-        // todo find out how to get all
-
-        foreach($ittVideos as $video) {
-            var_dump($video->getVideoId());
-        }
-
-        die();
-    }
+	}
 }
