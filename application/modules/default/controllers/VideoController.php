@@ -121,6 +121,11 @@ class VideoController extends Chaplin_Controller_Action_Api
         $this->view->gplusshare = '<script src="https://apis.google.com/js/platform.js" async defer></script>
             <div class="g-plus" data-action="share" ... ></div>';
 
+        $this->view->diasporashare = '<a href="javascript:;" onclick="window.open(\'http://sharetodiaspora.github.io/?url=\'+encodeURIComponent(location.href)+\'&title=\'+encodeURIComponent(document.title),\'das\',\'location=no,links=no,scrollbars=no,toolbar=no,width=620,height=550\'); return false;" rel="nofollow" target="_blank">
+        	<img src="http://sharetodiaspora.github.io/favicon.png" style="border: 0px solid;" />
+            Share on Diaspora
+        </a>';
+
         $formComment = new default_Form_Video_Comment();
 
         if(!$this->_request->isPost()) {
