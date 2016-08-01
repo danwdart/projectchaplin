@@ -85,7 +85,28 @@ class VideoController extends Chaplin_Controller_Action_Api
 
         $this->view->facebookAppId = $oauth['facebook']['client_id'];
 
+        $this->view->facebookshare = '<div class="fb-share-button"
+            data-href="'.$this->view->vhost.'/video/watch/id/'.$this->view->video->getVideoId().'"
+            data-layout="button_count"
+            data-size="small"
+            data-mobile-iframe="false"
+        >
+            <a class="fb-xfbml-parse-ignore"
+                target="_blank"
+                href="https://www.facebook.com/sharer/sharer.php?u='.
+                    urlencode(
+                        $this->view->vhost.
+                        '/video/watch/id/'.
+                        $this->view->video->getVideoId()
+                    ).'&amp;src=sdkpreparse">
+                    Share
+            </a>
+        </div>';
+
         $this->view->twittershare = $strTwitterShare;
+
+        $this->view->gplusshare = '<script src="https://apis.google.com/js/platform.js" async defer></script>
+            <div class="g-plus" data-action="share" ... ></div>';
 
         $formComment = new default_Form_Video_Comment();
 

@@ -33,7 +33,7 @@
 <meta property="og:url"           content="<?php echo $this->vhost ?>/video/watch/id/<?php echo $this->video->getVideoId() ?>" />
 <meta property="og:type"          content="website" />
 <meta property="og:title"         content="<?php echo $this->video->getTitle() ?> on Chaplin" />
-<meta property="og:description"   content="<?php echo $this->video->getDescription() ?>" />
+<meta property="og:description"   content="<?php echo urlencode($this->video->getDescription()) ?>" />
 <meta property="og:image"         content="<?php echo $this->vhost ?>/uploads/<?php echo $this->video->getFilename() ?>.png" />
 <!-- Load Facebook SDK for JavaScript -->
 <div id="fb-root"></div>
@@ -86,21 +86,9 @@
 	<br/><?php echo $this->video->getDescription(); ?>
 	<p>Short URL: <input type="text" disabled value="<?php echo $this->short; ?>"/></p>
 	<p><strong>&uparrow; <?php echo $this->video->getVotesUp(); ?> / <?php echo $this->video->getVotesDown(); ?> &downarrow;</strong></p>
-	<p><?php echo $this->twittershare; ?></p>
-    <p>
-    	<div class="fb-share-button"
-            data-href="<?php echo $this->vhost ?>/video/watch/id/<?php echo $this->video->getVideoId() ?>"
-            data-layout="button_count"
-            data-size="small"
-            data-mobile-iframe="false"
-        >
-            <a class="fb-xfbml-parse-ignore"
-                target="_blank"
-                href="https://www.facebook.com/sharer/sharer.php?u=<?php urlencode($this->vhost.'/video/watch/id/'.$this->video->getVideoId()) ?>&amp;src=sdkpreparse">
-                    Share
-            </a>
-        </div>
-    </p>
+	<p><?php echo $this->twittershare ?></p>
+    <p><?php echo $this->facebookshare ?></p>
+    <p><?php echo $this->gplusshare ?></p>
 	<br/>
 	<?php if(Chaplin_Auth::getInstance()->hasIdentity()):
 	if ('1' === $this->video->getYourVote()) :
