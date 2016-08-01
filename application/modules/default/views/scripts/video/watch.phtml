@@ -22,14 +22,29 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-$vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
 ?>
 <link rel="alternate" type="application/json+oembed"
-  href="<?php echo $vhost ?>/services/oembed?url=<?php echo $vhost ?>/video/watch/id/<?php echo $this->video->getVideoId() ?>&format=json"
+  href="<?php echo $this->vhost ?>/services/oembed?url=<?php echo $this->vhost ?>/video/watch/id/<?php echo $this->video->getVideoId() ?>&format=json"
   title="<?php echo $this->video->getTitle() ?>" />
 <link rel="alternate" type="application/xml+oembed"
-  href="<?php echo $vhost ?>/services/oembed?url=<?php echo $vhost ?>/video/watch/id/<?php echo $this->video->getVideoId() ?>&format=xml"
+  href="<?php echo $this->vhost ?>/services/oembed?url=<?php echo $this->vhost ?>/video/watch/id/<?php echo $this->video->getVideoId() ?>&format=xml"
   title="<?php echo $this->video->getTitle() ?>" />
+<!-- Facebook Meta Tags -->
+<meta property="og:url"           content="<?php echo $this->vhost ?>/video/watch/id/<?php echo $this->video->getVideoId() ?>" />
+<meta property="og:type"          content="website" />
+<meta property="og:title"         content="<?php echo $this->video->getTitle() ?> on Chaplin" />
+<meta property="og:description"   content="<?php echo $this->video->getDescription() ?>" />
+<meta property="og:image"         content="<?php echo $this->vhost ?>/uploads/<?php echo $this->video->getFilename() ?>.png" />
+<!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.7&appId=<? echo $this->facebookAppId ?>";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<!-- End Facebook Meta Tags -->
 
 <h1><?php echo $this->video->getTitle();?></h1>
 <div id="videoarea">
@@ -72,6 +87,20 @@ $vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
 	<p>Short URL: <input type="text" disabled value="<?php echo $this->short; ?>"/></p>
 	<p><strong>&uparrow; <?php echo $this->video->getVotesUp(); ?> / <?php echo $this->video->getVotesDown(); ?> &downarrow;</strong></p>
 	<p><?php echo $this->twittershare; ?></p>
+    <p>
+    	<div class="fb-share-button"
+            data-href="<?php echo $this->vhost ?>/video/watch/id/<?php echo $this->video->getVideoId() ?>"
+            data-layout="button_count"
+            data-size="small"
+            data-mobile-iframe="false"
+        >
+            <a class="fb-xfbml-parse-ignore"
+                target="_blank"
+                href="https://www.facebook.com/sharer/sharer.php?u=<?php urlencode($this->vhost.'/video/watch/id/'.$this->video->getVideoId()) ?>&amp;src=sdkpreparse">
+                    Share
+            </a>
+        </div>
+    </p>
 	<br/>
 	<?php if(Chaplin_Auth::getInstance()->hasIdentity()):
 	if ('1' === $this->video->getYourVote()) :
