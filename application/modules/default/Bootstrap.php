@@ -55,5 +55,6 @@ class Default_Bootstrap extends Zend_Application_Module_Bootstrap
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/video', 'watchyoutube');
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/video', 'watchvimeo');
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/video', 'watchremote');
+        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/video', 'videoremote');
     }
 }

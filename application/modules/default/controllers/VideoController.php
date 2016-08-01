@@ -187,6 +187,54 @@ class VideoController extends Chaplin_Controller_Action_Api
         $this->view->assign('video', $modelVideo);
     }
 
+    public function videoremoteAction()
+    {
+        $modelUser = Chaplin_Auth::getInstance()
+            ->hasIdentity()?
+        Chaplin_Auth::getInstance()
+            ->getIdentity()
+            ->getUser():
+        null;
+
+        $strVideoId = $this->_request->getQuery('id', null);
+        if(is_null($strVideoId)) {
+            die(var_dump($this->_request));
+            return $this->_redirect('/');
+        }
+
+        $strNodeId = $this->_request->getQuery('node', 0);
+
+        $modelNode = Chaplin_Gateway::getNode()
+            ->getByNodeId($strNodeId);
+
+        $this->view->node = $modelNode;
+
+        $modelVideo = $modelNode->getVideoById($strVideoId);
+
+        // And stream it
+        $handle = fopen($modelVideo->getFilename(), 'rb');
+
+        if (!$handle) die('No video.');
+
+        if(isset($_SERVER['HTTP_RANGE'])){
+            die('WTF');
+        }
+
+        foreach(stream_get_meta_data($handle)['wrapper_data'] as $header) {
+            if (false !== strpos($header, 'Content'))
+                header($header);
+        }
+
+        header('Content-Type: video/webm');
+        $count = 0;
+        while (!feof($handle)) {
+            echo fread($handle, 1024);
+            ob_flush();
+            flush();
+        }
+        exit();
+    }
+
     public function watchshortAction()
     {
 	    $strId   = $this->_request->getParam('id');
