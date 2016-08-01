@@ -86,11 +86,13 @@
 	<br/><?php echo $this->video->getDescription(); ?>
 	<p>Short URL: <input type="text" disabled value="<?php echo $this->short; ?>"/></p>
 	<p><strong>&uparrow; <?php echo $this->video->getVotesUp(); ?> / <?php echo $this->video->getVotesDown(); ?> &downarrow;</strong></p>
-	<p><?php echo $this->twittershare ?></p>
+    <?php if ($this->video->getPrivacy()->isPublic()): ?>
+    <p><?php echo $this->twittershare ?></p>
     <p><?php echo $this->facebookshare ?></p>
     <p><?php echo $this->gplusshare ?></p>
     <p><?php echo $this->gnusocialshare ?></p>
     <p><?php echo $this->diasporashare ?></p>
+    <?php endif; ?>
 	<br/>
 	<?php if(Chaplin_Auth::getInstance()->hasIdentity()):
 	if ('1' === $this->video->getYourVote()) :
