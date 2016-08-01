@@ -59,13 +59,31 @@ class VideoController extends Chaplin_Controller_Action_Api
             str_replace('/','-',base64_encode(hex2bin($strVideoId)));
         $this->view->assign('short', $strShortURL);
 
-        $strTwitterShare = '<iframe id="tweetbutton" allowtransparency="true" frameborder="0" scrolling="no" src="'.
-        'https://platform.twitter.com/widgets/tweet_button.html'.
-        '?url='.urlencode($strShortURL).
-        '&dnt=true'.
-        '&hashtags=projectchaplin'.
-        '&text='.$this->view->strTitle.' : '.
-        '"></iframe>';
+        $strTwitterShare = '<script>window.twttr = (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+              if (d.getElementById(id)) return t;
+              js = d.createElement(s);
+              js.id = id;
+              js.src = "https://platform.twitter.com/widgets.js";
+              fjs.parentNode.insertBefore(js, fjs);
+
+              t._e = [];
+              t.ready = function(f) {
+                t._e.push(f);
+              };
+
+              return t;
+            }(document, "script", "twitter-wjs"));</script>
+            <a class="twitter-share-button"
+              href="https://twitter.com/intent/tweet">
+            Tweet</a>';
+
+        $oauth = include APPLICATION_PATH.'/config/oauth.php';
+
+        $this->view->vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
+
+        $this->view->facebookAppId = $oauth['facebook']['client_id'];
 
         $this->view->twittershare = $strTwitterShare;
 
