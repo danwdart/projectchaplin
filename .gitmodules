@@ -1,6 +1,3 @@
 [submodule "submodules/youtube-dl"]
 	path = submodules/youtube-dl
 	url = git://github.com/rg3/youtube-dl.git
-[submodule "public/gs-share"]
-	path = public/gs-share
-	url = git://github.com/chimo/gs-share.git
