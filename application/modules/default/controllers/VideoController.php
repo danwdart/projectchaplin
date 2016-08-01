@@ -52,8 +52,13 @@ class VideoController extends Chaplin_Controller_Action_Api
             ->getVideo_Comment()
             ->getByVideoId($strVideoId);
 
-        $this->view->assign('video', $modelVideo);
+        $this->view->video = $modelVideo;
         $this->view->assign('ittComments', $ittComments);
+
+        $this->view->vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
+
+        $url = $this->view->vhost.'/video/watch/id/'.$this->view->video->getVideoId();
+
         $strShortHost = Chaplin_Config_Servers::getInstance()->getShort();
         $strShortURL = 'http://'.$strShortHost.'/'.
             str_replace('/','-',base64_encode(hex2bin($strVideoId)));
@@ -79,14 +84,22 @@ class VideoController extends Chaplin_Controller_Action_Api
               href="https://twitter.com/intent/tweet">
             Tweet</a>';
 
-        $oauth = include APPLICATION_PATH.'/config/oauth.php';
+        $this->view->gnusocialshare = '
+            <link rel="stylesheet" href="/gs-share/css/styles.css" />
+            <div class="gs-share">
+                <button data-url="'.urlencode($url).'"
+                    data-title="'.urlencode($this->view->video->getTitle()).' on Chaplin"
+                    class="js-gs-share gs-share--icon">Share on GNU social</a>
+                </button>
+            </div>
+            <script src="/gs-share/js/gs-share.js"></script>';
 
-        $this->view->vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
+        $oauth = include APPLICATION_PATH.'/config/oauth.php';
 
         $this->view->facebookAppId = $oauth['facebook']['client_id'];
 
         $this->view->facebookshare = '<div class="fb-share-button"
-            data-href="'.$this->view->vhost.'/video/watch/id/'.$this->view->video->getVideoId().'"
+            data-href="'.$url.'"
             data-layout="button_count"
             data-size="small"
             data-mobile-iframe="false"
