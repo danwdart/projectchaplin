@@ -76,6 +76,13 @@ class Admin_SetupController extends Zend_Controller_Action
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $arrSmtp = $this->_request->getPost();
+
+        // Zend won't like this without
+        if (isset($arrSmtp['options']) &&
+            isset($arrSmtp['options']['ssl']) &&
+            empty($arrSmtp['options']['ssl'])) {
+            unset($arrSmtp['options']['ssl']);
+        }
         $transport = new Zend_Mail_Transport_Smtp(
             $arrSmtp['host'],
             $arrSmtp['options']

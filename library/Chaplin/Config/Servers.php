@@ -68,10 +68,18 @@ class Chaplin_Config_Servers
 
     public function getSmtpSettings()
     {
-        return $this->_getValue(
+        $smtp = $this->_getValue(
             $this->_zendConfig->smtp,
             'smtp'
         )->toArray();
+        // Zend will not accept a blank SSL option
+        if (isset($smtp['server']) &&
+            isset($smtp['server']['options']) &&
+            isset($smtp['server']['options']['ssl']) &&
+            empty($smtp['server']['options']['ssl'])) {
+            unset($smtp['server']['options']['ssl']);
+        }
+        return $smtp;
     }
 
     public function getSqlSettings()
