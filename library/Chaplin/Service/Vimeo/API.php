@@ -113,7 +113,7 @@ class Chaplin_Service_Vimeo_API
         return system($strCommandLine);
     }
 
-    public function downloadVideo($strURL, $strPathToSave, $ret)
+    public function downloadVideo($strURL, $strPathToSave, &$ret)
     {
         $strCommandLine = APPLICATION_PATH.self::LOCATION.
             " --recode-video webm -o ".
