@@ -110,7 +110,7 @@ class Chaplin_Service_Vimeo_API
             self::LOCATION.
             ' --prefer-free-formats -g -- '.
             escapeshellarg($strURL);
-        return exec($strCommandLine);
+        return system($strCommandLine);
     }
 
     public function downloadVideo($strURL, $strPathToSave, $ret)
@@ -123,7 +123,7 @@ class Chaplin_Service_Vimeo_API
         echo $strCommandLine.PHP_EOL;
         ob_flush();
         flush();
-        return system($strCommandLine, $output, $ret);
+        return system($strCommandLine, $ret);
     }
 
     public function downloadThumbnail($strVideoId, $strPathToSave)
