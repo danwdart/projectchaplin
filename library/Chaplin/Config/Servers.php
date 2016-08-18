@@ -79,6 +79,20 @@ class Chaplin_Config_Servers
             empty($smtp['server']['options']['ssl'])) {
             unset($smtp['server']['options']['ssl']);
         }
+        if (isset($smtp['server']) &&
+            isset($smtp['server']['options']) &&
+            isset($smtp['server']['options']['auth']) &&
+            isset($smtp['server']['options']['username']) &&
+            isset($smtp['server']['options']['password']) &&
+            (
+                empty($smtp['server']['options']['username']) ||
+                empty($smtp['server']['options']['password'])
+            )
+        ) {
+            unset($smtp['server']['options']['auth']);
+            unset($smtp['server']['options']['username']);
+            unset($smtp['server']['options']['password']);
+        }
         return $smtp;
     }
 
