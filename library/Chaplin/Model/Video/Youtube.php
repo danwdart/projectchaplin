@@ -57,12 +57,17 @@ class Chaplin_Model_Video_Youtube
 
         $strOut = Chaplin_Service::getInstance()
             ->getYoutube()
-            ->downloadVideo($this->_getYouTubeId(), $strPathToDownloadTo);
+            ->downloadVideo($this->_getYouTubeId(), $strPathToDownloadTo, $ret);
 
         echo $strOut;
         ob_flush();
         flush();
-        echo 'Downloaded '.$this->_getYouTubeId().PHP_EOL;
+        if (0 == $ret) {
+            echo 'Downloaded '.$this->_getYouTubeId().PHP_EOL;
+        } else {
+            echo 'Failed to download '.$this->_getYouTubeId().' because '.$strOut;
+            throw new \Exception('Failed to download '.$this->_getYouTubeId().' because '.$strOut);
+        }
         ob_flush();
         flush();
 
