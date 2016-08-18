@@ -109,7 +109,7 @@ class Chaplin_Service_YouTube_API
         return system($strCommandLine);
     }
 
-    public function downloadVideo($strURL, $strPathToSave, $ret)
+    public function downloadVideo($strURL, $strPathToSave, &$ret)
     {
         $strCommandLine = APPLICATION_PATH.self::LOCATION.
             " --format=webm -o ".
