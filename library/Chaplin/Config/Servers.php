@@ -34,9 +34,9 @@ class Chaplin_Config_Servers
 
     protected function _getConfigFile()
     {
-        return realpath(APPLICATION_PATH.'/../config/chaplin.ini');
+        return APPLICATION_PATH.'/../config/chaplin.ini';
     }
-    
+
     public function getRedisSettings()
     {
         return $this->_zendConfig->phpredis;
@@ -47,7 +47,7 @@ class Chaplin_Config_Servers
         return $this->_getValue(
             $this->_zendConfig->amqp,
             'amqp'
-        )->toArray();   
+        )->toArray();
     }
 
     public function getConfigConnectionRead()
@@ -57,7 +57,7 @@ class Chaplin_Config_Servers
             'amqp.servers.read'
         )->toArray();
     }
-    
+
     public function getConfigConnectionWrite()
     {
         return $this->_getValue(
@@ -68,10 +68,32 @@ class Chaplin_Config_Servers
 
     public function getSmtpSettings()
     {
-        return $this->_getValue(
+        $smtp = $this->_getValue(
             $this->_zendConfig->smtp,
             'smtp'
-        )->toArray();      
+        )->toArray();
+        // Zend will not accept a blank SSL option
+        if (isset($smtp['server']) &&
+            isset($smtp['server']['options']) &&
+            isset($smtp['server']['options']['ssl']) &&
+            empty($smtp['server']['options']['ssl'])) {
+            unset($smtp['server']['options']['ssl']);
+        }
+        if (isset($smtp['server']) &&
+            isset($smtp['server']['options']) &&
+            isset($smtp['server']['options']['auth']) &&
+            isset($smtp['server']['options']['username']) &&
+            isset($smtp['server']['options']['password']) &&
+            (
+                empty($smtp['server']['options']['username']) ||
+                empty($smtp['server']['options']['password'])
+            )
+        ) {
+            unset($smtp['server']['options']['auth']);
+            unset($smtp['server']['options']['username']);
+            unset($smtp['server']['options']['password']);
+        }
+        return $smtp;
     }
 
     public function getSqlSettings()
@@ -79,7 +101,7 @@ class Chaplin_Config_Servers
         return $this->_getValue(
             $this->_zendConfig->sql,
             'sql'
-        );   
+        );
     }
 
     public function getMongoSettings()

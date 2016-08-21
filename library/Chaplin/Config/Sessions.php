@@ -34,15 +34,15 @@ class Chaplin_Config_Sessions
 
     protected function _getConfigFile()
     {
-        return realpath(APPLICATION_PATH.'/config/sessions.ini');
+        return APPLICATION_PATH.'/config/sessions.ini';
     }
-    
+
     public function getName()
     {
     	$this->_getValue(
             $this->_zendConfig->session->name,
             'session.name'
-        );	
+        );
     }
 
     public function getRememberMeSeconds()
@@ -50,7 +50,7 @@ class Chaplin_Config_Sessions
 		$this->_getValue(
             $this->_zendConfig->session->remember_me_seconds,
             'session.remember_me_seconds'
-        );    		
+        );
     }
 
     public function getSessionOptions()
@@ -58,7 +58,7 @@ class Chaplin_Config_Sessions
     	return $this->_getValue(
             $this->_zendConfig->session,
             'session'
-        )->toArray();	
+        )->toArray();
     }
 
     public function getSaveHandler()

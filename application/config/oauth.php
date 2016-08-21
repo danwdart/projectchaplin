@@ -1,11 +1,12 @@
 <?php
+$strVhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
 return [
     'google' => [
         'registration_url' => 'https://code.google.com/apis/console/',
         'oauth_version' => 2,
         'client_id' => '489050087246.apps.googleusercontent.com',
         'client_secret' => 'csIFAlwR65VATyk-hs9P2aId',
-        'scope' => 'openid%20email%20profile',  
+        'scope' => 'openid%20email%20profile',
         'auth_uri' => 'https://accounts.google.com/o/oauth2/auth',
         'redirect_uri' => 'http://'.$strVhost.'/login/oauth/provider/google',
         'token_uri' => 'https://accounts.google.com/o/oauth2/token',

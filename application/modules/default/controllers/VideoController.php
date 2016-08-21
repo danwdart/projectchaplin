@@ -52,22 +52,79 @@ class VideoController extends Chaplin_Controller_Action_Api
             ->getVideo_Comment()
             ->getByVideoId($strVideoId);
 
-        $this->view->assign('video', $modelVideo);
+        $this->view->video = $modelVideo;
         $this->view->assign('ittComments', $ittComments);
+
+        $this->view->vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
+
+        $url = $this->view->vhost.'/video/watch/id/'.$this->view->video->getVideoId();
+
         $strShortHost = Chaplin_Config_Servers::getInstance()->getShort();
         $strShortURL = 'http://'.$strShortHost.'/'.
             str_replace('/','-',base64_encode(hex2bin($strVideoId)));
         $this->view->assign('short', $strShortURL);
 
-        $strTwitterShare = '<iframe id="tweetbutton" allowtransparency="true" frameborder="0" scrolling="no" src="'.
-        'https://platform.twitter.com/widgets/tweet_button.html'.
-        '?url='.urlencode($strShortURL).
-        '&dnt=true'.
-        '&hashtags=projectchaplin'.
-        '&text='.$this->view->strTitle.' : '.
-        '"></iframe>';
+        $strTwitterShare = '<script>window.twttr = (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+              if (d.getElementById(id)) return t;
+              js = d.createElement(s);
+              js.id = id;
+              js.src = "https://platform.twitter.com/widgets.js";
+              fjs.parentNode.insertBefore(js, fjs);
+
+              t._e = [];
+              t.ready = function(f) {
+                t._e.push(f);
+              };
+
+              return t;
+            }(document, "script", "twitter-wjs"));</script>
+            <a class="twitter-share-button"
+              href="https://twitter.com/intent/tweet">
+            Tweet</a>';
+
+        $this->view->gnusocialshare = '
+            <link rel="stylesheet" href="/gs-share/css/styles.css" />
+            <div class="gs-share">
+                <button data-url="'.urlencode($url).'"
+                    data-title="'.urlencode($this->view->video->getTitle()).' on Chaplin"
+                    class="js-gs-share gs-share--icon">Share on GNU social</a>
+                </button>
+            </div>
+            <script src="/gs-share/js/gs-share.js"></script>';
+
+        $oauth = include APPLICATION_PATH.'/config/oauth.php';
+
+        $this->view->facebookAppId = $oauth['facebook']['client_id'];
+
+        $this->view->facebookshare = '<div class="fb-share-button"
+            data-href="'.$url.'"
+            data-layout="button_count"
+            data-size="small"
+            data-mobile-iframe="false"
+        >
+            <a class="fb-xfbml-parse-ignore"
+                target="_blank"
+                href="https://www.facebook.com/sharer/sharer.php?u='.
+                    urlencode(
+                        $this->view->vhost.
+                        '/video/watch/id/'.
+                        $this->view->video->getVideoId()
+                    ).'&amp;src=sdkpreparse">
+                    Share
+            </a>
+        </div>';
 
         $this->view->twittershare = $strTwitterShare;
+
+        $this->view->gplusshare = '<script src="https://apis.google.com/js/platform.js" async defer></script>
+            <div class="g-plus" data-action="share" ... ></div>';
+
+        $this->view->diasporashare = '<a href="javascript:;" onclick="window.open(\'http://sharetodiaspora.github.io/?url=\'+encodeURIComponent(location.href)+\'&title=\'+encodeURIComponent(document.title),\'das\',\'location=no,links=no,scrollbars=no,toolbar=no,width=620,height=550\'); return false;" rel="nofollow" target="_blank">
+        	<img src="http://sharetodiaspora.github.io/favicon.png" style="border: 0px solid;" />
+            Share on Diaspora
+        </a>';
 
         $formComment = new default_Form_Video_Comment();
 

@@ -83,7 +83,8 @@
 <div class="clearfix"></div>
 <h2>Vimeo results for: <?php echo $this->strSearchTerm; ?></h2>
 <div class="content-centre" id="youtubevids">
-<?php foreach($this->vimeoFeed['data'] as $arrVideo): ?>
+<?php if (isset($this->vimeoFeed['data'])):
+foreach($this->vimeoFeed['data'] as $arrVideo): ?>
 <div class="video">
 	<a href="/video/watchvimeo/id/<?php echo substr($arrVideo['uri'], 8); ?>">
 		<div class="thumb-wrapper">
@@ -92,7 +93,7 @@
 		<p><?php echo $arrVideo['name'];?></p>
 	</a>
 </div>
-<?php endforeach;?>
-
+<?php endforeach;
+endif;?>
 </div>
 <script src="/js/search.js"></script>

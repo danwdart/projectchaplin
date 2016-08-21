@@ -24,7 +24,11 @@
 **/
 ?>
 <div class="content-header">
+    <?php if (!isset($this->ittVideos['data'][0])): ?>
+    Videos
+    <?php else: ?>
     Videos for user <?php echo $this->ittVideos['data'][0]['user']['name'] ?>
+    <?php endif; ?>
 </div>
 <div class="content-centre">
 <?php foreach($this->ittVideos['data'] as $videoEntry):?>
@@ -38,3 +42,4 @@
 </a>
 <?php endforeach;?>
 </div>
+<script src="/js/uservimeo.js"></script>

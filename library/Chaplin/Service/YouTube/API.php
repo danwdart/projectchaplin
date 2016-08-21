@@ -77,7 +77,7 @@ class Chaplin_Service_YouTube_API
         return 0 < $list->pageInfo->totalResults ? $list->items[0] : null;
     }
 
-    public function getUserUploads($strChannelId)
+    public function getUserUploads($strChannelId, $strPageToken = null)
     {
         $configChaplin = Chaplin_Config_Chaplin::getInstance();
 
@@ -86,14 +86,18 @@ class Chaplin_Service_YouTube_API
 
         $youtube = new Google_Service_YouTube($client);
 
-        return $youtube->search->listSearch('id,snippet', [
+        $arrRequest = [
             'channelId' => $strChannelId,
-            //'pageToken' => $page,
             'maxResults' => 50,
             'order' => 'relevance',
             'videoLicense' => 'creativeCommon',
             'type' => 'video',
-        ])->items;
+        ];
+
+        if ($strPageToken)
+            $arrRequest['pageToken'] = $strPageToken;
+
+        return $youtube->search->listSearch('id,snippet', $arrRequest);
     }
 
     public function getDownloadURL($strURL)
@@ -102,10 +106,10 @@ class Chaplin_Service_YouTube_API
             self::LOCATION.
             ' --prefer-free-formats -g -- '.
             escapeshellarg($strURL);
-        return exec($strCommandLine);
+        return system($strCommandLine);
     }
 
-    public function downloadVideo($strURL, $strPathToSave)
+    public function downloadVideo($strURL, $strPathToSave, &$ret)
     {
         $strCommandLine = APPLICATION_PATH.self::LOCATION.
             " --format=webm -o ".
@@ -115,7 +119,7 @@ class Chaplin_Service_YouTube_API
         echo $strCommandLine.PHP_EOL;
         ob_flush();
         flush();
-        system($strCommandLine);
+        return system($strCommandLine, $ret);
     }
 
     public function downloadThumbnail($strVideoId, $strPathToSave)

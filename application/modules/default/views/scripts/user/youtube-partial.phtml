@@ -22,23 +22,15 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
-class Chaplin_Config_Amqp
-    extends Chaplin_Config_Abstract
-{
-    const CONFIG_TYPE = 'Json';
+?>
 
-    protected function _getConfigType()
-    {
-        return self::CONFIG_TYPE;
-    }
-
-    protected function _getConfigFile()
-    {
-        return APPLICATION_PATH.'/config/amqp.json';
-    }
-
-    public function getConfigArray()
-    {
-        return $this->_getValue($this->_zendConfig->exchanges, 'exchanges')->toArray();
-    }
-}
+<?php foreach($this->ittVideos->items as $videoEntry):?>
+<a href="/video/watchyoutube/id/<?php echo $videoEntry->id->videoId;?>" data-next-page-token="<?php echo $this->ittVideos->nextPageToken; ?>">
+<div class="thumb-wrapper">
+<div class="thumb-img">
+    <img src="<?php echo htmlentities($videoEntry->getSnippet()->thumbnails->high->url);?>" alt="View Video"/>
+</div>
+<p><?php echo $videoEntry->getSnippet()->title;?></p>
+</div>
+</a>
+<?php endforeach;?>

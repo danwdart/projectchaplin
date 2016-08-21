@@ -43,7 +43,8 @@
         "robmorgan/phinx": "dev-master",
         "zendframework/zendgdata": "^2.0",
         "google/apiclient": "^2.0",
-        "vimeo/vimeo-api": "^1.2"
+        "vimeo/vimeo-api": "^1.2",
+        "misd/linkify": "^1.1"
     },
     "require-dev": {
         "mockery/mockery": "dev-master"

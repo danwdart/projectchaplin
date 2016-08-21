@@ -40,7 +40,6 @@
     <canvas id="canvas" height="300" width="400"></canvas>
 </div>
 <div id="status"></div>
-<script src="<?php echo $this->scheme; ?>://<?php echo $_SERVER['HTTP_HOST']?>:1337/socket.io/socket.io.js"></script>
-<script src="/js/video.js"></script>
+<script src="<?php echo $_SERVER['REQUEST_SCHEME']?>://<?php echo $_SERVER['HTTP_HOST']?>:1337/socket.io/socket.io.js"></script>
 <script src="/js/broadcast.js"></script>
 <link rel="stylesheet" type="text/css" href="/css/broadcast.css"/>
