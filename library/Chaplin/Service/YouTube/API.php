@@ -104,7 +104,7 @@ class Chaplin_Service_YouTube_API
     {
         $strCommandLine = APPLICATION_PATH.
             self::LOCATION.
-            ' --prefer-free-formats -g -- '.
+            '-4 --prefer-free-formats -g -- '.
             escapeshellarg($strURL);
         return system($strCommandLine);
     }
@@ -112,7 +112,7 @@ class Chaplin_Service_YouTube_API
     public function downloadVideo($strURL, $strPathToSave, &$ret)
     {
         $strCommandLine = APPLICATION_PATH.self::LOCATION.
-            " --format=webm -o ".
+            "-4 --format=webm -o ".
             escapeshellarg($strPathToSave."/%(id)s.%(ext)s").
             " -- ".escapeshellarg($strURL).
             ' 2>&1';
