@@ -1,7 +1,7 @@
 version: "2"
 services:
     projectchaplin:
-        image: dandart/projectchaplin:latest
+        image: kathiedart/projectchaplin:latest
         ports:
             - "80:80"
             - "1337:1337"

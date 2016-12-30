@@ -27,7 +27,9 @@ return [
         'redirect_uri' => $strVhost.'/login/oauth/provider/facebook',
         'token_uri' => 'https://graph.facebook.com/oauth/access_token',
         'info_uri' => 'https://graph.facebook.com/me',
-        'callback_decode' => function($str){parse_str($str,$arr);return $arr;},
+        'callback_decode' => function ($str) {
+            parse_str($str, $arr);return $arr;
+        },
         'key_email' => 'email',
         'key_fullname' => 'name',
         'key_firstname' => 'first_name',

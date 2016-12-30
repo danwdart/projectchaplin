@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class default_Form_Validate extends Zend_Form
 {
@@ -43,14 +43,20 @@ class default_Form_Validate extends Zend_Form
         $password->setLabel('New Password:');
 
         $password2 = new Zend_Form_Element_Password('password2');
-        $password2->addValidators(array(
-            new Zend_Validate_StringLength(array(
+        $password2->addValidators(
+            array(
+            new Zend_Validate_StringLength(
+                array(
                 'min' => 6
-            )),
-            new Zend_Validate_Identical(array(
+                )
+            ),
+            new Zend_Validate_Identical(
+                array(
                 'token' => 'password'
-            ))
-        ));
+                )
+            )
+            )
+        );
         
         $password2->setLabel('Confirm Password:');
 

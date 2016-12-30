@@ -15,22 +15,22 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 interface Chaplin_Dao_Interface_Video_Comment extends Chaplin_Dao_Interface
 {
-	public function getById($strId);
+    public function getById($strId);
 
-	public function getByVideoId($strVideoId);
+    public function getByVideoId($strVideoId);
 
-	public function save(Chaplin_Model_Video_Comment $modelComment);
+    public function save(Chaplin_Model_Video_Comment $modelComment);
 
-	public function delete(Chaplin_Model_Video_Comment $modelComment);
+    public function delete(Chaplin_Model_Video_Comment $modelComment);
 
-	public function deleteById($strComment);
+    public function deleteById($strComment);
 }

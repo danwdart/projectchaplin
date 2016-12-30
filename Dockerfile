@@ -17,7 +17,7 @@ RUN a2enmod rewrite
 RUN a2enmod headers
 RUN a2dissite 000-default
 RUN a2ensite projectchaplin
-RUN cd /var && rm -rf /var/www && git clone https://github.com/dandart/projectchaplin.git /var/www
+RUN cd /var && rm -rf /var/www && git clone https://github.com/kathiedart/projectchaplin.git /var/www
 RUN cd /var/www && ./composer.phar install
 RUN cd /var/www && npm install
 RUN chown -R www-data:www-data /var/www/public/uploads
