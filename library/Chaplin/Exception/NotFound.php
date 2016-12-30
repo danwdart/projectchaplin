@@ -1,11 +1,11 @@
 <?php
 class Chaplin_Exception_NotFound
-	extends Exception
+    extends Exception
 {
-	const MESSAGE = 'Page not found (%s)';
+    const MESSAGE = 'Page not found (%s)';
 
-	public function __construct($strIdentifier)
-	{
-		parent::__construct(sprintf(self::MESSAGE, $strIdentifier));
-	}
+    public function __construct($strIdentifier)
+    {
+        parent::__construct(sprintf(self::MESSAGE, $strIdentifier));
+    }
 }

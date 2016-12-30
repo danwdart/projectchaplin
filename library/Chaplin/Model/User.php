@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Model_User extends Chaplin_Model_Field_Hash
 {
@@ -35,18 +35,20 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
 
     const SALT = 'dguqwtduR^%$*%%';
 
-    const HASH_SHA512 = 'sha512';   
+    const HASH_SHA512 = 'sha512';
 
-    protected $_arrFields = array(
-        self::FIELD_Username => array('Class' => 'Chaplin_Model_Field_FieldId'),
-        self::FIELD_Password => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_Nick => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_Email => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_UserTypeId => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_VALIDATION => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_HASH => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::CHILD_ASSOC_Credentials => array('Class' => 'Chaplin_Model_Field_Collection')
-    );
+    protected $_arrFields = [
+        self::FIELD_Username => ['Class' => 'Chaplin_Model_Field_FieldId'],
+        self::FIELD_Password => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_Nick => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_Email => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_UserTypeId => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_VALIDATION => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_HASH => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::CHILD_ASSOC_Credentials => [
+            'Class' => 'Chaplin_Model_Field_Collection'
+        ]
+    ];
 
     public static function create($strUsername, $strPassword)
     {
@@ -76,12 +78,14 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
         return strtolower($strUsername);
     }
 
-    /** I'm not sure about this */
+    /**
+ * I'm not sure about this
+*/
     public static function encodePassword($strPassword)
     {
         return hash('sha512', self::SALT.$strPassword, false);
     }
-    
+
     public function verifyPassword($strPassword)
     {
         return (self::encodePassword($strPassword) == $this->_getField(self::FIELD_Password, null));

@@ -16,29 +16,22 @@
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package    Project Chaplin
- * @author     Dan Dart
+ * @author     Kathie Dart
  * @copyright  2012-2013 Project Chaplin
  * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @link       https://github.com/kathiedart/projectchaplin
 **/
 ?>
 <!DOCTYPE html>
 <html lang="en" manifest="/chaplin.appcache">
 <head>
     <title><?php if (isset($this->strTitle)): echo $this->strTitle . ' - '; endif;?>Chaplin</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
-    <meta name="apple-mobile-web-app-capable" content="yes" /> 
-    <link rel="stylesheet" type="text/css" href="/ext/bootstrap/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/ext/bootstrap/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/ext/fontawesome/css/font-awesome.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/css/chaplin.css"/>
-    <script type="text/javascript" src="/js/jquery.js"></script>
-    <!--<script type="text/javascript" src="/js/jquery.color.js"></script>-->
-    <script type="text/javascript" src="/ext/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" type="text/css" href="/css/index.css"/>
 </head>
 <body>
     <div id="contentwrapper">
@@ -54,5 +47,7 @@
             <?php echo $this->render('_footer.phtml'); ?>
         </footer>
     </div>
+    <script src="js/index.js"></script>
+    <script src="<?php echo $_SERVER['REQUEST_SCHEME']?>://<?php echo $_SERVER['HTTP_HOST']?>:1337/socket.io/socket.io.js"></script>
 </body>
 </html>
