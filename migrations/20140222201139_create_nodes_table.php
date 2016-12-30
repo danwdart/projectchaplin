@@ -10,10 +10,10 @@ class CreateNodesTable extends AbstractMigration
             'id' => false,
             'primary_key' => 'NodeId'
         ])
-        	->addColumn('NodeId', 'string', ['size' => 50])
-        	->addColumn('IP', 'string', ['size' => 29])
-        	->addColumn('Name', 'string', ['size' => 30])
-        	->addColumn('Active', 'bool')
+        	->addColumn('NodeId', 'string', ['length' => 50])
+        	->addColumn('IP', 'string', ['length' => 29])
+        	->addColumn('Name', 'string', ['length' => 30])
+        	->addColumn('Active', 'boolean')
         	->create();
     }
 }

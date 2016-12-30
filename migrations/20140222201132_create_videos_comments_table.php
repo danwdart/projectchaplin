@@ -10,9 +10,9 @@ class CreateVideosCommentsTable extends AbstractMigration
             'id' => false,
             'primary_key' => 'CommentId'
         ])
-        	->addColumn('CommentId', 'string', ['size' => 50])
-        	->addColumn('VideoId', 'string', ['size' => 50])
-        	->addColumn('Username', 'string', ['size' => 50])
+        	->addColumn('CommentId', 'string', ['length' => 50])
+        	->addColumn('VideoId', 'string', ['length' => 50])
+        	->addColumn('Username', 'string', ['length' => 50])
         	->addColumn('Comment', 'text')
         	->create();
     }

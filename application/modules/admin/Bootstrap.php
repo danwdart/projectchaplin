@@ -36,6 +36,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         $acl->add(new Zend_Acl_Resource('admin/user'));
         $acl->add(new Zend_Acl_Resource('admin/setup'));
         $acl->add(new Zend_Acl_Resource('admin/daemons'));
+        $acl->add(new Zend_Acl_Resource('admin/db'));
 
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'admin/setup');
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_MINION, 'admin/events');
@@ -45,5 +46,6 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'admin/nodestatus');
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/error');
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/user');
+        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GOD, 'admin/db');
     }
 }

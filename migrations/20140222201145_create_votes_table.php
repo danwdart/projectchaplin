@@ -10,9 +10,9 @@ class CreateVotesTable extends AbstractMigration
             'id' => false,
             'primary_key' => ['Username', 'VideoId']
         ])
-        	->addColumn('Username', 'string', ['size' => 255])
-        	->addColumn('VideoId', 'string', ['size' => 50])
-        	->addColumn('Vote', 'bool')
+        	->addColumn('Username', 'string', ['length' => 255])
+        	->addColumn('VideoId', 'string', ['length' => 50])
+        	->addColumn('Vote', 'boolean')
         	->create();
     }
 }

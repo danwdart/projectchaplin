@@ -10,7 +10,7 @@ class CreateCredentialsTable extends AbstractMigration
             'id' => false,
             'primary_key' => 'CredentialId'
         ])
-            ->addColumn('CredentialId', 'smallinteger')
+            ->addColumn('CredentialId', 'integer')
             ->addColumn('Username', 'string')
             ->addColumn('Type', 'string', ['limit' => 10])
             ->addColumn('APIKey', 'string', ['limit' => 40])

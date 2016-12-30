@@ -22,6 +22,9 @@
  * @version    git
  * @link       https://github.com/dandart/projectchaplin
 **/
+use Phinx\Console\PhinxApplication;
+use Phinx\Wrapper\TextWrapper;
+
 class Admin_SetupController extends Zend_Controller_Action
 {
     public function init()
@@ -113,8 +116,6 @@ class Admin_SetupController extends Zend_Controller_Action
             'development' => array()
         );
 
-        $schemaSql = file_get_contents(APPLICATION_PATH . '/../sql/schema.sql');
-
         $arrDefault = $arrPost['default'];
 
         if (!isset($arrDefault['sql'])) {
@@ -133,7 +134,9 @@ class Admin_SetupController extends Zend_Controller_Action
 
         try {
             $adapter = Zend_Db::factory($strAdapter, $arrParams);
-            $adapter->getConnection()->exec($schemaSql);
+            $app = new PhinxApplication();
+            $wrap = new TextWrapper($app, ['environment' => 'chaplin']);
+            echo $wrap->getMigrate();
         } catch (Exception $e) {
             echo 'Error writing DB: '.$e->getMessage().' Please refresh and try again.';
             exit();

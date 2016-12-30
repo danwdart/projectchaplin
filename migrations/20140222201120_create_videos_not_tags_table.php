@@ -10,8 +10,8 @@ class CreateVideosNotTagsTable extends AbstractMigration
             'id' => false,
             'primary_key' => ['VideoId', 'TagId']
         ])
-        	->addColumn('VideoId', 'string', ['size' => 50])
-        	->addColumn('TagId', 'string', ['size' => 50])
+        	->addColumn('VideoId', 'string', ['length' => 50])
+        	->addColumn('TagId', 'string', ['length' => 50])
         	->create();
     }
 }
