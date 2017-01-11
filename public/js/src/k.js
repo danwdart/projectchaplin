@@ -1,6 +1,6 @@
 /*
- * Konami-JS ~ 
- * :: Now with support for touch events and multiple instances for 
+ * Konami-JS ~
+ * :: Now with support for touch events and multiple instances for
  * :: those situations that call for multiple easter eggs!
  * Code: http://konami-js.googlecode.com/
  * Examples: http://www.snaptortoise.com/konami-js
@@ -8,9 +8,10 @@
  * Version: 1.4.2 (9/2/2013)
  * Licensed under the MIT License (http://opensource.org/licenses/MIT)
  * Tested in: Safari 4+, Google Chrome 4+, Firefox 3+, IE7+, Mobile Safari 2.2.1 and Dolphin Browser
+ * Changed by Kathie Dart to be es6 compliant for Project Chaplin
  */
 
-var k = function (callback) {
+export default function (callback) {
     var konami = {
         addEvent: function (obj, type, fn, ref_obj) {
             if (obj.addEventListener) {

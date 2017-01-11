@@ -16,33 +16,37 @@
  *
  * @package   Project Chaplin
  * @author    Kathie Dart
- * @copyright 2012-2013 Project Chaplin
+ * @copyright 2012-2017 Project Chaplin
  * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version   git
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-$(
-    function() {
-        $.extend(
-            {
-                getUrlVars: function(){
-                    var vars = [], hash;
-                    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-                    for(var i = 0; i < hashes.length; i++)
-                    {
-                        hash = hashes[i].split('=');
-                        vars.push(hash[0]);
-                        vars[hash[0]] = hash[1];
-                    }
-                    return vars;
-                },
-                getUrlVar: function(name){
-                    return $.getUrlVars()[name];
-                }
-            }
-        );
+import $ from 'jquery';
 
-        var intSkip = 50,
+$(document).ready(() => {
+    if (!window.location.href.startsWith('/search')) {
+        return;
+    }
+    $.extend(
+        {
+            getUrlVars: function(){
+                var vars = [], hash;
+                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                for(var i = 0; i < hashes.length; i++)
+                {
+                    hash = hashes[i].split('=');
+                    vars.push(hash[0]);
+                    vars[hash[0]] = hash[1];
+                }
+                return vars;
+            },
+            getUrlVar: function(name){
+                return $.getUrlVars()[name];
+            }
+        }
+    );
+
+    let intSkip = 50,
         moreYoutube = () =>{
             $.ajax(
                 {
@@ -54,5 +58,4 @@ $(
                 }
             );
         };
-    }
-);
+});
