@@ -36,8 +36,8 @@
     ],
     "require": {
         "zendframework/zendframework1": "dev-master",
-        "kathiedart/amqp": "dev-master",
-        "kathiedart/multiorm": "dev-master",
+        "dandart/amqp": "dev-master",
+        "dandart/multiorm": "dev-master",
         "mustache/mustache": "dev-master",
         "dailymotion/sdk": "dev-master",
         "robmorgan/phinx": "dev-master",
