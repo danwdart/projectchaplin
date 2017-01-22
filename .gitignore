@@ -3,5 +3,4 @@ vendor
 node_modules
 *.pid
 npm-debug.log
-/public/js
-!/public/js/src
+/public/js/index*
