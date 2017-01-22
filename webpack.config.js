@@ -7,7 +7,9 @@ module.exports = {
    module: {
        loaders: [
            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
-           { test: /\.css$/, loader: "style!css" }
+           { test: /\.css$/, loader: "style!css" },
+           { test: /\.png$/, loader: "url-loader?mimetype=image/png" },
+           { test: /\.svg$/, loader: "url-loader?mimetype=image/svg" }
        ]
    }
 };
