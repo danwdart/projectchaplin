@@ -146,9 +146,9 @@ $(document).ready(() => {
 
 
     // nothing important :P
-    k = new k();
-    k.code = function() {
+    let kk = new k();
+    kk.code = function() {
         $('#fun').show();
     };
-    k.load();
+    kk.load();
 });
