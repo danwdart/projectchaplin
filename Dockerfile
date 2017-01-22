@@ -23,5 +23,6 @@ RUN cd /var/www && npm install
 RUN chown -R www-data:www-data /var/www/public/uploads
 RUN chown -R www-data:www-data /var/www/config/
 RUN chown -R www-data:www-data /var/www/logs/
+RUN chown -R www-data:www-data /var/www/temp/
 VOLUME ["/var/www"]
 CMD /usr/sbin/apache2ctl -D FOREGROUND
