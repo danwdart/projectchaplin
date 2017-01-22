@@ -21,9 +21,9 @@
  * @version   git
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-import $ from jquery;
+import $ from 'jquery';
 
-$(document).ready(
+$(document).ready(() => {
     if (!window.location.href.startsWith('/user/vimeo')) {
         return;
     }
@@ -50,4 +50,4 @@ $(document).ready(
             }
         );
     }
-);
+});
