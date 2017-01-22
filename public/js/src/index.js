@@ -28,5 +28,6 @@ import './uservimeo';
 import './useryoutube';
 import './video';
 
-import '../../css/broadcast.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/chaplin.css';
+import '../../css/broadcast.css';
