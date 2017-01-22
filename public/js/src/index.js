@@ -29,5 +29,6 @@ import './useryoutube';
 import './video';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.css';
 import '../../css/chaplin.css';
 import '../../css/broadcast.css';
