@@ -1,19 +1,20 @@
 module.exports = {
-   entry: __dirname+"/public/js/src/index.js",
+   context: __dirname+'/public/js/',
+   entry: './src/index.js',
    output: {
-       path: __dirname+'/public/js',
+       path: './public/js/',
+       publicPath: '/public/js/',
        filename: "index.js"
    },
    module: {
        loaders: [
            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
-           { test: /\.css$/, loader: "style!css" },
+           { test: /\.css$/, loader: "style-loader!css-loader" },
            { test: /\.png/, loader: "url-loader?mimetype=image/png" },
-           { test: /\.svg/, loader: "url-loader?mimetype=image/svg" },
-           { test: /\.ttf/, loader: "url-loader?mimetype=font/ttf" },
-           { test: /\.eot/, loader: "url-loader?mimetype=font/eof" },
-           { test: /\.woff/, loader: "url-loader?mimetype=font/woff" },
-           { test: /\.woff2/, loader: "url-loader?mimetype=font/woff" }
+           { test: /\.woff2?/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
+           { test: /\.ttf/, loader: "file-loader" },
+           { test: /\.eot/, loader: "file-loader" },
+           { test: /\.svg/, loader: "file-loader" },
        ]
    }
 };
