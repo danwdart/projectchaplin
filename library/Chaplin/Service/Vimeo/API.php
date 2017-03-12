@@ -15,71 +15,123 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 use Vimeo\Vimeo;
 
 class Chaplin_Service_Vimeo_API
 {
-    const LOCATION = '/../external/youtube-dl';
+    const LOCATION = '/../external/youtube-dl --verbose';
 
-    public function search($strSearchTerm, $page = 0, $intLimit = 50)
+    // Required before config available
+    public function requestAccessToken($clientId, $clientSecret)
+    {
+        $lib = new Vimeo($clientId, $clientSecret);
+
+        // Get from cache
+        $token = $lib->clientCredentials(['public']);
+        if (!isset($token['body']['access_token'])) {
+            return null;
+        }
+        return $token['body']['access_token'];
+    }
+
+    private function _getAccessToken($lib)
     {
         $configChaplin = Chaplin_Config_Chaplin::getInstance();
 
         $configVimeo = $configChaplin->getVimeo();
 
-        $lib = new Vimeo($configVimeo->client_id, $configVimeo->client_secret);
-        $token = $lib->clientCredentials(['public']);
-        $lib->setToken($token['body']['access_token']);
+        return $configVimeo->accesstoken;
+    }
 
-        return $lib->request('/videos', ['query' => $strSearchTerm, 'filter' => 'CC'], 'GET')['body'];
+    private function _getLib()
+    {
+        $configChaplin = Chaplin_Config_Chaplin::getInstance();
+
+        $configVimeo = $configChaplin->getVimeo();
+
+        $lib = new Vimeo($configVimeo->clientid, $configVimeo->clientsecret);
+
+        $accesstoken = $this->_getAccessToken($lib);
+        $lib->setToken($accesstoken);
+
+        return $lib;
+    }
+
+    public function search($strSearchTerm, $page = 0, $intLimit = 50)
+    {
+        $lib = $this->_getLib();
+        if (!$lib) {
+            return null;
+        }
+
+        return $lib->request(
+            '/videos',
+            [
+                'query' => $strSearchTerm,
+                'filter' => 'CC'
+            ],
+            'GET'
+        )['body'];
     }
 
     public function getVideoById($strId)
     {
-        $configChaplin = Chaplin_Config_Chaplin::getInstance();
-
-        $configVimeo = $configChaplin->getVimeo();
-
-        $lib = new Vimeo($configVimeo->client_id, $configVimeo->client_secret);
-        $token = $lib->clientCredentials(['public']);
-        $lib->setToken($token['body']['access_token']);
+        $lib = $this->_getLib();
+        if (!$lib) {
+            return null;
+        }
 
         return $lib->request('/videos/'.$strId, [], 'GET')['body'];
     }
 
     public function getUserProfile($strSearchTerm)
     {
-        $configChaplin = Chaplin_Config_Chaplin::getInstance();
+        $lib = $this->_getLib();
+        if (!$lib) {
+            return null;
+        }
 
-        $configVimeo = $configChaplin->getVimeo();
+        $res = $lib->request(
+            '/users',
+            [
+                'query' => $strSearchTerm
+            ],
+            'GET'
+        )['body'];
 
-        $lib = new Vimeo($configVimeo->client_id, $configVimeo->client_secret);
-        $token = $lib->clientCredentials(['public']);
-        $lib->setToken($token['body']['access_token']);
+        if (!isset($res['data'])) {
+            return null;
+        }
 
-        $ret = $lib->request('/users', ['query' => $strSearchTerm], 'GET')['body']['data'];
-        if (isset($ret[0]) && strtolower($strSearchTerm) == strtolower($ret[0]['name'])) return $ret[0];
+        $ret = $res['data'];
+
+        if (isset($ret[0]) &&
+            strtolower($strSearchTerm) == strtolower($ret[0]['name'])
+        ) {
+            return $ret[0];
+        }
         return null;
     }
 
-    public function getUserUploads($strChannelId)
+    public function getUserUploads($strChannelId, $intPage = 1)
     {
-        $configChaplin = Chaplin_Config_Chaplin::getInstance();
+        $lib = $this->_getLib();
+        if (!$lib) {
+            return null;
+        }
 
-        $configVimeo = $configChaplin->getVimeo();
-
-        $lib = new Vimeo($configVimeo->client_id, $configVimeo->client_secret);
-        $token = $lib->clientCredentials(['public']);
-        $lib->setToken($token['body']['access_token']);
-
-        return $lib->request('/users/'.$strChannelId.'/videos', [], 'GET')['body'];
+        return $lib->request(
+            '/users/'.$strChannelId.'/videos', [
+            'page' => $intPage
+            ], 'GET'
+        )['body'];
     }
 
     public function getDownloadURL($strURL)
@@ -88,10 +140,10 @@ class Chaplin_Service_Vimeo_API
             self::LOCATION.
             ' --prefer-free-formats -g -- '.
             escapeshellarg($strURL);
-        return exec($strCommandLine);
+        return system($strCommandLine);
     }
 
-    public function downloadVideo($strURL, $strPathToSave)
+    public function downloadVideo($strURL, $strPathToSave, &$ret)
     {
         $strCommandLine = APPLICATION_PATH.self::LOCATION.
             " --recode-video webm -o ".
@@ -101,7 +153,7 @@ class Chaplin_Service_Vimeo_API
         echo $strCommandLine.PHP_EOL;
         ob_flush();
         flush();
-        system($strCommandLine);
+        return system($strCommandLine, $ret);
     }
 
     public function downloadThumbnail($strVideoId, $strPathToSave)
@@ -143,13 +195,18 @@ class Chaplin_Service_Vimeo_API
         );
         // All YouTube imports are CC-BY
         $modelVideo->setLicence(
-            Chaplin_Model_Video_Licence::createWithVimeoId($entryVideo['license'])
+            Chaplin_Model_Video_Licence::createWithVimeoId(
+                $entryVideo['license']
+            )
             ->getId()
         );
         $modelVideo->save();
 
         // msg
-        $modelYoutube = Chaplin_Model_Video_Vimeo::create($modelVideo, $strVideoId);
+        $modelYoutube = Chaplin_Model_Video_Vimeo::create(
+            $modelVideo,
+            $strVideoId
+        );
         Chaplin_Gateway::getInstance()->getVideo_Vimeo()->save($modelYoutube);
 
         return $modelVideo;

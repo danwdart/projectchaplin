@@ -15,18 +15,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
-class Chaplin_Model_User_CredentialTest extends Zend_Test_PHPUnit_ControllerTestCase
+class Chaplin_Model_User_CredentialTest
+    extends Zend_Test_PHPUnit_ControllerTestCase
 {
     public function testCreate()
     {
-        $this->markTestSkipped('Credentials not actively maintained and deprecated');
+        $this->markTestSkipped(
+            'Credentials not actively maintained and deprecated'
+        );
 
         $strServiceName = 'ServiceName';
         $strServiceURL = 'ServiceURL';
@@ -34,9 +37,14 @@ class Chaplin_Model_User_CredentialTest extends Zend_Test_PHPUnit_ControllerTest
         $strUsername = 'Username';
         $strPassword = 'Password';
         $modelUser = Chaplin_Model_User::create($strUsername, $strPassword);
-        $credential = Chaplin_Model_User_Credential::create($modelUser, $strServiceName, $strServiceURL, $strAccessToken);
+        $credential = Chaplin_Model_User_Credential::create(
+            $modelUser,
+            $strServiceName,
+            $strServiceURL,
+            $strAccessToken
+        );
         $this->assertEquals($strServiceName, $credential->getServiceName());
-        $this->assertEquals($strServiceURL,  $credential->getServiceURL());
+        $this->assertEquals($strServiceURL, $credential->getServiceURL());
         $this->assertEquals($strAccessToken, $credential->getAccessToken());
     }
 }

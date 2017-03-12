@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Config_Sessions
     extends Chaplin_Config_Abstract
@@ -34,36 +34,36 @@ class Chaplin_Config_Sessions
 
     protected function _getConfigFile()
     {
-        return realpath(APPLICATION_PATH.'/config/sessions.ini');
+        return APPLICATION_PATH.'/config/sessions.ini';
     }
-    
+
     public function getName()
     {
-    	$this->_getValue(
+        $this->_getValue(
             $this->_zendConfig->session->name,
             'session.name'
-        );	
+        );
     }
 
     public function getRememberMeSeconds()
     {
-		$this->_getValue(
+        $this->_getValue(
             $this->_zendConfig->session->remember_me_seconds,
             'session.remember_me_seconds'
-        );    		
+        );
     }
 
     public function getSessionOptions()
     {
-    	return $this->_getValue(
+        return $this->_getValue(
             $this->_zendConfig->session,
             'session'
-        )->toArray();	
+        )->toArray();
     }
 
     public function getSaveHandler()
     {
-    	$strClassName = $this->_getValue(
+        $strClassName = $this->_getValue(
             $this->_zendConfig->saveHandler->class,
             'saveHandler.class'
         );

@@ -15,26 +15,18 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Default_Bootstrap extends Zend_Application_Module_Bootstrap
 {
-    // Load the local models and forms
-    protected function _initModuleAutoloader()
-    {    
-        $this->_resourceLoader = new Zend_Application_Module_Autoloader(array(
-            'namespace' => 'default',
-            'basePath'  => APPLICATION_PATH . '/modules/default',
-        ));  
-    }    
     protected function _initAcl()
-    {    
-        //$acl = $this->getApplication()->getResource('acl');     
+    {
+        //$acl = $this->getApplication()->getResource('acl');
         $acl = Zend_Registry::get('acl');
 
         $acl->add(new Zend_Acl_Resource('default/index'));
@@ -47,7 +39,7 @@ class Default_Bootstrap extends Zend_Application_Module_Bootstrap
         $acl->add(new Zend_Acl_Resource('default/services'));
         $acl->add(new Zend_Acl_Resource('default/video'));
         $acl->add(new Zend_Acl_Resource('default/user'));
-             
+
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/index');
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_USER, 'default/broadcast');
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/error');
@@ -61,6 +53,7 @@ class Default_Bootstrap extends Zend_Application_Module_Bootstrap
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/video', 'watch');
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/video', 'watchshort');
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/video', 'watchyoutube');
+        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/video', 'watchvimeo');
         $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/video', 'watchremote');
     }
 }

@@ -16,27 +16,42 @@
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package    Project Chaplin
- * @author     Dan Dart
+ * @author     Kathie Dart
  * @copyright  2012-2013 Project Chaplin
  * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @link       https://github.com/kathiedart/projectchaplin
 **/
-$vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
 ?>
 <link rel="alternate" type="application/json+oembed"
-  href="<?php echo $vhost ?>/services/oembed?url=<?php echo $vhost ?>/video/watch/id/<?php echo $this->video->getVideoId() ?>&format=json"
+  href="<?php echo $this->vhost ?>/services/oembed?url=<?php echo $this->vhost ?>/video/watch/id/<?php echo $this->video->getVideoId() ?>&format=json"
   title="<?php echo $this->video->getTitle() ?>" />
 <link rel="alternate" type="application/xml+oembed"
-  href="<?php echo $vhost ?>/services/oembed?url=<?php echo $vhost ?>/video/watch/id/<?php echo $this->video->getVideoId() ?>&format=xml"
+  href="<?php echo $this->vhost ?>/services/oembed?url=<?php echo $this->vhost ?>/video/watch/id/<?php echo $this->video->getVideoId() ?>&format=xml"
   title="<?php echo $this->video->getTitle() ?>" />
+<!-- Facebook Meta Tags -->
+<meta property="og:url"           content="<?php echo $this->vhost ?>/video/watch/id/<?php echo $this->video->getVideoId() ?>" />
+<meta property="og:type"          content="website" />
+<meta property="og:title"         content="<?php echo $this->video->getTitle() ?> on Chaplin" />
+<meta property="og:description"   content="<?php echo urlencode($this->video->getDescription()) ?>" />
+<meta property="og:image"         content="<?php echo $this->vhost ?>/uploads/<?php echo $this->video->getFilename() ?>.png" />
+<!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.7&appId=<? echo $this->facebookAppId ?>";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<!-- End Facebook Meta Tags -->
 
 <h1><?php echo $this->video->getTitle();?></h1>
 <div id="videoarea">
-	<video id="video" controls class="clicktoplay fullscreen"
-		src="<?php echo $this->video->getFilename().'?'.time();?>">
+	<video id="video" controls poster="<?php echo $this->video->getFilename().'.png?'.time();?>">
+        <source src="<?php echo $this->video->getFilename().'?'.time();?>"/>
 	</video>
-	<span id="fun">
+	<div id="fun">
 		<button id="slower">&laquo; Slow Motion</button>
 		<button id="normalspeed">Normal Speed</button>
 		<button id="faster">Fast Forward &raquo;</button>
@@ -54,18 +69,30 @@ $vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
 		    <option class="filter" value="br">Barrel Roll!</option>
 		    <option class="filter" value="drunk">Drunk!</option>
 		</select>
-	</span>
+	</div>
 </div>
 <div id="infoarea">
     <button class="infinite btn btn-primary"><i class="fa fa-refresh"></i> Loop</button>
 	<br/>
 	<br/>Uploaded by: <a href="/user/<?php echo $this->video->getUsername(); ?>"><?php echo $this->video->getUsername(); ?></a>
 	<br/>Uploaded on <?php echo date('d/m/Y H:i', $this->video->getTimeCreated());?> (<?php echo $this->video->getTimeAgo(); ?>)
-	<br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
+    <?php if ($this->video->getSource()): ?>
+    <br/>Original source: <a href="https://youtube.com/watch?v=<?php echo $this->video->getSource(); ?>" target="_blank">Source Video</a>
+    <?php endif; ?>
+    <?php if ($this->video->getUploader()): ?>
+    <br/>Original author: <?php echo $this->video->getUploader(); ?>
+    <?php endif; ?>
+    <br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
 	<br/><?php echo $this->video->getDescription(); ?>
 	<p>Short URL: <input type="text" disabled value="<?php echo $this->short; ?>"/></p>
 	<p><strong>&uparrow; <?php echo $this->video->getVotesUp(); ?> / <?php echo $this->video->getVotesDown(); ?> &downarrow;</strong></p>
-	<p><?php echo $this->twittershare; ?></p>
+    <?php if ($this->video->getPrivacy()->isPublic()): ?>
+    <p><?php echo $this->twittershare ?></p>
+    <p><?php echo $this->facebookshare ?></p>
+    <p><?php echo $this->gplusshare ?></p>
+    <p><?php echo $this->gnusocialshare ?></p>
+    <p><?php echo $this->diasporashare ?></p>
+    <?php endif; ?>
 	<br/>
 	<?php if(Chaplin_Auth::getInstance()->hasIdentity()):
 	if ('1' === $this->video->getYourVote()) :
@@ -107,5 +134,3 @@ $vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
 	<?php endforeach; ?>
 	</div>
 </div>
-<script src="/js/k.js"></script>
-<script src="/js/video.js"></script>

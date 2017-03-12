@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Model_Video_Convert
     extends Chaplin_Model_Field_Hash
@@ -51,57 +51,58 @@ class Chaplin_Model_Video_Convert
     {
         if (is_null($this->_modelVideo)) {
             $this->_modelVideo = Chaplin_Gateway::getInstance()
-            ->getVideo()
-            ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
+                ->getVideo()
+                ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
         }
         return $this->_modelVideo;
     }
-    
+
     public function process()
     {
         $modelVideo = Chaplin_Gateway::getInstance()
             ->getVideo()
             ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
-        
+
         $strFullPath = APPLICATION_PATH.'/../public';
-        
+
         $strFilenameRawFullPath = $strFullPath.$modelVideo->getFilename();
-        
+
         echo 'Converting '.$strFilenameRawFullPath.PHP_EOL;
         ob_flush();
         flush();
-        
+
         $strPathToWebm = $strFullPath.$modelVideo->getFilename().'.webm';
-    
+
         $ret = 0;
-    
+
         $strError = Chaplin_Service::getInstance()
             ->getEncoder()
             ->convertFile($strFilenameRawFullPath, $strPathToWebm, $ret);
-        
+
         if(0 != $ret) {
             throw new Exception('Unable to convert: '.$strFilenameRawFullPath);
         }
-        
+
         echo 'Converted '.$strFilenameRawFullPath;
         ob_flush();
         flush();
-        
+
         unlink($strFilenameRawFullPath);
-        
+
         $modelVideo->setFilename($modelVideo->getFilename().'.webm');
         $modelVideo->save();
 
         try {
             Chaplin_Gateway::getEmail()
                 ->videoFinished($modelVideo);
+            echo '"Video Finished" email successfully sent.'.PHP_EOL;
         } catch (Exception $e) {
-            echo 'Video Finished Email could not be sent.';
+            echo '"Video Finished" email could not be sent because '.$e->getMessage().PHP_EOL.$e->getTraceAsString();
             ob_flush();
             flush();
         }
     }
-    
+
     public function getRoutingKey()
     {
         return 'video.convert.'.$this->_getModelVideo()->getUsername();
@@ -111,4 +112,4 @@ class Chaplin_Model_Video_Convert
     {
         return 'Video';
     }
-}    
+}

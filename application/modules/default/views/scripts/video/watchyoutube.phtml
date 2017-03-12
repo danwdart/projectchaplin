@@ -16,22 +16,24 @@
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package    Project Chaplin
- * @author     Dan Dart
+ * @author     Kathie Dart
  * @copyright  2012-2013 Project Chaplin
  * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @link       https://github.com/kathiedart/projectchaplin
 **/
 ?>
 <h1><?php echo $this->entryVideo->getSnippet()->title;?></h1>
 <div id="videoarea">
 	<iframe
+        id="video"
 		class="youtube-player"
 		type="text/html"
-		width="640"
-		height="385"
-		src="<?php echo $this->strScheme; ?>://www.youtube.com/embed/<?php echo $this->entryVideo->id; ?>"
+		width="720"
+		height="405"
+		src="https://www.youtube-nocookie.com/embed/<?php echo $this->entryVideo->id; ?>"
 		frameborder="0"
+        allowfullscreen
 	>
 	</iframe>
 </div>
@@ -44,7 +46,11 @@
 	?> by <a href="/user/youtube/id/<?php echo $strChannelId; ?>"><?php echo $strName; ?></a>
 	</h3>
 	<br/>
-	<span class="text-sm"><?php echo str_replace("\n", '<br/>', $this->entryVideo->getSnippet()->description); ?></span>
+	<span class="text-sm"><?php echo str_replace(
+        "\n", '<br/>', (new Misd\Linkify\Linkify())->process(
+            $this->entryVideo->getSnippet()->description
+        )
+    ); ?></span>
 	<br/>
 	<a class="btn btn-success" href="/video/importyoutube/id/<?php echo $this->entryVideo->id;?>"><i class="fa fa-download"></i> Import</a>
 	<?php if ($this->isLocal) : ?>
@@ -54,4 +60,3 @@
 	<?php if(Chaplin_Auth::getInstance()->hasIdentity()): echo $this->formComment; else:
 	echo 'Login above to comment.'; endif;  ?>
 </div>
-<script src="/js/video.js"></script>

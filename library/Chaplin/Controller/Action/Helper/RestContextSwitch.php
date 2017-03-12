@@ -90,18 +90,17 @@ class Chaplin_Controller_Action_Helper_RestContextSwitch
             if (is_string($callback) && method_exists($this, $callback)) {
                 $this->$callback();
             }
-            else if (is_string($callback) && function_exists($callback))
-            {
+            else if (is_string($callback) && function_exists($callback)) {
                 $callback();
             }
-            else if (is_array($callback))
-            {
+            else if (is_array($callback)) {
                 call_user_func($callback);
             }
             else
             {
                 throw new Zend_Controller_Action_Exception(
-                    sprintf('Invalid context callback registered for context "%s"', $context));
+                    sprintf('Invalid context callback registered for context "%s"', $context)
+                );
             }
         }
 

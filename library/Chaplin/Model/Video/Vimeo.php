@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Model_Video_Vimeo
     extends Chaplin_Model_Field_Hash
@@ -57,12 +57,17 @@ class Chaplin_Model_Video_Vimeo
 
         $strOut = Chaplin_Service::getInstance()
             ->getVimeo()
-            ->downloadVideo($this->_getVimeoId(), $strPathToDownloadTo);
+            ->downloadVideo($this->_getVimeoId(), $strPathToDownloadTo, $ret);
 
         echo $strOut;
         ob_flush();
         flush();
-        echo 'Downloaded '.$this->_getVimeoId().PHP_EOL;
+        if (0 == $ret) {
+            echo 'Downloaded '.$this->_getVimeoId().PHP_EOL;
+        } else {
+            echo 'Failed to download '.$this->_getVimeoId().PHP_EOL;
+            throw new \Exception('Failed to download '.$this->_getVimeoId().' because: '.$strOut);
+        }
         ob_flush();
         flush();
 
@@ -73,8 +78,9 @@ class Chaplin_Model_Video_Vimeo
         try {
             Chaplin_Gateway::getEmail()
                 ->videoFinished($modelVideo);
+            echo '"Video Finished" email successfully sent.'.PHP_EOL;
         } catch (Exception $e) {
-            echo 'Video Finished Email could not be sent.';
+            echo '"Video Finished" email could not be sent because '.$e->getMessage().PHP_EOL.$e->getTraceAsString();
             ob_flush();
             flush();
         }

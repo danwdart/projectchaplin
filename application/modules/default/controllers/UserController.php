@@ -15,43 +15,43 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class UserController extends Chaplin_Controller_Action_Api
 {
-	public function indexAction()
-	{
-		$strUsername = $this->_request->getParam('id', null);
-		if(is_null($strUsername)) {
-			return $this->_redirect('/');
-		}
+    public function indexAction()
+    {
+        $strUsername = $this->_request->getParam('id', null);
+        if(is_null($strUsername)) {
+            return $this->_redirect('/');
+        }
 
-		try {
-			$modelUser = Chaplin_Gateway::getInstance()
-				->getUser()
-				->getByUsername($strUsername);
-		} catch(Chaplin_Dao_Exception_User_NotFound $e) {
-			$this->_redirect('/');
-		}
+        try {
+            $modelUser = Chaplin_Gateway::getInstance()
+             ->getUser()
+             ->getByUsername($strUsername);
+        } catch(Chaplin_Dao_Exception_User_NotFound $e) {
+            $this->_redirect('/');
+        }
 
         if ($this->_isAPICall()) {
             return $this->view->assign($modelUser->toArray());
         }
 
-		$this->view->bIsMe = Chaplin_Auth::getInstance()->hasIdentity() &&
-			Chaplin_Auth::getInstance()->getIdentity()->getUser()->getUsername() ==
-				$modelUser->getUsername();
+        $this->view->bIsMe = Chaplin_Auth::getInstance()->hasIdentity() &&
+         Chaplin_Auth::getInstance()->getIdentity()->getUser()->getUsername() ==
+          $modelUser->getUsername();
 
-		$this->view->modelUser = $modelUser;
+        $this->view->modelUser = $modelUser;
 
-		if (!$this->view->bIsMe) {
-			return;
-		}
+        if (!$this->view->bIsMe) {
+            return;
+        }
 
         $this->view->strTitle = $modelUser->getNick().' - Chaplin';
 
@@ -84,8 +84,7 @@ class UserController extends Chaplin_Controller_Action_Api
         $email = $post['email'];
         $fullname = $post['fullname'];
 
-        if(!$user->verifyPassword($oldpassword))
-        {
+        if(!$user->verifyPassword($oldpassword)) {
             $form->oldpassword->addError('Incorrect old password.');
             return $this->view->assign('form', $form);
         }
@@ -107,29 +106,39 @@ class UserController extends Chaplin_Controller_Action_Api
             $form->Save->addError('An error occurred whilst saving your details. Please try again.');
             return $this->view->assign('form', $form);
         }
-	}
+    }
 
-	public function youtubeAction()
-	{
-		$strUsername = $this->_request->getParam('id', null);
-
+    public function youtubeAction()
+    {
+        $strPageToken = $this->_request->getQuery('pageToken', null);
+        $strUsername = $this->_request->getParam('id', null);
         $serviceYouTube = Chaplin_Service::getInstance()->getYouTube();
+        $this->view->ittVideos = $serviceYouTube->getUserUploads($strUsername, $strPageToken);
 
-		$this->view->ittVideos = $serviceYouTube->getUserUploads($strUsername);
-
-        $this->view->strTitle = $this->view->ittVideos[0]->getSnippet()->channelTitle.
+        if ($strPageToken) {
+            $this->_helper->layout()->disableLayout();
+            $this->_helper->viewRenderer('youtube-partial');
+        } else {
+            $this->view->strTitle = $this->view->ittVideos->items[0]->getSnippet()->channelTitle.
             ' from YouTube - Chaplin';
-	}
+        }
+    }
 
     public function vimeoAction()
-	{
-		$strUsername = $this->_request->getParam('id', null);
+    {
+        $strPage = $this->_request->getQuery('page', 1);
+        $intPage = intval($strPage);
 
+        $strUsername = $this->_request->getParam('id', null);
         $serviceVimeo = Chaplin_Service::getInstance()->getVimeo();
 
-		$this->view->ittVideos = $serviceVimeo->getUserUploads($strUsername);
-
-        $this->view->strTitle = $this->view->ittVideos['data'][0]['user']['name'].
-            ' from Vimeo - Chaplin';
-	}
+        $this->view->ittVideos = $serviceVimeo->getUserUploads($strUsername, $intPage);
+        if (1 < $strPage) {
+            $this->_helper->layout()->disableLayout();
+            $this->_helper->viewRenderer('vimeo-partial');
+        } else {
+            $this->view->strTitle = $this->view->ittVideos['data'][0]['user']['name'].
+                    ' from Vimeo - Chaplin';
+        }
+    }
 }

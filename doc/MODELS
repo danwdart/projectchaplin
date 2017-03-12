@@ -56,7 +56,7 @@ E.g.:
 
 {
     id: 1,
-    Email: dandart@googlemail.com,
+    Email: kathiedart@googlemail.com,
     Credentials: {
         _id: 127891,
         openidassoc: 42486264
