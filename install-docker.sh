@@ -24,6 +24,8 @@ rm -rf /var/www
 git clone https://github.com/kathiedart/projectchaplin.git /var/www
 
 cd /var/www
+# REMOVE ME
+git checkout cs_compile
 composer install
 npm install
 npm run build
