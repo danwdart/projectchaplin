@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class default_Form_Video_Comment extends Zend_Form
 {
@@ -28,16 +28,20 @@ class default_Form_Video_Comment extends Zend_Form
     {
         $this->setAction('');
         $this->setMethod('post');
-        $this->setAttribs(array(
+        $this->setAttribs(
+            array(
             'class' => 'ajax',
             'rel' => 'comments'
-        ));
+            )
+        );
         
         $comment = new Zend_Form_Element_Textarea('Comment');
-        $comment->setAttribs(array(
+        $comment->setAttribs(
+            array(
             'style' => 'width:250px;height:40px;margin:0;',
             'placeholder' => 'Your Comment'
-        ));
+            )
+        );
         $submit = new Zend_Form_Element_Submit('Submit');
         $submit->setLabel('Say it!');
         

@@ -2,18 +2,18 @@
 /**
  * @see Zend_Cache_Backend
 **/
-#require_once 'Zend/Cache/Backend.php';
+// require_once 'Zend/Cache/Backend.php';
 
 /**
  * @see Zend_Cache_Backend_ExtendedInterface
 **/
-#require_once 'Zend/Cache/Backend/ExtendedInterface.php';
+// require_once 'Zend/Cache/Backend/ExtendedInterface.php';
 
 /**
  * Redis adapter for Zend_Cache
  * 
- * @author Soin Stoiana
- * @author Colin Mollenhour
+ * @author  Soin Stoiana
+ * @author  Colin Mollenhour
  * @version 0.0.1
 **/
 class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_Cache_Backend_ExtendedInterface
@@ -27,18 +27,25 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
     const PREFIX_TAG_IDS  = 'zc:ti:';
     const PREFIX_ID_TAGS  = 'zc:it:';
 
-    /** @var Redis**/
+    /**
+ * @var Redis
+**/
     protected $_redis;
 
-    /** @var bool**/
-    protected $_notMatchingTags = FALSE;
+    /**
+ * @var bool
+**/
+    protected $_notMatchingTags = false;
 
-    /** @var bool**/
-    protected $_exactMtime = FALSE;
+    /**
+ * @var bool
+**/
+    protected $_exactMtime = false;
 
     /**
      * Contruct Zend_Cache Redis backend
-     * @param array $options
+     *
+     * @param  array $options
      * @return \Chaplin_Cache_Backend_PhpRedis
     **/
     public function __construct($options = array())
@@ -48,36 +55,36 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
         }
         
         if (isset($options['phpredis'])) {
-          $this->_redis = $options['phpredis'];
+            $this->_redis = $options['phpredis'];
         } else {
-            if ( empty($options['server']) ) {
+            if (empty($options['server']) ) {
                 Zend_Cache::throwException('Redis \'server\' not specified.');
             }
 
-            if ( empty($options['port']) ) {
+            if (empty($options['port']) ) {
                 Zend_Cache::throwException('Redis \'port\' not specified.');
             }
 
             $this->_redis = new Redis;
-            if ( ! $this->_redis->connect($options['server'], $options['port']) ) {
+            if (! $this->_redis->connect($options['server'], $options['port']) ) {
                 Zend_Cache::throwException("Could not connect to Redis server {$options['server']}:{$options['port']}");
             }
         }
 
-        if ( ! empty($options['database'])) {
+        if (! empty($options['database'])) {
             $this->_redis->select((int) $options['database']) or 
               Zend_Cache::throwException('The redis database could not be selected.');
         }
 
-        if ( isset($options['notMatchingTags']) ) {
+        if (isset($options['notMatchingTags']) ) {
             $this->_notMatchingTags = (bool) $options['notMatchingTags'];
         }
 
-        if ( isset($options['exactMtime']) ) {
+        if (isset($options['exactMtime']) ) {
             $this->_exactMtime = (bool) $options['exactMtime'];
         }
 
-        if ( isset($options['automatic_cleaning_factor']) ) {
+        if (isset($options['automatic_cleaning_factor']) ) {
             $this->_options['automatic_cleaning_factor'] = (int) $options['automatic_cleaning_factor'];
         } else {
             $this->_options['automatic_cleaning_factor'] = 20000;
@@ -93,8 +100,8 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
     public function load($id, $doNotTestCacheValidity = false)
     {
         $data = $this->_redis->get(self::PREFIX_DATA . $id);
-        if ($data === NULL) {
-            return FALSE;
+        if ($data === null) {
+            return false;
         }
         return $data;
     }
@@ -109,10 +116,10 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
     {
         if ($this->_exactMtime) {
             $mtime = $this->_redis->get(self::PREFIX_MTIME . $id);
-            return ($mtime ? $mtime : FALSE);
+            return ($mtime ? $mtime : false);
         } else {
             $exists = $this->_redis->exists(self::PREFIX_DATA . $id);
-            return ($exists ? time() : FALSE);
+            return ($exists ? time() : false);
         }
     }
 
@@ -122,9 +129,9 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
      * Note : $data is always "string" (serialization is done by the
      * core not by the backend)
      *
-     * @param  string $data             Datas to cache
-     * @param  string $id               Cache id
-     * @param  array  $tags             Array of strings, the cache record will
+     * @param  string   $data             Datas to cache
+     * @param  string   $id               Cache id
+     * @param  array    $tags             Array of strings, the cache record will be tagged by each string entry
      * be tagged by each string entry
      * @param  bool|int $specificLifetime If != false, set a specific lifetime
      * for this cache record (null => infinite lifetime)
@@ -132,7 +139,8 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
     **/
     public function save($data, $id, $tags = array(), $specificLifetime = false)
     {
-        if (!is_array($tags)) $tags = array($tags);
+        if (!is_array($tags)) { $tags = array($tags);
+        }
 
         $lifetime = $this->getLifetime($specificLifetime);
 
@@ -143,7 +151,7 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
             $result = $this->_redis->set(self::PREFIX_DATA . $id, $data);
         }
 
-        if ( $result == 'OK' ) {
+        if ($result == 'OK' ) {
             // Set the modified time
             if ($this->_exactMtime) {
                 if ($lifetime) {
@@ -175,10 +183,10 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
                 $this->_redis->sAdd(self::SET_IDS, $id);
             }
 
-            return TRUE;
+            return true;
         }
 
-        return FALSE;
+        return false;
     }
 
     /**
@@ -219,7 +227,7 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
     protected function _removeByNotMatchingTags($tags)
     {
         $ids = $this->getIdsNotMatchingTags($tags);
-        if ( ! $ids) {
+        if (! $ids) {
             return;
         }
 
@@ -319,17 +327,19 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
         $tags = (array) $this->_redis->sMembers(self::SET_TAGS);
         foreach ($tags as $tag) {
             $tagMembers = $this->_redis->sMembers(self::PREFIX_TAG_IDS . $tag);
-            if ( ! count($tagMembers)) continue;
+            if (! count($tagMembers)) { continue;
+            }
             $expired = array();
             foreach ($tagMembers as $id) {
-                if ( ! isset($exists[$id])) {
+                if (! isset($exists[$id])) {
                     $exists[$id] = $this->_redis->exists($id);
                 }
-                if ( ! $exists[$id]) {
+                if (! $exists[$id]) {
                     $expired[] = $id;
                 }
             }
-            if ( ! count($expired)) continue;
+            if (! count($expired)) { continue;
+            }
 
             if (count($expired) == count($tagMembers)) {
                 $this->_redis->del(self::PREFIX_TAG_IDS . $tag);
@@ -365,7 +375,7 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
     **/
     public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
-        if ( $tags && ! is_array($tags)) {
+        if ($tags && ! is_array($tags)) {
             $tags = array($tags);
         }
 
@@ -375,34 +385,34 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
 
         if ($mode == Zend_Cache::CLEANING_MODE_OLD) {
             $this->_collectGarbage();
-            return TRUE;
+            return true;
         }
 
-        if ( ! count($tags)) {
-            return TRUE;
+        if (! count($tags)) {
+            return true;
         }
 
-        $result = TRUE;
+        $result = true;
 
         switch ($mode)
         {
-            case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
+        case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
 
-                $this->_removeByMatchingTags($tags);
-                break;
+            $this->_removeByMatchingTags($tags);
+            break;
 
-            case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
+        case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
 
-                $this->_removeByNotMatchingTags($tags);
-                break;
+            $this->_removeByNotMatchingTags($tags);
+            break;
 
-            case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+        case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
 
-                $this->_removeByMatchingAnyTags($tags);
-                break;
+            $this->_removeByMatchingAnyTags($tags);
+            break;
 
-            default:
-                Zend_Cache::throwException('Invalid mode for clean() method: '.$mode);
+        default:
+            Zend_Cache::throwException('Invalid mode for clean() method: '.$mode);
         }
         return (bool) $result;
     }
@@ -414,7 +424,7 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
     **/
     public function isAutomaticCleaningAvailable()
     {
-        return TRUE;
+        return true;
     }
 
     /**
@@ -467,7 +477,7 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
      *
      * In case of multiple tags, a logical AND is made between tags
      *
-     * @param array $tags array of tags
+     * @param  array $tags array of tags
      * @return array array of matching cache ids (string)
     **/
     public function getIdsMatchingTags($tags = array())
@@ -480,12 +490,12 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
      *
      * In case of multiple tags, a negated logical AND is made between tags
      *
-     * @param array $tags array of tags
+     * @param  array $tags array of tags
      * @return array array of not matching cache ids (string)
     **/
     public function getIdsNotMatchingTags($tags = array())
     {
-        if ( ! $this->_notMatchingTags) {
+        if (! $this->_notMatchingTags) {
             Zend_Cache::throwException("notMatchingTags is currently disabled.");
         }
         return (array) $this->_redisVariadic('sDiff', self::SET_IDS, $this->_preprocessTagIds($tags));
@@ -496,7 +506,7 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
      *
      * In case of multiple tags, a logical OR is made between tags
      *
-     * @param array $tags array of tags
+     * @param  array $tags array of tags
      * @return array array of any matching cache ids (string)
     **/
     public function getIdsMatchingAnyTags($tags = array())
@@ -523,14 +533,14 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
      * - tags : a string array of tags
      * - mtime : timestamp of last modification time
      *
-     * @param string $id cache id
+     * @param  string $id cache id
      * @return array array of metadatas (false if the cache id is not found)
     **/
     public function getMetadatas($id)
     {
         $mtime = $this->test($id);
-        if ( ! $mtime) {
-            return FALSE;
+        if (! $mtime) {
+            return false;
         }
         $ttl = $this->_redis->ttl(self::PREFIX_DATA . $id);
         $tags = (array) $this->_redis->sMembers(self::PREFIX_ID_TAGS . $id);
@@ -545,8 +555,8 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
     /**
      * Give (if possible) an extra lifetime to the given cache id
      *
-     * @param string $id cache id
-     * @param int $extraLifetime
+     * @param  string $id            cache id
+     * @param  int    $extraLifetime
      * @return boolean true if ok
     **/
     public function touch($id, $extraLifetime)
@@ -623,7 +633,7 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
         return $this->_preprocessItems($tags, self::PREFIX_TAG_IDS);
     }
 
-    protected function _redisVariadic($command, $arg1, $args = NULL)
+    protected function _redisVariadic($command, $arg1, $args = null)
     {
         if (is_array($arg1)) {
             $args = $arg1;

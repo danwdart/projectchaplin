@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 require __DIR__.'/../vendor/autoload.php';
 
@@ -35,10 +35,14 @@ defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
 // Ensure library/ is on include_path
-set_include_path(implode(PATH_SEPARATOR, array(
-    realpath(APPLICATION_PATH . '/../library'),
-    get_include_path(),
-)));
+set_include_path(
+    implode(
+        PATH_SEPARATOR, array(
+        realpath(APPLICATION_PATH . '/../library'),
+        get_include_path(),
+        )
+    )
+);
 
 // Create application, bootstrap, and run
 $application = new Zend_Application(
@@ -62,15 +66,15 @@ $front->setRequest(
     )
 );
 
-$front->setRouter(	new Chaplin_Controller_Router_Cli());
+$front->setRouter(new Chaplin_Controller_Router_Cli());
 $front->setResponse(new Zend_Controller_Response_Cli());
 $errorHandler = new Zend_Controller_Plugin_ErrorHandler();
 $front->registerPlugin($errorHandler, 100);
 $error = $front->getPlugin('Zend_Controller_Plugin_ErrorHandler');
 $error->setErrorHandler(
     array(
-        'controller'	=> 'clierror',
-        'action'		=> 'error'
+        'controller'    => 'clierror',
+        'action'        => 'error'
     )
 );
 $front->dispatch();

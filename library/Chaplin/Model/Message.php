@@ -15,14 +15,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
-class Chaplin_Model_Message
+abstract class Chaplin_Model_Message
     extends Chaplin_Model_Field_Hash
 {
     const FIELD_MESSAGEID = 'MessageId';
@@ -46,9 +46,15 @@ class Chaplin_Model_Message
         self::FIELD_SENDER => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_SUBJECT => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_TEXT => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_DATE_TIMECREATED => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_DATE_TIMEACKNOWLEDGED => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_DATE_TIMEDELETED => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_DATE_TIMECREATED => [
+            'Class' => 'Chaplin_Model_Field_Field'
+        ],
+        self::FIELD_DATE_TIMEACKNOWLEDGED => [
+            'Class' => 'Chaplin_Model_Field_Field'
+        ],
+        self::FIELD_DATE_TIMEDELETED => [
+            'Class' => 'Chaplin_Model_Field_Field'
+        ],
         self::FIELD_PRIORITY => ['Class' => 'Chaplin_Model_Field_Field'],
     ];
 
@@ -58,14 +64,22 @@ class Chaplin_Model_Message
         $strSubject,
         $strText,
         $intPriority = self::PRIORITY_NORMAL
-    ) {
+    )
+    {
+
         $modelMessage = new self();
         $modelMessage->_setField(self::FIELD_MESSAGEID, md5(uniqid()));
-        $modelMessage->_setField(self::FIELD_RECIPIENT, $modelUserRecipient->getUsername());
-        $modelMessage->_setField(self::FIELD_SENDER, $modelUserSender->getUsername());
-        $modelMessage->_setField(self::FIELD_SUBJECR, $strSubject);
+        $modelMessage->_setField(
+            self::FIELD_RECIPIENT,
+            $modelUserRecipient->getUsername()
+        );
+        $modelMessage->_setField(
+            self::FIELD_SENDER,
+            $modelUserSender->getUsername()
+        );
+        $modelMessage->_setField(self::FIELD_SUBJECT, $strSubject);
         $modelMessage->_setField(self::FIELD_TEXT, $strText);
-        $modelMessage->_setField(self::FIELD_DATE_TIMECREATED, time();
+        $modelMessage->_setField(self::FIELD_DATE_TIMECREATED, time());
         $modelMessage->_setField(self::FIELD_PRIORITY, $intPriority);
         return $modelMessage;
     }
@@ -96,20 +110,25 @@ class Chaplin_Model_Message
 
         try {
             $modelUser = Chaplin_Gateway::getInstance()
-                ->getUser()
-                ->getByUsername($strUsername);
+            ->getUser()
+            ->getByUsername($strUsername);
         } catch(Exception $e) {
             return;
         }
 
-        if(is_null($modelUser->getEmail())) {
+        if (is_null($modelUser->getEmail())) {
             return;
         }
 
-        $strPathToTemplateHtml = APPLICATION_PATH.'/../mustache/en_GB/mail/html/'.
-            $this->_getField(self::FIELD_MAILTEMPLATE, null).'.mustache';
-        $strPathToTemplateText = APPLICATION_PATH.'/../mustache/en_GB/mail/text/'.
-            $this->_getField(self::FIELD_MAILTEMPLATE, null).'.mustache';
+        $strPathToTemplateHtml = APPLICATION_PATH.
+            '/../mustache/en_GB/mail/html/'.
+            $this->_getField(self::FIELD_MAILTEMPLATE, null).
+            '.mustache';
+
+        $strPathToTemplateText = APPLICATION_PATH.
+            '/../mustache/en_GB/mail/text/'.
+            $this->_getField(self::FIELD_MAILTEMPLATE, null).
+            '.mustache';
 
         $strTemplateHtml = file_get_contents($strPathToTemplateHtml);
         $strTemplateText = file_get_contents($strPathToTemplateText);
@@ -140,11 +159,12 @@ class Chaplin_Model_Message
     public function getRoutingKey()
     {
         return 'message.'.
-            $this->getType().'.'.
-            $this->_getField(self::FIELD_USERNAME, null)
+        $this->getType().'.'.
+        $this->_getField(self::FIELD_USERNAME, null);
     }
 
     public function getExchangeName()
     {
         return Chaplin_Service_Amqp_Notification::EXCHANGE_NAME;
     }
+}

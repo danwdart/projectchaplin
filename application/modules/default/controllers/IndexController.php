@@ -15,24 +15,24 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class IndexController extends Chaplin_Controller_Action_Api
 {
     public function indexAction()
     {
         $this->view->strTitle = 'Home - Chaplin';
-    	$modelUser = Chaplin_Auth::getInstance()
-    		->hasIdentity()?
-    	Chaplin_Auth::getInstance()
-    		->getIdentity()
-    		->getUser():
-    	null;
+        $modelUser = Chaplin_Auth::getInstance()
+        ->hasIdentity()?
+        Chaplin_Auth::getInstance()
+        ->getIdentity()
+        ->getUser():
+        null;
 
         $ittFeaturedVideos = Chaplin_Gateway::getInstance()
             ->getVideo()

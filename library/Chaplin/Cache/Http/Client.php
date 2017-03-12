@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Cache_Http_Client
     extends Chaplin_Cache_Abstract 
@@ -36,22 +36,22 @@ class Chaplin_Cache_Http_Client
     
     public function getPageBody($strURL, $intLogPriority = Zend_Log::ERR)
     {
-      $cacheKey   = $this->_getCacheKey(__METHOD__, $strURL);
-      if (false === ($response = $this->_cacheLoadKey($cacheKey))) {
-        $response   = $this->_objHttpClient->getPageBody($strURL, $intLogPriority);
-        $this->_cacheSaveKey($cacheKey, $response);
-      }
-      return $response;
+        $cacheKey   = $this->_getCacheKey(__METHOD__, $strURL);
+        if (false === ($response = $this->_cacheLoadKey($cacheKey))) {
+            $response   = $this->_objHttpClient->getPageBody($strURL, $intLogPriority);
+            $this->_cacheSaveKey($cacheKey, $response);
+        }
+        return $response;
     }
 
     public function getObject($strURL, $intLogPriority = Zend_Log::ERR)
     {
-      $cacheKey   = $this->_getCacheKey(__METHOD__, $strURL);
-      if (false === ($response = $this->_cacheLoadKey($cacheKey))) {
-        $response   = $this->_objHttpClient->getObject($strURL, $intLogPriority);
-        $this->_cacheSaveKey($cacheKey, $response);
-      }
-      return $response;
+        $cacheKey   = $this->_getCacheKey(__METHOD__, $strURL);
+        if (false === ($response = $this->_cacheLoadKey($cacheKey))) {
+            $response   = $this->_objHttpClient->getObject($strURL, $intLogPriority);
+            $this->_cacheSaveKey($cacheKey, $response);
+        }
+        return $response;
     }
     
     public function scrapeXPath($strURL, $strXPath)

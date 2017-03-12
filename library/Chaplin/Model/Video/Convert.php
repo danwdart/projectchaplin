@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Model_Video_Convert
     extends Chaplin_Model_Field_Hash
@@ -51,8 +51,8 @@ class Chaplin_Model_Video_Convert
     {
         if (is_null($this->_modelVideo)) {
             $this->_modelVideo = Chaplin_Gateway::getInstance()
-            ->getVideo()
-            ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
+                ->getVideo()
+                ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
         }
         return $this->_modelVideo;
     }

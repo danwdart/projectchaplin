@@ -15,34 +15,34 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 /**
  * Interface for relevant Http_Client interfaces so we can mock Zend_Http_Client
  *
  * @package default
- * @author Dan Dart
+ * @author  Kathie Dart <chaplin@kathiedart.uk>
 **/
 interface Chaplin_Http_Interface
 {
     /**
      * Try to use the client to get the page body
      *
-     * @param string $strURL 
+     * @param  string $strURL 
      * @return string
-     * @author Dan Dart
+     * @author Kathie Dart <chaplin@kathiedart.uk>
     **/
     public function getPageBody($url);
     /**
      * Use use the client to parse the page 
      *
-     * @param string $strURL 
-     * @param string $strXPath 
+     * @param  string $strURL 
+     * @param  string $strXPath 
      * @return string
      * @author Tim Langley
     **/
