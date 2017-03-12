@@ -15,23 +15,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Dao_Sql_Vote
-	extends Chaplin_Dao_Sql_Abstract
-	implements Chaplin_Dao_Interface_Vote
+    extends Chaplin_Dao_Sql_Abstract
+    implements Chaplin_Dao_Interface_Vote
 {
-	const TABLE = 'Votes';
+    const TABLE = 'Votes';
 
     protected function _getTable()
-	{
-		return self::TABLE;
-	}
+    {
+        return self::TABLE;
+    }
 
     protected function _getPrimaryKey()
     {
@@ -39,8 +39,8 @@ class Chaplin_Dao_Sql_Vote
         return null;
     }
 
-	public function addVote(Chaplin_Model_User $modelUser, Chaplin_Model_Video $modelVideo, $intVote)
-	{
+    public function addVote(Chaplin_Model_User $modelUser, Chaplin_Model_Video $modelVideo, $intVote)
+    {
         $this->_getAdapter()->query(
             'INSERT INTO '.self::TABLE.' SET '.
             'Vote = ?, Username = ?, VideoId = ? ON DUPLICATE KEY UPDATE Vote = ?',
@@ -51,7 +51,7 @@ class Chaplin_Dao_Sql_Vote
                 $intVote
             ]
         );
-	}
+    }
 
     protected function _sqlToModel(Array $arrSql)
     {

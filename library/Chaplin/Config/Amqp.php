@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Config_Amqp
     extends Chaplin_Config_Abstract
@@ -34,9 +34,9 @@ class Chaplin_Config_Amqp
 
     protected function _getConfigFile()
     {
-        return realpath(APPLICATION_PATH.'/config/amqp.json');
+        return APPLICATION_PATH.'/config/amqp.json';
     }
-    
+
     public function getConfigArray()
     {
         return $this->_getValue($this->_zendConfig->exchanges, 'exchanges')->toArray();

@@ -15,62 +15,62 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Admin_ImportController extends Zend_Controller_Action
 {
-	private $_strAcceptableTypes = '3gp|3gpp|flv|asf|mov|rm|wmv|mp4|mpg|webm|avi|mkv|ogv';
+    private $_strAcceptableTypes = '3gp|3gpp|flv|asf|mov|rm|wmv|mp4|mpg|webm|avi|mkv|ogv';
 
-	public function indexAction()
+    public function indexAction()
     {
         // This is likely to take a long time.
         set_time_limit(0);
 
-		$form = new Admin_Form_Import_Directory();
+        $form = new Admin_Form_Import_Directory();
 
-		if(!$this->_request->isPost()) {
-			return $this->view->assign('form', $form);
-		}
+        if(!$this->_request->isPost()) {
+            return $this->view->assign('form', $form);
+        }
 
-		if(!$form->isValid($this->_request->getPost())) {
-			return $this->view->assign('form', $form);
-		}
+        if(!$form->isValid($this->_request->getPost())) {
+            return $this->view->assign('form', $form);
+        }
 
-		$strDirectory = $form->Directory->getValue();
+        $strDirectory = $form->Directory->getValue();
 
-		// This is strangely slower
-		$ittFiles = new Chaplin_Iterator_Filter_File(
-			new RecursiveIteratorIterator(
-				new RecursiveDirectoryIterator(
-					$strDirectory,
-					FilesystemIterator::KEY_AS_PATHNAME |
-					FilesystemIterator::CURRENT_AS_FILEINFO |
-					FilesystemIterator::FOLLOW_SYMLINKS |
-					FilesystemIterator::SKIP_DOTS
-				),
-				RecursiveIteratorIterator::LEAVES_ONLY,
-    			RecursiveIteratorIterator::CATCH_GET_CHILD
-			)
-		);
-		$ittFiles->setAcceptableTypes($this->_strAcceptableTypes);
+        // This is strangely slower
+        $ittFiles = new Chaplin_Iterator_Filter_File(
+            new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator(
+                    $strDirectory,
+                    FilesystemIterator::KEY_AS_PATHNAME |
+                    FilesystemIterator::CURRENT_AS_FILEINFO |
+                    FilesystemIterator::FOLLOW_SYMLINKS |
+                    FilesystemIterator::SKIP_DOTS
+                ),
+                RecursiveIteratorIterator::LEAVES_ONLY,
+                RecursiveIteratorIterator::CATCH_GET_CHILD
+            )
+        );
+        $ittFiles->setAcceptableTypes($this->_strAcceptableTypes);
 
-		$form = new Admin_Form_Import_Files($ittFiles);
+        $form = new Admin_Form_Import_Files($ittFiles);
 
-		$this->view->assign('form', $form);
-	}
+        $this->view->assign('form', $form);
+    }
 
-	public function convertAction()
-	{
-		foreach($this->_request->getPost('Videos') as $strFile => $intInclude) {
-			if (!$intInclude) {
-				continue;
-			}
-			$strFilename = base64_decode($strFile);
+    public function convertAction()
+    {
+        foreach($this->_request->getPost('Videos') as $strFile => $intInclude) {
+            if (!$intInclude) {
+                continue;
+            }
+            $strFilename = base64_decode($strFile);
 
 
             $strPathToThumb = $strFilename.'.png';
@@ -113,11 +113,11 @@ class Admin_ImportController extends Zend_Controller_Action
                 '',
                 ''
             );
-            $modelVideo->save();
+                  $modelVideo->save();
 
-            $modelConvert = Chaplin_Model_Video_Convert::create($modelVideo);
-            Chaplin_Gateway::getInstance()->getVideo_Convert()->save($modelConvert);
-		}
-		$this->_redirect('/');
-	}
+                  $modelConvert = Chaplin_Model_Video_Convert::create($modelVideo);
+                  Chaplin_Gateway::getInstance()->getVideo_Convert()->save($modelConvert);
+        }
+        $this->_redirect('/');
+    }
 }

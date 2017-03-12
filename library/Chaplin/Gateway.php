@@ -15,17 +15,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Gateway
 {
     private static $_instance;
-    
+
     private function __clone()
     {
     }
@@ -36,12 +36,15 @@ class Chaplin_Gateway
 
     public static function __callStatic($strMethod, Array $arrArgs)
     {
-        return call_user_func_array([self::getInstance(), $strMethod], $arrArgs);
+        return call_user_func_array(
+            [self::getInstance(), $strMethod],
+            $arrArgs
+        );
     }
 
     public static function getInstance()
     {
-        if(is_null(self::$_instance)) {
+        if (is_null(self::$_instance)) {
             self::$_instance = new self();
         }
 
@@ -60,7 +63,7 @@ class Chaplin_Gateway
         $param = $configGateways->getParam($strName);
 
         $strGatewayClass = 'Chaplin_Gateway_'.$strName;
-        
+
         if (!is_null($configGateways->getDaoName($strName))) {
             $strName = $configGateways->getDaoName($strName);
         }
@@ -68,7 +71,7 @@ class Chaplin_Gateway
             throw new Exception('Dao Type is null for '.$strName);
         }
         $strDaoClass = 'Chaplin_Dao_'.$strDaoType.'_'.$strName;
-        
+
         if (!class_exists($strGatewayClass)) {
             throw new Exception('Class does not exist: '.$strGatewayClass);
         }
@@ -86,6 +89,6 @@ class Chaplin_Gateway
             throw new Exception('Invalid method: '.__CLASS__.'::'.$strMethod);
         }
         $strGatewayType = substr($strMethod, 3);
-        return $this->getGateway($strGatewayType);        
+        return $this->getGateway($strGatewayType);
     }
 }

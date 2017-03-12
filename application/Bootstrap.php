@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
@@ -92,7 +92,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initRoutes()
     {
         $router = Zend_Controller_Front::getInstance()->getRouter();
-/*
+        /*
         $route = new Zend_Controller_Router_Route_Regex('.*-p(\d+).htm',
             array(
                 'controller' => 'product',
@@ -163,6 +163,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
     protected function _initSmtp()
     {
+        // Don't initialise on setup - configs don't exist yet
+        if (0 === strpos($_SERVER['REQUEST_URI'], '/admin/setup')) { return;
+        }
+
         $configSmtp = Chaplin_Config_Servers::getInstance();
         $arrSmtp = $configSmtp->getSmtpSettings();
         $transport = new Zend_Mail_Transport_Smtp(
@@ -177,16 +181,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         try {
             parent::_bootstrap($resource);
         } catch(Exception $e) {
-            echo '<h1>'.$e->getMessage().'</h1>';
+            echo '<pre>'.$e->getMessage().PHP_EOL.$e->getTraceAsString().'</pre>';
         }
     }
 
     public function run()
     {
-       try {
-           parent::run();
-       } catch(Exception $e) {
-           echo '<h1>'.$e->getMessage().'</h1>';
-       }
+        try {
+            parent::run();
+        } catch(Exception $e) {
+            echo '<pre>'.$e->getMessage().PHP_EOL.$e->getTraceAsString().'</pre>';
+        }
     }
 }

@@ -15,20 +15,20 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Admin_SetupController extends Zend_Controller_Action
 {
     public function init()
     {
-    	parent::init();
+        parent::init();
         if (file_exists(APPLICATION_PATH.'/../config/chaplin.ini')) {
-        	return $this->_redirect('/');
+            return $this->_redirect('/');
         }
         $this->_helper->_layout->setLayout('plain');
     }
@@ -76,6 +76,14 @@ class Admin_SetupController extends Zend_Controller_Action
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $arrSmtp = $this->_request->getPost();
+
+        // Zend won't like this without
+        if (isset($arrSmtp['options'])
+            && isset($arrSmtp['options']['ssl'])
+            && empty($arrSmtp['options']['ssl'])
+        ) {
+            unset($arrSmtp['options']['ssl']);
+        }
         $transport = new Zend_Mail_Transport_Smtp(
             $arrSmtp['host'],
             $arrSmtp['options']
@@ -87,11 +95,11 @@ class Admin_SetupController extends Zend_Controller_Action
     private function _enableVimeo($arrPost)
     {
         $serviceVimeo = Chaplin_Service::getInstance()->getVimeo();
-        $clientId = $arrPost['default']['vimeo']['client_id'];
-        $clientSecret = $arrPost['default']['vimeo']['client_secret'];
+        $clientId = $arrPost['default']['vimeo']['clientid'];
+        $clientSecret = $arrPost['default']['vimeo']['clientsecret'];
         $accessToken = $serviceVimeo->requestAccessToken($clientId, $clientSecret);
 
-        $arrPost['default']['vimeo']['access_token'] = $accessToken;
+        $arrPost['default']['vimeo']['accesstoken'] = $accessToken;
         return $arrPost;
     }
 
@@ -143,8 +151,9 @@ class Admin_SetupController extends Zend_Controller_Action
         $iniWriter->setConfig($config);
         try {
             $iniWriter->write(APPLICATION_PATH.'/../config/chaplin.ini');
-            if (!$arrPost['default']['vimeo']['access_token'])
+            if (!$arrPost['default']['vimeo']['access_token']) {
                 echo 'Vimeo access token not available. Go back and try again if you plan on using it.'.PHP_EOL;
+            }
 
             echo 'File successfully written.'.PHP_EOL.
                 'Starting application.'.PHP_EOL;

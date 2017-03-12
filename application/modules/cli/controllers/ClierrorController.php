@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class ClierrorController extends Zend_Controller_Action
 {
@@ -34,22 +34,22 @@ class ClierrorController extends Zend_Controller_Action
         $errors = $this->_getParam('error_handler');
         
         switch ($errors->type) {
-            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
-            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
-            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
-                echo 'Not Found - no route, controller or action'.PHP_EOL;
-                var_dump($this->_request->getParams());
-                ob_flush();
-                flush();
-                break;
-            default:
-                echo 'something broke horribly'.PHP_EOL;
-                echo get_class($errors->exception).PHP_EOL;
-                echo $errors->exception->getMessage().PHP_EOL;
-                echo $errors->exception->getTraceAsString().PHP_EOL;  
-                ob_flush();
-                flush();
-                break;
+        case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
+        case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
+        case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
+            echo 'Not Found - no route, controller or action'.PHP_EOL;
+            var_dump($this->_request->getParams());
+            ob_flush();
+            flush();
+            break;
+        default:
+            echo 'something broke horribly'.PHP_EOL;
+            echo get_class($errors->exception).PHP_EOL;
+            echo $errors->exception->getMessage().PHP_EOL;
+            echo $errors->exception->getTraceAsString().PHP_EOL;  
+            ob_flush();
+            flush();
+            break;
         }
  
         // conditionally display exceptions

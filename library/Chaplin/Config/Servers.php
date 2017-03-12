@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Config_Servers
     extends Chaplin_Config_Abstract
@@ -34,9 +34,9 @@ class Chaplin_Config_Servers
 
     protected function _getConfigFile()
     {
-        return realpath(APPLICATION_PATH.'/../config/chaplin.ini');
+        return APPLICATION_PATH.'/../config/chaplin.ini';
     }
-    
+
     public function getRedisSettings()
     {
         return $this->_zendConfig->phpredis;
@@ -47,7 +47,7 @@ class Chaplin_Config_Servers
         return $this->_getValue(
             $this->_zendConfig->amqp,
             'amqp'
-        )->toArray();   
+        )->toArray();
     }
 
     public function getConfigConnectionRead()
@@ -57,7 +57,7 @@ class Chaplin_Config_Servers
             'amqp.servers.read'
         )->toArray();
     }
-    
+
     public function getConfigConnectionWrite()
     {
         return $this->_getValue(
@@ -68,10 +68,31 @@ class Chaplin_Config_Servers
 
     public function getSmtpSettings()
     {
-        return $this->_getValue(
+        $smtp = $this->_getValue(
             $this->_zendConfig->smtp,
             'smtp'
-        )->toArray();      
+        )->toArray();
+        // Zend will not accept a blank SSL option
+        if (isset($smtp['server']) 
+            && isset($smtp['server']['options']) 
+            && isset($smtp['server']['options']['ssl']) 
+            && empty($smtp['server']['options']['ssl'])
+        ) {
+            unset($smtp['server']['options']['ssl']);
+        }
+        if (isset($smtp['server']) 
+            && isset($smtp['server']['options']) 
+            && isset($smtp['server']['options']['auth']) 
+            && isset($smtp['server']['options']['username']) 
+            && isset($smtp['server']['options']['password']) 
+            && (            empty($smtp['server']['options']['username']) 
+            || empty($smtp['server']['options']['password']))
+        ) {
+            unset($smtp['server']['options']['auth']);
+            unset($smtp['server']['options']['username']);
+            unset($smtp['server']['options']['password']);
+        }
+        return $smtp;
     }
 
     public function getSqlSettings()
@@ -79,7 +100,7 @@ class Chaplin_Config_Servers
         return $this->_getValue(
             $this->_zendConfig->sql,
             'sql'
-        );   
+        );
     }
 
     public function getMongoSettings()
@@ -96,7 +117,7 @@ class Chaplin_Config_Servers
      * we don't know the request URL
      *
      * @return string
-     * @author Dan Dart
+     * @author Kathie Dart <chaplin@kathiedart.uk>
      **/
     public function getVhost()
     {
@@ -111,7 +132,7 @@ class Chaplin_Config_Servers
      * Useful for sending video URLs
      *
      * @return string
-     * @author Dan Dart
+     * @author Kathie Dart <chaplin@kathiedart.uk>
      **/
     public function getShort()
     {
