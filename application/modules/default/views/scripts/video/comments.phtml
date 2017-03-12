@@ -26,10 +26,10 @@ foreach($this->comments as $modelComment):?>
 	<p>
 		<i>
 			<?php echo $modelComment->getUsername();?>
-		</i> said: 
+		</i> said:
 		<?php echo $modelComment->getComment();?>
 		<?php if ($modelComment->isMine()): ?>
-			<a class="ajax" href="/video/deletecomment/id/<?php echo $modelComment->getCommentId(); ?>" 
+			<a class="ajax" href="/video/deletecomment/id/<?php echo $modelComment->getCommentId(); ?>"
 				rel="comments">
 			(X)
 			</a>
@@ -38,4 +38,3 @@ foreach($this->comments as $modelComment):?>
 <?php endforeach;
 // Until we JSONify this then we need to include the AJAX stuff again
 ?>
-<script src="/js/video.js"></script>
