@@ -26,5 +26,6 @@ git clone https://github.com/kathiedart/projectchaplin.git /var/www
 cd /var/www
 composer install
 npm install
+npm run build
 
 chown -R www-data:www-data /var/www/{config,logs,temp,public/uploads}

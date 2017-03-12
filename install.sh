@@ -18,6 +18,7 @@ a2dissite 000-default &&
 a2ensite projectchaplin &&
 ./composer.phar install &&
 npm install &&
+npm run build &&
 chown -R www-data:www-data public/uploads &&
 chown -R www-data:www-data config/ &&
 chown -R www-data:www-data logs/ &&
