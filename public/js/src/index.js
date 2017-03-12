@@ -1,4 +1,4 @@
-/**
+/**jQuery
  * This file is part of Project Chaplin.
  *
  * Project Chaplin is free software: you can redistribute it and/or modify
@@ -23,7 +23,9 @@
 **/
 import './broadcast';
 import './main';
+import './login';
 import './search';
+import './setup';
 import './uservimeo';
 import './useryoutube';
 import './video';
