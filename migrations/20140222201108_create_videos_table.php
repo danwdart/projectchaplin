@@ -6,10 +6,12 @@ class CreateVideosTable extends AbstractMigration
 {
     public function change()
     {
-        $this->table('Videos', [
+        $this->table(
+            'Videos', [
             'id' => false,
             'primary_key' => 'VideoId'
-        ])
+            ]
+        )
             ->addColumn('VideoId', 'string', ['size' => 50])
             ->addColumn('TimeCreated', 'datetime')
             ->addColumn('Username', 'string') // References users

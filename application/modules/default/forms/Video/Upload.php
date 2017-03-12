@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class default_Form_Video_Upload extends Zend_Form
 {
@@ -29,9 +29,11 @@ class default_Form_Video_Upload extends Zend_Form
         $this->setAction('');
         $this->setMethod('post');
         $this->setEncType('multipart/form-data');
-        $this->setAttribs(array(
+        $this->setAttribs(
+            array(
             'class' => 'upload'
-        ));
+            )
+        );
         
         $upload = new Zend_Form_Element_File(
             'Files[]',

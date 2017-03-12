@@ -15,17 +15,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Service
 {
     const LIFETIME_SECS = 1800;
-    
+
     public static function inject(Chaplin_Service $service)
     {
         self::$_instance = $service;
@@ -35,16 +35,21 @@ class Chaplin_Service
 
     public static function getInstance()
     {
-        if (is_null(self::$_instance))
+        if (is_null(self::$_instance)) {
             self::$_instance   = new Chaplin_Service();
+        }
         return self::$_instance;
     }
 
-    private function __construct() {}
-    private function __clone() {}
+    private function __construct()
+    {
+    }
+    private function __clone()
+    {
+    }
 
     private $_zendCache;
-    private function getCache()
+    private function _getCache()
     {
         if (is_null($this->_zendCache)) {
             //@TODO - probably put this in a config file
@@ -53,14 +58,17 @@ class Chaplin_Service
                 'automatic_serialization' => true
             ];
             if (Zend_Registry::isRegistered(
-                    Chaplin_Dao_PhpRedis_Abstract::DEFAULT_REGISTRY_KEY
-            )){
+                Chaplin_Dao_PhpRedis_Abstract::DEFAULT_REGISTRY_KEY
+            )
+            ) {
                 $backendOptions = [
                     'phpredis' => Zend_Registry::get(
                         Chaplin_Dao_PhpRedis_Abstract::DEFAULT_REGISTRY_KEY
                     )
                 ];
-                $backendType = new Chaplin_Cache_Backend_PhpRedis($backendOptions);
+                $backendType = new Chaplin_Cache_Backend_PhpRedis(
+                    $backendOptions
+                );
             } else {
                 $backendOptions = [
                     'cache_dir' => APPLICATION_PATH.'/../temp/'
@@ -86,7 +94,9 @@ class Chaplin_Service
     public function getHttpClient()
     {
         $objClient = new Chaplin_Http_Client();
-        $objCache  = new Chaplin_Cache_Http_Client($objClient, $this->getCache());
+        $objCache  = new Chaplin_Cache_Http_Client(
+            $objClient, $this->_getCache()
+        );
         return new Chaplin_Service_Http_Client($objCache);
     }
 

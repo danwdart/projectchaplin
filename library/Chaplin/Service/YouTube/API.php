@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Service_YouTube_API
 {
@@ -35,14 +35,16 @@ class Chaplin_Service_YouTube_API
 
         $youtube = new Google_Service_YouTube($client);
 
-        return $youtube->search->listSearch('id,snippet', [
+        return $youtube->search->listSearch(
+            'id,snippet', [
             'q' => $strSearchTerm,
             //'pageToken' => $page,
             'maxResults' => $intLimit,
             'order' => 'relevance',
             'videoLicense' => 'creativeCommon',
             'type' => 'video',
-        ]);
+            ]
+        );
     }
 
     public function getVideoById($strId)
@@ -54,9 +56,11 @@ class Chaplin_Service_YouTube_API
 
         $youtube = new Google_Service_YouTube($client);
 
-        $list = $youtube->videos->listVideos('id,snippet', [
+        $list = $youtube->videos->listVideos(
+            'id,snippet', [
             'id' => $strId
-        ]);
+            ]
+        );
 
         return 0 < $list->pageInfo->totalResults ? $list->items[0] : null;
     }
@@ -70,9 +74,11 @@ class Chaplin_Service_YouTube_API
 
         $youtube = new Google_Service_YouTube($client);
 
-        $list = $youtube->channels->listChannels('id,snippet', [
+        $list = $youtube->channels->listChannels(
+            'id,snippet', [
             'forUsername' => $strSearchTerm
-        ]);
+            ]
+        );
 
         return 0 < $list->pageInfo->totalResults ? $list->items[0] : null;
     }
@@ -94,8 +100,9 @@ class Chaplin_Service_YouTube_API
             'type' => 'video',
         ];
 
-        if ($strPageToken)
+        if ($strPageToken) {
             $arrRequest['pageToken'] = $strPageToken;
+        }
 
         return $youtube->search->listSearch('id,snippet', $arrRequest);
     }
@@ -164,7 +171,10 @@ class Chaplin_Service_YouTube_API
         $modelVideo->save();
 
         // msg
-        $modelYoutube = Chaplin_Model_Video_Youtube::create($modelVideo, $strVideoId);
+        $modelYoutube = Chaplin_Model_Video_Youtube::create(
+            $modelVideo,
+            $strVideoId
+        );
         Chaplin_Gateway::getInstance()->getVideo_Youtube()->save($modelYoutube);
 
         return $modelVideo;
