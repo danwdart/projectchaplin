@@ -5,17 +5,17 @@ class Chaplin_Controller_Action_Api
     final public function init()
     {
         $this->_helper->getHelper('restContextSwitch')
-         ->setContext(
-             'html', [
+            ->setContext(
+                'html', [
                  'suffix'    => '',
                  'headers'   => [
                      'Content-Type' => 'text/html; Charset=UTF-8',
                  ]
-             ]
-         )
-         ->addGlobalContext(['html', 'json', 'xml'])
-         ->setAutoJsonSerialization(true)
-         ->initContext();
+                ]
+            )
+            ->addGlobalContext(['html', 'json', 'xml'])
+            ->setAutoJsonSerialization(true)
+            ->initContext();
 
         $this->_postInit();
     }
@@ -40,7 +40,7 @@ class Chaplin_Controller_Action_Api
             $this->_helper->layout()->disableLayout();
             $this->_helper->viewRenderer->setNoRender();
             if ($this->_isXml()) {
-               // not implemented for now
+                // not implemented for now
                 return $this->getResponse()->setHttpResponseCode(501);
             }
 

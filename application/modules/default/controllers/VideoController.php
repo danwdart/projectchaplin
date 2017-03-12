@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class VideoController extends Chaplin_Controller_Action_Api
 {
@@ -61,7 +61,7 @@ class VideoController extends Chaplin_Controller_Action_Api
 
         $strShortHost = Chaplin_Config_Servers::getInstance()->getShort();
         $strShortURL = 'http://'.$strShortHost.'/'.
-            str_replace('/','-',base64_encode(hex2bin($strVideoId)));
+            str_replace('/', '-', base64_encode(hex2bin($strVideoId)));
         $this->view->assign('short', $strShortURL);
 
         $strTwitterShare = '<script>window.twttr = (function(d, s, id) {
@@ -121,8 +121,8 @@ class VideoController extends Chaplin_Controller_Action_Api
         $this->view->gplusshare = '<script src="https://apis.google.com/js/platform.js" async defer></script>
             <div class="g-plus" data-action="share" ... ></div>';
 
-        $this->view->diasporashare = '<a href="javascript:;" onclick="window.open(\'http://sharetodiaspora.github.io/?url=\'+encodeURIComponent(location.href)+\'&title=\'+encodeURIComponent(document.title),\'das\',\'location=no,links=no,scrollbars=no,toolbar=no,width=620,height=550\'); return false;" rel="nofollow" target="_blank">
-        	<img src="http://sharetodiaspora.github.io/favicon.png" style="border: 0px solid;" />
+        $this->view->diasporashare = '<a href="javascript:;" onclick="window.open(\'https://sharetodiaspora.github.io/?url=\'+encodeURIComponent(location.href)+\'&title=\'+encodeURIComponent(document.title),\'das\',\'location=no,links=no,scrollbars=no,toolbar=no,width=620,height=550\'); return false;" rel="nofollow" target="_blank">
+        	<img src="https://sharetodiaspora.github.io/favicon.png" style="border: 0px solid;" />
             Share on Diaspora
         </a>';
 
@@ -189,9 +189,9 @@ class VideoController extends Chaplin_Controller_Action_Api
 
     public function watchshortAction()
     {
-	    $strId   = $this->_request->getParam('id');
-        $strId   = str_replace('-','/', $strId);
-        $strId   = str_replace(' ','+', $strId);
+        $strId   = $this->_request->getParam('id');
+        $strId   = str_replace('-', '/', $strId);
+        $strId   = str_replace(' ', '+', $strId);
         $strId   = bin2hex(base64_decode($strId));
         $strHost = Chaplin_Config_Servers::getInstance()
             ->getVhost();
@@ -399,7 +399,7 @@ class VideoController extends Chaplin_Controller_Action_Api
         $adapter = $form->Files->getTransferAdapter();
         foreach($adapter->getFileInfo() as $info) {
             if (!$adapter->receive($info['name'])) {
-                die(print_r($adapter->getMessages(),true));
+                die(print_r($adapter->getMessages(), true));
             }
         }
 
@@ -564,8 +564,9 @@ class VideoController extends Chaplin_Controller_Action_Api
             ->getVideo()
             ->getByVideoId($strVideoId, $modelUser);
 
-        if ($modelVideo->isMine() ||
-            Chaplin_Auth::getInstance()->getIdentity()->getUser()->isGod()) {
+        if ($modelVideo->isMine() 
+            || Chaplin_Auth::getInstance()->getIdentity()->getUser()->isGod()
+        ) {
             // Confirmation?
             $modelVideo->delete();
         }

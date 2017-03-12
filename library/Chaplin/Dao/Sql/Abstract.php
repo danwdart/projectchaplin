@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
 {
@@ -123,14 +123,14 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
             if($objField->bIsDirty()) {
                 $strClass = get_class($objField);
                 switch($strClass) {
-                    case 'Chaplin_Model_Field_Field':
-                    case 'Chaplin_Model_Field_FieldId':
-                        $arrUpdate[$strFieldName] = $this->_textToSafe($objField->getValue(null));
-                        break;
-                    case 'Chaplin_Model_Field_Readonly':
-                        break;
-                    default:
-                        throw new Exception('Unmanaged class: '.$strClass);
+                case 'Chaplin_Model_Field_Field':
+                case 'Chaplin_Model_Field_FieldId':
+                    $arrUpdate[$strFieldName] = $this->_textToSafe($objField->getValue(null));
+                    break;
+                case 'Chaplin_Model_Field_Readonly':
+                    break;
+                default:
+                    throw new Exception('Unmanaged class: '.$strClass);
                 }
             }
         }

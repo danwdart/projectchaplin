@@ -6,10 +6,12 @@ class CreateCredentialsTable extends AbstractMigration
 {
     public function change()
     {
-        $this->table('Users_Credentials', [
+        $this->table(
+            'Users_Credentials', [
             'id' => false,
             'primary_key' => 'CredentialId'
-        ])
+            ]
+        )
             ->addColumn('CredentialId', 'smallinteger')
             ->addColumn('Username', 'string')
             ->addColumn('Type', 'string', ['limit' => 10])

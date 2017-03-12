@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Gateway_Video_Comment
     extends Chaplin_Gateway_Abstract
@@ -29,7 +29,7 @@ class Chaplin_Gateway_Video_Comment
 
     public function __construct(Chaplin_Dao_Interface_Video_Comment $daoComment)
     {
-    	$this->_daoComment = $daoComment;
+        $this->_daoComment = $daoComment;
     }
 
     public function getById($strId)
@@ -39,7 +39,7 @@ class Chaplin_Gateway_Video_Comment
 
     public function getByVideoId($strVideoId)
     {
-    	return $this->_daoComment->getByVideoId($strVideoId);
+        return $this->_daoComment->getByVideoId($strVideoId);
     }
 
     public function delete(Chaplin_Model_Video_Comment $modelComment)

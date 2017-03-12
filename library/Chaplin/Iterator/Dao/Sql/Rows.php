@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Iterator_Dao_Sql_Rows implements Chaplin_Iterator_Interface
 {
@@ -96,8 +96,9 @@ class Chaplin_Iterator_Dao_Sql_Rows implements Chaplin_Iterator_Interface
     }
     /**
      *  Skips the first  $intNoRows
-     *  @param:     $intNoRows  = number of rows to skip
-     *  @return:    $this (this is a fluent interface)
+     *
+     *  @param:  $intNoRows  = number of rows to skip
+     *  @return: $this (this is a fluent interface)
      **/
     public function skip($intNoRows)
     {
@@ -105,8 +106,9 @@ class Chaplin_Iterator_Dao_Sql_Rows implements Chaplin_Iterator_Interface
     }
     /**
      *  Sorts the cursor 
-     *  @param:     $arrColumns     Associative array of Key => value (1 = ASC, -1 = DESC)
-     *  @return:    $this (this is a fluent interface)
+     *
+     *  @param:  $arrColumns     Associative array of Key => value (1 = ASC, -1 = DESC)
+     *  @return: $this (this is a fluent interface)
      **/
     public function sort(Array $arrColumns = array())
     {

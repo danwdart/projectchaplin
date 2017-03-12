@@ -15,33 +15,33 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Dao_Sql_Video
-	extends Chaplin_Dao_Sql_Abstract
-	implements Chaplin_Dao_Interface_Video
+    extends Chaplin_Dao_Sql_Abstract
+    implements Chaplin_Dao_Interface_Video
 {
-	const TABLE = 'Videos';
+    const TABLE = 'Videos';
 
     const PK = 'VideoId';
 
-	protected function _getTable()
-	{
-		return self::TABLE;
-	}
+    protected function _getTable()
+    {
+        return self::TABLE;
+    }
 
     protected function _getPrimaryKey()
     {
         return self::PK;
     }
 
-	public function getFeaturedVideos(Chaplin_Model_User $modelUser = null)
-	{
+    public function getFeaturedVideos(Chaplin_Model_User $modelUser = null)
+    {
         $strSql = 'SELECT * FROM %s WHERE '.
             Chaplin_Model_Video::FIELD_PRIVACY.' = "'.Chaplin_Model_Video_Privacy::ID_PUBLIC.
             ((is_null($modelUser))? '"' : 
@@ -49,8 +49,8 @@ class Chaplin_Dao_Sql_Video
             Chaplin_Model_Video::FIELD_USERNAME .' = "'.$modelUser->getUsername().'"').
             ' ORDER BY TimeCreated DESC';
         $arrRows = $this->_getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
-		return new Chaplin_Iterator_Dao_Sql_Rows($arrRows, $this);
-	}
+        return new Chaplin_Iterator_Dao_Sql_Rows($arrRows, $this);
+    }
     
     public function getByVideoId($strVideoId, Chaplin_Model_User $modelUser = null)
     {
@@ -80,18 +80,18 @@ class Chaplin_Dao_Sql_Video
     public function getBySearchTerms($strSearchTerms)
     {
         // todo fill in
-    	return new Chaplin_Iterator_Dao_Sql_Rows([], $this);
+        return new Chaplin_Iterator_Dao_Sql_Rows([], $this);
     }
     
     public function getByUser(Chaplin_Model_User $modelUser)
     {
         // todo fill in
-    	return new Chaplin_Iterator_Dao_Sql_Rows([], $this);
+        return new Chaplin_Iterator_Dao_Sql_Rows([], $this);
     }
             
     public function delete(Chaplin_Model_Video $modelVideo)
     {
-    	return $this->_delete($modelVideo);
+        return $this->_delete($modelVideo);
     }
 
     protected function _sqlToModel(Array $arrSql)

@@ -16,15 +16,15 @@
  *
  * @package    Project Chaplin
  * @author     Nabil Freeman
- * @copyright  2012-2013 Project Chaplin
+ * @copyright  2012-2017 Project Chaplin
  * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @link       https://github.com/kathiedart/projectchaplin
 **/
 
 * {
-	padding:0;
-	margin: 0;
+    padding:0;
+    margin: 0;
     font-family: 'Open Sans', sans-serif;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -60,21 +60,21 @@ html, body {
 }
 
 header {
-	height: 25px;
-	border-width: 0 0 1px 0;
-	padding: 5px;
+    height: 25px;
+    border-width: 0 0 1px 0;
+    padding: 5px;
 }
 
 a {
-	color: #555;
-	font-weight: 700;
-	text-decoration: none;
-	font-size: 11pt;
+    color: #555;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 11pt;
 }
 
 a:hover {
-	color: #666;
-	text-decoration: underline;
+    color: #666;
+    text-decoration: underline;
 }
 
 header {
@@ -88,17 +88,17 @@ header {
 }
 
 header .left {
-	width: 40%;
-	text-align:left;
-	float:left;
+    width: 40%;
+    text-align:left;
+    float:left;
     line-height:35px;
 }
 
 header .middle {
-	width: 18%;
-	margin: 0 auto;
-	float:left;
-	text-align:center;
+    width: 18%;
+    margin: 0 auto;
+    float:left;
+    text-align:center;
 }
 
 header .middle h2, header .middle i {
@@ -115,9 +115,9 @@ header .middle a:hover {
 }
 
 header .right {
-	width: 40%;
-	text-align: right;
-	float:right;
+    width: 40%;
+    text-align: right;
+    float:right;
     display:inline;
     line-height: 35px;
 }
@@ -197,15 +197,15 @@ main h1 {
 
 footer {
     vertical-align: middle;
-	width:100%;
+    width:100%;
     background-color: white;
-	height: 30px;
+    height: 30px;
     position:fixed;
     padding:2px;
     bottom:0;
     left:0;
-	text-align: center;
-	font-size: 10pt;
+    text-align: center;
+    font-size: 10pt;
 }
 
 #infoarea {

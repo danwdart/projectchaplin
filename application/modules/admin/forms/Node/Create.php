@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Admin_Form_Node_Create extends Zend_Form
 {
@@ -28,12 +28,16 @@ class Admin_Form_Node_Create extends Zend_Form
     {
         $name = new Zend_Form_Element_Text('Name');
         $name->setLabel('Name');
-        $name->addValidators(array(
-            new Zend_Validate_StringLength(array(
+        $name->addValidators(
+            array(
+            new Zend_Validate_StringLength(
+                array(
                 'min' => 1,
                 'max' => 255
-            ))
-        ));
+                )
+            )
+            )
+        );
         
         $ip = new Zend_Form_Element_Text('IP');
         $ip->setLabel('IP/Host');
@@ -43,11 +47,12 @@ class Admin_Form_Node_Create extends Zend_Form
         
         $submit = new Zend_Form_Element_Submit('Add');
         
-        $this->addElements(array(
+        $this->addElements(
+            array(
             $name,
             $ip,
             $submit
-        ));
+            )
+        );
     }
 }
-?>

@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class LoginController extends Zend_Controller_Action
 {
@@ -216,101 +216,107 @@ class LoginController extends Zend_Controller_Action
         $this->_session = new Zend_Session_Namespace('oauth');
 
         switch ($arrOauth['oauth_version']) {
-            case 2:
+        case 2:
 
-                if (is_null($this->_request->getQuery('code'))) {
-                    $state = md5(uniqid());
+            if (is_null($this->_request->getQuery('code'))) {
+                $state = md5(uniqid());
                 
-                    $this->_session->state = $state;
+                $this->_session->state = $state;
 
-                    $url = $arrOauth['auth_uri'].
-                        '?client_id='.$arrOauth['client_id'].
-                        '&response_type=code'.
-                        '&scope='.$arrOauth['scope'].
-                        '&redirect_uri='.$arrOauth['redirect_uri'].
-                        '&state='.$state;
+                $url = $arrOauth['auth_uri'].
+                    '?client_id='.$arrOauth['client_id'].
+                    '&response_type=code'.
+                    '&scope='.$arrOauth['scope'].
+                    '&redirect_uri='.$arrOauth['redirect_uri'].
+                    '&state='.$state;
 
-                    return $this->_redirect($url);
-                }
-                $state = $this->_session->state;
-                $getstate = $this->_request->getQuery('state');
-                if ($getstate != $state) {
-                    die('Unauthorised, buddy. Hey:  ' . $getstate . ' ' . $state);
-                }
-                $this->_session->state = null;
+                return $this->_redirect($url);
+            }
+            $state = $this->_session->state;
+            $getstate = $this->_request->getQuery('state');
+            if ($getstate != $state) {
+                die('Unauthorised, buddy. Hey:  ' . $getstate . ' ' . $state);
+            }
+            $this->_session->state = null;
 
-                $client = new Zend_Http_Client($arrOauth['token_uri']);
-                $client->setMethod(Zend_Http_Client::POST);
-                $client->setParameterPost([
-                    'code' => $_GET['code'],
-                    'client_id' => $arrOauth['client_id'],
-                    'client_secret' => $arrOauth['client_secret'],
-                    'redirect_uri' => $arrOauth['redirect_uri'],
-                    'grant_type' => 'authorization_code'
-                ]);
-                $response = $client->request('POST');
-                $body = $response->getBody();
+            $client = new Zend_Http_Client($arrOauth['token_uri']);
+            $client->setMethod(Zend_Http_Client::POST);
+            $client->setParameterPost(
+                [
+                'code' => $_GET['code'],
+                'client_id' => $arrOauth['client_id'],
+                'client_secret' => $arrOauth['client_secret'],
+                'redirect_uri' => $arrOauth['redirect_uri'],
+                'grant_type' => 'authorization_code'
+                ]
+            );
+            $response = $client->request('POST');
+            $body = $response->getBody();
 
-                $callback_decode = $arrOauth['callback_decode'];
+            $callback_decode = $arrOauth['callback_decode'];
 
-                $arrInfo = $callback_decode($body);
+            $arrInfo = $callback_decode($body);
 
-                $strAccessToken = $arrInfo['access_token'];
-                $infoUri = $arrOauth['info_uri'].'?oauth_token='.   $strAccessToken;
+            $strAccessToken = $arrInfo['access_token'];
+            $infoUri = $arrOauth['info_uri'].'?oauth_token='.   $strAccessToken;
 
-                $client = new Zend_Http_Client($infoUri);
-                $response = $client->request();
-                break;
+            $client = new Zend_Http_Client($infoUri);
+            $response = $client->request();
+            break;
 
-            case 1:
-                $consumer = new Zend_Oauth_Consumer($arrOauth);
-                $arrQuery = $this->_request->getQuery();
-                if (empty($arrQuery) &&
-                    is_null($this->_session->request_token)
-                ) { 
-                    $token = $consumer->getRequestToken();
-                    $this->_session->request_token = serialize($token);
-                    return $consumer->redirect();
-                }
+        case 1:
+            $consumer = new Zend_Oauth_Consumer($arrOauth);
+            $arrQuery = $this->_request->getQuery();
+            if (empty($arrQuery) 
+                && is_null($this->_session->request_token)
+            ) { 
+                $token = $consumer->getRequestToken();
+                $this->_session->request_token = serialize($token);
+                return $consumer->redirect();
+            }
 
-                $request_token = unserialize($this->_session->request_token);
-                if (!$request_token) {
-                    $this->_session->request_token = null;
-                    return $this->_redirect($arrOauth['callbackUrl']);
-                }
-
-                try {
-                    $token = $consumer->getAccessToken(
-                        $arrQuery,
-                        unserialize($this->_session->request_token)
-                    );
-                } catch (Zend_Oauth_Exception $e) {
-                    $this->_session->request_token = null;
-                    return $this->_redirect($arrOauth['callbackUrl']);
-                }
-
-                $this->_session->access_token = $token;
+            $request_token = unserialize($this->_session->request_token);
+            if (!$request_token) {
                 $this->_session->request_token = null;
+                return $this->_redirect($arrOauth['callbackUrl']);
+            }
 
-                $zendClient = $token->getHttpClient($arrOauth);
-                $zendClient->setMethod(Zend_Http_Client::GET);
-                $zendClient->setUri($arrOauth['info_uri']);
-                $response = $zendClient->request();
-                break;
-            default:
-                throw new Exception('unknown api version');
+            try {
+                $token = $consumer->getAccessToken(
+                    $arrQuery,
+                    unserialize($this->_session->request_token)
+                );
+            } catch (Zend_Oauth_Exception $e) {
+                $this->_session->request_token = null;
+                return $this->_redirect($arrOauth['callbackUrl']);
+            }
+
+            $this->_session->access_token = $token;
+            $this->_session->request_token = null;
+
+            $zendClient = $token->getHttpClient($arrOauth);
+            $zendClient->setMethod(Zend_Http_Client::GET);
+            $zendClient->setUri($arrOauth['info_uri']);
+            $response = $zendClient->request();
+            break;
+        default:
+            throw new Exception('unknown api version');
         }
 
         $arrResponse = Zend_Json::decode($response->getBody());
         $email = $arrResponse[$arrOauth['key_email']];
         echo 'Name: '.$arrResponse[$arrOauth['key_fullname']].'<br/>';
-        if (isset($arrOauth['key_firstname']))
+        if (isset($arrOauth['key_firstname'])) {
             echo 'First Name: '.$arrResponse[$arrOauth['key_firstname']].'<br/>';
-        if (isset($arrOauth['key_lastname']))
+        }
+        if (isset($arrOauth['key_lastname'])) {
             echo 'Last Name: '.$arrResponse[$arrOauth['key_lastname']].'<br/>';
-        if (isset($arrOauth['key_username']))
+        }
+        if (isset($arrOauth['key_username'])) {
             echo 'Username: '.$arrResponse[$arrOauth['key_username']].'<br/>';
-        if (isset($arrOauth['key_email']))
+        }
+        if (isset($arrOauth['key_email'])) {
             echo 'Email: '.$arrResponse[$arrOauth['key_email']];
+        }
     }
 }

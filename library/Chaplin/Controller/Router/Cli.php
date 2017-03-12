@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 //require_once ('Zend/Controller/Router/Interface.php');
 //require_once ('Zend/Controller/Router/Abstract.php');
@@ -28,6 +28,10 @@ class Chaplin_Controller_Router_Cli
     extends Zend_Controller_Router_Abstract
     implements Zend_Controller_Router_Interface
 {
-    public function assemble($userParams, $name = null, $reset = false, $encode = true) {}
-    public function route(Zend_Controller_Request_Abstract $dispatcher) {}
+    public function assemble($userParams, $name = null, $reset = false, $encode = true) 
+    {
+    }
+    public function route(Zend_Controller_Request_Abstract $dispatcher) 
+    {
+    }
 }
