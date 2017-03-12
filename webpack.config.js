@@ -3,7 +3,7 @@ module.exports = {
    entry: './src/index.js',
    output: {
        path: './public/js/',
-       publicPath: '/public/js/',
+       publicPath: '/js/',
        filename: "index.js"
    },
    module: {
