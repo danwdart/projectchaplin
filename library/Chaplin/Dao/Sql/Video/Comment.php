@@ -15,25 +15,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Dao_Sql_Video_Comment
-	extends Chaplin_Dao_Sql_Abstract
-	implements Chaplin_Dao_Interface_Video_Comment
+    extends Chaplin_Dao_Sql_Abstract
+    implements Chaplin_Dao_Interface_Video_Comment
 {
-	const TABLE = 'Videos_Comments';
+    const TABLE = 'Videos_Comments';
 
     const PK = 'CommentId';
 
-	protected function _getTable()
-	{
-		return self::TABLE;
-	}
+    protected function _getTable()
+    {
+        return self::TABLE;
+    }
 
     protected function _getPrimaryKey()
     {
@@ -52,7 +52,7 @@ class Chaplin_Dao_Sql_Video_Comment
     
     public function getByVideoId($strVideoId)
     {
-    	$strSql = 'SELECT * FROM %s WHERE %s = ?';
+        $strSql = 'SELECT * FROM %s WHERE %s = ?';
         $arrRows = $this->_getAdapter()->fetchAll(
             sprintf(
                 $strSql,
@@ -66,7 +66,7 @@ class Chaplin_Dao_Sql_Video_Comment
 
     public function delete(Chaplin_Model_Video_Comment $modelComment)
     {
-    	return $this->_delete($modelComment);
+        return $this->_delete($modelComment);
     }
 
     public function deleteById($strCommentId)

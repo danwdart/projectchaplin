@@ -15,39 +15,41 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Dao_Smtp_Exchange
     implements Chaplin_Dao_Interface
 {
-	public function email(
-		Chaplin_Model_User $modelUser,
-		$strSubject,
-		$strTemplate,
-		$arrParams
-	) {
-		$strVhost = Chaplin_Config_Servers::getInstance()->getVhost();
-		
-		$mail = new Zend_Mail();
-		$mail->addTo($modelUser->getEmail(), $modelUser->getNick());
-		$mail->setFrom('info@'.$strVhost, 'Project Chaplin');
-		$mail->setSubject($strSubject);
-		$strFilenameTemplateHTML = APPLICATION_PATH.
-			'/../mustache/en_GB/mail/html/'.$strTemplate.'.mustache';
-		$strFilenameTemplateText = APPLICATION_PATH.
-			'/../mustache/en_GB/mail/text/'.$strTemplate.'.mustache';
-		$strTemplateHTML = file_get_contents($strFilenameTemplateHTML);
-		$strTemplateText = file_get_contents($strFilenameTemplateText);
-		$m = new Mustache_Engine();
-		$strHTML = $m->render($strTemplateHTML, $arrParams);
-		$strText = $m->render($strTemplateText, $arrParams);
-		$mail->setBodyText($strText);
-		$mail->setBodyHTML($strHTML);
-		$mail->send();
-	}
+    public function email(
+        Chaplin_Model_User $modelUser,
+        $strSubject,
+        $strTemplate,
+        $arrParams
+    ) 
+    { 
+    
+        $strVhost = Chaplin_Config_Servers::getInstance()->getVhost();
+        
+        $mail = new Zend_Mail();
+        $mail->addTo($modelUser->getEmail(), $modelUser->getNick());
+        $mail->setFrom('info@'.$strVhost, 'Project Chaplin');
+        $mail->setSubject($strSubject);
+        $strFilenameTemplateHTML = APPLICATION_PATH.
+         '/../mustache/en_GB/mail/html/'.$strTemplate.'.mustache';
+        $strFilenameTemplateText = APPLICATION_PATH.
+         '/../mustache/en_GB/mail/text/'.$strTemplate.'.mustache';
+        $strTemplateHTML = file_get_contents($strFilenameTemplateHTML);
+        $strTemplateText = file_get_contents($strFilenameTemplateText);
+        $m = new Mustache_Engine();
+        $strHTML = $m->render($strTemplateHTML, $arrParams);
+        $strText = $m->render($strTemplateText, $arrParams);
+        $mail->setBodyText($strText);
+        $mail->setBodyHTML($strHTML);
+        $mail->send();
+    }
 }

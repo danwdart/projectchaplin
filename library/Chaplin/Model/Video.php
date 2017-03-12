@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 use Misd\Linkify\Linkify;
 
@@ -55,7 +55,9 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     const CHILD_ASSOC_COMMENTS = 'Comments';
 
     protected $_arrFields = [
-        self::FIELD_VIDEOID         => ['Class' => 'Chaplin_Model_Field_FieldId'],
+        self::FIELD_VIDEOID         => [
+            'Class' => 'Chaplin_Model_Field_FieldId'
+        ],
         self::FIELD_TIMECREATED     => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_USERNAME        => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_FILENAME        => ['Class' => 'Chaplin_Model_Field_Field'],
@@ -75,9 +77,15 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         self::FIELD_PARTIALVIEWS    => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_BOUNCES         => ['Class' => 'Chaplin_Model_Field_Field'],
         self::FIELD_PRIVACY         => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_VOTESUP         => ['Class' => 'Chaplin_Model_Field_Readonly'],
-        self::FIELD_VOTESDOWN       => ['Class' => 'Chaplin_Model_Field_Readonly'],
-        self::FIELD_YOURVOTE       => ['Class' => 'Chaplin_Model_Field_Readonly'],
+        self::FIELD_VOTESUP         => [
+            'Class' => 'Chaplin_Model_Field_Readonly'
+        ],
+        self::FIELD_VOTESDOWN       => [
+            'Class' => 'Chaplin_Model_Field_Readonly'
+        ],
+        self::FIELD_YOURVOTE       => [
+            'Class' => 'Chaplin_Model_Field_Readonly'
+        ],
         self::CHILD_ASSOC_COMMENTS  => [
             'Class' => 'Chaplin_Model_Field_Collection',
             'Param' => 'Chaplin_Model_Video_Comment'
@@ -92,7 +100,9 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         $strDescription,
         $strUploader,
         $strSource
-    ) {
+    )
+    {
+
         $video = new self();
         $video->_bIsNew = true;
         $video->_setField(self::FIELD_VIDEOID, md5(uniqid()));
@@ -101,7 +111,10 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         $video->_setField(self::FIELD_FILENAME, $strFilename);
         $video->_setField(self::FIELD_THUMBNAIL, $strThumbURL);
         $video->_setField(self::FIELD_TITLE, $strTitle);
-        $video->_setField(self::FIELD_PRIVACY, Chaplin_Model_Video_Privacy::ID_PUBLIC);
+        $video->_setField(
+            self::FIELD_PRIVACY,
+            Chaplin_Model_Video_Privacy::ID_PUBLIC
+        );
         $video->_setField(self::FIELD_DESCRIPTION, $strDescription);
         $video->_setField(self::FIELD_UPLOADER, $strUploader);
         $video->_setField(self::FIELD_SOURCE, $strSource);
@@ -115,7 +128,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
     public function setFromAPIArray(Array $arrVideo)
     {
-        foreach($arrVideo as $strKey => $strValue) {
+        foreach ($arrVideo as $strKey => $strValue) {
             $strValue = (string)$strValue;
             $this->_setField($strKey, $strValue);
         }
@@ -138,7 +151,10 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
     public function getFilename()
     {
-        return $this->_strURLPrefix.$this->_getField(self::FIELD_FILENAME, null);
+        return $this->_strURLPrefix.$this->_getField(
+            self::FIELD_FILENAME,
+            null
+        );
     }
 
     public function setFilename($strFilename)
@@ -161,7 +177,10 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
     public function getThumbnail()
     {
-        return $this->_strURLPrefix.$this->_getField(self::FIELD_THUMBNAIL, null);
+        return $this->_strURLPrefix.$this->_getField(
+            self::FIELD_THUMBNAIL,
+            null
+        );
     }
 
     public function getDescription()
@@ -201,7 +220,10 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
     public function getLicenceId()
     {
-        return $this->_getField(self::FIELD_LICENCE, Chaplin_Model_Video_Licence::ID_CCBYSA);
+        return $this->_getField(
+            self::FIELD_LICENCE,
+            Chaplin_Model_Video_Licence::ID_CCBYSA
+        );
     }
 
     public function getLicence()
@@ -211,7 +233,10 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
     public function getPrivacyId()
     {
-        return $this->_getField(self::FIELD_PRIVACY, Chaplin_Model_Video_Privacy::ID_PUBLIC);
+        return $this->_getField(
+            self::FIELD_PRIVACY,
+            Chaplin_Model_Video_Privacy::ID_PUBLIC
+        );
     }
 
     public function getPrivacy()
@@ -246,14 +271,17 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
     public function isMine()
     {
-        if(!Chaplin_Auth::getInstance()->hasIdentity()) {
+        if (!Chaplin_Auth::getInstance()->hasIdentity()) {
             return false;
         }
-        if(Chaplin_Auth::getInstance()->getIdentity()->getUser()->isGod()) {
+        if (Chaplin_Auth::getInstance()->getIdentity()->getUser()->isGod()) {
             // God users own everything, mwuhahaha
             return true;
         }
-        return Chaplin_Auth::getInstance()->getIdentity()->getUser()->getUsername() ==
+        return Chaplin_Auth::getInstance()
+            ->getIdentity()
+            ->getUser()
+            ->getUsername() ==
             $this->getUsername();
     }
 

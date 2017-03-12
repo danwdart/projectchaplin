@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Dao_Amqp_Exchange
     implements Chaplin_Dao_Interface
@@ -48,15 +48,17 @@ class Chaplin_Dao_Amqp_Exchange
         $arrExchanges = Chaplin_Config_Amqp::getInstance()
             ->getConfigArray();
 
-        if (!isset($arrExchanges[$strExchangeName]) ||
-            !is_array($arrExchanges[$strExchangeName])) {
+        if (!isset($arrExchanges[$strExchangeName]) 
+            || !is_array($arrExchanges[$strExchangeName])
+        ) {
             throw new Exception($strExchangeName.' exchange not found');
         }
 
         $this->_arrExchange = $arrExchanges[$strExchangeName];
 
-        if (!isset($this->_arrExchange[self::CONFIG_TYPE]))
+        if (!isset($this->_arrExchange[self::CONFIG_TYPE])) {
             throw new Canddi_Dao_Exception_Message_ExchangeTypeEmpty();
+        }
     }
 
     private static function _getReadConnection()
@@ -133,20 +135,23 @@ class Chaplin_Dao_Amqp_Exchange
 
     /**
     *  Provides the queue listening functionality
+     *
     *  @param: $queueName
     *  @param: $callback   - this is the function that will be called when a message is found
     **/
     public function listen($strQueue, Closure $callback)
     {
-        if (!isset($this->_arrExchange[self::CONFIG_QUEUES]) ||
-           !is_array($this->_arrExchange[self::CONFIG_QUEUES][$strQueue])) {
+        if (!isset($this->_arrExchange[self::CONFIG_QUEUES]) 
+            || !is_array($this->_arrExchange[self::CONFIG_QUEUES][$strQueue])
+        ) {
             throw new Exception('Queue not found: '.$strQueue);
         }
 
         $arrQueue = $this->_arrExchange[self::CONFIG_QUEUES][$strQueue];
 
-        if (!isset($arrQueue[self::CONFIG_QUEUE_KEYS]) ||
-            !is_array($arrQueue[self::CONFIG_QUEUE_KEYS])) {
+        if (!isset($arrQueue[self::CONFIG_QUEUE_KEYS]) 
+            || !is_array($arrQueue[self::CONFIG_QUEUE_KEYS])
+        ) {
             throw new Exception($strQueue.' has no keys');
         }
 
@@ -165,7 +170,7 @@ class Chaplin_Dao_Amqp_Exchange
         $amqpQueue->setFlags($intFlags);
         $amqpQueue->declareQueue();
 
-        $localCallback  = function(
+        $localCallback  = function (
             Amqp\Envelope $amqpEnvelope
         ) use (
             $callback,
@@ -220,6 +225,7 @@ class Chaplin_Dao_Amqp_Exchange
 
     /**
     *  Publishes the message
+     *
     *  @param: $modelMessage
     **/
     public function publish(Chaplin_Model_Field_Hash $message, $strRoutingKey)
@@ -232,7 +238,8 @@ class Chaplin_Dao_Amqp_Exchange
                 [
                     'content_type' => 'application/json',
                     'type' => get_class($message)
-                ]);
+                ]
+            );
     }
 
     public function save(Chaplin_Model_Field_Hash $model)

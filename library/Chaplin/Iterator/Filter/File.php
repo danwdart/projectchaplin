@@ -15,27 +15,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   ProjectChaplin
+ * @author    Kathie Dart <chaplin@kathiedart.uk>
+ * @copyright 2012-2017 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   GIT: $Id$
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 class Chaplin_Iterator_Filter_File
-	extends FilterIterator
+    extends FilterIterator
 {
-	private $_strAcceptableTypes;
+    private $_strAcceptableTypes;
 
-	public function setAcceptableTypes($strAcceptableTypes)
-	{
-		$this->_strAcceptableTypes = $strAcceptableTypes;
-	}
+    public function setAcceptableTypes($strAcceptableTypes)
+    {
+        $this->_strAcceptableTypes = $strAcceptableTypes;
+    }
 
-	public function accept()
-	{
-		return parent::current()->isFile() && 
-			preg_match('/\\.('.$this->_strAcceptableTypes.')$/i', parent::current()->getFilename()) &&
-			false === strpos(parent::current()->getPathname(), realpath(APPLICATION_PATH.'/..'));
-	}
+    public function accept()
+    {
+        return parent::current()->isFile() && 
+         preg_match('/\\.('.$this->_strAcceptableTypes.')$/i', parent::current()->getFilename()) &&
+         false === strpos(parent::current()->getPathname(), realpath(APPLICATION_PATH.'/..'));
+    }
 }

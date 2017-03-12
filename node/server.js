@@ -14,26 +14,36 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
- * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
- * @version    git
- * @link       https://github.com/dandart/projectchaplin
+ * @package   Project Chaplin
+ * @author    Kathie Dart
+ * @copyright 2012-2013 Project Chaplin
+ * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version   git
+ * @link      https://github.com/kathiedart/projectchaplin
 **/
 io = require('socket.io').listen(1337);
-io.sockets.on('connection', function (socket) {
-    socket.emit('message', { hello: 'world' });
-    socket.on('message', function (data) {
-        console.log(data);
-    });
-    socket.on('frame', function(data) {
-        socket.broadcast.emit('frame', {src: data.src, id: socket.id});
-    });
-    socket.on('rtc', function(data) {
-        socket.broadcast.emit('rtc', data);
-    });
-    socket.on('disconnect', function() {
-        socket.broadcast.emit('client disconnect', {id: socket.id});
-    });
-});
+io.sockets.on(
+    'connection', function (socket) {
+        socket.emit('message', { hello: 'world' });
+        socket.on(
+            'message', function (data) {
+                console.log(data);
+            }
+        );
+        socket.on(
+            'frame', function(data) {
+                socket.broadcast.emit('frame', {src: data.src, id: socket.id});
+            }
+        );
+        socket.on(
+            'rtc', function(data) {
+                socket.broadcast.emit('rtc', data);
+            }
+        );
+        socket.on(
+            'disconnect', function() {
+                socket.broadcast.emit('client disconnect', {id: socket.id});
+            }
+        );
+    }
+);
