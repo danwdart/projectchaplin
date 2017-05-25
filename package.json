@@ -10,7 +10,9 @@
   "scripts": {
     "build": "webpack",
     "watch": "webpack -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -25,8 +27,9 @@
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.7.0",
     "jquery": "^3.1.1",
-    "socket.io": "^1.3.5",
-    "webpack": "^2.2.1"
+    "socket.io": "^2.0.0",
+    "webpack": "^2.2.1",
+    "snyk": "^1.30.1"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -38,5 +41,6 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^2.2.1"
-  }
+  },
+  "snyk": true
 }
