@@ -1,21 +1,14 @@
 version: "2"
 services:
     chaplin_node:
-        build: node
+        image: node
         volumes:
-            - ../..:/var/www
-        links:
-            - redis:redis
-            - mysql:mysql
-            - rabbitmq:rabbitmq
-        depends_on:
-            - redis
-            - mysql
-            - rabbitmq
+            - ../../src/js:/var/www
+        command: npm start
     chaplin_php:
-        build: php
+        image: php:fpm
         volumes:
-            - ../..:/var/www
+            - ../../src/php:/var/www
         links:
             - redis:redis
             - mysql:mysql
@@ -25,9 +18,9 @@ services:
             - mysql
             - rabbitmq
     chaplin_listener_convert:
-        build: listener/convert
+        image: php
         volumes:
-            - ../..:/var/www
+            - ../../src/php:/var/www
         links:
             - redis:redis
             - mysql:mysql
@@ -36,10 +29,11 @@ services:
             - redis
             - mysql
             - rabbitmq
+        command: php -a
     chaplin_listener_youtube:
-        build: listener/youtube
+        image: php
         volumes:
-            - ../..:/var/www
+            - ../../src/php:/var/www
         links:
             - redis:redis
             - mysql:mysql
@@ -48,10 +42,11 @@ services:
             - redis
             - mysql
             - rabbitmq
+        command: php -a
     chaplin_listener_vimeo:
-        build: listener/vimeo
+        image: php
         volumes:
-            - ../..:/var/www
+            - ../../src/php:/var/www
         links:
             - redis:redis
             - mysql:mysql
@@ -60,10 +55,11 @@ services:
             - redis
             - mysql
             - rabbitmq
+        command: php -a
     chaplin_listener_email:
-        build: listener/email
+        image: php
         volumes:
-            - ../..:/var/www
+            - ../../src/php:/var/www
         links:
             - redis:redis
             - mysql:mysql
@@ -72,14 +68,14 @@ services:
             - redis
             - mysql
             - rabbitmq
+        command: php -a
     nginx:
         image: nginx
         links:
             - node:chaplin_node
             - php:chaplin_php
         volumes:
-            - ../..:/var/www
-            -
+            - ../../src/php:/var/www
     redis:
         image: redis
     mysql:
