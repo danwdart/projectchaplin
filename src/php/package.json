@@ -1,22 +1,18 @@
 {
-  "name": "projectchaplin",
+  "name": "projectchaplin-php",
   "version": "0.0.0",
   "description": "Video sharing project",
-  "main": "node/server.js",
-  "directories": {
-    "doc": "doc",
-    "test": "test"
-  },
   "scripts": {
     "build": "webpack",
     "watch": "webpack -w",
     "test": "echo \"Error: no test specified\" && exit 1",
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "prepublish": "npm run snyk-protect",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kathiedart/projectchaplin.git"
+    "url": "git+https://github.com/kathiedart/projectchaplin.git"
   },
   "author": "Kathie Dart <chaplin@kathiedart.uk>",
   "license": "AGPL-3.0",
@@ -27,7 +23,6 @@
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.7.0",
     "jquery": "^3.1.1",
-    "socket.io": "^2.0.0",
     "webpack": "^2.2.1",
     "snyk": "^1.30.1"
   },
@@ -42,5 +37,7 @@
     "url-loader": "^0.5.7",
     "webpack": "^2.2.1"
   },
-  "snyk": true
+  "snyk": true,
+  "homepage": "https://github.com/kathiedart/projectchaplin#readme",
+  "main": "server.js"
 }
