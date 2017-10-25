@@ -52,10 +52,11 @@
         "squizlabs/php_codesniffer": "^2.7"
     },
     "autoload": {
-        "classmap": [
-            "application/",
-            "library/",
-            "test/"
-        ]
+        "psr-4": {
+            "Chaplin\\": "Chaplin/"
+        },
+        "psr-0": {
+            "Chaplin_": "Chaplin/"
+        }
     }
 }

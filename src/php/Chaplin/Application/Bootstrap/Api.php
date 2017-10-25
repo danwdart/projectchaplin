@@ -22,57 +22,65 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
+namespace Chaplin\Application\Bootstrap;
+
+use Chaplin_Controller_Plugin_Acl as PluginAcl;
+use Chaplin_Model_User_Helper_UserType as UserType;
+use Zend_Acl as Acl;
+use Zend_Acl_Role as Role;
+use Zend_Application_Bootstrap_Bootstrap as ZendBootstrap;
+
+class Api extends ZendBootstrap;
 {
     protected function _initAcl()
     {
-        $acl = new Zend_Acl();
+        $acl = new Acl();
 
         $acl->addRole(
-            new Zend_Acl_Role(
-                Chaplin_Model_User_Helper_UserType::TYPE_GUEST
+            new Role(
+                UserType::TYPE_GUEST
             )
         );
 
         $acl->addRole(
-            new Zend_Acl_Role(
-                Chaplin_Model_User_Helper_UserType::TYPE_USER
+            new Role(
+                UserType::TYPE_USER
             ),
-            Chaplin_Model_User_Helper_UserType::TYPE_GUEST
+            UserType::TYPE_GUEST
         );
 
         $acl->addRole(
-            new Zend_Acl_Role(
-                Chaplin_Model_User_Helper_UserType::TYPE_SILVER
+            new Role(
+                UserType::TYPE_SILVER
             ),
-            Chaplin_Model_User_Helper_UserType::TYPE_USER
+            UserType::TYPE_USER
         );
 
         $acl->addRole(
-            new Zend_Acl_Role(
-                Chaplin_Model_User_Helper_UserType::TYPE_GOLD
+            new Role(
+                UserType::TYPE_GOLD
             ),
-            Chaplin_Model_User_Helper_UserType::TYPE_SILVER
+            UserType::TYPE_SILVER
         );
 
         $acl->addRole(
-            new Zend_Acl_Role(
-                Chaplin_Model_User_Helper_UserType::TYPE_MINION
+            new Role(
+                UserType::TYPE_MINION
             ),
-            Chaplin_Model_User_Helper_UserType::TYPE_GOLD
+            UserType::TYPE_GOLD
         );
 
         $acl->addRole(
-            new Zend_Acl_Role(
-                Chaplin_Model_User_Helper_UserType::TYPE_GOD
+            new Role(
+                UserType::TYPE_GOD
             ),
-            Chaplin_Model_User_Helper_UserType::TYPE_MINION
+            UserType::TYPE_MINION
         );
 
         $this->bootstrap('frontController');
-        $this->frontController->registerPlugin(new Chaplin_Controller_Plugin_Acl($acl));
+        $this->frontController->registerPlugin(new PluginAcl($acl));
         Zend_View_Helper_Navigation_HelperAbstract::setDefaultAcl($acl);
-        Zend_View_Helper_Navigation_HelperAbstract::setDefaultRole(Chaplin_Model_User_Helper_UserType::TYPE_GUEST);
+        Zend_View_Helper_Navigation_HelperAbstract::setDefaultRole(UserType::TYPE_GUEST);
         Zend_Registry::set('acl', $acl);
     }
 
