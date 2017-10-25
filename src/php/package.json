@@ -5,7 +5,7 @@
   "scripts": {
     "build": "webpack",
     "watch": "webpack -w",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "snyk test",
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect",
     "start": "node server.js"
@@ -23,8 +23,9 @@
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.7.0",
     "jquery": "^3.1.1",
-    "webpack": "^2.2.1",
-    "snyk": "^1.30.1"
+    "snyk": "^1.30.1",
+    "socket.io-client": "^2.0.4",
+    "webpack": "^2.2.1"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
