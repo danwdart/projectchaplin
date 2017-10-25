@@ -1,10 +1,11 @@
 module.exports = {
-   context: __dirname+'/public/js/',
-   entry: './src/index.js',
-   output: {
-       publicPath: '/js/',
-       filename: "index.js"
-   },
+    context: __dirname+'/public/js',
+    entry: './src/index.js',
+    output: {
+        path: __dirname+'/public/js',
+        publicPath: '/js/',
+        filename: "index.js"
+    },
    module: {
        loaders: [
            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
