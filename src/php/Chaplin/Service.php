@@ -22,33 +22,17 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class Chaplin_Service
+use Chaplin\Interfaces\Singleton as SingletonInterface;
+use Chaplin\Traits\Singleton as SingletonTrait;
+
+class Chaplin_Service implements SingletonInterface
 {
+    use SingletonTrait;
+
     const LIFETIME_SECS = 1800;
 
-    public static function inject(Chaplin_Service $service)
-    {
-        self::$_instance = $service;
-    }
-
-    private static $_instance;
-
-    public static function getInstance()
-    {
-        if (is_null(self::$_instance)) {
-            self::$_instance   = new Chaplin_Service();
-        }
-        return self::$_instance;
-    }
-
-    private function __construct()
-    {
-    }
-    private function __clone()
-    {
-    }
-
     private $_zendCache;
+
     private function _getCache()
     {
         if (is_null($this->_zendCache)) {

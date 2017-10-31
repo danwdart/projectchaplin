@@ -22,39 +22,12 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class Chaplin_Gateway
+use Chaplin\Interfaces\Singleton as SingletonInterface;
+use Chaplin\Traits\Singleton as SingletonTrait;
+
+class Chaplin_Gateway implements SingletonInterface
 {
-    private static $_instance;
-
-    private function __clone()
-    {
-    }
-
-    private function __construct()
-    {
-    }
-
-    public static function __callStatic($strMethod, Array $arrArgs)
-    {
-        return call_user_func_array(
-            [self::getInstance(), $strMethod],
-            $arrArgs
-        );
-    }
-
-    public static function getInstance()
-    {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new self();
-        }
-
-        return self::$_instance;
-    }
-
-    public function inject(Chaplin_Gateway $gateway)
-    {
-        self::$_instance = $gateway;
-    }
+    use SingletonTrait;
 
     public function getGateway($strName)
     {

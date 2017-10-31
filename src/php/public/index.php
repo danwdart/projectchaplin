@@ -35,7 +35,7 @@ defined('APPLICATION_PATH')
     || define(
         'APPLICATION_PATH',
         realpath(
-            dirname(__FILE__) . '/../application'
+            __DIR__ . '/..'
         )
     );
 
@@ -47,11 +47,14 @@ defined('APPLICATION_ENV')
             getenv('APPLICATION_ENV') ?? 'production'
         )
     );
-    
+
+$dotenv = new Dotenv\Dotenv(__DIR__."/../");
+$dotenv->load();
+
 // Create application, bootstrap, and run
 $application = new Zend_Application(
     APPLICATION_ENV,
-    APPLICATION_PATH . '/config/application.ini'
+    APPLICATION_PATH . '/config/application-api.ini'
 );
 $application->bootstrap()
     ->run();
