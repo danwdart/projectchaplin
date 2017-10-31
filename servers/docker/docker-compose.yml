@@ -5,67 +5,47 @@ services:
             context: ../..
             dockerfile: servers/docker/node/Dockerfile
         image: chaplin-node
-    chaplin_php:
+    chaplin_api:
         build:
             context: ../..
             dockerfile: servers/docker/php/api/Dockerfile
         image: chaplin-php-api
-        links:
-            - redis:redis
-            - mysql:mysql
-            - rabbitmq:rabbitmq
         depends_on:
             - redis
             - mysql
             - rabbitmq
-    chaplin_listener_convert:
+    chaplin_cli_convert:
         build:
             context: ../..
             dockerfile: servers/docker/php/cli/convert/Dockerfile
         image: chaplin-php
-        links:
-            - redis:redis
-            - mysql:mysql
-            - rabbitmq:rabbitmq
         depends_on:
             - redis
             - mysql
             - rabbitmq
-    chaplin_listener_youtube:
+    chaplin_cli_youtube:
         build:
             context: ../..
             dockerfile: servers/docker/php/cli/youtube/Dockerfile
         image: chaplin-php
-        links:
-            - redis:redis
-            - mysql:mysql
-            - rabbitmq:rabbitmq
         depends_on:
             - redis
             - mysql
             - rabbitmq
-    chaplin_listener_vimeo:
+    chaplin_cli_vimeo:
         build:
             context: ../..
             dockerfile: servers/docker/php/cli/vimeo/Dockerfile
         image: chaplin-php
-        links:
-            - redis:redis
-            - mysql:mysql
-            - rabbitmq:rabbitmq
         depends_on:
             - redis
             - mysql
             - rabbitmq
-    chaplin_listener_email:
+    chaplin_cli_email:
         build:
             context: ../..
             dockerfile: servers/docker/php/cli/email/Dockerfile
         image: chaplin-php
-        links:
-            - redis:redis
-            - mysql:mysql
-            - rabbitmq:rabbitmq
         depends_on:
             - redis
             - mysql
@@ -74,20 +54,15 @@ services:
         image: nginx
         links:
             - chaplin_node:node
-            - chaplin_php:php
+            - chaplin_api:api
         depends_on:
             - chaplin_node
-            - chaplin_php
+            - chaplin_api
         ports:
             - "80:80"
     redis:
         image: redis
     mysql:
         image: mysql
-        environment:
-            MYSQL_ROOT_PASSWORD: testtest123
-            MYSQL_DATABASE: chaplin
-            MYSQL_USER: chaplin
-            MYSQL_PASSWORD: chaplin
     rabbitmq:
         image: rabbitmq
