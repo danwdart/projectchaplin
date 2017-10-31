@@ -44,7 +44,8 @@
         "zendframework/zendgdata": "^2.0",
         "google/apiclient": "^2.0",
         "vimeo/vimeo-api": "^1.2",
-        "misd/linkify": "^1.1"
+        "misd/linkify": "^1.1",
+        "vlucas/phpdotenv": "^2.4"
     },
     "require-dev": {
         "mockery/mockery": "dev-master",
@@ -52,11 +53,11 @@
         "squizlabs/php_codesniffer": "^2.7"
     },
     "autoload": {
-        "psr-4": {
-            "Chaplin\\": "Chaplin/"
-        },
         "psr-0": {
             "Chaplin_": "Chaplin/"
+        },
+        "psr-4": {
+            "Chaplin\\": "Chaplin/"
         }
     }
 }

@@ -28,26 +28,19 @@ set_time_limit(0);
 
 // Define path to application directory
 defined('APPLICATION_PATH')
-    || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
+    || define('APPLICATION_PATH', realpath(__DIR__ . '/..'));
 
 // Define application environment
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
-// Ensure library/ is on include_path
-set_include_path(
-    implode(
-        PATH_SEPARATOR, array(
-        realpath(APPLICATION_PATH . '/../library'),
-        get_include_path(),
-        )
-    )
-);
+$dotenv = new Dotenv\Dotenv(__DIR__."/../");
+$dotenv->load();
 
 // Create application, bootstrap, and run
 $application = new Zend_Application(
     APPLICATION_ENV,
-    APPLICATION_PATH . '/../cli/config/application.ini'
+    APPLICATION_PATH . '/config/application-cli.ini'
 );
 $application->bootstrap();//            ->run();
 

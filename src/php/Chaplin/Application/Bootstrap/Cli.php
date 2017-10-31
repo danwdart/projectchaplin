@@ -22,17 +22,35 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class cliBootstrap extends Zend_Application_Bootstrap_Bootstrap
+namespace Chaplin\Application\Bootstrap;
+
+use Chaplin\Config\Env;
+use Exception;
+use Zend_Application_Bootstrap_Bootstrap as ZendBootstrap;
+use Zend_Mail as ZendMail;
+use Zend_Mail_Transport_Smtp as TransportSmtp;
+
+class Cli extends ZendBootstrap
 {
+    protected function _initEnvs()
+    {
+        Env::init();
+    }
+
     protected function _initSmtp()
     {
-        $configSmtp = Chaplin_Config_Servers::getInstance();
-        $arrSmtp = $configSmtp->getSmtpSettings();
-        $transport = new Zend_Mail_Transport_Smtp(
-            $arrSmtp['server']['host'],
-            $arrSmtp['server']['options']
+        $this->bootstrap('env');
+
+        $transport = new TransportSmtp(
+            SMTP_HOST,
+            [
+                "port"      => SMTP_PORT,
+                "user"      => SMTP_USER,
+                "password"  => SMTP_PASSWORD,
+                "tls"       => SMTP_USE_TLS
+            ]
         );
-        Zend_Mail::setDefaultTransport($transport);
+        ZendMail::setDefaultTransport($transport);
     }
 
     protected function _bootstrap($resource = null)

@@ -24,14 +24,34 @@
 **/
 namespace Chaplin\Application\Bootstrap;
 
+use Chaplin\Config\Env;
+use Chaplin_Config_Sessions as ConfigSessions;
+use Chaplin_Controller_Action_Helper as ActionHelper;
 use Chaplin_Controller_Plugin_Acl as PluginAcl;
+use Chaplin_Controller_Plugin_Api as PluginApi;
 use Chaplin_Model_User_Helper_UserType as UserType;
+use Exception;
 use Zend_Acl as Acl;
 use Zend_Acl_Role as Role;
 use Zend_Application_Bootstrap_Bootstrap as ZendBootstrap;
+use Zend_Controller_Action_HelperBroker as HelperBroker;
+use Zend_Controller_Front as Front;
+use Zend_Controller_Router_Route as Route;
+use Zend_Controller_Router_Route_Hostname as RouteHostname;
+use Zend_Controller_Router_Route_Static as RouteStatic;
+use Zend_Mail as ZendMail;
+use Zend_Mail_Transport_Smtp as TransportSmtp;
+use Zend_Registry as Reg;
+use Zend_Session as Session;
+use Zend_View_Helper_Navigation_HelperAbstract as HelperAbstract;
 
-class Api extends ZendBootstrap;
+class Api extends ZendBootstrap
 {
+    protected function _initEnvs()
+    {
+        Env::init();
+    }
+
     protected function _initAcl()
     {
         $acl = new Acl();
@@ -79,16 +99,16 @@ class Api extends ZendBootstrap;
 
         $this->bootstrap('frontController');
         $this->frontController->registerPlugin(new PluginAcl($acl));
-        Zend_View_Helper_Navigation_HelperAbstract::setDefaultAcl($acl);
-        Zend_View_Helper_Navigation_HelperAbstract::setDefaultRole(UserType::TYPE_GUEST);
-        Zend_Registry::set('acl', $acl);
+        HelperAbstract::setDefaultAcl($acl);
+        HelperAbstract::setDefaultRole(UserType::TYPE_GUEST);
+        Reg::set('acl', $acl);
     }
 
     protected function _initApi()
     {
         $this->bootstrap('frontController');
-        Zend_Controller_Action_HelperBroker::addPrefix('Chaplin_Controller_Action_Helper');
-        $this->frontController->registerPlugin(new Chaplin_Controller_Plugin_Api());
+        HelperBroker::addPrefix(ActionHelper::class);
+        $this->frontController->registerPlugin(new PluginApi());
     }
 
     protected function _initIniValues()
@@ -99,7 +119,9 @@ class Api extends ZendBootstrap;
 
     protected function _initRoutes()
     {
-        $router = Zend_Controller_Front::getInstance()->getRouter();
+        $this->bootstrap('env');
+
+        $router = Front::getInstance()->getRouter();
         /*
         $route = new Zend_Controller_Router_Route_Regex('.*-p(\d+).htm',
             array(
@@ -111,15 +133,15 @@ class Api extends ZendBootstrap;
         $router->addRoute('product', $route);
         */
 
-        $chapli = new Zend_Controller_Router_Route_Hostname(
-            'chap.li',
+        $chapli = new RouteHostname(
+            VHOST_SHORT,
             array(
                 'controller' => 'video',
                 'action' => 'watchshort'
             )
         );
 
-        $route = new Zend_Controller_Router_Route(
+        $route = new Route(
             '/:id',
             array(
                 'controller' => 'video',
@@ -128,7 +150,7 @@ class Api extends ZendBootstrap;
             )
         );
         $router->addRoute('watchshort', $chapli->chain($route));
-        $route = new Zend_Controller_Router_Route(
+        $route = new Route(
             'user/:id/:action',
             array(
                 'controller' => 'user',
@@ -138,7 +160,7 @@ class Api extends ZendBootstrap;
         );
         $router->addRoute('user', $route);
 
-        $route = new Zend_Controller_Router_Route_Static(
+        $route = new RouteStatic(
             'logout',
             array(
                 'controller' => 'login',
@@ -159,23 +181,32 @@ class Api extends ZendBootstrap;
 
     protected function _initSession()
     {
-        $configSessions = Chaplin_Config_Sessions::getInstance();
+        $this->bootstrap('env');
+
+        $configSessions = ConfigSessions::getInstance();
         if (!is_null($configSessions->getSaveHandler())) {
-            Zend_Session::setSaveHandler($configSessions->getSaveHandler());
+            Session::setSaveHandler($configSessions->getSaveHandler());
         }
         if (!is_null($configSessions->getSessionOptions())) {
-            Zend_Session::setOptions($configSessions->getSessionOptions());
+            Session::setOptions($configSessions->getSessionOptions());
         }
-        Zend_Session::start();
+        Session::start();
     }
 
     protected function _initSmtp()
     {
-        $transport = new Zend_Mail_Transport_Smtp(
-            $arrSmtp['server']['host'],
-            $arrSmtp['server']['options']
+        $this->bootstrap('env');
+
+        $transport = new TransportSmtp(
+            SMTP_HOST,
+            [
+                "port"      => SMTP_PORT,
+                "user"      => SMTP_USER,
+                "password"  => SMTP_PASSWORD,
+                "tls"       => SMTP_USE_TLS
+            ]
         );
-        Zend_Mail::setDefaultTransport($transport);
+        ZendMail::setDefaultTransport($transport);
     }
 
     protected function _bootstrap($resource = null)
