@@ -8,3 +8,4 @@ npm-debug.log
 /public/js/*.woff*
 /public/js/*.eot
 /public/js/*.ttf
+.env
