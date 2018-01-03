@@ -16,8 +16,8 @@
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package   ProjectChaplin
- * @author    Kathie Dart <chaplin@kathiedart.uk>
- * @copyright 2012-2017 Project Chaplin
+ * @author    Dan Dart <chaplin@dandart.co.uk>
+ * @copyright 2012-2018 Project Chaplin
  * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
@@ -36,7 +36,7 @@ abstract class Chaplin_Dao_PhpRedis_Abstract
      * Gets the Redis instance
      *
      * @return Redis
-     * @author Kathie Dart <chaplin@kathiedart.uk>
+     * @author Dan Dart <chaplin@dandart.co.uk>
     **/
     protected function _getRedis()
     {
@@ -52,7 +52,7 @@ abstract class Chaplin_Dao_PhpRedis_Abstract
      *
      * @param  Redis $redis 
      * @return void
-     * @author Kathie Dart <chaplin@kathiedart.uk>
+     * @author Dan Dart <chaplin@dandart.co.uk>
     **/
     public function inject(Redis $redis)
     {

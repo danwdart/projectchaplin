@@ -17,8 +17,8 @@
  *
  * @package   ProjectChaplin
  * @author    Ivan Shumkov
- * @author    Kathie Dart <chaplin@kathiedart.uk>
- * @copyright 2012-2017 Project Chaplin
+ * @author    Dan Dart <chaplin@dandart.co.uk>
+ * @copyright 2012-2018 Project Chaplin
  * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin

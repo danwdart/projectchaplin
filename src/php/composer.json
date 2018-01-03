@@ -14,7 +14,7 @@
     "license": "AGPL-3.0",
     "authors": [
         {
-            "name": "Kathie Dart",
+            "name": "Dan Dart",
             "email": "chaplin@kathiedart.co.uk",
             "homepage": "http://kathiedart.co.uk",
             "role": "Developer"
@@ -45,7 +45,8 @@
         "google/apiclient": "^2.0",
         "vimeo/vimeo-api": "^1.2",
         "misd/linkify": "^1.1",
-        "vlucas/phpdotenv": "^2.4"
+        "vlucas/phpdotenv": "^2.4",
+        "phpstan/phpstan": "^0.9.1"
     },
     "require-dev": {
         "mockery/mockery": "dev-master",
@@ -54,10 +55,13 @@
     },
     "autoload": {
         "psr-0": {
-            "Chaplin_": "Chaplin/"
-        },
+            "Chaplin_": ""
+	},
         "psr-4": {
             "Chaplin\\": "Chaplin/"
-        }
+        },
+	"classmap": [
+            "Chaplin/"
+	]
     }
 }

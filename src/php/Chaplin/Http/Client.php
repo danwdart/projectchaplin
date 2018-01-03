@@ -16,8 +16,8 @@
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package   ProjectChaplin
- * @author    Kathie Dart <chaplin@kathiedart.uk>
- * @copyright 2012-2017 Project Chaplin
+ * @author    Dan Dart <chaplin@dandart.co.uk>
+ * @copyright 2012-2018 Project Chaplin
  * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
@@ -27,7 +27,7 @@
  * This only does GET requests right now - to do POST extend this - for one, the arrPageBody[url] needs some more
  *
  * @package default
- * @author  Kathie Dart <chaplin@kathiedart.uk>
+ * @author  Dan Dart <chaplin@dandart.co.uk>
 **/
 class Chaplin_Http_Client implements Chaplin_Http_Interface
 {
@@ -37,7 +37,7 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
      * Save a new Zend_Http_Client in the object
      *
      * @param  Zend_Http_Client $client (for testing purposes)
-     * @author Kathie Dart <chaplin@kathiedart.uk>
+     * @author Dan Dart <chaplin@dandart.co.uk>
     **/
     public function __construct(Zend_Http_Client $client = null)
     {
@@ -66,7 +66,7 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
      * @return string $pageBody
      * @throws Chaplin_Http_Exception_Unsuccessful
      * @throws Chaplin_Http_Exception_InvalidURL
-     * @author Kathie Dart <chaplin@kathiedart.uk>
+     * @author Dan Dart <chaplin@dandart.co.uk>
     **/
     public function getPageBody($url, $intLogPriority = Zend_Log::ERR)
     {
@@ -214,7 +214,7 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
      * @param  string $strData 
      * @param  string $strXPath 
      * @return string
-     * @author Kathie Dart <chaplin@kathiedart.uk>
+     * @author Dan Dart <chaplin@dandart.co.uk>
     **/
     public function parseRawXPath($strData, $strXPath)
     {
@@ -252,7 +252,7 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
      * @param  string $strXPath 
      * @param  string $strURL 
      * @return void
-     * @author Kathie Dart <chaplin@kathiedart.uk>
+     * @author Dan Dart <chaplin@dandart.co.uk>
     **/
     public function parseRawHtmlXPath($strData, $strXPath, $strURL = null)
     {
@@ -290,7 +290,7 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
     * @param  string $strURL 
     * @param  int    $intLogPriority = null
     * @return Zend_Http_Response
-    * @author Kathie Dart <chaplin@kathiedart.uk>
+    * @author Dan Dart <chaplin@dandart.co.uk>
     **/
     public function getHttpResponse($url, $intLogPriority = Zend_Log::ERR)
     {

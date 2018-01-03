@@ -8,7 +8,7 @@
  * Version: 1.4.2 (9/2/2013)
  * Licensed under the MIT License (http://opensource.org/licenses/MIT)
  * Tested in: Safari 4+, Google Chrome 4+, Firefox 3+, IE7+, Mobile Safari 2.2.1 and Dolphin Browser
- * Changed by Kathie Dart to be es6 compliant for Project Chaplin
+ * Changed by Dan Dart to be es6 compliant for Project Chaplin
  */
 
 export default function (callback) {
