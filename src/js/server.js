@@ -15,7 +15,7 @@
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package   Project Chaplin
- * @author    Kathie Dart
+ * @author    Dan Dart
  * @copyright 2012-2013 Project Chaplin
  * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version   git

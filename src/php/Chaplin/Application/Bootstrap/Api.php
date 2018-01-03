@@ -16,15 +16,14 @@
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package   ProjectChaplin
- * @author    Kathie Dart <chaplin@kathiedart.uk>
- * @copyright 2012-2017 Project Chaplin
+ * @author    Dan Dart <chaplin@dandart.co.uk>
+ * @copyright 2012-2018 Project Chaplin
  * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
 namespace Chaplin\Application\Bootstrap;
 
-use Chaplin\Config\Env;
 use Chaplin_Config_Sessions as ConfigSessions;
 use Chaplin_Controller_Action_Helper as ActionHelper;
 use Chaplin_Controller_Plugin_Acl as PluginAcl;
@@ -47,11 +46,6 @@ use Zend_View_Helper_Navigation_HelperAbstract as HelperAbstract;
 
 class Api extends ZendBootstrap
 {
-    protected function _initEnvs()
-    {
-        Env::init();
-    }
-
     protected function _initAcl()
     {
         $acl = new Acl();
@@ -119,8 +113,6 @@ class Api extends ZendBootstrap
 
     protected function _initRoutes()
     {
-        $this->bootstrap('env');
-
         $router = Front::getInstance()->getRouter();
         /*
         $route = new Zend_Controller_Router_Route_Regex('.*-p(\d+).htm',

@@ -16,15 +16,14 @@
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package   ProjectChaplin
- * @author    Kathie Dart <chaplin@kathiedart.uk>
- * @copyright 2012-2017 Project Chaplin
+ * @author    Dan Dart <chaplin@dandart.co.uk>
+ * @copyright 2012-2018 Project Chaplin
  * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
 namespace Chaplin\Application\Bootstrap;
 
-use Chaplin\Config\Env;
 use Exception;
 use Zend_Application_Bootstrap_Bootstrap as ZendBootstrap;
 use Zend_Mail as ZendMail;
@@ -32,11 +31,6 @@ use Zend_Mail_Transport_Smtp as TransportSmtp;
 
 class Cli extends ZendBootstrap
 {
-    protected function _initEnvs()
-    {
-        Env::init();
-    }
-
     protected function _initSmtp()
     {
         $this->bootstrap('env');

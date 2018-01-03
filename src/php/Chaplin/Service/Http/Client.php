@@ -16,8 +16,8 @@
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package   ProjectChaplin
- * @author    Kathie Dart <chaplin@kathiedart.uk>
- * @copyright 2012-2017 Project Chaplin
+ * @author    Dan Dart <chaplin@dandart.co.uk>
+ * @copyright 2012-2018 Project Chaplin
  * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
@@ -26,7 +26,7 @@
  * The hook that Service->getHttpClient() provides
  *
  * @package default
- * @author  Kathie Dart <chaplin@kathiedart.uk>
+ * @author  Dan Dart <chaplin@dandart.co.uk>
 **/
 class Chaplin_Service_Http_Client
 {
@@ -37,7 +37,7 @@ class Chaplin_Service_Http_Client
      *
      * @param Chaplin_Http_Interface $objHttpClient This needs mocking
      *
-     * @author Kathie Dart <chaplin@kathiedart.uk>
+     * @author Dan Dart <chaplin@dandart.co.uk>
     **/
     public function __construct(Chaplin_Http_Interface $objHttpClient)
     {
@@ -51,7 +51,7 @@ class Chaplin_Service_Http_Client
      * @param int    $intLogPriority = null
      *
      * @return string
-     * @author Kathie Dart <chaplin@kathiedart.uk>
+     * @author Dan Dart <chaplin@dandart.co.uk>
     **/
     public function getPageBody($strURL, $intLogPriority = Zend_Log::ERR)
     {
@@ -88,7 +88,7 @@ class Chaplin_Service_Http_Client
      * @param string $strXPath The xPath
      *
      * @return string
-     * @author Kathie Dart <chaplin@kathiedart.uk>
+     * @author Dan Dart <chaplin@dandart.co.uk>
     **/
     public function parseRawXPath($strData, $strXPath)
     {
@@ -103,7 +103,7 @@ class Chaplin_Service_Http_Client
      * @param string $strURL   = null (for absolute paths - does not scrape)
      *
      * @return string
-     * @author Kathie Dart <chaplin@kathiedart.uk>
+     * @author Dan Dart <chaplin@dandart.co.uk>
     **/
     public function parseRawHtmlXPath($strData, $strXPath, $strURL = null)
     {
@@ -121,7 +121,7 @@ class Chaplin_Service_Http_Client
      * @param  string $intLogPriority
      * @param  string $bCache
      * @return Chaplin_Cache_HttpClient
-     * @author Kathie Dart <chaplin@kathiedart.uk>
+     * @author Dan Dart <chaplin@dandart.co.uk>
     **/
     public function getHttpResponse(
         $strURL,
