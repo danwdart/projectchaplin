@@ -27,11 +27,11 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/kathiedart/amqp"
+            "url": "https://github.com/danwdart/amqp"
         },
         {
             "type": "vcs",
-            "url": "https://github.com/kathiedart/multiorm"
+            "url": "https://github.com/danwdart/multiorm"
         }
     ],
     "require": {

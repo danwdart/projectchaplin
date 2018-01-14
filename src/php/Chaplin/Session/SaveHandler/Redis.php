@@ -21,7 +21,7 @@
  * @copyright 2012-2018 Project Chaplin
  * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version   GIT: $Id$
- * @link      https://github.com/kathiedart/projectchaplin
+ * @link      https://github.com/danwdart/projectchaplin
 **/
 /**
  * This file was partially ripped off from Rediska
