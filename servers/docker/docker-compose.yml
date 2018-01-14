@@ -1,87 +1,74 @@
 version: "3"
 services:
-    chaplin_node:
-        build: node
+    node:
+        build:
+            context: ../..
+            dockerfile: servers/docker/node/Dockerfile
         volumes:
             - ../..:/var/www
-        links:
-            - redis:redis
-            - mysql:mysql
-            - rabbitmq:rabbitmq
         depends_on:
             - redis
             - mysql
             - rabbitmq
-    chaplin_php:
-        build: php
+    api:
+        build:
+            context: ../..
+            dockerfile: servers/docker/php/api/Dockerfile
         volumes:
             - ../..:/var/www
-        links:
-            - redis:redis
-            - mysql:mysql
-            - rabbitmq:rabbitmq
         depends_on:
             - redis
             - mysql
             - rabbitmq
-    chaplin_listener_convert:
-        build: listener/convert
+    cli_convert:
+        build:
+            context: ../..
+            dockerfile: servers/docker/php/cli/convert/Dockerfile
         volumes:
             - ../..:/var/www
-        links:
-            - redis:redis
-            - mysql:mysql
-            - rabbitmq:rabbitmq
         depends_on:
             - redis
             - mysql
             - rabbitmq
-    chaplin_listener_youtube:
-        build: listener/youtube
+    cli_youtube:
+        build:
+            context: ../..
+            dockerfile: servers/docker/php/cli/youtube/Dockerfile
         volumes:
             - ../..:/var/www
-        links:
-            - redis:redis
-            - mysql:mysql
-            - rabbitmq:rabbitmq
         depends_on:
             - redis
             - mysql
             - rabbitmq
-    chaplin_listener_vimeo:
-        build: listener/vimeo
+    cli_vimeo:
+        build:
+            context: ../..
+            dockerfile: servers/docker/php/cli/vimeo/Dockerfile
         volumes:
             - ../..:/var/www
-        links:
-            - redis:redis
-            - mysql:mysql
-            - rabbitmq:rabbitmq
         depends_on:
             - redis
             - mysql
             - rabbitmq
-    chaplin_listener_email:
-        build: listener/email
+    cli_email:
+        build:
+            context: ../..
+            dockerfile: servers/docker/php/cli/email/Dockerfile
         volumes:
             - ../..:/var/www
-        links:
-            - redis:redis
-            - mysql:mysql
-            - rabbitmq:rabbitmq
         depends_on:
             - redis
             - mysql
             - rabbitmq
     nginx:
-        image: nginx
+        build:
+            context: ../..
+            dockerfile: servers/docker/nginx/Dockerfile
+        depends_on:
+            - api
     redis:
         image: redis
     mysql:
         image: mysql
-        environment:
-            MYSQL_ROOT_PASSWORD: testtest123
-            MYSQL_DATABASE: chaplin
-            MYSQL_USER: chaplin
-            MYSQL_PASSWORD: chaplin
     rabbitmq:
         image: rabbitmq
