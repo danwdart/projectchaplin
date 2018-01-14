@@ -4,9 +4,9 @@ COPY src/php /var/www/
 RUN composer install --ignore-platform-reqs --no-scripts
 
 FROM php
+RUN docker-php-ext-install pdo pdo_mysql
 WORKDIR /var/www
 COPY src/php /var/www/
-COPY .env /var/www/
 COPY --from=build /var/www/vendor /var/www/vendor
 
 CMD ["php", "cli/cli.php", "cli", "convert"]
