@@ -1,5 +1,5 @@
 server {
-  server_name     ${VHOST}:${VHOST_PORT}
+  server_name     ${VHOST}:${VHOST_PORT};
   root            /var/www/public/;
   index           index.php;
 
@@ -42,7 +42,7 @@ server {
 }
 
 server {
-  server_name     ${VHOST_NODE}:${VHOST_NODE_PORT}
+  server_name     ${VHOST_NODE}:${VHOST_NODE_PORT};
 
   add_header      X-Server $hostname;
   location / {
@@ -57,7 +57,7 @@ server {
 
 
 #server {
-#    server_name     $VHOST_GUI
+#    server_name     $VHOST_GUI;
 #    listen 80;
 #
 #    root            /Volumes/www.kompli.dwt/_site/;

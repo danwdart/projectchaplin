@@ -4,8 +4,8 @@ services:
         build:
             context: ../..
             dockerfile: servers/docker/node/Dockerfile
-        volumes:
-            - ../..:/var/www
+        #volumes:
+        #    - ../../src/js:/app
         depends_on:
             - redis
             - mysql
@@ -14,8 +14,8 @@ services:
         build:
             context: ../..
             dockerfile: servers/docker/php/api/Dockerfile
-        volumes:
-            - ../..:/var/www
+        #volumes:
+        #    - ../../src/php:/var/www
         depends_on:
             - redis
             - mysql
@@ -24,8 +24,8 @@ services:
         build:
             context: ../..
             dockerfile: servers/docker/php/cli/convert/Dockerfile
-        volumes:
-            - ../..:/var/www
+        #volumes:
+        #    - ../../src/php:/var/www
         depends_on:
             - redis
             - mysql
@@ -34,8 +34,8 @@ services:
         build:
             context: ../..
             dockerfile: servers/docker/php/cli/youtube/Dockerfile
-        volumes:
-            - ../..:/var/www
+        #volumes:
+        #    - ../../src/php:/var/www
         depends_on:
             - redis
             - mysql
@@ -44,8 +44,8 @@ services:
         build:
             context: ../..
             dockerfile: servers/docker/php/cli/vimeo/Dockerfile
-        volumes:
-            - ../..:/var/www
+        #volumes:
+        #    - ../../src/php:/var/www
         depends_on:
             - redis
             - mysql
@@ -54,8 +54,8 @@ services:
         build:
             context: ../..
             dockerfile: servers/docker/php/cli/email/Dockerfile
-        volumes:
-            - ../..:/var/www
+        #volumes:
+        #    - ../../src/php:/var/www
         depends_on:
             - redis
             - mysql
@@ -64,6 +64,8 @@ services:
         build:
             context: ../..
             dockerfile: servers/docker/nginx/Dockerfile
+        #volumes:
+        #    - ../../src/php:/var/www
         depends_on:
             - api
     redis:
