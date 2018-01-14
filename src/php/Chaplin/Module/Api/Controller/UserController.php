@@ -22,7 +22,17 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class UserController extends Chaplin_Controller_Action_Api
+namespace Chaplin\Module\Api\Controller;
+
+use Chaplin_Auth as Auth;
+use Chaplin_Controller_Action_Api as ApiController;
+use Chaplin_Dao_Exception_User_NotFound as ExceptionUserNotFound;
+use Chaplin_Gateway as Gateway;
+use Chaplin\Module\Api\Form\UserData\Edit as FormEditUserData;
+use Chaplin_Service as Service;
+use Exception;
+
+class UserController extends ApiController
 {
     public function indexAction()
     {
@@ -32,10 +42,10 @@ class UserController extends Chaplin_Controller_Action_Api
         }
 
         try {
-            $modelUser = Chaplin_Gateway::getInstance()
+            $modelUser = Gateway::getInstance()
              ->getUser()
              ->getByUsername($strUsername);
-        } catch(Chaplin_Dao_Exception_User_NotFound $e) {
+        } catch(ExceptionUserNotFound $e) {
             $this->_redirect('/');
         }
 
@@ -43,8 +53,8 @@ class UserController extends Chaplin_Controller_Action_Api
             return $this->view->assign($modelUser->toArray());
         }
 
-        $this->view->bIsMe = Chaplin_Auth::getInstance()->hasIdentity() &&
-         Chaplin_Auth::getInstance()->getIdentity()->getUser()->getUsername() ==
+        $this->view->bIsMe = Auth::getInstance()->hasIdentity() &&
+         Auth::getInstance()->getIdentity()->getUser()->getUsername() ==
           $modelUser->getUsername();
 
         $this->view->modelUser = $modelUser;
@@ -55,9 +65,9 @@ class UserController extends Chaplin_Controller_Action_Api
 
         $this->view->strTitle = $modelUser->getNick().' - Chaplin';
 
-        $form = new default_Form_UserData_Edit();
+        $form = new FormEditUserData();
 
-        $user = Chaplin_Auth::getInstance()->getIdentity()->getUser();
+        $user = Auth::getInstance()->getIdentity()->getUser();
 
         $form->username->setValue($user->getUsername());
         $form->fullname->setValue($user->getNick());
@@ -112,7 +122,7 @@ class UserController extends Chaplin_Controller_Action_Api
     {
         $strPageToken = $this->_request->getQuery('pageToken', null);
         $strUsername = $this->_request->getParam('id', null);
-        $serviceYouTube = Chaplin_Service::getInstance()->getYouTube();
+        $serviceYouTube = Service::getInstance()->getYouTube();
         $this->view->ittVideos = $serviceYouTube->getUserUploads($strUsername, $strPageToken);
 
         if ($strPageToken) {
@@ -130,7 +140,7 @@ class UserController extends Chaplin_Controller_Action_Api
         $intPage = intval($strPage);
 
         $strUsername = $this->_request->getParam('id', null);
-        $serviceVimeo = Chaplin_Service::getInstance()->getVimeo();
+        $serviceVimeo = Service::getInstance()->getVimeo();
 
         $this->view->ittVideos = $serviceVimeo->getUserUploads($strUsername, $intPage);
         if (1 < $strPage) {

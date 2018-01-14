@@ -22,41 +22,50 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class default_Form_UserData_Create extends Zend_Form
+namespace Chaplin\Module\Api\Form\UserData;
+
+use Zend_Form as Form;
+use Zend_Form_Element_Password as Password;
+use Zend_Form_Element_Submit as Submit;
+use Zend_Form_Element_Text as Text;
+use Zend_Validate_Identical as ValidateIdentical;
+use Zend_Validate_StringLength as ValidateStringLength;
+
+class Create extends Form
 {
     public function init()
-    { 
+    {
         $this->setMethod('post');
         $this->setAction('/login/register');
 
-        $username = new Zend_Form_Element_Text('username');
+        $username = new Text('username');
         $username->setAttrib('placeholder', 'Username');
         $username->removeDecorator('Label');
 
-        $password = new Zend_Form_Element_Password('password');
+        $password = new Password('password');
         $password->setAttrib('placeholder', 'Password');
         $password->removeDecorator('Label');
         $password->addValidators(
             array(
-            new Zend_Validate_StringLength(
+            new ValidateStringLength(
                 array(
                 'min' => 6
                 )
             )
             )
         );
-        
-        $password2 = new Zend_Form_Element_Password('password2');
+
+        $password2 = new Password('password2');
         $password2->setAttrib('placeholder', 'Password (again)');
         $password2->removeDecorator('Label');
         $password2->addValidators(
             array(
-            new Zend_Validate_StringLength(
+            new ValidateStringLength(
                 array(
                 'min' => 6
                 )
             ),
-            new Zend_Validate_Identical(
+            new ValidateIdentical(
                 array(
                 'token' => 'password'
                 )
@@ -64,15 +73,15 @@ class default_Form_UserData_Create extends Zend_Form
             )
         );
 
-        $fullname = new Zend_Form_Element_Text('fullname');
+        $fullname = new Text('fullname');
         $fullname->setAttrib('placeholder', 'Full name');
         $fullname->removeDecorator('Label');
 
-        $email = new Zend_Form_Element_Text('email');
+        $email = new Text('email');
         $email->setAttrib('placeholder', 'Email address');
         $email->removeDecorator('Label');
 
-        $register = new Zend_Form_Element_Submit('Register');
+        $register = new Submit('Register');
         $register->removeDecorator('DtDdWrapper');
         $register->removeDecorator('Label');
 

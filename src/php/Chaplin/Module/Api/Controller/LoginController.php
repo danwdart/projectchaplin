@@ -22,12 +22,36 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class LoginController extends Zend_Controller_Action
+namespace Chaplin\Module\Api\Controller;
+
+use Chaplin_Auth as Auth;
+use Chaplin_Auth_Adapter_Database as AuthAdapterDB;
+use Chaplin_Config_Chaplin as ConfigChaplin;
+use Chaplin_Dao_Exception_User_NotFound as ExceptionUserNotFound;
+use Chaplin_Gateway as Gateway;
+use Chaplin_Model_User as ModelUser;
+use Chaplin_Model_User_Helper_UserType as UserType;
+use Chaplin\Module\Api\Form\Auth\{
+    Forgot as FormForgot,
+    Login as FormLogin,
+    Validate as FormValidate
+};
+use Chaplin\Module\Api\Form\UserData\Create as FormCreateUser;
+use Exception;
+use Zend_Controller_Action as Controller;
+use Zend_Db_Statement_Exception as StatementException;
+use Zend_Http_Client as HttpClient;
+use Zend_Json as Json;
+use Zend_Oauth_Consumer as OauthConsumer;
+use Zend_Oauth_Exception as OauthException;
+use Zend_Session_Namespace as SessionNS;
+
+class LoginController extends Conroller
 {
     public function indexAction()
     {
         $this->view->strTitle = 'Login - Chaplin';
-        $form = new default_Form_Login();
+        $form = new FormLogin();
 
         if ($this->_helper->flashMessenger->hasMessages()) {
             $this->view->messages = $this->_helper->flashMessenger->getMessages();
@@ -49,18 +73,18 @@ class LoginController extends Zend_Controller_Action
         if (isset($post['Forgot'])) {
             return $this->_redirect('/login/forgot');
         }
-        
+
         if(!$form->isValid($post)) {
             return $this->view->assign('form', $form);
         }
-        
+
         if(!isset($post['Login'])) {
             $form->password->addError('Invalid Action');
             return $this->view->assign('form', $form);
         }
-            
-        $adapter = new Chaplin_Auth_Adapter_Database($username, $password);
-        $auth = Chaplin_Auth::getInstance();
+
+        $adapter = new AuthAdapterDB($username, $password);
+        $auth = Auth::getInstance();
         $auth->authenticate($adapter);
         if(!$auth->hasIdentity()) {
             $form->password->addError('Wrong username or password.');
@@ -68,7 +92,7 @@ class LoginController extends Zend_Controller_Action
             return $this->view->assign('form', $form);
         }
 
-        $login = new Zend_Session_Namespace('login');
+        $login = new SessionNS('login');
         if (!is_null($login->url)) {
             $this->_redirect($login->url);
             $login->url = null;
@@ -84,21 +108,21 @@ class LoginController extends Zend_Controller_Action
         $renderer = $this->getHelper('ViewRenderer');
         $renderer->setNoRender(true);
 
-        Chaplin_Auth::getInstance()->clearIdentity();
+        Auth::getInstance()->clearIdentity();
         $this->_redirect($this->_redirect_url);
     }
 
     public function registerAction()
     {
         $this->view->strTitle = 'Register - Chaplin';
-        $form = new default_Form_UserData_Create();
+        $form = new FormCreateUser();
 
         if(!$this->_request->isPost()) {
             return $this->view->assign('form', $form);
         }
 
         $post = $this->_request->getPost();
-        
+
         if(!$form->isValid($post)) {
             return $this->view->assign('form', $form);
         }
@@ -114,20 +138,16 @@ class LoginController extends Zend_Controller_Action
         // TODO check if user exists
         try
         {
-            $user = Chaplin_Model_User::create($username, $password);
+            $user = ModelUser::create($username, $password);
             $user->setEmail($email);
             $user->setNick($fullname);
-            $user->setUserType(
-                new Chaplin_Model_User_Helper_UserType(
-                    Chaplin_Model_User_Helper_UserType::ID_USER
-                )
-            );
+            $user->setUserType(new UserType(UserType::ID_USER));
             $user->save();
-                   
+
             // AJAX: Success
             return $this->_redirect($this->_redirect_url);
         }
-        catch (Zend_Db_Statement_Exception $e) {
+        catch (StatementException $e) {
             $form->username->addError('Could not create account - a user aleady exists with that name');
             $form->markAsError();
             return $this->view->assign('form', $form);
@@ -144,7 +164,7 @@ class LoginController extends Zend_Controller_Action
     {
         $this->view->strTitle = 'Forgot - Chaplin';
 
-        $form = new default_Form_Forgot();
+        $form = new FormForgot();
         if (!$this->_request->isPost()) {
             return $this->view->form = $form;
         }
@@ -153,13 +173,13 @@ class LoginController extends Zend_Controller_Action
         }
 
         try {
-            $modelUser = Chaplin_Gateway::getUser()
+            $modelUser = Gateway::getUser()
                 ->getByUsername($form->username->getValue());
-            
-            Chaplin_Gateway::getEmail()
+
+            Gateway::getEmail()
                 ->resetPassword($modelUser);
 
-        } catch (Chaplin_Dao_Exception_User_NotFound $e) {
+        } catch (ExceptionUserNotFound $e) {
         }
 
         $this->_helper->flashMessenger(
@@ -177,7 +197,7 @@ class LoginController extends Zend_Controller_Action
             $this->_redirect('/login');
         }
 
-        $form = new default_Form_Validate($strToken);
+        $form = new FormValidate($strToken);
 
         if (!$this->_request->isPost()) {
             return $this->view->form = $form;
@@ -187,7 +207,7 @@ class LoginController extends Zend_Controller_Action
             return $this->view->form = $form;
         }
 
-        Chaplin_Gateway::getUser()
+        Gateway::getUser()
             ->updateByToken(
                 $strToken,
                 $form->password->getValue()
@@ -202,7 +222,7 @@ class LoginController extends Zend_Controller_Action
 
     public function oauthAction()
     {
-        $strVhost = Chaplin_Config_Chaplin::getInstance()->getVhost();
+        $strVhost = ConfigChaplin::getInstance()->getVhost();
 
         $oauth = include APPLICATION_PATH.'/config/oauth.php';
 
@@ -213,14 +233,14 @@ class LoginController extends Zend_Controller_Action
         $arrOauth = $oauth[$strProvider];
 
         $this->_helper->viewRenderer->setNoRender();
-        $this->_session = new Zend_Session_Namespace('oauth');
+        $this->_session = new SessionNS('oauth');
 
         switch ($arrOauth['oauth_version']) {
         case 2:
 
             if (is_null($this->_request->getQuery('code'))) {
                 $state = md5(uniqid());
-                
+
                 $this->_session->state = $state;
 
                 $url = $arrOauth['auth_uri'].
@@ -239,8 +259,8 @@ class LoginController extends Zend_Controller_Action
             }
             $this->_session->state = null;
 
-            $client = new Zend_Http_Client($arrOauth['token_uri']);
-            $client->setMethod(Zend_Http_Client::POST);
+            $client = new HttpClient($arrOauth['token_uri']);
+            $client->setMethod(HttpClient::POST);
             $client->setParameterPost(
                 [
                 'code' => $_GET['code'],
@@ -260,16 +280,16 @@ class LoginController extends Zend_Controller_Action
             $strAccessToken = $arrInfo['access_token'];
             $infoUri = $arrOauth['info_uri'].'?oauth_token='.   $strAccessToken;
 
-            $client = new Zend_Http_Client($infoUri);
+            $client = new HttpClient($infoUri);
             $response = $client->request();
             break;
 
         case 1:
-            $consumer = new Zend_Oauth_Consumer($arrOauth);
+            $consumer = new OauthConsumer($arrOauth);
             $arrQuery = $this->_request->getQuery();
-            if (empty($arrQuery) 
+            if (empty($arrQuery)
                 && is_null($this->_session->request_token)
-            ) { 
+            ) {
                 $token = $consumer->getRequestToken();
                 $this->_session->request_token = serialize($token);
                 return $consumer->redirect();
@@ -286,7 +306,7 @@ class LoginController extends Zend_Controller_Action
                     $arrQuery,
                     unserialize($this->_session->request_token)
                 );
-            } catch (Zend_Oauth_Exception $e) {
+            } catch (OauthException $e) {
                 $this->_session->request_token = null;
                 return $this->_redirect($arrOauth['callbackUrl']);
             }
@@ -295,7 +315,7 @@ class LoginController extends Zend_Controller_Action
             $this->_session->request_token = null;
 
             $zendClient = $token->getHttpClient($arrOauth);
-            $zendClient->setMethod(Zend_Http_Client::GET);
+            $zendClient->setMethod(HttpClient::GET);
             $zendClient->setUri($arrOauth['info_uri']);
             $response = $zendClient->request();
             break;
@@ -303,7 +323,7 @@ class LoginController extends Zend_Controller_Action
             throw new Exception('unknown api version');
         }
 
-        $arrResponse = Zend_Json::decode($response->getBody());
+        $arrResponse = Json::decode($response->getBody());
         $email = $arrResponse[$arrOauth['key_email']];
         echo 'Name: '.$arrResponse[$arrOauth['key_fullname']].'<br/>';
         if (isset($arrOauth['key_firstname'])) {

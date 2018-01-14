@@ -26,6 +26,7 @@ namespace Chaplin\Application\Bootstrap;
 
 use Chaplin_Config_Sessions as ConfigSessions;
 use Chaplin_Controller_Action_Helper as ActionHelper;
+use Chaplin_Controller_Action_Helper_RestContextSwitch as RestContextSwitch;
 use Chaplin_Controller_Plugin_Acl as PluginAcl;
 use Chaplin_Controller_Plugin_Api as PluginApi;
 use Chaplin_Model_User_Helper_UserType as UserType;
@@ -102,6 +103,7 @@ class Api extends ZendBootstrap
     {
         $this->bootstrap('frontController');
         HelperBroker::addPrefix(ActionHelper::class);
+        HelperBroker::addHelper(new RestContextSwitch());
         $this->frontController->registerPlugin(new PluginApi());
     }
 

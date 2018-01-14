@@ -43,7 +43,7 @@ class Chaplin_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         }
         return false;
     }
- 
+
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
         if (!$this->_isValidRequest($request)) {
@@ -62,16 +62,16 @@ class Chaplin_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         $role = $auth->hasIdentity() ?
             $auth->getIdentity()->getUser()->getUserType()->getUserType():
             Chaplin_Model_User_Helper_UserType::TYPE_GUEST;
-        
-        if (false === strpos($request->getRequestUri(), 'login') 
-            && $this->_acl->isAllowed($role, $resource, $strAction) 
+
+        if (false === strpos($request->getRequestUri(), 'login')
+            && $this->_acl->isAllowed($role, strtolower($resource), $strAction)
             && 'error' != $strAction
         ) {
             $login = new Zend_Session_Namespace('login');
             $login->url = $request->getRequestUri();
         }
-        
-        if (!$this->_acl->isAllowed($role, $resource, $strAction)) {
+
+        if (!$this->_acl->isAllowed($role, strtolower($resource), $strAction)) {
             return $redirectHelper->gotoUrl('/login');
         }
     }

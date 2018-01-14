@@ -22,8 +22,15 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
+namespace Chaplin\Module\Api\Controller;
 
-class SearchController extends Chaplin_Controller_Action_Api
+use Chaplin_Controller_Action_Api as ApiController;
+use Chaplin_Gateway as Gateway;
+use Chaplin_Service as Service;
+use Zend_Uri as Uri;
+use Zend_Uri_Exception as UriException;
+
+class SearchController extends ApiController
 {
     public function indexAction()
     {
@@ -38,7 +45,7 @@ class SearchController extends Chaplin_Controller_Action_Api
         try {
             // TODO : search helper
             // Note: only full Scheme://FQDN/Path URLs are supported currently
-            $uri = Zend_Uri::factory($strSearchTerm);
+            $uri = Uri::factory($strSearchTerm);
             // Detect YouTube
             if (false !== strpos($uri->getHost(), 'youtube.com')) {
                 $strQS = $uri->getQuery();
@@ -48,11 +55,11 @@ class SearchController extends Chaplin_Controller_Action_Api
                 }
             }
             // Insert other detectors here
-        } catch (Zend_Uri_Exception $e) {
+        } catch (UriException $e) {
             // That's fine
         }
 
-        $ittVideos = Chaplin_Gateway::getInstance()
+        $ittVideos = Gateway::getInstance()
             ->getVideo()
             ->getBySearchTerms($strSearchTerm);
 
@@ -64,7 +71,7 @@ class SearchController extends Chaplin_Controller_Action_Api
         $this->view->assign('ittVideos', $ittVideos);
 
         // Retrieve Youtube results
-        $service = Chaplin_Service::getInstance();
+        $service = Service::getInstance();
 
         $serviceYouTube = $service->getYouTube();
         $serviceVimeo = $service->getVimeo();
@@ -100,7 +107,7 @@ class SearchController extends Chaplin_Controller_Action_Api
 
         // Retrieve Youtube results
 
-        $serviceYouTube = Chaplin_Service::getInstance()->getYouTube();
+        $serviceYouTube = Service::getInstance()->getYouTube();
         $videoFeed = $serviceYouTube->search($strSearchTerm, $intSkip, $intLimit);
 
         $this->view->videoFeed = $videoFeed;

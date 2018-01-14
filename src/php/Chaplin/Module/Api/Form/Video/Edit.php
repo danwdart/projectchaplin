@@ -22,7 +22,12 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class default_Form_Video_Edit extends Zend_Form
+namespace Chaplin\Module\Api\Form\Video;
+
+use Zend_Form as Form;
+use Zend_Form_Element_Submit as Submit;
+
+class Edit extends Form
 {
     private $_modelVideo;
 
@@ -31,15 +36,15 @@ class default_Form_Video_Edit extends Zend_Form
         $this->_modelVideo = $modelVideo;
         parent::__construct();
     }
-    
+
     public function init()
     {
-        $subform = new default_Form_Video_SubForm($this->_modelVideo);            
-        $submit = new Zend_Form_Element_Submit('Save');
+        $subform = new SubForm($this->_modelVideo);
+        $submit = new Submit('Save');
         $submit->setAttribs(array('style' => 'clear:both; width: 140px; height: 40px;'));
-        
+
         $this->addSubForm($subform, 'Video');
         $this->addElement($submit);
         $this->setAttribs(array('style' => 'width: 800px; margin: 0 auto;'));
-    }   
+    }
 }

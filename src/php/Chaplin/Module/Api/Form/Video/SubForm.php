@@ -22,42 +22,54 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class default_Form_Video_SubForm extends Zend_Form_SubForm
+namespace Chaplin\Module\Api\Form\Video;
+
+use Chaplin_Model_Video_Licence as VideoLicence;
+use Chaplin_Model_Video_Privacy as VideoPrivacy;
+use Zend_Form as Form;
+use Zend_Form_Element_Image as Image;
+use Zend_Form_Element_Select as Select;
+use Zend_Form_Element_Submit as Submit;
+use Zend_Form_Element_Text as Text;
+use Zend_Form_Element_Textarea as Textarea;
+use Zend_Form_SubForm as ZendSubForm;
+
+class SubForm extends ZendSubForm
 {
     private $_modelVideo;
 
     public function __construct(Chaplin_Model_Video $modelVideo)
     {
         $this->_modelVideo = $modelVideo;
-        
+
         parent::__construct();
     }
 
     public function init()
     {
         $modelVideo = $this->_modelVideo;
-    
+
         $strImageURL = $modelVideo->getThumbnail();
-        $elImage = new Zend_Form_Element_Image('Image');
+        $elImage = new Image('Image');
         $elImage->setImage($strImageURL);
         $elImage->setAttribs(['style' => 'max-width: 200px; height: 150px;']);
-        $elTitle = new Zend_Form_Element_Text('Title');
+        $elTitle = new Text('Title');
         $elTitle->setLabel('Title');
         $elTitle->setValue($modelVideo->getSuggestedTitle());
         $elTitle->addValidators(['NotEmpty']);
-        $elDescription = new Zend_Form_Element_Textarea('Description');
+        $elDescription = new Textarea('Description');
         $elDescription->setAttribs(['style' => 'width: 200px; height:75px;']);
         $elDescription->setLabel('Description');
         $elDescription->addValidators(['NotEmpty']);
-        $elLicence = new Zend_Form_Element_Select('Licence');
-        $elLicence->setMultiOptions(Chaplin_Model_Video_Licence::getSelectOptions());
+        $elLicence = new Select('Licence');
+        $elLicence->setMultiOptions(VideoLicence::getSelectOptions());
         $elLicence->setValue($modelVideo->getLicenceId());
         $elLicence->setLabel('Licence');
-        $elPrivacy = new Zend_Form_Element_Select('Privacy');
+        $elPrivacy = new Select('Privacy');
         $elPrivacy->setLabel('Limit To');
         $elPrivacy->setValue($modelVideo->getPrivacyId());
         $elPrivacy->addValidators(['NotEmpty']);
-        $elPrivacy->setMultiOptions(Chaplin_Model_Video_Privacy::getSelectOptions());
+        $elPrivacy->setMultiOptions(VideoPrivacy::getSelectOptions());
         $this->addElements([$elImage, $elTitle, $elDescription, $elLicence, $elPrivacy]);
         $this->setAttribs(['style' => 'float:left; width: 240px; padding: 5px; border: 0; margin: 5px']);
         $this->removeDecorator('DtDdWrapper');

@@ -22,20 +22,27 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class ErrorController extends Zend_Controller_Action
-{
+namespace Chaplin\Module\Api\Controller;
 
+use Chaplin_Exception_NotFound as ExceptionNotFound;
+use Zend_Controller_Action as Controller;
+use Zend_Controller_Plugin_ErrorHandler as ErrorHandler;
+
+class ErrorController extends Controller
+{
     public function errorAction()
     {
         $errors = $this->_getParam('error_handler');
-        
+
         if (in_array(
-            $errors->type, [
-            Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE,
-            Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER,
-            Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION]
-        ) 
-            || $errors->exception instanceof Chaplin_Exception_NotFound
+            $errors->type,
+            [
+                ErrorHandler::EXCEPTION_NO_ROUTE,
+                ErrorHandler::EXCEPTION_NO_CONTROLLER,
+                ErrorHandler::EXCEPTION_NO_ACTION
+            ]
+        )
+            || $errors->exception instanceof ExceptionNotFound
         ) {
             $this->getResponse()->setHttpResponseCode(404);
             $this->view->message = 'Page not found';
@@ -47,11 +54,11 @@ class ErrorController extends Zend_Controller_Action
                 $log->crit($this->view->message . ': ' . $errors->exception->getMessage() . PHP_EOL . 'Exception Class: ' . get_class($errors->exception) . PHP_EOL . 'My Vhost: ' . $this->_request->getServer('HTTP_HOST') . PHP_EOL . 'My Host: ' . gethostname() . PHP_EOL . $errors->exception->getTraceAsString(), $errors->exception);
             }
         }
-        
+
         if ($this->getInvokeArg('displayExceptions') == true) {
             $this->view->exception = $errors->exception;
         }
-        
+
         $this->view->request   = $errors->request;
     }
 
@@ -67,4 +74,3 @@ class ErrorController extends Zend_Controller_Action
 
 
 }
-

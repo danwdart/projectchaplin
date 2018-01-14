@@ -22,7 +22,13 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class default_Form_Video_Name extends Zend_Form
+namespace Chaplin\Module\Api\Form\Video;
+
+use Zend_Form as Form;
+use Zend_Form_Element_Submit as Submit;
+use Zend_Form_SubForm as ZendSubForm;
+
+class Name extends Form
 {
     private $_ittVideos;
 
@@ -31,21 +37,21 @@ class default_Form_Video_Name extends Zend_Form
         $this->_ittVideos = $ittVideos;
         parent::__construct();
     }
-    
+
     public function init()
     {
-        $sfVideos = new Zend_Form_SubForm('Videos');
+        $sfVideos = new ZendSubForm('Videos');
         $sfVideos->setAttribs(array('style' => 'width: 800px; margin: 0 auto;'));
         foreach($this->_ittVideos as $modelVideo) {
-            $subform = new default_Form_Video_SubForm($modelVideo);            
+            $subform = new SubForm($modelVideo);
             $sfVideos->addSubForm($subform, $modelVideo->getId());
         }
-        
-        $submit = new Zend_Form_Element_Submit('Save');
+
+        $submit = new Submit('Save');
         $submit->setAttribs(array('style' => 'clear:both; width: 140px; height: 40px;'));
-        
+
         $this->addSubForm($sfVideos, 'Videos');
         $this->addElement($submit);
         $this->setAttribs(array('style' => 'width: 800px;'));
-    }   
+    }
 }

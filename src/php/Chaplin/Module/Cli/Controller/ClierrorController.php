@@ -22,7 +22,12 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class ClierrorController extends Zend_Controller_Action
+namespace Chaplin\Module\Cli\Controller;
+
+use Zend_Controller_Action as Controller;
+use Zend_Controller_Plugin_ErrorHandler as ErrorHandler;
+
+class ClierrorController extends Controller
 {
     public function preDispatch()
     {
@@ -32,11 +37,11 @@ class ClierrorController extends Zend_Controller_Action
     public function errorAction()
     {
         $errors = $this->_getParam('error_handler');
-        
+
         switch ($errors->type) {
-        case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
-        case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
-        case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
+        case ErrorHandler::EXCEPTION_NO_ROUTE:
+        case ErrorHandler::EXCEPTION_NO_CONTROLLER:
+        case ErrorHandler::EXCEPTION_NO_ACTION:
             echo 'Not Found - no route, controller or action'.PHP_EOL;
             var_dump($this->_request->getParams());
             ob_flush();
@@ -46,12 +51,12 @@ class ClierrorController extends Zend_Controller_Action
             echo 'something broke horribly'.PHP_EOL;
             echo get_class($errors->exception).PHP_EOL;
             echo $errors->exception->getMessage().PHP_EOL;
-            echo $errors->exception->getTraceAsString().PHP_EOL;  
+            echo $errors->exception->getTraceAsString().PHP_EOL;
             ob_flush();
             flush();
             break;
         }
- 
+
         // conditionally display exceptions
         if ($this->getInvokeArg('displayExceptions') == true) {
             echo get_class($this->exception);
@@ -59,8 +64,7 @@ class ClierrorController extends Zend_Controller_Action
             echo $this->exception->getTraceAsString();
             ob_flush();
             flush();
-        }        
+        }
         //$this->_request);
     }
 }
-
