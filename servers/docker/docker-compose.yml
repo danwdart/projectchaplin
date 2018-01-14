@@ -1,11 +1,13 @@
 version: "3"
 services:
     node:
+        environment:
+            - NODE_ENV=${NODE_ENV}
         build:
             context: ../..
             dockerfile: servers/docker/node/Dockerfile
-        #volumes:
-        #    - ../../src/js:/app
+        volumes:
+            - ../../src/js:/app
         depends_on:
             - redis
             - mysql
@@ -14,8 +16,27 @@ services:
         build:
             context: ../..
             dockerfile: servers/docker/php/api/Dockerfile
-        #volumes:
-        #    - ../../src/php:/var/www
+        environment:
+            - APPLICATION_ENV=${APPLICATION_ENV}
+            - SQL_ADAPTER=${SQL_ADAPTER}
+            - SQL_PASSWORD=${SQL_PASSWORD}
+            - SQL_USER=${SQL_USER}
+            - SQL_DATABASE=${SQL_DATABASE}
+            - SQL_HOST=${SQL_HOST}
+            - SQL_PORT=${SQL_PORT}
+            - AMQP_HOST=${AMQP_HOST}
+            - AMQP_PORT=${AMQP_PORT}
+            - AMQP_USER=${AMQP_USER}
+            - AMQP_PASSWORD=${AMQP_PASSWORD}
+            - AMQP_VHOST=${AMQP_VHOST}
+            - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+            - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+            - FACEBOOK_CLIENT_ID=${FACEBOOK_CLIENT_ID}
+            - FACEBOOK_CLIENT_SECRET=${FACEBOOK_CLIENT_SECRET}
+            - TWITTER_CONSUMER_KEY=${TWITTER_CONSUMER_KEY}
+            - TWITTER_CONSUMER_SECRET=${TWITTER_CONSUMER_SECRET}
+        volumes:
+            - ../../src/php:/var/www
         depends_on:
             - redis
             - mysql
@@ -24,8 +45,21 @@ services:
         build:
             context: ../..
             dockerfile: servers/docker/php/cli/convert/Dockerfile
-        #volumes:
-        #    - ../../src/php:/var/www
+        environment:
+            - APPLICATION_ENV=${APPLICATION_ENV}
+            - SQL_ADAPTER=${SQL_ADAPTER}
+            - SQL_PASSWORD=${SQL_PASSWORD}
+            - SQL_USER=${SQL_USER}
+            - SQL_DATABASE=${SQL_DATABASE}
+            - SQL_HOST=${SQL_HOST}
+            - SQL_PORT=${SQL_PORT}
+            - AMQP_HOST=${AMQP_HOST}
+            - AMQP_PORT=${AMQP_PORT}
+            - AMQP_USER=${AMQP_USER}
+            - AMQP_PASSWORD=${AMQP_PASSWORD}
+            - AMQP_VHOST=${AMQP_VHOST}
+        volumes:
+            - ../../src/php:/var/www
         depends_on:
             - redis
             - mysql
@@ -34,8 +68,22 @@ services:
         build:
             context: ../..
             dockerfile: servers/docker/php/cli/youtube/Dockerfile
-        #volumes:
-        #    - ../../src/php:/var/www
+        environment:
+            - APPLICATION_ENV=${APPLICATION_ENV}
+            - SQL_ADAPTER=${SQL_ADAPTER}
+            - SQL_PASSWORD=${SQL_PASSWORD}
+            - SQL_USER=${SQL_USER}
+            - SQL_DATABASE=${SQL_DATABASE}
+            - SQL_HOST=${SQL_HOST}
+            - SQL_PORT=${SQL_PORT}
+            - AMQP_HOST=${AMQP_HOST}
+            - AMQP_PORT=${AMQP_PORT}
+            - AMQP_USER=${AMQP_USER}
+            - AMQP_PASSWORD=${AMQP_PASSWORD}
+            - AMQP_VHOST=${AMQP_VHOST}
+            - YOUTUBE_API_TOKEN=${YOUTUBE_API_TOKEN}
+        volumes:
+            - ../../src/php:/var/www
         depends_on:
             - redis
             - mysql
@@ -44,8 +92,24 @@ services:
         build:
             context: ../..
             dockerfile: servers/docker/php/cli/vimeo/Dockerfile
-        #volumes:
-        #    - ../../src/php:/var/www
+        environment:
+            - APPLICATION_ENV=${APPLICATION_ENV}
+            - SQL_ADAPTER=${SQL_ADAPTER}
+            - SQL_PASSWORD=${SQL_PASSWORD}
+            - SQL_USER=${SQL_USER}
+            - SQL_DATABASE=${SQL_DATABASE}
+            - SQL_HOST=${SQL_HOST}
+            - SQL_PORT=${SQL_PORT}
+            - AMQP_HOST=${AMQP_HOST}
+            - AMQP_PORT=${AMQP_PORT}
+            - AMQP_USER=${AMQP_USER}
+            - AMQP_PASSWORD=${AMQP_PASSWORD}
+            - AMQP_VHOST=${AMQP_VHOST}
+            - VIMEO_CLIENTSECRET=${VIMEO_CLIENTSECRET}
+            - VIMEO_CLIENTID=${VIMEO_CLIENTID}
+            - VIMEO_ACCESSTOKEN=${VIMEO_ACCESSTOKEN}
+        volumes:
+            - ../../src/php:/var/www
         depends_on:
             - redis
             - mysql
@@ -54,8 +118,26 @@ services:
         build:
             context: ../..
             dockerfile: servers/docker/php/cli/email/Dockerfile
-        #volumes:
-        #    - ../../src/php:/var/www
+        environment:
+            - APPLICATION_ENV=${APPLICATION_ENV}
+            - SQL_ADAPTER=${SQL_ADAPTER}
+            - SQL_PASSWORD=${SQL_PASSWORD}
+            - SQL_USER=${SQL_USER}
+            - SQL_DATABASE=${SQL_DATABASE}
+            - SQL_HOST=${SQL_HOST}
+            - SQL_PORT=${SQL_PORT}
+            - AMQP_HOST=${AMQP_HOST}
+            - AMQP_PORT=${AMQP_PORT}
+            - AMQP_USER=${AMQP_USER}
+            - AMQP_PASSWORD=${AMQP_PASSWORD}
+            - AMQP_VHOST=${AMQP_VHOST}
+            - SMTP_HOST=${SMTP_HOST}
+            - SMTP_USE_TLS=${SMTP_USE_TLS}
+            - SMTP_PORT=${SMTP_PORT}
+            - SMTP_USER=${SMTP_USER}
+            - SMTP_PASSWORD=${SMTP_PASSWORD}
+        volumes:
+            - ../../src/php:/var/www
         depends_on:
             - redis
             - mysql
@@ -64,13 +146,38 @@ services:
         build:
             context: ../..
             dockerfile: servers/docker/nginx/Dockerfile
-        #volumes:
-        #    - ../../src/php:/var/www
+        environment:
+            - APPLICATION_ENV=${APPLICATION_ENV}
+            - VHOST=${VHOST}
+            - VHOST_PORT=${VHOST_PORT}
+            - VHOST_SHORT=${VHOST_SHORT}
+            - VHOST_NODE=${VHOST_NODE}
+            - VHOST_NODE_PORT=${VHOST_NODE_PORT}
+            - VHOST_GUI=${VHOST_GUI}
+            - API_HOST=${API_HOST}
+            - API_PORT=${API_PORT}
+            - NODE_HOST=${NODE_HOST}
+            - NODE_PORT=${NODE_PORT}
+        volumes:
+            - ../../src/php:/var/www
         depends_on:
             - api
+        ports:
+            - 80:80
     redis:
         image: redis
     mysql:
+        environment:
+            - MYSQL_ROOT_PASSWORD=${SQL_PASSWORD}
+            - MYSQL_DATABASE=${SQL_DATABASE}
+            - MYSQL_USER=${SQL_USER}
+            - MYSQL_PASSWORD=${SQL_PASSWORD}
         image: mysql
     rabbitmq:
+        environment:
+            - AMQP_HOST=${AMQP_HOST}
+            - AMQP_PORT=${AMQP_PORT}
+            - AMQP_USER=${AMQP_USER}
+            - AMQP_PASSWORD=${AMQP_PASSWORD}
+            - AMQP_VHOST=${AMQP_VHOST}
         image: rabbitmq
