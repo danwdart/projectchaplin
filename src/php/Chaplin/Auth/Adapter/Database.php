@@ -33,11 +33,22 @@ class Chaplin_Auth_Adapter_Database implements Zend_Auth_Adapter_Interface
     public function authenticate()
     {
         try {
-            $modelUser = Chaplin_Gateway::getInstance()->getUser()->getByUsernameAndPassword($this->_strUsername, $this->_strPassword);
+            $modelUser = Chaplin_Gateway::getInstance()
+                ->getUser()
+                ->getByUsernameAndPassword(
+                    $this->_strUsername,
+                    $this->_strPassword
+                );
+
             $identity = new Chaplin_Auth_Identity($modelUser);
+
             return new Zend_Auth_Result(Zend_Auth_Result::SUCCESS, $identity);
         } catch(Chaplin_Dao_Exception_User_NotFound $e) {
-            return new Zend_Auth_Result(Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID, null, array($e->getMessage()));
+            return new Zend_Auth_Result(
+                Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID,
+                null,
+                array($e->getMessage())
+            );
         }
     }
 }

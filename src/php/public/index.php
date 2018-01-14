@@ -48,9 +48,6 @@ defined('APPLICATION_ENV')
         )
     );
 
-$dotenv = new Dotenv\Dotenv(__DIR__."/../");
-$dotenv->load();
-
 // Create application, bootstrap, and run
 $application = new Zend_Application(
     APPLICATION_ENV,

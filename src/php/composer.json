@@ -45,7 +45,6 @@
         "google/apiclient": "^2.0",
         "vimeo/vimeo-api": "^1.2",
         "misd/linkify": "^1.1",
-        "vlucas/phpdotenv": "^2.4",
         "phpstan/phpstan": "^0.9.1"
     },
     "require-dev": {
