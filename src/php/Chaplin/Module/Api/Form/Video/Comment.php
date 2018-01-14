@@ -22,33 +22,35 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class IndexController extends Chaplin_Controller_Action_Api
+namespace Chaplin\Module\Api\Form\Video;
+
+use Zend_Form as Form;
+use Zend_Form_Element_Submit as Submit;
+use Zend_Form_Element_Textarea as Textarea;
+
+class Comment extends Form
 {
-    public function indexAction()
+    public function init()
     {
-        $this->view->strTitle = 'Home - Chaplin';
-        $modelUser = Chaplin_Auth::getInstance()
-        ->hasIdentity()?
-        Chaplin_Auth::getInstance()
-        ->getIdentity()
-        ->getUser():
-        null;
+        $this->setAction('');
+        $this->setMethod('post');
+        $this->setAttribs(
+            array(
+            'class' => 'ajax',
+            'rel' => 'comments'
+            )
+        );
 
-        $ittFeaturedVideos = Chaplin_Gateway::getInstance()
-            ->getVideo()
-            ->getFeaturedVideos($modelUser);
+        $comment = new Textarea('Comment');
+        $comment->setAttribs(
+            array(
+            'style' => 'width:250px;height:40px;margin:0;',
+            'placeholder' => 'Your Comment'
+            )
+        );
+        $submit = new Submit('Submit');
+        $submit->setLabel('Say it!');
 
-        if ($this->_isAPICall()) {
-            return $this->view->assign($ittFeaturedVideos->toArray());
-        }
-
-        $ittNodes = Chaplin_Gateway::getInstance()
-            ->getNode()
-            ->getAllNodes();
-
-        $this->view->ittNodes = $ittNodes;
-        
-        $this->view->assign('ittFeaturedVideos', $ittFeaturedVideos);
+        $this->addElements(array($comment, $submit));
     }
 }
-

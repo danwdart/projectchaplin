@@ -30,12 +30,16 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
 
     public function __construct()
     {
-        $configServers = Chaplin_Config_Servers::getInstance();
-        if ($configServers->getSqlSettings()) {
-            $configSettings = $configServers->getSqlSettings();
-            $db = Zend_Db::factory($configSettings);
-            self::$_zendDb = $db;
-        }
+        $db = Zend_Db::factory(
+            getenv("SQL_ADAPTER"),
+            [
+                "host" => getenv("SQL_HOST"),
+                "username" => getenv("SQL_USER"),
+                "password" => getenv("SQL_PASSWORD"),
+                "dbname" => getenv("SQL_DATABASE")
+            ]
+        );
+        self::$_zendDb = $db;
     }
 
     public static function setAdapter(Zend_Db_Adapter_Abstract $zendDb)
@@ -137,5 +141,3 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
         return $this->_modelToSql($arrUpdate);
     }
 }
-
-

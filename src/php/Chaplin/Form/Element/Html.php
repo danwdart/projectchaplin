@@ -22,9 +22,21 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class ChannelController extends Zend_Controller_Action
+namespace Chaplin\Form\Element;
+
+use Zend_Form_Element_Xhtml as Xhtml;
+
+class Html extends Xhtml
 {
-    public function indexAction()
+    /**
+     * Default form view helper to use for rendering
+     *
+     * @var string
+     */
+    public $helper = 'formNote';
+
+    public function isValid($value, $context = null)
     {
+        return true;
     }
 }

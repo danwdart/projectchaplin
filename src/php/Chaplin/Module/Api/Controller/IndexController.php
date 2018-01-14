@@ -22,10 +22,38 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class BroadcastController extends Zend_Controller_Action
+namespace Chaplin\Module\Api\Controller;
+
+use Chaplin_Auth as Auth;
+use Chaplin_Controller_Action_Api as ApiController;
+use Chaplin_Gateway as Gateway;
+
+class IndexController extends ApiController
 {
     public function indexAction()
     {
-        $this->view->scheme = Chaplin_Config_Chaplin::getInstance()->getScheme();
+        $this->view->strTitle = 'Home - Chaplin';
+        $modelUser = Auth::getInstance()
+            ->hasIdentity() ?
+            Auth::getInstance()
+                ->getIdentity()
+                ->getUser():
+            null;
+
+        $ittFeaturedVideos = Gateway::getInstance()
+            ->getVideo()
+            ->getFeaturedVideos($modelUser);
+
+        if ($this->_isAPICall()) {
+            return $this->view->assign($ittFeaturedVideos->toArray());
+        }
+
+        $ittNodes = Gateway::getInstance()
+            ->getNode()
+            ->getAllNodes();
+
+        $this->view->ittNodes = $ittNodes;
+
+        $this->view->assign('ittFeaturedVideos', $ittFeaturedVideos);
     }
 }

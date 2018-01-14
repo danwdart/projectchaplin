@@ -22,18 +22,24 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class default_Form_Forgot extends Zend_Form
+namespace Chaplin\Module\Api\Form\Auth;
+
+use Zend_Form as Form;
+use Zend_Form_Element_Submit as Submit;
+use Zend_Form_Element_Text as Text;
+
+class Forgot extends Form
 {
     public function init()
     {
         $this->setMethod('post');
 
-        $username = new Zend_Form_Element_Text('username');
+        $username = new Text('username');
         $username->setAttrib('placeholder', 'Username');
         $username->removeDecorator('Label');
         $username->setAttrib('required', 'true');
 
-        $submit = new Zend_Form_Element_Submit('Login');
+        $submit = new Login('Login');
 
         $submit->removeDecorator('DtDdWrapper');
 

@@ -22,36 +22,23 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-namespace Chaplin\Module\Cli\Controller;
+/**
+ * This file was almost completely stolen from Zend Framework,
+ * licensed under MIT.
+ */
+namespace Chaplin\Controller\Dispatcher;
 
-use Chaplin_Gateway as Gateway;
-use Zend_Controller_Action as Controller;
+use Zend_Controller_Dispatcher_Standard as DispatcherStandard;
 
-class CliController extends Controller
+class Api extends DispatcherStandard
 {
-    public function preDispatch()
+    public function formatClassName($moduleName, $className)
     {
-        $this->_helper->viewRenderer->setNoRender(true);
+        return $this->formatModuleName($moduleName) . "\\Controller\\" . $className;
     }
 
-    public function convertAction()
+    public function formatModuleName($unformatted)
     {
-        Gateway::getInstance()
-            ->getVideo_Convert()
-            ->convert();
-    }
-
-    public function youtubeAction()
-    {
-        Gateway::getInstance()
-            ->getVideo_Youtube()
-            ->youtube();
-    }
-
-    public function vimeoAction()
-    {
-        Gateway::getInstance()
-            ->getVideo_Vimeo()
-            ->vimeo();
+        return ucfirst("Chaplin\\Module\\".$this->_formatName($unformatted));
     }
 }

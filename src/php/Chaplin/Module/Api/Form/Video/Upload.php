@@ -22,46 +22,45 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class default_Form_Validate extends Zend_Form
+namespace Chaplin\Module\Api\Form\Video;
+
+use Zend_Form as Form;
+use Zend_Form_Element_File as File;
+use Zend_Form_Element_Hidden as Hidden;
+use Zend_Form_Element_Submit as Submit;
+
+class Upload extends Form
 {
-    private $_strToken;
-
-    public function __construct($strToken)
-    {
-        parent::__construct();
-        $this->_strToken = $strToken;
-    }
-
     public function init()
     {
+        $this->setAction('');
         $this->setMethod('post');
-
-        $token = new Zend_Form_Element_Hidden('token');
-        $token->setValue($this->_strToken);
-
-        $password = new Zend_Form_Element_Password('password');
-        $password->setLabel('New Password:');
-
-        $password2 = new Zend_Form_Element_Password('password2');
-        $password2->addValidators(
+        $this->setEncType('multipart/form-data');
+        $this->setAttribs(
             array(
-            new Zend_Validate_StringLength(
-                array(
-                'min' => 6
-                )
-            ),
-            new Zend_Validate_Identical(
-                array(
-                'token' => 'password'
-                )
-            )
+            'class' => 'upload'
             )
         );
-        
-        $password2->setLabel('Confirm Password:');
 
-        $submit = new Zend_Form_Element_Submit('Reset');
+        $upload = new File(
+            'Files[]',
+            array(
+                'label' => 'Upload files...',
+                'multiple' => 'multiple',
+                'isArray' => true
+            )
+        );
+        $strLocation = realpath(APPLICATION_PATH.'/../public/uploads');
+        $upload->setDestination($strLocation);
 
-        $this->addElements(array($token, $password, $password2, $submit));
+        $progress = new Hidden(
+            ini_get('session.upload_progress.name')
+        );
+        $progress->setValue('file');
+
+        $submit = new Submit('Upload');
+        $submit->setLabel('Upload');
+
+        $this->addElements(array($progress, $upload, $submit));
     }
 }

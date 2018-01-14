@@ -22,40 +22,41 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
+namespace Chaplin\Module\Api;
 
 use Chaplin_Model_User_Helper_UserType as UserType;
 use Zend_Acl_Resource as Acl;
 use Zend_Application_Module_Bootstrap as ModuleBootstrap;
 use Zend_Registry as Reg;
 
-class Default_Bootstrap extends ModuleBootstrap
+class Bootstrap extends ModuleBootstrap
 {
     protected function _initAcl()
     {
         //$acl = $this->getApplication()->getResource('acl');
         $acl = Reg::get('acl');
 
-        $acl->add(new Acl('default/index'));
-        $acl->add(new Acl('default/broadcast'));
-        $acl->add(new Acl('default/error'));
-        $acl->add(new Acl('default/login'));
-        $acl->add(new Acl('default/search'));
-        $acl->add(new Acl('default/services'));
-        $acl->add(new Acl('default/video'));
-        $acl->add(new Acl('default/user'));
+        $acl->add(new Acl('api/index'));
+        $acl->add(new Acl('api/broadcast'));
+        $acl->add(new Acl('api/error'));
+        $acl->add(new Acl('api/login'));
+        $acl->add(new Acl('api/search'));
+        $acl->add(new Acl('api/services'));
+        $acl->add(new Acl('api/video'));
+        $acl->add(new Acl('api/user'));
 
-        $acl->allow(UserType::TYPE_GUEST, 'default/index');
-        $acl->allow(UserType::TYPE_USER, 'default/broadcast');
-        $acl->allow(UserType::TYPE_GUEST, 'default/error');
-        $acl->allow(UserType::TYPE_GUEST, 'default/login');
-        $acl->allow(UserType::TYPE_GUEST, 'default/search');
-        $acl->allow(UserType::TYPE_GUEST, 'default/services');
-        $acl->allow(UserType::TYPE_GUEST, 'default/user');
-        $acl->allow(UserType::TYPE_USER, 'default/video');
-        $acl->allow(UserType::TYPE_GUEST, 'default/video', 'watch');
-        $acl->allow(UserType::TYPE_GUEST, 'default/video', 'watchshort');
-        $acl->allow(UserType::TYPE_GUEST, 'default/video', 'watchyoutube');
-        $acl->allow(UserType::TYPE_GUEST, 'default/video', 'watchvimeo');
-        $acl->allow(UserType::TYPE_GUEST, 'default/video', 'watchremote');
+        $acl->allow(UserType::TYPE_GUEST, 'api/index');
+        $acl->allow(UserType::TYPE_USER, 'api/broadcast');
+        $acl->allow(UserType::TYPE_GUEST, 'api/error');
+        $acl->allow(UserType::TYPE_GUEST, 'api/login');
+        $acl->allow(UserType::TYPE_GUEST, 'api/search');
+        $acl->allow(UserType::TYPE_GUEST, 'api/services');
+        $acl->allow(UserType::TYPE_GUEST, 'api/user');
+        $acl->allow(UserType::TYPE_USER, 'api/video');
+        $acl->allow(UserType::TYPE_GUEST, 'api/video', 'watch');
+        $acl->allow(UserType::TYPE_GUEST, 'api/video', 'watchshort');
+        $acl->allow(UserType::TYPE_GUEST, 'api/video', 'watchyoutube');
+        $acl->allow(UserType::TYPE_GUEST, 'api/video', 'watchvimeo');
+        $acl->allow(UserType::TYPE_GUEST, 'api/video', 'watchremote');
     }
 }

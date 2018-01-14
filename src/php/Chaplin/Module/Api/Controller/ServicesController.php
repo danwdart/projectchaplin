@@ -22,17 +22,24 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class ServicesController extends Chaplin_Controller_Action_Api
+namespace Chaplin\Module\Cli\Api\Controller;
+
+use Chaplin_Config_Chaplin as ConfigChaplin;
+use Chaplin_Controller_Action_Api as ApiController;
+use Chaplin_Gateway as Gateway;
+use Exception;
+
+class ServicesController extends ApiController;
 {
     // The OEmbed Service
     public function oembedAction()
     {
         // currently we only support video oembeds
-        
-        
-        $strVideoURL = $this->_request->getQuery('url');        
-        $vhost = Chaplin_Config_Chaplin::getInstance()->getFullVhost();
-        
+
+
+        $strVideoURL = $this->_request->getQuery('url');
+        $vhost = ConfigChaplin::getInstance()->getFullVhost();
+
         if (false === strpos($strVideoURL, $vhost)) {
             $arrOut = ['error' => 'Video not in current server.'];
             $this->getResponse()->setHttpResponseCode(404);
@@ -46,8 +53,8 @@ class ServicesController extends Chaplin_Controller_Action_Api
             $arrMatches
         );
 
-        if (empty($arrMatches) 
-            || !isset($arrMatches[1]) 
+        if (empty($arrMatches)
+            || !isset($arrMatches[1])
             || !is_string($arrMatches[1])
         ) {
             $arrOut = ['error' => 'Request shows not a video resource'];
@@ -58,14 +65,14 @@ class ServicesController extends Chaplin_Controller_Action_Api
         $strVideoId = $arrMatches[1];
 
         try {
-            $video = Chaplin_Gateway::getVideo()
+            $video = Gateway::getVideo()
              ->getByVideoId($strVideoId);
         } catch (Exception $e) {
             $arrOut = ['error' => 'Video not found: ',$strVideoId];
             $this->getResponse()->setHttpResponseCode(404);
             return $this->_forceAPI($arrOut);
         }
-    
+
         if ($video->getPrivacy()->isPrivate()) {
             $arrOut = ['error' => 'Private Video'];
             $this->getResponse()->setHttpResponseCode(401);
