@@ -57,7 +57,7 @@ server {
 
 
 #server {
-#    server_name     $VHOST_GUI;
+#    server_name     ${VHOST_GUI};
 #    listen 80;
 #
 #    root            /Volumes/www.kompli.dwt/_site/;
