@@ -20,7 +20,7 @@
  * @copyright  2012-2013 Project Chaplin
  * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version    git
- * @link       https://github.com/kathiedart/projectchaplin
+ * @link       https://github.com/danwdart/projectchaplin
 **/
 $bIsLoggedIn = false;
 if(Chaplin_Auth::getInstance()->hasIdentity()) :
@@ -35,10 +35,8 @@ endif;
 	</div></a>
 	<div class="right">
 		<a href="/video/upload" class="upload button"><i class="fa fa-upload"></i> Upload</a>
-		<a href="/broadcast" class="broadcast button"><i class="fa fa-video-camera"></i> Broadcast</a>
-		
-		
-		
+		<!--<a href="/broadcast" class="broadcast button"><i class="fa fa-video-camera"></i> Broadcast</a>-->
+        
 		<span class="dropdown">
 			<a href="#" class="btn btn-transparent dropdown-toggle" data-toggle="dropdown">
 				<?php if($bIsLoggedIn): ?>
@@ -50,10 +48,10 @@ endif;
 					<span class="username nobold">
 						Not logged in
 					</span>
-				<?php endif; ?> 
+				<?php endif; ?>
 				<span class="caret"></span></a>
 			<ul class="dropdown-menu pull-right" role="menu">
-				
+
 				<?php if($bIsLoggedIn): ?>
 					<li>
 						<a href="/user/<?php echo $modelUser->getUsername();?>"><i class="fa fa-user"></i> Profile</a>
@@ -65,7 +63,7 @@ endif;
 					<li>
 						<a href="/login"><i class="fa fa-sign-in"></i> Login</a>
 					</li>
-				<?php endif; ?> 
+				<?php endif; ?>
 
 				<?php //if ($bIsLoggedIn && $modelUser->isGod()) :?>
 					<li class="divider"></li>
@@ -84,7 +82,7 @@ endif;
 				<?php //endif; ?>
 			</ul>
 
-		</span>   
+		</span>
 	</div>
 	<form class="search" action="/search" method="get">
 		<input type="search" id="search" required placeholder="Search for videos..."
@@ -98,6 +96,6 @@ endif;
 
 
 <div class="left">
-	
+
 </div>
 <div class="clearfix"></div>

@@ -34,7 +34,7 @@ If you're interested please contact me at chaplin@kathiedart.co.uk.
 
 ## Issues
 For help, you can create an issue on the Github project:
-https://github.com/kathiedart/projectchaplin/issues
+https://github.com/danwdart/projectchaplin/issues
 
 ### Remember
 Have fun!

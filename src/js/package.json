@@ -12,12 +12,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kathiedart/projectchaplin.git"
+    "url": "git+https://github.com/danwdart/projectchaplin.git"
   },
   "author": "Dan Dart <chaplin@dandart.co.uk>",
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/kathiedart/projectchaplin/issues"
+    "url": "https://github.com/danwdart/projectchaplin/issues"
   },
   "dependencies": {
     "socket.io": "^2.0.0"
@@ -25,6 +25,6 @@
   "devDependencies": {
   },
   "snyk": true,
-  "homepage": "https://github.com/kathiedart/projectchaplin#readme",
+  "homepage": "https://github.com/danwdart/projectchaplin#readme",
   "main": "server.js"
 }

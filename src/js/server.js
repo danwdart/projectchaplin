@@ -19,7 +19,7 @@
  * @copyright 2012-2013 Project Chaplin
  * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version   git
- * @link      https://github.com/kathiedart/projectchaplin
+ * @link      https://github.com/danwdart/projectchaplin
 **/
 io = require('socket.io').listen(1337);
 io.sockets.on(
