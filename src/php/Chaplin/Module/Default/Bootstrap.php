@@ -22,34 +22,40 @@
  * @version   GIT: $Id$
  * @link      https://github.com/kathiedart/projectchaplin
 **/
-class Default_Bootstrap extends Zend_Application_Module_Bootstrap
+
+use Chaplin_Model_User_Helper_UserType as UserType;
+use Zend_Acl_Resource as Acl;
+use Zend_Application_Module_Bootstrap as ModuleBootstrap;
+use Zend_Registry as Reg;
+
+class Default_Bootstrap extends ModuleBootstrap
 {
     protected function _initAcl()
     {
         //$acl = $this->getApplication()->getResource('acl');
-        $acl = Zend_Registry::get('acl');
+        $acl = Reg::get('acl');
 
-        $acl->add(new Zend_Acl_Resource('default/index'));
-        $acl->add(new Zend_Acl_Resource('default/broadcast'));
-        $acl->add(new Zend_Acl_Resource('default/error'));
-        $acl->add(new Zend_Acl_Resource('default/login'));
-        $acl->add(new Zend_Acl_Resource('default/search'));
-        $acl->add(new Zend_Acl_Resource('default/services'));
-        $acl->add(new Zend_Acl_Resource('default/video'));
-        $acl->add(new Zend_Acl_Resource('default/user'));
+        $acl->add(new Acl('default/index'));
+        $acl->add(new Acl('default/broadcast'));
+        $acl->add(new Acl('default/error'));
+        $acl->add(new Acl('default/login'));
+        $acl->add(new Acl('default/search'));
+        $acl->add(new Acl('default/services'));
+        $acl->add(new Acl('default/video'));
+        $acl->add(new Acl('default/user'));
 
-        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/index');
-        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_USER, 'default/broadcast');
-        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/error');
-        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/login');
-        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/search');
-        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/services');
-        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/user');
-        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_USER, 'default/video');
-        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/video', 'watch');
-        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/video', 'watchshort');
-        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/video', 'watchyoutube');
-        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/video', 'watchvimeo');
-        $acl->allow(Chaplin_Model_User_Helper_UserType::TYPE_GUEST, 'default/video', 'watchremote');
+        $acl->allow(UserType::TYPE_GUEST, 'default/index');
+        $acl->allow(UserType::TYPE_USER, 'default/broadcast');
+        $acl->allow(UserType::TYPE_GUEST, 'default/error');
+        $acl->allow(UserType::TYPE_GUEST, 'default/login');
+        $acl->allow(UserType::TYPE_GUEST, 'default/search');
+        $acl->allow(UserType::TYPE_GUEST, 'default/services');
+        $acl->allow(UserType::TYPE_GUEST, 'default/user');
+        $acl->allow(UserType::TYPE_USER, 'default/video');
+        $acl->allow(UserType::TYPE_GUEST, 'default/video', 'watch');
+        $acl->allow(UserType::TYPE_GUEST, 'default/video', 'watchshort');
+        $acl->allow(UserType::TYPE_GUEST, 'default/video', 'watchyoutube');
+        $acl->allow(UserType::TYPE_GUEST, 'default/video', 'watchvimeo');
+        $acl->allow(UserType::TYPE_GUEST, 'default/video', 'watchremote');
     }
 }

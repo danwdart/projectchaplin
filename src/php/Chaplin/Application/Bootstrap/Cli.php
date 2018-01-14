@@ -33,15 +33,13 @@ class Cli extends ZendBootstrap
 {
     protected function _initSmtp()
     {
-        $this->bootstrap('env');
-
         $transport = new TransportSmtp(
-            SMTP_HOST,
+            getenv("SMTP_HOST"),
             [
-                "port"      => SMTP_PORT,
-                "user"      => SMTP_USER,
-                "password"  => SMTP_PASSWORD,
-                "tls"       => SMTP_USE_TLS
+                "port"      => getenv("SMTP_PORT"),
+                "user"      => getenv("SMTP_USER"),
+                "password"  => getenv("SMTP_PASSWORD"),
+                "tls"       => getenv("SMTP_USE_TLS")
             ]
         );
         ZendMail::setDefaultTransport($transport);

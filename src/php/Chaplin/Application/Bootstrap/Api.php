@@ -126,7 +126,7 @@ class Api extends ZendBootstrap
         */
 
         $chapli = new RouteHostname(
-            VHOST_SHORT,
+            getenv("VHOST_SHORT"),
             array(
                 'controller' => 'video',
                 'action' => 'watchshort'
@@ -161,7 +161,7 @@ class Api extends ZendBootstrap
         );
         $router->addRoute('logout', $route);
 
-        $route = new Zend_Controller_Router_Route_Static(
+        $route = new RouteStatic(
             'userinfo',
             array(
                 'controller' => 'login',
@@ -173,8 +173,6 @@ class Api extends ZendBootstrap
 
     protected function _initSession()
     {
-        $this->bootstrap('env');
-
         $configSessions = ConfigSessions::getInstance();
         if (!is_null($configSessions->getSaveHandler())) {
             Session::setSaveHandler($configSessions->getSaveHandler());
@@ -187,15 +185,14 @@ class Api extends ZendBootstrap
 
     protected function _initSmtp()
     {
-        $this->bootstrap('env');
-
         $transport = new TransportSmtp(
-            SMTP_HOST,
+            getenv("SMTP_HOST"),
             [
-                "port"      => SMTP_PORT,
-                "user"      => SMTP_USER,
-                "password"  => SMTP_PASSWORD,
-                "tls"       => SMTP_USE_TLS
+                "port"      => getenv("SMTP_PORT"),
+                "user"      => getenv("SMTP_USER"),
+                "password"  => getenv("SMTP_PASSWORD"),
+                "auth"      => "plain",
+                "ssl"       => "tls"
             ]
         );
         ZendMail::setDefaultTransport($transport);
