@@ -194,6 +194,8 @@ services:
             - MYSQL_USER=${SQL_USER}
             - MYSQL_PASSWORD=${SQL_PASSWORD}
         image: mysql
+        volumes:
+            - ../../db/sql/:/docker-entrypoint-initdb.d/
     rabbitmq:
         environment:
             - AMQP_HOST=${AMQP_HOST}
