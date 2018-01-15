@@ -50,7 +50,7 @@ class Upload extends Form
                 'isArray' => true
             )
         );
-        $strLocation = realpath(APPLICATION_PATH.'/../public/uploads');
+        $strLocation = realpath(APPLICATION_PATH.'/public/uploads');
         $upload->setDestination($strLocation);
 
         $progress = new Hidden(
