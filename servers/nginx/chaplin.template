@@ -3,6 +3,8 @@ server {
   root            /var/www/public/;
   index           index.php;
 
+  client_max_body_size 2000M;
+
   add_header      X-Server $hostname;
 
   error_page      404 = /index.php;
