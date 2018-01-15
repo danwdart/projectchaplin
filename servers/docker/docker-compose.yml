@@ -174,9 +174,9 @@ services:
             - ../../db/sql/:/docker-entrypoint-initdb.d/
     rabbitmq:
         environment:
-            - AMQP_HOST=${AMQP_HOST}
-            - AMQP_PORT=${AMQP_PORT}
-            - AMQP_USER=${AMQP_USER}
-            - AMQP_PASSWORD=${AMQP_PASSWORD}
-            - AMQP_VHOST=${AMQP_VHOST}
-        image: rabbitmq
+            - RABBITMQ_DEFAULT_USER=${AMQP_USER}
+            - RABBITMQ_DEFAULT_PASS=${AMQP_PASSWORD}
+            - RABBITMQ_DEFAULT_VHOST=${AMQP_VHOST}
+        image: rabbitmq:management
+        ports:
+            - 15672:15672
