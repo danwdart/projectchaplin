@@ -1,8 +1,15 @@
 {
     "presets": [
-        "stage-0"
-    ],
-    "plugins": [
-        "transform-es2015-modules-commonjs"
+        [
+	    "@babel/preset-env",
+            {
+                "targets": {
+                    "browsers": [
+                        "last 2 versions"
+                    ]
+                }
+            }
+        ],
+        "@babel/preset-stage-0"
     ]
 }
