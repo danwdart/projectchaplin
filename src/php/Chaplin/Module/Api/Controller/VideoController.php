@@ -403,7 +403,8 @@ class VideoController extends ApiController
                 $strRelaPath.$strRelaThumb,
                 $strTitle,
                 '',
-                ''
+                '',
+                "Uploaded file"
             );
             $modelVideo->save();
 

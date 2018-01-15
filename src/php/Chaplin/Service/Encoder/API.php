@@ -26,9 +26,9 @@ class Chaplin_Service_Encoder_API
 {
     const THUMBNAIL_DEFAULT_TIME = 0;
 
-    const CMD_CONVERT_FILE = 'ffmpeg -threads 9 -i "%s" "%s" 2>&1';
+    const CMD_CONVERT_FILE = 'ffmpeg -threads 12 -i "%s" "%s" 2>&1';
     const CMD_GET_THUMBNAIL = 'ffmpeg -i "%s" -f image2 -vframes 1 -ss %s "%s"'.
-        ' 2>&1'; 
+        ' 2>&1';
 
     public function convertFile($strFile, $strOut, $ret)
     {

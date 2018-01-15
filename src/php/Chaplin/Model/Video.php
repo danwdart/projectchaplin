@@ -102,7 +102,6 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         $strSource
     )
     {
-
         $video = new self();
         $video->_bIsNew = true;
         $video->_setField(self::FIELD_VIDEOID, md5(uniqid()));
