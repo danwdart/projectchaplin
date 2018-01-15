@@ -53,11 +53,9 @@ class Chaplin_Model_Video_Youtube
         ob_flush();
         flush();
 
-        $strPathToDownloadTo = realpath(APPLICATION_PATH.'/public/uploads');
-
         $strOut = Chaplin_Service::getInstance()
             ->getYoutube()
-            ->downloadVideo($this->_getYouTubeId(), $strPathToDownloadTo, $ret);
+            ->downloadVideo($this->_getYouTubeId(), getenv("UPLOADS_PATH"), $ret);
 
         echo $strOut;
         ob_flush();

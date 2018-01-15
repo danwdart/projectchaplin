@@ -38,10 +38,14 @@ class Chaplin_Dao_Smtp_Exchange
         $mail->addTo($modelUser->getEmail(), $modelUser->getNick());
         $mail->setFrom('info@'.$strVhost, 'Project Chaplin');
         $mail->setSubject($strSubject);
-        $strFilenameTemplateHTML = APPLICATION_PATH.
-         '/../mustache/en_GB/mail/html/'.$strTemplate.'.mustache';
-        $strFilenameTemplateText = APPLICATION_PATH.
-         '/../mustache/en_GB/mail/text/'.$strTemplate.'.mustache';
+        $strFilenameTemplateHTML = getenv("EMAILS_PATH").
+            '/html/'.
+            $strTemplate.
+            '.mustache';
+        $strFilenameTemplateText = getenv("EMAILS_PATH").
+            '/text/'.
+            $strTemplate.
+            '.mustache';
         $strTemplateHTML = file_get_contents($strFilenameTemplateHTML);
         $strTemplateText = file_get_contents($strFilenameTemplateText);
         $m = new Mustache_Engine();

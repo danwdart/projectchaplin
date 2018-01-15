@@ -168,10 +168,12 @@ class Chaplin_Service_Vimeo_API
         $strTitle = $entryVideo['name'];
         $strDescription = $entryVideo['description'];
 
-        $strPath = realpath(APPLICATION_PATH.'/../public/uploads');
         $strVideoFile = $strPath.'/'.$strVideoId.'.webm';
         $strRelaFile = '/uploads/'.$strVideoId.'.webm';
-        $strThumbnail = $this->downloadThumbnail($strVideoId, $strPath);
+        $strThumbnail = $this->downloadThumbnail(
+            $strVideoId,
+            getenv("UPLOADS_PATH")
+        );
 
         $modelVideo = Chaplin_Model_Video::create(
             $modelUser,

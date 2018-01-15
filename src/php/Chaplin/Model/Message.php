@@ -120,19 +120,19 @@ abstract class Chaplin_Model_Message
             return;
         }
 
-        $strPathToTemplateHtml = APPLICATION_PATH.
-            '/../mustache/en_GB/mail/html/'.
+        $strPathToTemplateHtml = getenv("EMAILS_PATH").
+            '/html/'.
             $this->_getField(self::FIELD_MAILTEMPLATE, null).
             '.mustache';
 
-        $strPathToTemplateText = APPLICATION_PATH.
-            '/../mustache/en_GB/mail/text/'.
+        $strPathToTemplateText = getenv("EMAILS_PATH").
+            '/text/'.
             $this->_getField(self::FIELD_MAILTEMPLATE, null).
             '.mustache';
 
         $strTemplateHtml = file_get_contents($strPathToTemplateHtml);
         $strTemplateText = file_get_contents($strPathToTemplateText);
-        $m = new Mustache_Engine;
+        $m = new Mustache_Engine();
 
         $strMessageHtml = $m->render(
             $strTemplateHtml,
