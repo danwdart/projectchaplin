@@ -46,6 +46,7 @@ services:
             - TWITTER_CONSUMER_SECRET=${TWITTER_CONSUMER_SECRET}
         volumes:
             - ../../src/php:/var/www
+            - uploads:/var/www/public/uploads
         depends_on:
             - redis
             - mysql
@@ -74,6 +75,7 @@ services:
             - SMTP_PASSWORD=${SMTP_PASSWORD}
         volumes:
             - ../../src/php:/var/www
+            - uploads:/var/www/public/uploads
         depends_on:
             - redis
             - mysql
@@ -103,6 +105,7 @@ services:
             - YOUTUBE_API_TOKEN=${YOUTUBE_API_TOKEN}
         volumes:
             - ../../src/php:/var/www
+            - uploads:/var/www/public/uploads
         depends_on:
             - redis
             - mysql
@@ -134,6 +137,7 @@ services:
             - VIMEO_ACCESS_TOKEN=${VIMEO_ACCESS_TOKEN}
         volumes:
             - ../../src/php:/var/www
+            - uploads:/var/www/public/uploads
         depends_on:
             - redis
             - mysql
@@ -156,6 +160,7 @@ services:
             - NODE_PORT=${NODE_PORT}
         volumes:
             - ../../src/php:/var/www
+            - uploads:/var/www/public/uploads
         depends_on:
             - node
             - api
@@ -171,6 +176,7 @@ services:
             - MYSQL_PASSWORD=${SQL_PASSWORD}
         image: mysql
         volumes:
+            - mysql:/var/lib/mysql
             - ../../db/sql/:/docker-entrypoint-initdb.d/
     rabbitmq:
         environment:
@@ -180,3 +186,6 @@ services:
         image: rabbitmq:management
         ports:
             - 15672:15672
+volumes:
+    mysql:
+    uploads:
