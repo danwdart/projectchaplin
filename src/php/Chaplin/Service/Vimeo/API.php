@@ -41,24 +41,14 @@ class Chaplin_Service_Vimeo_API
         return $token['body']['access_token'];
     }
 
-    private function _getAccessToken($lib)
-    {
-        $configChaplin = Chaplin_Config_Chaplin::getInstance();
-
-        $configVimeo = $configChaplin->getVimeo();
-
-        return $configVimeo->accesstoken;
-    }
-
     private function _getLib()
     {
-        $configChaplin = Chaplin_Config_Chaplin::getInstance();
+        $lib = new Vimeo(
+            getenv("VIMEO_CLIENT_ID"),
+            getenv("VIMEO_CLIENT_SECRET")
+        );
 
-        $configVimeo = $configChaplin->getVimeo();
-
-        $lib = new Vimeo($configVimeo->clientid, $configVimeo->clientsecret);
-
-        $accesstoken = $this->_getAccessToken($lib);
+        $accesstoken = getenv("VIMEO_ACCESS_TOKEN");
         $lib->setToken($accesstoken);
 
         return $lib;

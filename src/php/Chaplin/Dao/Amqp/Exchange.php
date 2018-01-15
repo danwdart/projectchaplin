@@ -48,7 +48,7 @@ class Chaplin_Dao_Amqp_Exchange
         $arrExchanges = Chaplin_Config_Amqp::getInstance()
             ->getConfigArray();
 
-        if (!isset($arrExchanges[$strExchangeName]) 
+        if (!isset($arrExchanges[$strExchangeName])
             || !is_array($arrExchanges[$strExchangeName])
         ) {
             throw new Exception($strExchangeName.' exchange not found');
@@ -64,10 +64,15 @@ class Chaplin_Dao_Amqp_Exchange
     private static function _getReadConnection()
     {
         if (is_null(self::$_amqpConnectionRead)) {
-            $arrReadConfig = Chaplin_Config_Servers::getInstance()
-            ->getConfigConnectionRead();
-
-            self::$_amqpConnectionRead = new Amqp\Connection($arrReadConfig);
+            self::$_amqpConnectionRead = new Amqp\Connection(
+                [
+                    "host" => getenv("AMQP_HOST"),
+                    "port" => getenv("AMQP_PORT"),
+                    "username" => getenv("AMQP_USER"),
+                    "password" => getenv("AMQP_PASSWORD"),
+                    "vhost" => getenv("AMQP_VHOST")
+                ]
+            );
             if (!self::$_amqpConnectionRead->isConnected()) {
                 self::$_amqpConnectionRead->connect();
             }
@@ -82,10 +87,15 @@ class Chaplin_Dao_Amqp_Exchange
     private static function _getWriteConnection()
     {
         if (is_null(self::$_amqpConnectionWrite)) {
-            $arrWriteConfig = Chaplin_Config_Servers::getInstance()
-            ->getConfigConnectionWrite();
-
-            self::$_amqpConnectionWrite = new Amqp\Connection($arrWriteConfig);
+            self::$_amqpConnectionWrite = new Amqp\Connection(
+                [
+                    "host" => getenv("AMQP_HOST"),
+                    "port" => getenv("AMQP_PORT"),
+                    "username" => getenv("AMQP_USER"),
+                    "password" => getenv("AMQP_PASSWORD"),
+                    "vhost" => getenv("AMQP_VHOST")
+                ]
+            );
             if (!self::$_amqpConnectionWrite->isConnected()) {
                 self::$_amqpConnectionWrite->connect();
             }
@@ -141,7 +151,7 @@ class Chaplin_Dao_Amqp_Exchange
     **/
     public function listen($strQueue, Closure $callback)
     {
-        if (!isset($this->_arrExchange[self::CONFIG_QUEUES]) 
+        if (!isset($this->_arrExchange[self::CONFIG_QUEUES])
             || !is_array($this->_arrExchange[self::CONFIG_QUEUES][$strQueue])
         ) {
             throw new Exception('Queue not found: '.$strQueue);
@@ -149,7 +159,7 @@ class Chaplin_Dao_Amqp_Exchange
 
         $arrQueue = $this->_arrExchange[self::CONFIG_QUEUES][$strQueue];
 
-        if (!isset($arrQueue[self::CONFIG_QUEUE_KEYS]) 
+        if (!isset($arrQueue[self::CONFIG_QUEUE_KEYS])
             || !is_array($arrQueue[self::CONFIG_QUEUE_KEYS])
         ) {
             throw new Exception($strQueue.' has no keys');

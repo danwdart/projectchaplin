@@ -26,7 +26,6 @@ namespace Chaplin\Module\Api\Controller;
 
 use Chaplin_Auth as Auth;
 use Chaplin_Auth_Adapter_Database as AuthAdapterDB;
-use Chaplin_Config_Chaplin as ConfigChaplin;
 use Chaplin_Dao_Exception_User_NotFound as ExceptionUserNotFound;
 use Chaplin_Gateway as Gateway;
 use Chaplin_Model_User as ModelUser;
@@ -46,7 +45,7 @@ use Zend_Oauth_Consumer as OauthConsumer;
 use Zend_Oauth_Exception as OauthException;
 use Zend_Session_Namespace as SessionNS;
 
-class LoginController extends Conroller
+class LoginController extends Controller
 {
     public function indexAction()
     {
@@ -222,7 +221,7 @@ class LoginController extends Conroller
 
     public function oauthAction()
     {
-        $strVhost = ConfigChaplin::getInstance()->getVhost();
+        $strVhost = getenv("VHOST");
 
         $oauth = include APPLICATION_PATH.'/config/oauth.php';
 

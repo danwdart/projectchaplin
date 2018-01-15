@@ -30,7 +30,7 @@ use Zend_Form_Element_Password as Password;
 use Zend_Form_Element_Submit as Submit;
 use Zend_Form_Element_Text as Text;
 
-class default_Form_Login extends Form
+class Login extends Form
 {
     public function init()
     {

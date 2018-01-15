@@ -14,17 +14,17 @@ class Chaplin_Gateway_Email
         $strSubject,
         $strTemplate,
         $arrParams
-    ) 
-    { 
-    
+    )
+    {
+
         $this->_daoExchange->email($modelUser, $strSubject, $strTemplate, $arrParams);
     }
 
     public function videoFinished(
         Chaplin_Model_Video $modelVideo
-    ) 
-    { 
-    
+    )
+    {
+
         $strUsername = $modelVideo->getUsername();
         $modelUser = Chaplin_Gateway::getUser()->getByUsername($strUsername);
 
@@ -41,10 +41,9 @@ class Chaplin_Gateway_Email
 
     public function resetPassword(
         Chaplin_Model_User $modelUser
-    ) 
-    { 
-    
-        $strVhost = Chaplin_Config_Servers::getInstance()->getVhost();
+    )
+    {
+        $strVhost = getenv("VHOST");
 
         $strValidationToken = $modelUser->resetPassword();
         // Let's make sure that we save before we send the email.
@@ -56,7 +55,7 @@ class Chaplin_Gateway_Email
             'Reset Password',
             'resetpassword',
             [
-            'Url' => 'http://'.$strVhost.'/login/validate/token/'.$strValidationToken
+                'Url' => 'http://'.$strVhost.'/login/validate/token/'.$strValidationToken
             ]
         );
     }

@@ -83,8 +83,8 @@ class UserController extends ApiController
             return $this->view->assign('form', $form);
         }
 
-        if(!isset($post['Save'])) {
-            $form->Save->addError('Invalid Request');
+        if(!isset($post['Update'])) {
+            $form->Update->addError('Invalid Request');
             return $this->view->assign('form', $form);
         }
 
