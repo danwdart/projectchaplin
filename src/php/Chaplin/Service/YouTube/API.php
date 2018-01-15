@@ -143,10 +143,12 @@ class Chaplin_Service_YouTube_API
         $strTitle = $entryVideo->getSnippet()->title;
         $strDescription = $entryVideo->getSnippet()->description;
 
-        $strPath = realpath(APPLICATION_PATH.'/../public/uploads');
         $strVideoFile = $strPath.'/'.$strVideoId.'.webm';
         $strRelaFile = '/uploads/'.$strVideoId.'.webm';
-        $strThumbnail = $this->downloadThumbnail($strVideoId, $strPath);
+        $strThumbnail = $this->downloadThumbnail(
+            $strVideoId,
+            getenv("UPLOADS_PATH")
+        );
 
         $modelVideo = Chaplin_Model_Video::create(
             $modelUser,

@@ -18,6 +18,8 @@ services:
             dockerfile: servers/docker/php/api/Dockerfile
         environment:
             - APPLICATION_ENV=${APPLICATION_ENV}
+            - EMAILS_PATH=${EMAILS_PATH}
+            - UPLOADS_PATH=${UPLOADS_PATH}
             - SQL_ADAPTER=${SQL_ADAPTER}
             - SQL_PASSWORD=${SQL_PASSWORD}
             - SQL_USER=${SQL_USER}
@@ -58,6 +60,8 @@ services:
             dockerfile: servers/docker/php/cli/convert/Dockerfile
         environment:
             - APPLICATION_ENV=${APPLICATION_ENV}
+            - EMAILS_PATH=${EMAILS_PATH}
+            - UPLOADS_PATH=${UPLOADS_PATH}
             - SQL_ADAPTER=${SQL_ADAPTER}
             - SQL_PASSWORD=${SQL_PASSWORD}
             - SQL_USER=${SQL_USER}
@@ -88,6 +92,8 @@ services:
             dockerfile: servers/docker/php/cli/youtube/Dockerfile
         environment:
             - APPLICATION_ENV=${APPLICATION_ENV}
+            - EMAILS_PATH=${EMAILS_PATH}
+            - UPLOADS_PATH=${UPLOADS_PATH}
             - SQL_ADAPTER=${SQL_ADAPTER}
             - SQL_PASSWORD=${SQL_PASSWORD}
             - SQL_USER=${SQL_USER}
@@ -119,6 +125,8 @@ services:
             dockerfile: servers/docker/php/cli/vimeo/Dockerfile
         environment:
             - APPLICATION_ENV=${APPLICATION_ENV}
+            - EMAILS_PATH=${EMAILS_PATH}
+            - UPLOADS_PATH=${UPLOADS_PATH}
             - SQL_ADAPTER=${SQL_ADAPTER}
             - SQL_PASSWORD=${SQL_PASSWORD}
             - SQL_USER=${SQL_USER}
