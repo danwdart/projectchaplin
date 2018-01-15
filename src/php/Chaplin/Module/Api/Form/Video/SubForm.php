@@ -24,6 +24,7 @@
 **/
 namespace Chaplin\Module\Api\Form\Video;
 
+use Chaplin_Model_Video as ModelVideo;
 use Chaplin_Model_Video_Licence as VideoLicence;
 use Chaplin_Model_Video_Privacy as VideoPrivacy;
 use Zend_Form as Form;
@@ -38,7 +39,7 @@ class SubForm extends ZendSubForm
 {
     private $_modelVideo;
 
-    public function __construct(Chaplin_Model_Video $modelVideo)
+    public function __construct(ModelVideo $modelVideo)
     {
         $this->_modelVideo = $modelVideo;
 

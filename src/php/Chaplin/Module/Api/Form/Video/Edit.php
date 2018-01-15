@@ -24,6 +24,7 @@
 **/
 namespace Chaplin\Module\Api\Form\Video;
 
+use Chaplin_Model_Video as ModelVideo;
 use Zend_Form as Form;
 use Zend_Form_Element_Submit as Submit;
 
@@ -31,7 +32,7 @@ class Edit extends Form
 {
     private $_modelVideo;
 
-    public function __construct(Chaplin_Model_Video $modelVideo)
+    public function __construct(ModelVideo $modelVideo)
     {
         $this->_modelVideo = $modelVideo;
         parent::__construct();
