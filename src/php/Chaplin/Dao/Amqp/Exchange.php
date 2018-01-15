@@ -229,10 +229,10 @@ class Chaplin_Dao_Amqp_Exchange
         $strRoutingKey
     ) : void
     {
-        $amqpConnection = $this->_getConnection(self::TYPE_READ);
+        $connection = $this->_getConnection(self::TYPE_READ);
         $channel = $connection->channel();
 
-        $message = new AMQPMessage(
+        $message = new Message(
             Zend_Json::encode($message),
             [
                 'content_type' => 'application/json',
