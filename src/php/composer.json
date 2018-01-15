@@ -36,7 +36,6 @@
     ],
     "require": {
         "zendframework/zendframework1": "dev-master",
-        "dandart/amqp": "dev-master",
         "dandart/multiorm": "dev-master",
         "mustache/mustache": "dev-master",
         "dailymotion/sdk": "dev-master",
@@ -45,7 +44,8 @@
         "google/apiclient": "^2.0",
         "vimeo/vimeo-api": "^1.2",
         "misd/linkify": "^1.1",
-        "phpstan/phpstan": "^0.9.1"
+        "phpstan/phpstan": "^0.9.1",
+        "php-amqplib/php-amqplib": "^2.7"
     },
     "require-dev": {
         "mockery/mockery": "dev-master",
