@@ -106,7 +106,7 @@ class Api extends ZendBootstrap
         HelperBroker::addHelper(new RestContextSwitch());
         $this->frontController->registerPlugin(new PluginApi());
     }
-    
+
     protected function _initRoutes()
     {
         $router = Front::getInstance()->getRouter();
@@ -185,9 +185,9 @@ class Api extends ZendBootstrap
             getenv("SMTP_HOST"),
             [
                 "port"      => getenv("SMTP_PORT"),
-                "user"      => getenv("SMTP_USER"),
+                "username"  => getenv("SMTP_USER"),
                 "password"  => getenv("SMTP_PASSWORD"),
-                "auth"      => "plain",
+                "auth"      => "login",
                 "ssl"       => "tls"
             ]
         );

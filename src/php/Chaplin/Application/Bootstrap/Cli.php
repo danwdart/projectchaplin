@@ -37,9 +37,10 @@ class Cli extends ZendBootstrap
             getenv("SMTP_HOST"),
             [
                 "port"      => getenv("SMTP_PORT"),
-                "user"      => getenv("SMTP_USER"),
+                "username"  => getenv("SMTP_USER"),
                 "password"  => getenv("SMTP_PASSWORD"),
-                "tls"       => getenv("SMTP_USE_TLS")
+                "auth"      => "login",
+                "ssl"       => "tls"//"tls"       => getenv("SMTP_USE_TLS")
             ]
         );
         ZendMail::setDefaultTransport($transport);
