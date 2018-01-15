@@ -138,8 +138,10 @@ class Chaplin_Dao_Amqp_Exchange
             $arrQueue[self::CONFIG_FLAGS]:
             array();
 
-        $amqpConnection = $this->_getConnection(self::TYPE_READ);
+        $connection = $this->_getConnection(self::TYPE_READ);
         $channel = $connection->channel();
+
+        $this->_declareExchange(self::TYPE_READ);
 
         $channel->queue_declare(
             $strQueue,
@@ -238,6 +240,8 @@ class Chaplin_Dao_Amqp_Exchange
                 'delivery_mode' => Message::DELIVERY_MODE_PERSISTENT
             ]
         );
+
+        $this->_declareExchange(self::TYPE_WRITE);
 
         $channel->basic_publish(
             $message,
