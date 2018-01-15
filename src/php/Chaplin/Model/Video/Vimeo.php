@@ -53,7 +53,7 @@ class Chaplin_Model_Video_Vimeo
         ob_flush();
         flush();
 
-        $strPathToDownloadTo = realpath(APPLICATION_PATH.'/../public/uploads');
+        $strPathToDownloadTo = realpath(APPLICATION_PATH.'/public/uploads');
 
         $strOut = Chaplin_Service::getInstance()
             ->getVimeo()
