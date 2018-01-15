@@ -1,4 +1,4 @@
-/**jQuery
+/**
  * This file is part of Project Chaplin.
  *
  * Project Chaplin is free software: you can redistribute it and/or modify
@@ -21,18 +21,14 @@
  * @version   git
  * @link      https://github.com/danwdart/projectchaplin
 **/
-import 'bootstrap';
 
-import './broadcast';
-import './br';
-import './login';
-import './search';
-import './upload';
-import './uservimeo';
-import './useryoutube';
-import './video';
+import $ from 'jquery';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'font-awesome/css/font-awesome.css';
-import '../../css/chaplin.css';
-import '../../css/broadcast.css';
+// fun
+$('#search').keyup(
+    function() {
+        if ('do a barrel roll' == $(this).val()) {
+            $('#video, div.thumb-wrapper').addClass('br');
+        }
+    }
+);
