@@ -87,14 +87,14 @@
 	<p>Short URL: <input type="text" disabled value="<?php echo $this->short; ?>"/></p>
 	<p><strong>&uparrow; <?php echo $this->video->getVotesUp(); ?> / <?php echo $this->video->getVotesDown(); ?> &downarrow;</strong></p>
     <?php if ($this->video->getPrivacy()->isPublic()): ?>
-    <p><?php echo $this->partial("twittershare.phtml"); ?></p>
-    <p><?php echo $this->partial("facebookshare.phtml", [
+    <p><?php echo $this->partial("partials/twittershare.phtml"); ?></p>
+    <p><?php echo $this->partial("partials/facebookshare.phtml", [
         'vhost' => $this->vhost,
         'video' => $this->video
     ]); ?></p>
-    <p><?php echo $this->partial("gplusshare.phtml"); ?></p>
-    <p><?php echo $this->partial("gnusocialshare.phtml"); ?></p>
-    <p><?php echo $this->partial("diasporashare.phtml"); ?></p>
+    <p><?php echo $this->partial("partials/gplusshare.phtml"); ?></p>
+    <p><?php echo $this->partial("partials/gnusocialshare.phtml"); ?></p>
+    <p><?php echo $this->partial("partials/diasporashare.phtml"); ?></p>
     <?php endif; ?>
 	<br/>
 	<?php if(Chaplin_Auth::getInstance()->hasIdentity()):
