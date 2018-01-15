@@ -22,6 +22,9 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+use PhpAmqpLib\Connection\AMQPStreamConnection as Connection;
+use PhpAmqpLib\Message\AMQPMessage as Message;
+
 class Chaplin_Dao_Amqp_Exchange
     implements Chaplin_Dao_Interface
 {
@@ -30,12 +33,22 @@ class Chaplin_Dao_Amqp_Exchange
     const CONFIG_QUEUES = 'Queues';
     const CONFIG_QUEUE_KEYS = 'Keys';
 
+    const FLAG_PASSIVE = "Passive";
+    const FLAG_DURABLE = "Durable";
+    const FLAG_EXCLUSIVE = "Exclusive";
+    const FLAG_AUTODELETE = "AutoDelete";
+
+    const TYPE_READ = "read";
+    const TYPE_WRITE = "write";
+
     private $_strExchangeName;
     private $_strExchangeType;
     private $_arrExchange;
 
-    private static $_amqpConnectionRead;
-    private static $_amqpConnectionWrite;
+    private static $_amqpConnections = [
+        self::TYPE_READ => null,
+        self::TYPE_WRITE => null
+    ];
 
     public function __construct($strExchangeName)
     {
@@ -61,95 +74,49 @@ class Chaplin_Dao_Amqp_Exchange
         }
     }
 
-    private static function _getReadConnection()
+    private static function _getConnection(
+        string $strType
+    ): Connection
     {
-        if (is_null(self::$_amqpConnectionRead)) {
-            self::$_amqpConnectionRead = new Amqp\Connection(
-                [
-                    "host" => getenv("AMQP_HOST"),
-                    "port" => getenv("AMQP_PORT"),
-                    "username" => getenv("AMQP_USER"),
-                    "password" => getenv("AMQP_PASSWORD"),
-                    "vhost" => getenv("AMQP_VHOST")
-                ]
+        if (is_null(self::$_amqpConnections[$strType])) {
+            self::$_amqpConnections[$strType] = new Connection(
+                getenv("AMQP_HOST"),
+                getenv("AMQP_PORT"),
+                getenv("AMQP_USER"),
+                getenv("AMQP_PASSWORD"),
+                getenv("AMQP_VHOST")
             );
-            if (!self::$_amqpConnectionRead->isConnected()) {
-                self::$_amqpConnectionRead->connect();
-            }
-            if (!self::$_amqpConnectionRead->isConnected()) {
-                throw new Exception('Connection exception');
-            }
         }
 
-        return self::$_amqpConnectionRead;
+        return self::$_amqpConnections[$strType];
     }
 
-    private static function _getWriteConnection()
+    private function _declareExchange(string $strType) : void
     {
-        if (is_null(self::$_amqpConnectionWrite)) {
-            self::$_amqpConnectionWrite = new Amqp\Connection(
-                [
-                    "host" => getenv("AMQP_HOST"),
-                    "port" => getenv("AMQP_PORT"),
-                    "username" => getenv("AMQP_USER"),
-                    "password" => getenv("AMQP_PASSWORD"),
-                    "vhost" => getenv("AMQP_VHOST")
-                ]
-            );
-            if (!self::$_amqpConnectionWrite->isConnected()) {
-                self::$_amqpConnectionWrite->connect();
-            }
-            if (!self::$_amqpConnectionWrite->isConnected()) {
-                throw new Exception('Connection exception');
-            }
-        }
+        $connection = self::_getConnection($strType);
 
-        return self::$_amqpConnectionWrite;
-    }
-
-    private function _getReadExchange()
-    {
-        $amqpConnection = self::_getReadConnection();
+        $channel = $connection->channel();
 
         $arrFlags = (isset($this->_arrExchange[self::CONFIG_FLAGS]))?
             $this->_arrExchange[self::CONFIG_FLAGS]:
             array();
 
-        $intFlags = Amqp\Flags::getFlags($arrFlags);
-        $amqpChannel = new Amqp\Channel($amqpConnection);
-        $exchange = new Amqp\Exchange($amqpChannel);
-        $exchange->setName($this->_strExchangeName);
-        $exchange->setType($this->_arrExchange[self::CONFIG_TYPE]);
-        $exchange->setFlags($intFlags);
-        $exchange->declareExchange();
-        return $exchange;
-    }
-
-    private function _getWriteExchange()
-    {
-        $amqpConnection = self::_getWriteConnection();
-
-        $arrFlags = (isset($this->_arrExchange[self::CONFIG_FLAGS]))?
-            $this->_arrExchange[self::CONFIG_FLAGS]:
-            array();
-
-        $intFlags = Amqp\Flags::getFlags($arrFlags);
-        $amqpChannel = new Amqp\Channel($amqpConnection);
-        $exchange = new Amqp\Exchange($amqpChannel);
-        $exchange->setName($this->_strExchangeName);
-        $exchange->setType($this->_arrExchange[self::CONFIG_TYPE]);
-        $exchange->setFlags($intFlags);
-        $exchange->declareExchange();
-        return $exchange;
+        $channel->exchange_declare(
+            $this->_strExchangeName,
+            'topic',
+            $arrFlags[self::FLAG_PASSIVE] ?? false,
+            $arrFlags[self::FLAG_DURABLE] ?? true,
+            $arrFlags[self::FLAG_AUTODELETE] ?? false
+        );
     }
 
     /**
     *  Provides the queue listening functionality
-     *
+    *
     *  @param: $queueName
     *  @param: $callback   - this is the function that will be called when a message is found
     **/
-    public function listen($strQueue, Closure $callback)
+    public function listen($strQueue, Closure $callback) : void
     {
         if (!isset($this->_arrExchange[self::CONFIG_QUEUES])
             || !is_array($this->_arrExchange[self::CONFIG_QUEUES][$strQueue])
@@ -171,22 +138,29 @@ class Chaplin_Dao_Amqp_Exchange
             $arrQueue[self::CONFIG_FLAGS]:
             array();
 
-        $intFlags = Amqp\Flags::getFlags($arrFlags);
-        $amqpConnection = $this->_getReadConnection();
+        $amqpConnection = $this->_getConnection(self::TYPE_READ);
+        $channel = $connection->channel();
 
-        $amqpChannel = new Amqp\Channel($amqpConnection);
-        $amqpQueue = new Amqp\Queue($amqpChannel);
-        $amqpQueue->setName($strQueue);
-        $amqpQueue->setFlags($intFlags);
-        $amqpQueue->declareQueue();
+        $channel->queue_declare(
+            $strQueue,
+            $arrFlags[self::FLAG_PASSIVE] ?? false,
+            $arrFlags[self::FLAG_DURABLE] ?? true,
+            $arrFlags[self::FLAG_EXCLUSIVE] ?? false,
+            $arrFlags[self::FLAG_AUTODELETE] ?? false
+        );
 
-        $localCallback  = function (
-            Amqp\Envelope $amqpEnvelope
-        ) use (
-            $callback,
-            $amqpQueue
-        ) {
-            $strBody = $amqpEnvelope->getBody();
+        foreach($arrKeys as $strQueueKey) {
+            $strBindingKey = is_null($strQueueKey)?'#':$strQueueKey;
+            $channel->queue_bind(
+                $strQueue,
+                $this->_strExchangeName,
+                $strBindingKey
+            );
+        }
+
+        $localCallback  = function (Message $message) use ($callback) {
+            $strBody = $message->body;
+
             try {
                 $arrData = Zend_Json::decode($strBody);
             } catch (Zend_Json_Exception $e) {
@@ -195,7 +169,9 @@ class Chaplin_Dao_Amqp_Exchange
                 flush();
                 return;
             }
-            $strClass = $amqpEnvelope->getType();
+
+            $strClass = $message->type;
+
             if (!class_exists($strClass)) {
                 echo 'Class does not exist: '.$strClass;
                 ob_flush();
@@ -209,12 +185,11 @@ class Chaplin_Dao_Amqp_Exchange
                 flush();
                 return;
             }
+
             $model = $strClass::createFromData($this, $arrData);
             try {
-
                 $callback($model);
-
-                $amqpQueue->ack($amqpEnvelope->getDeliveryTag());
+                $message->delivery_info['channel']->basic_ack($message->delivery_info['delivery_tag']);
             } catch (Exception $e) {
                 echo 'Caught Exception ('.get_class($e).'): '.$e->getMessage().PHP_EOL.$e->getTraceAsString().PHP_EOL;
             }
@@ -222,15 +197,24 @@ class Chaplin_Dao_Amqp_Exchange
             flush();
         };
 
-        // Make sure the exchange is created so there's something to listen on - DO NOT DELETE THIS
-        $this->_getReadExchange();
+        $channel->basic_consume(
+            $strQueue,
+            "Consumer",
+            false, // no local
+            false, // no ack
+            false, // exclusive
+            false, // nowait
+            $localCallback
+        );
 
-        foreach($arrKeys as $strQueueKey) {
-            $strRoutingKey = is_null($strQueueKey)?'#':$strQueueKey;
-            $amqpQueue->bind($this->_strExchangeName, $strRoutingKey);
+        register_shutdown_function(function () use ($channel, $connection) {
+            $channel->close();
+            $connection->close();
+        });
+
+        while (count($channel->callbacks)) {
+            $channel->wait();
         }
-
-        $amqpQueue->consume($localCallback, $intFlags);
     }
 
     /**
@@ -238,22 +222,35 @@ class Chaplin_Dao_Amqp_Exchange
      *
     *  @param: $modelMessage
     **/
-    public function publish(Chaplin_Model_Field_Hash $message, $strRoutingKey)
+    public function publish(
+        Chaplin_Model_Field_Hash $message,
+        $strRoutingKey
+    ) : void
     {
-        $this->_getWriteExchange()
-            ->publish(
-                Zend_Json::encode($message),
-                $strRoutingKey,
-                AMQP_NOPARAM,
-                [
-                    'content_type' => 'application/json',
-                    'type' => get_class($message)
-                ]
-            );
+        $amqpConnection = $this->_getConnection(self::TYPE_READ);
+        $channel = $connection->channel();
+
+        $message = new AMQPMessage(
+            Zend_Json::encode($message),
+            [
+                'content_type' => 'application/json',
+                'type' => get_class($message),
+                'delivery_mode' => Message::DELIVERY_MODE_PERSISTENT
+            ]
+        );
+
+        $channel->basic_publish(
+            $message,
+            $this->_strExchangeName,
+            $strRoutingKey
+        );
+
+        $channel->close();
+        $connection->close();
     }
 
-    public function save(Chaplin_Model_Field_Hash $model)
+    public function save(Chaplin_Model_Field_Hash $model) : void
     {
-        return $this->publish($model, $model->getRoutingKey());
+        $this->publish($model, $model->getRoutingKey());
     }
 }
