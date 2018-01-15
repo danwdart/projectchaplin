@@ -28,10 +28,8 @@ class Chaplin_Service_YouTube_API
 
     public function search($strSearchTerm, $page = 0, $intLimit = 50)
     {
-        $configChaplin = Chaplin_Config_Chaplin::getInstance();
-
         $client = new Google_Client();
-        $client->setDeveloperKey($configChaplin->getYouTubeAPIKey());
+        $client->setDeveloperKey(getenv("YOUTUBE_API_TOKEN"));
 
         $youtube = new Google_Service_YouTube($client);
 
@@ -49,10 +47,8 @@ class Chaplin_Service_YouTube_API
 
     public function getVideoById($strId)
     {
-        $configChaplin = Chaplin_Config_Chaplin::getInstance();
-
         $client = new Google_Client();
-        $client->setDeveloperKey($configChaplin->getYouTubeAPIKey());
+        $client->setDeveloperKey(getenv("YOUTUBE_API_TOKEN"));
 
         $youtube = new Google_Service_YouTube($client);
 
@@ -67,10 +63,8 @@ class Chaplin_Service_YouTube_API
 
     public function getUserProfile($strSearchTerm)
     {
-        $configChaplin = Chaplin_Config_Chaplin::getInstance();
-
         $client = new Google_Client();
-        $client->setDeveloperKey($configChaplin->getYouTubeAPIKey());
+        $client->setDeveloperKey(getenv("YOUTUBE_API_TOKEN"));
 
         $youtube = new Google_Service_YouTube($client);
 
@@ -85,10 +79,8 @@ class Chaplin_Service_YouTube_API
 
     public function getUserUploads($strChannelId, $strPageToken = null)
     {
-        $configChaplin = Chaplin_Config_Chaplin::getInstance();
-
         $client = new Google_Client();
-        $client->setDeveloperKey($configChaplin->getYouTubeAPIKey());
+        $client->setDeveloperKey(getenv("YOUTUBE_API_TOKEN"));
 
         $youtube = new Google_Service_YouTube($client);
 

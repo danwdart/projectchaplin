@@ -24,13 +24,12 @@
 **/
 namespace Chaplin\Module\Api\Controller;
 
-use Chaplin_Config_Chaplin as ConfigChaplin;
 use Zend_Controller_Action as Controller;
 
 class BroadcastController extends Controller
 {
     public function indexAction()
     {
-        $this->view->scheme = ConfigChaplin::getInstance()->getScheme();
+        $this->view->scheme = getenv("SCHEME");
     }
 }

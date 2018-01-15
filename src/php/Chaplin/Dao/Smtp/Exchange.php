@@ -30,11 +30,10 @@ class Chaplin_Dao_Smtp_Exchange
         $strSubject,
         $strTemplate,
         $arrParams
-    ) 
-    { 
-    
-        $strVhost = Chaplin_Config_Servers::getInstance()->getVhost();
-        
+    )
+    {
+        $strVhost = getenv("VHOST");
+
         $mail = new Zend_Mail();
         $mail->addTo($modelUser->getEmail(), $modelUser->getNick());
         $mail->setFrom('info@'.$strVhost, 'Project Chaplin');

@@ -24,7 +24,6 @@
 **/
 namespace Chaplin\Module\Cli\Api\Controller;
 
-use Chaplin_Config_Chaplin as ConfigChaplin;
 use Chaplin_Controller_Action_Api as ApiController;
 use Chaplin_Gateway as Gateway;
 use Exception;
@@ -38,7 +37,7 @@ class ServicesController extends ApiController;
 
 
         $strVideoURL = $this->_request->getQuery('url');
-        $vhost = ConfigChaplin::getInstance()->getFullVhost();
+        $vhost = getenv("SCHEME")."://".getenv("VHOST");
 
         if (false === strpos($strVideoURL, $vhost)) {
             $arrOut = ['error' => 'Video not in current server.'];
