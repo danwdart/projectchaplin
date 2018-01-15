@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 module.exports = {
     context: __dirname+'/public/js',
     entry: './src/index.js',
@@ -16,5 +18,11 @@ module.exports = {
            { test: /\.eot/, loader: "file-loader" },
            { test: /\.svg/, loader: "file-loader" },
        ]
-   }
+   },
+   plugins: [
+        new webpack.ProvidePlugin({
+           $: "jquery",
+           jQuery: "jquery"
+       })
+    ]
 };

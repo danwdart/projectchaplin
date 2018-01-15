@@ -21,6 +21,8 @@
  * @version   git
  * @link      https://github.com/danwdart/projectchaplin
 **/
+import 'bootstrap';
+
 import './broadcast';
 import './main';
 import './login';
