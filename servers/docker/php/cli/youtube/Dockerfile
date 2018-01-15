@@ -4,9 +4,11 @@ COPY src/php /var/www/
 RUN composer install --ignore-platform-reqs --no-scripts
 
 FROM php
-RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-install pdo pdo_mysql bcmath
 WORKDIR /var/www
 COPY src/php /var/www/
 COPY --from=build /var/www/vendor /var/www/vendor
+
+USER www-data
 
 CMD ["php", "cli/cli.php", "cli", "youtube"]
