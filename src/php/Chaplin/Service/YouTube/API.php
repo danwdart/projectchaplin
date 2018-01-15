@@ -24,7 +24,7 @@
 **/
 class Chaplin_Service_YouTube_API
 {
-    const LOCATION = '/../external/youtube-dl';
+    const LOCATION = 'youtube-dl';
 
     public function search($strSearchTerm, $page = 0, $intLimit = 50)
     {
@@ -101,8 +101,7 @@ class Chaplin_Service_YouTube_API
 
     public function getDownloadURL($strURL)
     {
-        $strCommandLine = APPLICATION_PATH.
-            self::LOCATION.
+        $strCommandLine = self::LOCATION.
             ' -4 --prefer-free-formats -g -- '.
             escapeshellarg($strURL);
         return system($strCommandLine);
@@ -110,7 +109,7 @@ class Chaplin_Service_YouTube_API
 
     public function downloadVideo($strURL, $strPathToSave, &$ret)
     {
-        $strCommandLine = APPLICATION_PATH.self::LOCATION.
+        $strCommandLine = self::LOCATION.
             " -4 --format=webm -o ".
             escapeshellarg($strPathToSave."/%(id)s.%(ext)s").
             " -- ".escapeshellarg($strURL).

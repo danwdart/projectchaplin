@@ -26,7 +26,7 @@ use Vimeo\Vimeo;
 
 class Chaplin_Service_Vimeo_API
 {
-    const LOCATION = '/../external/youtube-dl --verbose';
+    const LOCATION = 'youtube-dl --verbose';
 
     // Required before config available
     public function requestAccessToken($clientId, $clientSecret)
@@ -126,8 +126,7 @@ class Chaplin_Service_Vimeo_API
 
     public function getDownloadURL($strURL)
     {
-        $strCommandLine = APPLICATION_PATH.
-            self::LOCATION.
+        $strCommandLine = self::LOCATION.
             ' --prefer-free-formats -g -- '.
             escapeshellarg($strURL);
         return system($strCommandLine);
@@ -135,7 +134,7 @@ class Chaplin_Service_Vimeo_API
 
     public function downloadVideo($strURL, $strPathToSave, &$ret)
     {
-        $strCommandLine = APPLICATION_PATH.self::LOCATION.
+        $strCommandLine = self::LOCATION.
             " --recode-video webm -o ".
             escapeshellarg($strPathToSave."/%(id)s.%(ext)s").
             " -- ".escapeshellarg('https://vimeo.com/'.$strURL).

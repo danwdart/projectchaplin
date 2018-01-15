@@ -172,7 +172,7 @@ class Chaplin_Dao_Amqp_Exchange
                 return;
             }
 
-            $strClass = $message->type;
+            $strClass = $message->get("type");
 
             if (!class_exists($strClass)) {
                 echo 'Class does not exist: '.$strClass;
