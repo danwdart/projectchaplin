@@ -34,6 +34,10 @@ services:
             - SMTP_PORT=${SMTP_PORT}
             - SMTP_USER=${SMTP_USER}
             - SMTP_PASSWORD=${SMTP_PASSWORD}
+            - YOUTUBE_API_TOKEN=${YOUTUBE_API_TOKEN}
+            - VIMEO_CLIENT_SECRET=${VIMEO_CLIENT_SECRET}
+            - VIMEO_CLIENT_ID=${VIMEO_CLIENT_ID}
+            - VIMEO_ACCESS_TOKEN=${VIMEO_ACCESS_TOKEN}
             - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
             - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
             - FACEBOOK_CLIENT_ID=${FACEBOOK_CLIENT_ID}
@@ -125,37 +129,9 @@ services:
             - SMTP_PORT=${SMTP_PORT}
             - SMTP_USER=${SMTP_USER}
             - SMTP_PASSWORD=${SMTP_PASSWORD}
-            - VIMEO_CLIENTSECRET=${VIMEO_CLIENTSECRET}
-            - VIMEO_CLIENTID=${VIMEO_CLIENTID}
-            - VIMEO_ACCESSTOKEN=${VIMEO_ACCESSTOKEN}
-        volumes:
-            - ../../src/php:/var/www
-        depends_on:
-            - redis
-            - mysql
-            - rabbitmq
-    cli_email:
-        build:
-            context: ../..
-            dockerfile: servers/docker/php/cli/email/Dockerfile
-        environment:
-            - APPLICATION_ENV=${APPLICATION_ENV}
-            - SQL_ADAPTER=${SQL_ADAPTER}
-            - SQL_PASSWORD=${SQL_PASSWORD}
-            - SQL_USER=${SQL_USER}
-            - SQL_DATABASE=${SQL_DATABASE}
-            - SQL_HOST=${SQL_HOST}
-            - SQL_PORT=${SQL_PORT}
-            - AMQP_HOST=${AMQP_HOST}
-            - AMQP_PORT=${AMQP_PORT}
-            - AMQP_USER=${AMQP_USER}
-            - AMQP_PASSWORD=${AMQP_PASSWORD}
-            - AMQP_VHOST=${AMQP_VHOST}
-            - SMTP_HOST=${SMTP_HOST}
-            - SMTP_USE_TLS=${SMTP_USE_TLS}
-            - SMTP_PORT=${SMTP_PORT}
-            - SMTP_USER=${SMTP_USER}
-            - SMTP_PASSWORD=${SMTP_PASSWORD}
+            - VIMEO_CLIENT_SECRET=${VIMEO_CLIENT_SECRET}
+            - VIMEO_CLIENT_ID=${VIMEO_CLIENT_ID}
+            - VIMEO_ACCESS_TOKEN=${VIMEO_ACCESS_TOKEN}
         volumes:
             - ../../src/php:/var/www
         depends_on:

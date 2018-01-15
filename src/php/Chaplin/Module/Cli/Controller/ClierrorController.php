@@ -43,7 +43,7 @@ class ClierrorController extends Controller
         case ErrorHandler::EXCEPTION_NO_CONTROLLER:
         case ErrorHandler::EXCEPTION_NO_ACTION:
             echo 'Not Found - no route, controller or action'.PHP_EOL;
-            var_dump($this->_request->getParams());
+            //var_dump($this->_request->getParams());
             ob_flush();
             flush();
             break;
@@ -59,9 +59,9 @@ class ClierrorController extends Controller
 
         // conditionally display exceptions
         if ($this->getInvokeArg('displayExceptions') == true) {
-            echo get_class($this->exception);
-            echo $this->exception->getMessage();
-            echo $this->exception->getTraceAsString();
+            echo get_class($errors->exception).PHP_EOL;
+            echo $errors->exception->getMessage().PHP_EOL;
+            echo $errors->exception->getTraceAsString().PHP_EOL;
             ob_flush();
             flush();
         }

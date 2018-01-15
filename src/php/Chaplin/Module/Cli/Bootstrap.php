@@ -22,36 +22,10 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-namespace Chaplin\Module\Cli\Controller;
+namespace Chaplin\Module\Cli;
 
-use Chaplin_Gateway as Gateway;
-use Zend_Controller_Action as Controller;
+use Zend_Application_Module_Bootstrap as ModuleBootstrap;
 
-class CliController extends Controller
+class Bootstrap extends ModuleBootstrap
 {
-    public function preDispatch()
-    {
-        $this->_helper->viewRenderer->setNoRender(true);
-    }
-
-    public function convertAction()
-    {
-        Gateway::getInstance()
-            ->getVideo_Convert()
-            ->convert();
-    }
-    
-    public function youtubeAction()
-    {
-        Gateway::getInstance()
-            ->getVideo_Youtube()
-            ->youtube();
-    }
-
-    public function vimeoAction()
-    {
-        Gateway::getInstance()
-            ->getVideo_Vimeo()
-            ->vimeo();
-    }
 }

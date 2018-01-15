@@ -51,7 +51,7 @@ $front->setRequest(
     new Zend_Controller_Request_Simple(
         $strAction,
         $strController,
-        'cli',
+        'Cli',
         $arrParams
     )
 );

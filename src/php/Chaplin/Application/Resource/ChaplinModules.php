@@ -2,6 +2,7 @@
 namespace Chaplin\Application\Resource;
 
 use Zend_Application_Resource_Modules as ResourceModules;
+use Zend_Application_Resource_Exception as ResourceException;
 
 class ChaplinModules extends ResourceModules
 {
@@ -21,12 +22,12 @@ class ChaplinModules extends ResourceModules
             if (!class_exists($bootstrapClass, false)) {
                 $bootstrapPath = dirname($moduleDirectory) . '/Bootstrap.php';
                 if (file_exists($bootstrapPath)) {
-                    $eMsgTpl = 'Bootstrap w file found for module "%s" but bootstrap class "%s" not found';
+                    $eMsgTpl = 'Bootstrap file found for module "%s" but bootstrap class "%s" not found';
                     include_once $bootstrapPath;
                     if (($default != $module)
                         && !class_exists($bootstrapClass, false)
                     ) {
-                        throw new Zend_Application_Resource_Exception(
+                        throw new ResourceException(
                             sprintf(
                                 $eMsgTpl, $module, $bootstrapClass
                             )
@@ -35,7 +36,7 @@ class ChaplinModules extends ResourceModules
                         if (!class_exists($bootstrapClass, false)) {
                             $bootstrapClass = 'Bootstrap';
                             if (!class_exists($bootstrapClass, false)) {
-                                throw new Zend_Application_Resource_Exception(
+                                throw new ResourceException(
                                     sprintf(
                                         $eMsgTpl, $module, $bootstrapClass
                                     )
