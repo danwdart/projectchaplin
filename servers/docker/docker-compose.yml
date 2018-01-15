@@ -51,6 +51,7 @@ services:
             - redis
             - mysql
             - rabbitmq
+            - youtube_dl_api
     cli_convert:
         build:
             context: ../..
@@ -80,6 +81,7 @@ services:
             - redis
             - mysql
             - rabbitmq
+            - youtube_dl_api
     cli_youtube:
         build:
             context: ../..
@@ -110,6 +112,7 @@ services:
             - redis
             - mysql
             - rabbitmq
+            - youtube_dl_api
     cli_vimeo:
         build:
             context: ../..
@@ -142,6 +145,11 @@ services:
             - redis
             - mysql
             - rabbitmq
+            - youtube_dl_api
+    youtube_dl_api:
+        image: robhor/youtube-dl-api-server
+        volumes:
+            - uploads:/uploads
     nginx:
         build:
             context: ../..
