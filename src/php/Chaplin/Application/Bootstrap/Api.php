@@ -106,13 +106,7 @@ class Api extends ZendBootstrap
         HelperBroker::addHelper(new RestContextSwitch());
         $this->frontController->registerPlugin(new PluginApi());
     }
-
-    protected function _initIniValues()
-    {
-        ini_set('post_max_size', '2000M');
-        ini_set('upload_max_filesize', '2000M');
-    }
-
+    
     protected function _initRoutes()
     {
         $router = Front::getInstance()->getRouter();

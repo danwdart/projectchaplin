@@ -5,6 +5,10 @@ server {
 
   client_max_body_size 2000M;
 
+  add_header      Who-is-awesome Dan;
+  add_header      Base-belong-to Us;
+  add_header      Chaplin-version 0.4;
+
   add_header      X-Server $hostname;
 
   error_page      404 = /index.php;
