@@ -35,9 +35,9 @@ An open source, self-hosted video sharing service
 
 ## Development on Docker
 
-Edits on the source repository will be propagated to the docker environment with this command instead of the above:
+Edits on the source repository will be propagated to the docker environment, and rebuilds can be done with this command instead of the above:
 
-`docker-compose -p chaplin -f servers/docker/docker-compose.dev.yml up -d`
+`docker-compose -p chaplin -f servers/docker/docker-compose.yml -f servers/docker/docker-compose.dev.yml up -d`
 
 ## Manual install
 

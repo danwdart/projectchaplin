@@ -25,4 +25,4 @@ COPY servers/php-fpm /usr/local/etc/php/conf.d/
 COPY src/php /var/www/
 RUN chown -R www-data:www-data /var/www/public/uploads
 COPY --from=buildphp /var/www/vendor /var/www/vendor
-COPY --from=buildjs /var/www/public/js public/js/
+COPY --from=buildjs /var/www/public/js /var/www/public/js

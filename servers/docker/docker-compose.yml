@@ -4,18 +4,12 @@ services:
         image: projectchaplin/node
         environment:
             - NODE_ENV=${NODE_ENV}
-        build:
-            context: ../..
-            dockerfile: servers/docker/node/Dockerfile
         depends_on:
             - redis
             - mysql
             - rabbitmq
     api:
         image: projectchaplin/api
-        build:
-            context: ../..
-            dockerfile: servers/docker/php/api/Dockerfile
         environment:
             - APPLICATION_ENV=${APPLICATION_ENV}
             - EMAILS_PATH=${EMAILS_PATH}
@@ -56,9 +50,6 @@ services:
             - youtube_dl_api
     cli_convert:
         image: projectchaplin/cli_convert
-        build:
-            context: ../..
-            dockerfile: servers/docker/php/cli/convert/Dockerfile
         environment:
             - APPLICATION_ENV=${APPLICATION_ENV}
             - EMAILS_PATH=${EMAILS_PATH}
@@ -88,9 +79,6 @@ services:
             - youtube_dl_api
     cli_youtube:
         image: projectchaplin/cli_youtube
-        build:
-            context: ../..
-            dockerfile: servers/docker/php/cli/youtube/Dockerfile
         environment:
             - APPLICATION_ENV=${APPLICATION_ENV}
             - EMAILS_PATH=${EMAILS_PATH}
@@ -121,9 +109,6 @@ services:
             - youtube_dl_api
     cli_vimeo:
         image: projectchaplin/cli_vimeo
-        build:
-            context: ../..
-            dockerfile: servers/docker/php/cli/vimeo/Dockerfile
         environment:
             - APPLICATION_ENV=${APPLICATION_ENV}
             - EMAILS_PATH=${EMAILS_PATH}
@@ -160,9 +145,6 @@ services:
             - uploads:/uploads
     nginx:
         image: projectchaplin/nginx
-        build:
-            context: ../..
-            dockerfile: servers/docker/nginx/Dockerfile
         environment:
             - APPLICATION_ENV=${APPLICATION_ENV}
             - VHOST=${VHOST}
