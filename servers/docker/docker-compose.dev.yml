@@ -1,0 +1,214 @@
+version: "3"
+services:
+    node:
+        image: projectchaplin/node
+        environment:
+            - NODE_ENV=${NODE_ENV}
+        build:
+            context: ../..
+            dockerfile: servers/docker/node/Dockerfile
+        volumes:
+            - ../../src/js:/app
+        depends_on:
+            - redis
+            - mysql
+            - rabbitmq
+    api:
+        image: projectchaplin/api
+        build:
+            context: ../..
+            dockerfile: servers/docker/php/api/Dockerfile
+        environment:
+            - APPLICATION_ENV=${APPLICATION_ENV}
+            - EMAILS_PATH=${EMAILS_PATH}
+            - UPLOADS_PATH=${UPLOADS_PATH}
+            - SQL_ADAPTER=${SQL_ADAPTER}
+            - SQL_PASSWORD=${SQL_PASSWORD}
+            - SQL_USER=${SQL_USER}
+            - SQL_DATABASE=${SQL_DATABASE}
+            - SQL_HOST=${SQL_HOST}
+            - SQL_PORT=${SQL_PORT}
+            - AMQP_HOST=${AMQP_HOST}
+            - AMQP_PORT=${AMQP_PORT}
+            - AMQP_USER=${AMQP_USER}
+            - AMQP_PASSWORD=${AMQP_PASSWORD}
+            - AMQP_VHOST=${AMQP_VHOST}
+            - SMTP_HOST=${SMTP_HOST}
+            - SMTP_USE_TLS=${SMTP_USE_TLS}
+            - SMTP_PORT=${SMTP_PORT}
+            - SMTP_USER=${SMTP_USER}
+            - SMTP_PASSWORD=${SMTP_PASSWORD}
+            - YOUTUBE_API_TOKEN=${YOUTUBE_API_TOKEN}
+            - VIMEO_CLIENT_SECRET=${VIMEO_CLIENT_SECRET}
+            - VIMEO_CLIENT_ID=${VIMEO_CLIENT_ID}
+            - VIMEO_ACCESS_TOKEN=${VIMEO_ACCESS_TOKEN}
+            - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+            - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+            - FACEBOOK_CLIENT_ID=${FACEBOOK_CLIENT_ID}
+            - FACEBOOK_CLIENT_SECRET=${FACEBOOK_CLIENT_SECRET}
+            - TWITTER_CONSUMER_KEY=${TWITTER_CONSUMER_KEY}
+            - TWITTER_CONSUMER_SECRET=${TWITTER_CONSUMER_SECRET}
+            - SCHEME=${SCHEME}
+        volumes:
+            - ../../src/php:/var/www
+            - uploads:/var/www/public/uploads
+        depends_on:
+            - redis
+            - mysql
+            - rabbitmq
+            - youtube_dl_api
+    cli_convert:
+        image: projectchaplin/cli_convert
+        build:
+            context: ../..
+            dockerfile: servers/docker/php/cli/convert/Dockerfile
+        environment:
+            - APPLICATION_ENV=${APPLICATION_ENV}
+            - EMAILS_PATH=${EMAILS_PATH}
+            - UPLOADS_PATH=${UPLOADS_PATH}
+            - SQL_ADAPTER=${SQL_ADAPTER}
+            - SQL_PASSWORD=${SQL_PASSWORD}
+            - SQL_USER=${SQL_USER}
+            - SQL_DATABASE=${SQL_DATABASE}
+            - SQL_HOST=${SQL_HOST}
+            - SQL_PORT=${SQL_PORT}
+            - AMQP_HOST=${AMQP_HOST}
+            - AMQP_PORT=${AMQP_PORT}
+            - AMQP_USER=${AMQP_USER}
+            - AMQP_PASSWORD=${AMQP_PASSWORD}
+            - AMQP_VHOST=${AMQP_VHOST}
+            - SMTP_HOST=${SMTP_HOST}
+            - SMTP_USE_TLS=${SMTP_USE_TLS}
+            - SMTP_PORT=${SMTP_PORT}
+            - SMTP_USER=${SMTP_USER}
+            - SMTP_PASSWORD=${SMTP_PASSWORD}
+        volumes:
+            - ../../src/php:/var/www
+            - uploads:/var/www/public/uploads
+        depends_on:
+            - redis
+            - mysql
+            - rabbitmq
+            - youtube_dl_api
+    cli_youtube:
+        image: projectchaplin/cli_youtube
+        build:
+            context: ../..
+            dockerfile: servers/docker/php/cli/youtube/Dockerfile
+        environment:
+            - APPLICATION_ENV=${APPLICATION_ENV}
+            - EMAILS_PATH=${EMAILS_PATH}
+            - UPLOADS_PATH=${UPLOADS_PATH}
+            - SQL_ADAPTER=${SQL_ADAPTER}
+            - SQL_PASSWORD=${SQL_PASSWORD}
+            - SQL_USER=${SQL_USER}
+            - SQL_DATABASE=${SQL_DATABASE}
+            - SQL_HOST=${SQL_HOST}
+            - SQL_PORT=${SQL_PORT}
+            - AMQP_HOST=${AMQP_HOST}
+            - AMQP_PORT=${AMQP_PORT}
+            - AMQP_USER=${AMQP_USER}
+            - AMQP_PASSWORD=${AMQP_PASSWORD}
+            - AMQP_VHOST=${AMQP_VHOST}
+            - SMTP_HOST=${SMTP_HOST}
+            - SMTP_USE_TLS=${SMTP_USE_TLS}
+            - SMTP_PORT=${SMTP_PORT}
+            - SMTP_USER=${SMTP_USER}
+            - SMTP_PASSWORD=${SMTP_PASSWORD}
+            - YOUTUBE_API_TOKEN=${YOUTUBE_API_TOKEN}
+        volumes:
+            - ../../src/php:/var/www
+            - uploads:/var/www/public/uploads
+        depends_on:
+            - redis
+            - mysql
+            - rabbitmq
+            - youtube_dl_api
+    cli_vimeo:
+        image: projectchaplin/cli_vimeo
+        build:
+            context: ../..
+            dockerfile: servers/docker/php/cli/vimeo/Dockerfile
+        environment:
+            - APPLICATION_ENV=${APPLICATION_ENV}
+            - EMAILS_PATH=${EMAILS_PATH}
+            - UPLOADS_PATH=${UPLOADS_PATH}
+            - SQL_ADAPTER=${SQL_ADAPTER}
+            - SQL_PASSWORD=${SQL_PASSWORD}
+            - SQL_USER=${SQL_USER}
+            - SQL_DATABASE=${SQL_DATABASE}
+            - SQL_HOST=${SQL_HOST}
+            - SQL_PORT=${SQL_PORT}
+            - AMQP_HOST=${AMQP_HOST}
+            - AMQP_PORT=${AMQP_PORT}
+            - AMQP_USER=${AMQP_USER}
+            - AMQP_PASSWORD=${AMQP_PASSWORD}
+            - AMQP_VHOST=${AMQP_VHOST}
+            - SMTP_HOST=${SMTP_HOST}
+            - SMTP_USE_TLS=${SMTP_USE_TLS}
+            - SMTP_PORT=${SMTP_PORT}
+            - SMTP_USER=${SMTP_USER}
+            - SMTP_PASSWORD=${SMTP_PASSWORD}
+            - VIMEO_CLIENT_SECRET=${VIMEO_CLIENT_SECRET}
+            - VIMEO_CLIENT_ID=${VIMEO_CLIENT_ID}
+            - VIMEO_ACCESS_TOKEN=${VIMEO_ACCESS_TOKEN}
+        volumes:
+            - ../../src/php:/var/www
+            - uploads:/var/www/public/uploads
+        depends_on:
+            - redis
+            - mysql
+            - rabbitmq
+            - youtube_dl_api
+    youtube_dl_api:
+        image: robhor/youtube-dl-api-server
+        volumes:
+            - uploads:/uploads
+    nginx:
+        image: projectchaplin/nginx
+        build:
+            context: ../..
+            dockerfile: servers/docker/nginx/Dockerfile
+        environment:
+            - APPLICATION_ENV=${APPLICATION_ENV}
+            - VHOST=${VHOST}
+            - VHOST_PORT=${VHOST_PORT}
+            - VHOST_SHORT=${VHOST_SHORT}
+            - VHOST_NODE=${VHOST_NODE}
+            - VHOST_NODE_PORT=${VHOST_NODE_PORT}
+            - VHOST_GUI=${VHOST_GUI}
+            - API_HOST=${API_HOST}
+            - API_PORT=${API_PORT}
+            - NODE_HOST=${NODE_HOST}
+            - NODE_PORT=${NODE_PORT}
+        volumes:
+            - ../../src/php:/var/www
+            - uploads:/var/www/public/uploads
+        depends_on:
+            - node
+            - api
+        ports:
+            - 80:80
+    redis:
+        image: redis
+    mysql:
+        environment:
+            - MYSQL_ROOT_PASSWORD=${SQL_PASSWORD}
+            - MYSQL_DATABASE=${SQL_DATABASE}
+            - MYSQL_USER=${SQL_USER}
+            - MYSQL_PASSWORD=${SQL_PASSWORD}
+        image: mysql
+        volumes:
+            - mysql:/var/lib/mysql
+            - ../../db/sql/:/docker-entrypoint-initdb.d/
+    rabbitmq:
+        environment:
+            - RABBITMQ_DEFAULT_USER=${AMQP_USER}
+            - RABBITMQ_DEFAULT_PASS=${AMQP_PASSWORD}
+            - RABBITMQ_DEFAULT_VHOST=${AMQP_VHOST}
+        image: rabbitmq:management
+        ports:
+            - 15672:15672
+volumes:
+    mysql:
+    uploads:

@@ -1,0 +1,13 @@
+paths:
+    migrations: %%PHINX_CONFIG_DIR%%/migrations
+
+environments:
+    default_migration_table: phinxlog
+    default_database: development
+    production:
+        adapter: mysql
+        host: ${SQL_HOST}
+        name: ${SQL_DATABASE}
+        user: ${SQL_USER}
+        pass: ${SQL_PASSWORD}
+        port: ${SQL_PORT}
