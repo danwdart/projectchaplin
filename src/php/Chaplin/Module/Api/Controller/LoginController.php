@@ -47,6 +47,8 @@ use Zend_Session_Namespace as SessionNS;
 
 class LoginController extends Controller
 {
+    private $_session;
+
     public function indexAction()
     {
         $this->view->strTitle = 'Login - Chaplin';
@@ -102,7 +104,8 @@ class LoginController extends Controller
             return;
         }
 
-        return $this->_redirect('/');
+        $this->_redirect('/');
+        return;
     }
 
     public function logoutAction()
@@ -253,7 +256,8 @@ class LoginController extends Controller
                     '&redirect_uri='.$arrOauth['redirect_uri'].
                     '&state='.$state;
 
-                return $this->_redirect($url);
+                $this->_redirect($url);
+                return;
             }
             $state = $this->_session->state;
             $getstate = $this->_request->getQuery('state');
@@ -301,7 +305,8 @@ class LoginController extends Controller
             $request_token = unserialize($this->_session->request_token);
             if (!$request_token) {
                 $this->_session->request_token = null;
-                return $this->_redirect($arrOauth['callbackUrl']);
+                $this->_redirect($arrOauth['callbackUrl']);
+                return;
             }
 
             try {
@@ -311,7 +316,8 @@ class LoginController extends Controller
                 );
             } catch (OauthException $e) {
                 $this->_session->request_token = null;
-                return $this->_redirect($arrOauth['callbackUrl']);
+                $this->_redirect($arrOauth['callbackUrl']);
+                return;
             }
 
             $this->_session->access_token = $token;

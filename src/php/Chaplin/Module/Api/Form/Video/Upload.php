@@ -35,7 +35,7 @@ class Upload extends Form
     {
         $this->setAction('');
         $this->setMethod('post');
-        $this->setEncType('multipart/form-data');
+        $this->setEncType("multipart/form-data");
         $this->setAttribs(
             array(
             'class' => 'upload'

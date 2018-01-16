@@ -53,7 +53,8 @@ class VideoController extends ApiController
 
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
-            return $this->_redirect('/');
+            $this->_redirect('/');
+            return;
         }
 
         $modelVideo = Gateway::getInstance()
@@ -91,7 +92,8 @@ class VideoController extends ApiController
         }
 
         if(!Auth::getInstance()->hasIdentity()) {
-            return $this->_redirect('/login');
+            $this->_redirect('/login');
+            return;
         }
 
         if(!$formComment->isValid($this->_request->getPost())) {
@@ -116,6 +118,8 @@ class VideoController extends ApiController
         return $this->view->assign('formComment', $formComment);
     }
 
+    /*
+    // Nodes and remote are disabled for this release.
     public function watchremoteAction()
     {
         $modelUser = Auth::getInstance()
@@ -127,7 +131,8 @@ class VideoController extends ApiController
 
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
-            return $this->_redirect('/');
+            $this->_redirect('/');
+            return;
         }
 
         $strNodeId = $this->_request->getParam('node', 0);
@@ -144,6 +149,7 @@ class VideoController extends ApiController
 
         $this->view->assign('video', $modelVideo);
     }
+    */
 
     public function watchshortAction()
     {
@@ -152,14 +158,16 @@ class VideoController extends ApiController
         $strId   = str_replace(' ', '+', $strId);
         $strId   = bin2hex(base64_decode($strId));
         $strHost = getenv("VHOST");
-        return $this->_redirect('https://'.$strHost.'/video/watch/id/'.$strId);
+        $this->_redirect('https://'.$strHost.'/video/watch/id/'.$strId);
+        return;
     }
 
     public function watchyoutubeAction()
     {
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
-            return $this->_redirect('/');
+            $this->_redirect('/');
+            return;
         }
 
         // Get the YT information
@@ -185,7 +193,8 @@ class VideoController extends ApiController
     {
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
-            return $this->_redirect('/');
+            $this->_redirect('/');
+            return;
         }
 
         $modelUser = Auth::getInstance()->getIdentity()->getUser();
@@ -201,7 +210,8 @@ class VideoController extends ApiController
     {
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
-            return $this->_redirect('/');
+            $this->_redirect('/');
+            return;
         }
 
         // Get the YT information
@@ -227,7 +237,8 @@ class VideoController extends ApiController
     {
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
-            return $this->_redirect('/');
+            $this->_redirect('/');
+            return;
         }
 
         $modelUser = Auth::getInstance()->getIdentity()->getUser();
@@ -288,7 +299,8 @@ class VideoController extends ApiController
 
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
-            return $this->_redirect('/');
+            $this->_redirect('/');
+            return;
         }
 
         $modelUser = Auth::getInstance()
@@ -330,7 +342,8 @@ class VideoController extends ApiController
 
         $strVote = $this->_request->getParam('vote', null);
         if(is_null($strVideoId)) {
-            return $this->_redirect('/');
+            $this->_redirect('/');
+            return;
         }
 
         if ('up' == $strVote) {
@@ -420,6 +433,7 @@ class VideoController extends ApiController
         // Not sure how to implement this yet
         // Will skip until I work it out
         return $this->_redirect('/');
+        /*
         $identity = Auth::getInstance()
             ->getIdentity();
 
@@ -459,6 +473,7 @@ class VideoController extends ApiController
         }
 
         $this->_redirect('/');
+        */
     }
 
     public function editAction()

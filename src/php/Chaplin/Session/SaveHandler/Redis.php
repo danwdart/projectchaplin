@@ -43,8 +43,6 @@ class Chaplin_Session_SaveHandler_Redis
 
     /**
    * Sessions set
-   *
-   * @var Chaplin_Session_Set
   **/
     protected $_set;
 

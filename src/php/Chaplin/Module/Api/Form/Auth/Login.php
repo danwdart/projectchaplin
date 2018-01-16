@@ -34,7 +34,6 @@ class Login extends Form
 {
     public function init()
     {
-
         $this->setMethod('post');
         $this->setAction('/login?redirect=' . $this->_redirect_url);
 

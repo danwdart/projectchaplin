@@ -28,7 +28,7 @@ use Chaplin_Controller_Action_Api as ApiController;
 use Chaplin_Gateway as Gateway;
 use Exception;
 
-class ServicesController extends ApiController;
+class ServicesController extends ApiController
 {
     // The OEmbed Service
     public function oembedAction()

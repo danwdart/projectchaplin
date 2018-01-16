@@ -27,12 +27,13 @@ namespace Chaplin\Module\Api\Form\Video;
 use Zend_Form as Form;
 use Zend_Form_Element_Submit as Submit;
 use Zend_Form_SubForm as ZendSubForm;
+use Chaplin_Iterator_Interface as Itt;
 
 class Name extends Form
 {
     private $_ittVideos;
 
-    public function __construct(Chaplin_Iterator_Interface $ittVideos)
+    public function __construct(Itt $ittVideos)
     {
         $this->_ittVideos = $ittVideos;
         parent::__construct();

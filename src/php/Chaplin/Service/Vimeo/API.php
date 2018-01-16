@@ -168,7 +168,6 @@ class Chaplin_Service_Vimeo_API
         $strTitle = $entryVideo['name'];
         $strDescription = $entryVideo['description'];
 
-        $strVideoFile = $strPath.'/'.$strVideoId.'.webm';
         $strRelaFile = '/uploads/'.$strVideoId.'.webm';
         $strThumbnail = $this->downloadThumbnail(
             $strVideoId,
