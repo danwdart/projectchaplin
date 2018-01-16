@@ -36,7 +36,7 @@ class Chaplin_Model_User_Credential extends Chaplin_Model_Field_Hash
 
     public static function create(Chaplin_Model_User $modelUser, $strServiceName, $strServiceURL, $strAccessToken)
     {
-        $credential = new self($modelUser);
+        $credential = new self();
         $credential->_setField(self::FIELD_ServiceName, $strServiceName);
         $credential->_setField(self::FIELD_ServiceURL, $strServiceURL);
         $credential->_setField(self::FIELD_AccessToken, $strAccessToken);

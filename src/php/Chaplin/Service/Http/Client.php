@@ -120,7 +120,6 @@ class Chaplin_Service_Http_Client
      * @param  string $strURL
      * @param  string $intLogPriority
      * @param  string $bCache
-     * @return Chaplin_Cache_HttpClient
      * @author Dan Dart <chaplin@dandart.co.uk>
     **/
     public function getHttpResponse(

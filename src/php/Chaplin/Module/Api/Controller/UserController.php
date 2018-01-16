@@ -38,7 +38,8 @@ class UserController extends ApiController
     {
         $strUsername = $this->_request->getParam('id', null);
         if(is_null($strUsername)) {
-            return $this->_redirect('/');
+            $this->_redirect('/');
+            return;
         }
 
         try {

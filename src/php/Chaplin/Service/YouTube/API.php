@@ -143,7 +143,6 @@ class Chaplin_Service_YouTube_API
         $strTitle = $entryVideo->getSnippet()->title;
         $strDescription = $entryVideo->getSnippet()->description;
 
-        $strVideoFile = $strPath.'/'.$strVideoId.'.webm';
         $strRelaFile = '/uploads/'.$strVideoId.'.webm';
         $strThumbnail = $this->downloadThumbnail(
             $strVideoId,
