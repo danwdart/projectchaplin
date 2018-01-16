@@ -1,5 +1,11 @@
-FROM nginx
+FROM node as buildjs
+WORKDIR /var/www
+COPY src/php /var/www/
+RUN npm install && npm run build
 
+FROM nginx
+COPY src/php /var/www/
+COPY --from=buildjs /var/www/public/js /var/www/public/js
 COPY servers/nginx /etc/nginx/conf.d/
 
 CMD envsubst '$VHOST $VHOST_PORT $API_HOST $API_PORT $APPLICATION_ENV \
