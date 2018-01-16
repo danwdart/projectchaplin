@@ -432,7 +432,8 @@ class VideoController extends ApiController
     {
         // Not sure how to implement this yet
         // Will skip until I work it out
-        return $this->_redirect('/');
+        $this->_redirect('/');
+        return;
         /*
         $identity = Auth::getInstance()
             ->getIdentity();
@@ -488,7 +489,8 @@ class VideoController extends ApiController
 
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
-            return $this->_redirect('/');
+            $this->_redirect('/');
+            return;
         }
 
         $modelVideo = Gateway::getInstance()
@@ -512,7 +514,8 @@ class VideoController extends ApiController
             $modelVideo->save();
         }
 
-        return $this->_redirect('/video/watch/id/'.$strVideoId);
+        $this->_redirect('/video/watch/id/'.$strVideoId);
+        return;
     }
 
     public function deleteAction()
@@ -525,12 +528,14 @@ class VideoController extends ApiController
             null;
 
         if(!Auth::getInstance()->hasIdentity()) {
-            return $this->_redirect('/login');
+            $this->_redirect('/login');
+            return;
         }
 
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
-            return $this->_redirect('/');
+            $this->_redirect('/');
+            return;
         }
 
         $modelVideo = Gateway::getInstance()
