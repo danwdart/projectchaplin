@@ -1,0 +1,43 @@
+{
+  "name": "projectchaplin-php",
+  "version": "0.0.0",
+  "description": "Video sharing project",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack -w",
+    "test": "snyk test",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danwdart/projectchaplin.git"
+  },
+  "author": "Dan Dart <chaplin@dandart.co.uk>",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/danwdart/projectchaplin/issues"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.1.1",
+    "socket.io-client": "^2.0.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.37",
+    "@babel/preset-env": "^7.0.0-beta.37",
+    "@babel/preset-stage-0": "^7.0.0-beta.37",
+    "babel-loader": "^8.0.0-beta.0",
+    "css-loader": "^0.28.8",
+    "file-loader": "^1.1.6",
+    "snyk": "^1.68.0",
+    "style-loader": "^0.19.1",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.10.0"
+  },
+  "snyk": true,
+  "homepage": "https://github.com/danwdart/projectchaplin#readme",
+  "main": "server.js"
+}

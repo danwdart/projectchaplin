@@ -1,0 +1,44 @@
+<?php
+/**
+ * This file is part of Project Chaplin.
+ *
+ * Project Chaplin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Project Chaplin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @package    Project Chaplin
+ * @author     Dan Dart
+ * @copyright  2012-2013 Project Chaplin
+ * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
+ * @version    git
+ * @link       https://github.com/danwdart/projectchaplin
+**/
+?>
+<div class="content-header">
+    <?php if (!isset($this->ittVideos['data'][0])): ?>
+    Videos
+    <?php else: ?>
+    Videos for user <?php echo $this->ittVideos['data'][0]['user']['name'] ?>
+    <?php endif; ?>
+</div>
+<div class="content-centre">
+<?php foreach($this->ittVideos['data'] as $videoEntry):?>
+<a href="/video/watchvimeo/id/<?php echo substr($videoEntry['uri'], 8);?>">
+<div class="thumb-wrapper">
+<div class="thumb-img">
+    <img src="<?php echo htmlentities($videoEntry['pictures']['sizes'][3]['link']);?>" alt="View Video"/>
+</div>
+<p><?php echo $videoEntry['name'];?></p>
+</div>
+</a>
+<?php endforeach;?>
+</div>

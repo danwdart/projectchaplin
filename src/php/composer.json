@@ -1,0 +1,66 @@
+{
+    "name": "kathiedart/projectchaplin",
+    "description": "Federated social video sharing",
+    "version": "dev-master",
+    "type": "project",
+    "keywords": [
+        "video",
+        "sharing",
+        "youtube",
+        "kathiedart",
+        "import"
+    ],
+    "homepage": "https://projectchaplin.com",
+    "license": "AGPL-3.0",
+    "authors": [
+        {
+            "name": "Dan Dart",
+            "email": "chaplin@kathiedart.co.uk",
+            "homepage": "http://kathiedart.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "chaplin@kathiedart.co.uk",
+        "irc": "irc://irc.megworld.co.uk/projectchaplin"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/danwdart/amqp"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/danwdart/multiorm"
+        }
+    ],
+    "require": {
+        "zendframework/zendframework1": "dev-master",
+        "dandart/multiorm": "dev-master",
+        "mustache/mustache": "dev-master",
+        "dailymotion/sdk": "dev-master",
+        "robmorgan/phinx": "dev-master",
+        "zendframework/zendgdata": "^2.0",
+        "google/apiclient": "^2.0",
+        "vimeo/vimeo-api": "^1.2",
+        "misd/linkify": "^1.1",
+        "phpstan/phpstan": "^0.9.1",
+        "php-amqplib/php-amqplib": "^2.7"
+    },
+    "require-dev": {
+        "mockery/mockery": "dev-master",
+        "phpunit/phpunit": "^6",
+        "squizlabs/php_codesniffer": "^2.7"
+    },
+    "autoload": {
+        "psr-0": {
+            "Chaplin_": ""
+	},
+        "psr-4": {
+            "Chaplin\\": "Chaplin/"
+        },
+	"classmap": [
+            "Chaplin/"
+	]
+    }
+}

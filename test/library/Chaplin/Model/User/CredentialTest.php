@@ -16,11 +16,11 @@
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package   ProjectChaplin
- * @author    Kathie Dart <chaplin@kathiedart.uk>
- * @copyright 2012-2017 Project Chaplin
+ * @author    Dan Dart <chaplin@dandart.co.uk>
+ * @copyright 2012-2018 Project Chaplin
  * @license   http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version   GIT: $Id$
- * @link      https://github.com/kathiedart/projectchaplin
+ * @link      https://github.com/danwdart/projectchaplin
 **/
 class Chaplin_Model_User_CredentialTest
     extends Zend_Test_PHPUnit_ControllerTestCase
