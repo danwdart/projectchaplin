@@ -46,6 +46,7 @@ services:
             - FACEBOOK_CLIENT_SECRET=${FACEBOOK_CLIENT_SECRET}
             - TWITTER_CONSUMER_KEY=${TWITTER_CONSUMER_KEY}
             - TWITTER_CONSUMER_SECRET=${TWITTER_CONSUMER_SECRET}
+            - SCHEME=${SCHEME}
         volumes:
             - ../../src/php:/var/www
             - uploads:/var/www/public/uploads
