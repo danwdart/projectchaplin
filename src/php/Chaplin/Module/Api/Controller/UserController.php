@@ -129,8 +129,10 @@ class UserController extends ApiController
             $this->_helper->layout()->disableLayout();
             $this->_helper->viewRenderer('youtube-partial');
         } else {
-            $this->view->strTitle = $this->view->ittVideos->items[0]->getSnippet()->channelTitle.
-            ' from YouTube - Chaplin';
+            if ($this->view->ittVideos->count()) {
+                $this->view->strTitle = $this->view->ittVideos->items[0]->getSnippet()->channelTitle.
+                ' from YouTube - Chaplin';
+            }
         }
     }
 

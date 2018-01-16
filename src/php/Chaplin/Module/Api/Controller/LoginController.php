@@ -66,20 +66,24 @@ class LoginController extends Controller
         $password = $post['password'];
 
         if(isset($post['Register'])) {
-            return $this->_redirect('/login/register');
+            $this->_redirect('/login/register');
+            return;
         }
 
         if (isset($post['Forgot'])) {
-            return $this->_redirect('/login/forgot');
+            $this->_redirect('/login/forgot');
+            return;
         }
 
         if(!$form->isValid($post)) {
-            return $this->view->assign('form', $form);
+            $this->view->assign('form', $form);
+            return;
         }
 
         if(!isset($post['Login'])) {
             $form->password->addError('Invalid Action');
-            return $this->view->assign('form', $form);
+            $this->view->assign('form', $form);
+            return;
         }
 
         $adapter = new AuthAdapterDB($username, $password);

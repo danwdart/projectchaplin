@@ -32,7 +32,7 @@ class Chaplin_Model_Field_Collection
 
     public function __construct($strHashType)
     {
-        $this->_strHashType = $strHashType;        
+        $this->_strHashType = $strHashType;
     }
 
     public function bIsDirty()
@@ -78,7 +78,7 @@ class Chaplin_Model_Field_Collection
 
     public function seek($strId)
     {
-        foreach($thos->_collHashes as $hash) {
+        foreach($this->_collHashes as $hash) {
             if ($hash->getId() == $strId) {
                 return $hash;
             }
@@ -99,13 +99,13 @@ class Chaplin_Model_Field_Collection
             $this->_collHashes[] = $strHashType::createFromIterator($this, $arrData);
         }
         return $this;
-    }       
-    
+    }
+
     public function setValue($mixedValue)
     {
         throw new Exception("Can't do this!");
     }
-        
+
     public function getValue($mixedDefault)
     {
         return $this;

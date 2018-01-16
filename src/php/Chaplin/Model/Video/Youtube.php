@@ -53,6 +53,8 @@ class Chaplin_Model_Video_Youtube
         ob_flush();
         flush();
 
+        // phpstan
+        $ret = null;
         $strOut = Chaplin_Service::getInstance()
             ->getYoutube()
             ->downloadVideo($this->_getYouTubeId(), getenv("UPLOADS_PATH"), $ret);

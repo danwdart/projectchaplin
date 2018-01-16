@@ -30,23 +30,23 @@ class Chaplin_Model_Video_Comment
     const FIELD_USERNAME = 'Username';
     const FIELD_COMMENT = 'Comment';
     //Feedback
-    
+
     protected $_arrFields = array(
-        self::FIELD_ID => array('Class' => 'Chaplin_Model_Field_FieldId'),
+        self::FIELD_COMMENTID => array('Class' => 'Chaplin_Model_Field_FieldId'),
         self::FIELD_VIDEOID => array('Class' => 'Chaplin_Model_Field_Field'),
         self::FIELD_USERNAME => array('Class' => 'Chaplin_Model_Field_Field'),
         self::FIELD_COMMENT => array('Class' => 'Chaplin_Model_Field_Field')
     );
-    
+
     public static function create(
         Chaplin_Model_Video $modelVideo,
         Chaplin_Model_User $modelUser,
         $strComment
-    ) 
-    { 
-    
+    )
+    {
+
         $comment = new self();
-        $comment->_setField(self::FIELD_ID, md5(uniqid()));
+        $comment->_setField(self::FIELD_COMMENTID, md5(uniqid()));
         $comment->_setField(self::FIELD_VIDEOID, $modelVideo->getVideoId());
         $comment->_setField(self::FIELD_USERNAME, $modelUser->getUsername());
         $comment->_setField(self::FIELD_COMMENT, $strComment);
@@ -55,19 +55,19 @@ class Chaplin_Model_Video_Comment
 
     public function getId()
     {
-        return $this->_getField(self::FIELD_ID);
+        return $this->_getField(self::FIELD_COMMENTID, null);
     }
 
     public function getCommentId()
     {
-        return $this->_getField(self::FIELD_ID, null);
+        return $this->_getField(self::FIELD_COMMENTID, null);
     }
-    
+
     public function getUsername()
     {
         return $this->_getField(self::FIELD_USERNAME, null);
     }
-    
+
     private $_modelUser;
     public function getUser()
     {
@@ -78,7 +78,7 @@ class Chaplin_Model_Video_Comment
         }
         return $this->_modelUser;
     }
-    
+
     public function getComment()
     {
         return $this->_getField(self::FIELD_COMMENT, null);

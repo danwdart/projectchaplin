@@ -24,6 +24,9 @@
 **/
 class Chaplin_Auth_Adapter_Database implements Zend_Auth_Adapter_Interface
 {
+    private $_strUsername;
+    private $_strPassword;
+
     public function __construct($strUsername, $strPassword)
     {
         $this->_strUsername = $strUsername;
