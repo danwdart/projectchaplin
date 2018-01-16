@@ -70,7 +70,7 @@ class Chaplin_Dao_Amqp_Exchange
         $this->_arrExchange = $arrExchanges[$strExchangeName];
 
         if (!isset($this->_arrExchange[self::CONFIG_TYPE])) {
-            throw new Canddi_Dao_Exception_Message_ExchangeTypeEmpty();
+            throw new Exception("Exchange type empty.");
         }
     }
 

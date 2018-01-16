@@ -32,7 +32,7 @@
 class Chaplin_Http_Client implements Chaplin_Http_Interface
 {
     private $_zendHttpClient;
-    
+
     /**
      * Save a new Zend_Http_Client in the object
      *
@@ -49,7 +49,7 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
                 array(
                 'timeout' => 30
                 )
-            ); 
+            );
     }
 
     /**
@@ -58,11 +58,11 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
      * @var array
     **/
     private $_arrPageBody = array();
-    
+
     /**
      * Get the page body from a URL
      *
-     * @param  string $url 
+     * @param  string $url
      * @return string $pageBody
      * @throws Chaplin_Http_Exception_Unsuccessful
      * @throws Chaplin_Http_Exception_InvalidURL
@@ -71,8 +71,8 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
     public function getPageBody($url, $intLogPriority = Zend_Log::ERR)
     {
         // Make sure the URL has no spaces - re-encoding screws it up
-        $url = str_replace(' ', '%20', $url);      
-    
+        $url = str_replace(' ', '%20', $url);
+
         if (isset($this->_arrPageBody[$url])) {
             return $this->_arrPageBody[$url];
         }
@@ -89,7 +89,7 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
             Chaplin_Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url, $intLogPriority);
             throw new Chaplin_Http_Exception_InvalidURL($url, $e);
         }
-      
+
         $httpResponse = $this->_zendHttpClient->request();
 
         // Log if priority added - and if 200 don't log the body
@@ -101,21 +101,21 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
                 Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
             }
         }
-      
+
         if (!$httpResponse->isSuccessful()) {
             throw new Chaplin_Http_Exception_Unsuccessful($url, $httpResponse->getStatus());
         }
-          
+
         $this->_arrPageBody[$url] = $this->_checkForMetaRedirect($url, $httpResponse->getBody());
-      
+
         return $this->_arrPageBody[$url];
     }
 
     public function getObject($url, $intLogPriority = Zend_Log::ERR)
     {
         // Make sure the URL has no spaces - re-encoding screws it up
-        $url = str_replace(' ', '%20', $url);      
-    
+        $url = str_replace(' ', '%20', $url);
+
         if (isset($this->_arrPageBody[$url])) {
             return $this->_arrPageBody[$url];
         }
@@ -133,7 +133,7 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
             Chaplin_Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url, $intLogPriority);
             throw new Chaplin_Http_Exception_InvalidURL($url, $e);
         }
-      
+
         $httpResponse = $this->_zendHttpClient->request();
 
         // Log if priority added - and if 200 don't log the body
@@ -145,21 +145,21 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
                 Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
             }
         }
-      
+
         if (!$httpResponse->isSuccessful()) {
             throw new Chaplin_Http_Exception_Unsuccessful($url, $httpResponse->getStatus());
         }
-          
+
         $this->_arrPageBody[$url] = $this->_checkForMetaRedirect($url, $httpResponse->getBody());
-      
+
         return $this->_arrPageBody[$url];
     }
 
-    
-    public function getResponse($url)
+
+    public function getResponse($url, $intLogPriority = Zend_Log::ERR)
     {
         // Make sure the URL has no spaces - re-encoding screws it up
-          $url = str_replace(' ', '%20', $url);      
+          $url = str_replace(' ', '%20', $url);
 
         try
           {
@@ -191,12 +191,12 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
 
           return $httpResponse;
     }
-    
+
     /**
-     * Use use the client to parse the page 
+     * Use use the client to parse the page
      *
-     * @param  string $strURL 
-     * @param  string $strXPath 
+     * @param  string $strURL
+     * @param  string $strXPath
      * @return string
      * @author Tim Langley
     **/
@@ -206,13 +206,13 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         $strElement = $this->_parseXPath($strURL, $strPageBody, $strXPath);
         return $strElement;
     }
-    
-    
+
+
     /**
      * Parses the raw XPath out of some data
      *
-     * @param  string $strData 
-     * @param  string $strXPath 
+     * @param  string $strData
+     * @param  string $strXPath
      * @return string
      * @author Dan Dart <chaplin@dandart.co.uk>
     **/
@@ -224,33 +224,33 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         if (!@$domDocument->loadXML($strData)) {
             throw new Exception('Could not load XML! Raw follows: ' . $strData);
         }
-            
+
         $domXPath = new DOMXPath($domDocument);
-        
+
         // Query the DOM with an XPath query
         $domNodes = $domXPath->query($strXPath);
-        
+
         // If no nodes were found...
         if ($domNodes->length == 0) {
             throw new Chaplin_Http_Exception_XPathCannotFind($strXPath);
         }
-        
+
         // If more than one node was found...
         if ($domNodes->length > 1) {
             throw new Chaplin_Http_Exception_XPathNotUnique($strXPath);
         }
         $strNode = $domNodes->item(0);
-        
+
         return $strNode->nodeValue;
     }
-    
+
     /**
      * Parses raw HTML XPath
      * If URL is present and XPath ends in @src or @href then it attempts absolute URL detection
      *
-     * @param  string $strData 
-     * @param  string $strXPath 
-     * @param  string $strURL 
+     * @param  string $strData
+     * @param  string $strXPath
+     * @param  string $strURL
      * @return void
      * @author Dan Dart <chaplin@dandart.co.uk>
     **/
@@ -260,34 +260,34 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         $domDocument = new DOMDocument();
         // Be quiet - else we'll see a tonne of errors if the HTML is invalid - we don't care but we might want to tell later?...
         if (!@$domDocument->loadHTML($strData)) {
-            throw new Exception('Could not load HTML! Raw follows: ' . $strPageBody);
+            throw new Exception('Could not load HTML! Raw follows: ' . $strData);
         }
-            
+
         $domXPath = new DOMXPath($domDocument);
-        
+
         // Query the DOM with an XPath query
         $domNodes = $domXPath->query($strXPath);
-        
+
         // If no nodes were found...
         if ($domNodes->length == 0) {
             throw new Chaplin_Http_Exception_XPathCannotFind($strXPath);
         }
-        
+
         // If more than one node was found...
         if ($domNodes->length > 1) {
             throw new Chaplin_Http_Exception_XPathNotUnique($strXPath);
         }
         $strNode = $domNodes->item(0);
-        
+
         $strValue = $strNode->nodeValue;
         return $strValue;
-    } 
-    
+    }
+
     /**
     * Gets a Zend_Http_Response from trying to get this URL
     * TODO: Move everything here
     *
-    * @param  string $strURL 
+    * @param  string $strURL
     * @param  int    $intLogPriority = null
     * @return Zend_Http_Response
     * @author Dan Dart <chaplin@dandart.co.uk>
@@ -295,7 +295,7 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
     public function getHttpResponse($url, $intLogPriority = Zend_Log::ERR)
     {
         // Make sure the URL has no spaces - re-encoding screws it up
-        $url = str_replace(' ', '%20', $url);      
+        $url = str_replace(' ', '%20', $url);
 
         try
         {
@@ -327,18 +327,18 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
 
         return $httpResponse;
     }
-    
+
     protected function _parseXPath($strURL, $strPageBody, $strXPath)
     {
         $value = $this->parseRawHtmlXPath($strPageBody, $strXPath);
-        
+
         if (strpos($strXPath, '/@src') !== false || strpos($strXPath, '/@href') !== false) {
             $value = $this->_getAbsoluteURL($strURL, $value);
         }
 
         return $value;
     }
-    
+
     protected function _checkForMetaRedirect($strURL, $strPageBody)
     {
         try {
@@ -348,15 +348,15 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
             // We didn't find a redirect tag
             return $strPageBody;
         }
-        
+
         $strRedirectContent = strtolower($strRedirectContent);
-        
+
         /**
          * Now, RedirectContent will either look like:
          *      (a) a number (600)
          *      (b) a number, semicolon and url=[a url]
         **/
-         
+
         // The first instance - it won't go anywhere new so just return it back
         if (false === stripos($strRedirectContent, 'url=')) {
             return $strPageBody;
@@ -367,25 +367,25 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         $strNewURL = $arrNewURL[1];
 
         $strNewURL = $this->_getAbsoluteURL($strURL, $strNewURL);
-        
+
         if ($strNewURL != $strURL) {
             return $this->getPageBody($strNewURL);
-        }        
-        
+        }
+
         return $strPageBody;
     }
-    
+
     protected function _getAbsoluteURL($strPageURL, $strRelativePath)
     {
-        // If Relative URLs contain '../' at the beginning, they can either refer to the current directory 
-        
-        
+        // If Relative URLs contain '../' at the beginning, they can either refer to the current directory
+
+
         // Sometimes sites link to "//host.com/url" when they mean "https://host.com/url" - Google does this
         // This is already an absolute URL so add the missing scheme from the page URL
         if (strpos($strRelativePath, '//') === 0) {
             return parse_url($strPageURL, PHP_URL_SCHEME) . ':' . $strRelativePath;
-        }            
-        
+        }
+
          /* return if already absolute URL**/
         if (parse_url($strRelativePath, PHP_URL_SCHEME) != '') { return $strRelativePath;
         }
@@ -416,8 +416,8 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         }
 
         /* absolute URL is ready!**/
-        $strAbsoluteURL = $parsed['scheme'].'://'.$strAbsolutePath; 
-        
+        $strAbsoluteURL = $parsed['scheme'].'://'.$strAbsolutePath;
+
         return $strAbsoluteURL;
     }
 }

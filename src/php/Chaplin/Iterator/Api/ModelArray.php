@@ -28,9 +28,11 @@ class Chaplin_Iterator_Api_ModelArray implements Chaplin_Iterator_Interface
     private $_bEmpty        = false;
 
     private $_intOffset     = 0;
-    private $_intStartRow   = 0; 
+    private $_intStartRow   = 0;
     private $_intReturnRows;
     private $_strClass;
+    private $_arrRows;
+    private $_strURLPrefix;
 
     public function __construct($strClass, $strURLPrefix, Array $arrRows)
     {
@@ -55,15 +57,15 @@ class Chaplin_Iterator_Api_ModelArray implements Chaplin_Iterator_Interface
         $strClass = $this->_strClass;
         return $strClass::createFromAPIResponse($arrCurrentItem, $this->_strURLPrefix);
     }
-    function key() 
+    function key()
     {
         return $this->_intOffset;
     }
-    function next() 
+    function next()
     {
         $this->_intOffset++;
     }
-    function rewind() 
+    function rewind()
     {
         $this->_intOffset = 0;
     }
@@ -72,21 +74,21 @@ class Chaplin_Iterator_Api_ModelArray implements Chaplin_Iterator_Interface
         return isset($this->_arrRows[$this->_intOffset]);
     }
     //Implements ArrayAccess
-    public function offsetSet($offset, $value) 
+    public function offsetSet($offset, $value)
     {
-        throw new Chaplin_Exception_NotImplemented();
-    } 
+        throw new BadMethodCallException(__METHOD__);
+    }
     public function offsetExists($offset)
     {
-        throw new Chaplin_Exception_NotImplemented();
+        throw new BadMethodCallException(__METHOD__);
     }
     public function offsetUnset($offset)
     {
-        throw new Chaplin_Exception_NotImplemented();
-    } 
+        throw new BadMethodCallException(__METHOD__);
+    }
     public function offsetGet($offset)
     {
-        throw new Chaplin_Exception_NotImplemented();
+        throw new BadMethodCallException(__METHOD__);
     }
 
     /*  Limits the number of rows to be returned in the cursor
@@ -95,7 +97,7 @@ class Chaplin_Iterator_Api_ModelArray implements Chaplin_Iterator_Interface
      **/
     public function limit($intNoRows)
     {
-        throw new Chaplin_Exception_NotImplemented();
+        throw new BadMethodCallException(__METHOD__);
     }
     /**
      *  Skips the first  $intNoRows
@@ -105,23 +107,23 @@ class Chaplin_Iterator_Api_ModelArray implements Chaplin_Iterator_Interface
      **/
     public function skip($intNoRows)
     {
-        throw new Chaplin_Exception_NotImplemented();
+        throw new BadMethodCallException(__METHOD__);
     }
     /**
-     *  Sorts the cursor 
+     *  Sorts the cursor
      *
      *  @param:  $arrColumns     Associative array of Key => value (1 = ASC, -1 = DESC)
      *  @return: $this (this is a fluent interface)
      **/
     public function sort(Array $arrColumns = array())
     {
-        throw new Chaplin_Exception_NotImplemented();
+        throw new BadMethodCallException(__METHOD__);
     }
 
     //Implements SeekableIterator
     public function seek($strPosition)
     {
-        throw new Chaplin_Exception_NotImplemented();
+        throw new BadMethodCallException(__METHOD__);
     }
 
     public function toArray()

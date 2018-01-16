@@ -53,6 +53,8 @@ class Chaplin_Model_Video_Vimeo
         ob_flush();
         flush();
 
+        // phpstan
+        $ret = null;
         $strOut = Chaplin_Service::getInstance()
             ->getVimeo()
             ->downloadVideo($this->_getVimeoId(), getenv("UPLOADS_PATH"), $ret);

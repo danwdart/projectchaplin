@@ -66,8 +66,7 @@ abstract class Chaplin_Model_Message
         $intPriority = self::PRIORITY_NORMAL
     )
     {
-
-        $modelMessage = new self();
+        $modelMessage = new static();
         $modelMessage->_setField(self::FIELD_MESSAGEID, md5(uniqid()));
         $modelMessage->_setField(
             self::FIELD_RECIPIENT,

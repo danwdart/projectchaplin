@@ -22,7 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_User_Credential extends Chaplin_Model_Field_Collection
+class Chaplin_Model_User_Credential extends Chaplin_Model_Field_Hash
 {
     const FIELD_ServiceName = 'ServiceName';
     const FIELD_ServiceURL  = 'ServiceURL';

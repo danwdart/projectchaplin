@@ -64,4 +64,15 @@ class Chaplin_Gateway implements SingletonInterface
         $strGatewayType = substr($strMethod, 3);
         return $this->getGateway($strGatewayType);
     }
+
+    public function __callStatic(string $strMethod, Array $arrParams)
+    {
+        return call_user_func_array(
+            [
+                self::getInstance(),
+                $strMethod
+            ],
+            $arrParams
+        );
+    }
 }
