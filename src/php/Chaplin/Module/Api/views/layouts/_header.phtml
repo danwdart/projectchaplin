@@ -36,7 +36,7 @@ $bNoUploads = ("true" === getenv("NO_UPLOADS"));
 	</div></a>
 	<div class="right">
         <?php if (!$bNoUploads): ?>
-		<a href="/video/upload" class="upload button"><i class="fa fa-upload"></i> Upload</a>
+		<a href="/video/upload" class="upload button"><i class="fa fa-upload"></i> <span class="hidden-xs">Upload</span></a>
         <?php endif; ?>
 		<!--<a href="/broadcast" class="broadcast button"><i class="fa fa-video-camera"></i> Broadcast</a>-->
 
@@ -53,7 +53,7 @@ $bNoUploads = ("true" === getenv("NO_UPLOADS"));
 					</span>
 				<?php endif; ?>
 				<span class="caret"></span></a>
-			<ul class="dropdown-menu pull-right" role="menu">
+    			<ul class="dropdown-menu pull-right" role="menu">
 
 				<?php if($bIsLoggedIn): ?>
 					<li>
@@ -87,13 +87,12 @@ $bNoUploads = ("true" === getenv("NO_UPLOADS"));
 
 		</span>
 	</div>
-	<form class="search" action="/search" method="get">
+	<form class="hidden-xs search" action="/search" method="get">
 		<input type="search" id="search" required placeholder="Search for videos..."
 		<?php if (isset($this->strSearchTerm)) : echo 'value="'.$this->strSearchTerm.'"'; endif; ?> name="search"/>
-		<button type="submit">
-
-		</button>
+		<button type="submit"></button>
 	</form>
+    <form class="visible-xs search">S</forn>
 </div>
 
 

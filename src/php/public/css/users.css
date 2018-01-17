@@ -1,4 +1,3 @@
-<?php
 /**
  * This file is part of Project Chaplin.
  *
@@ -16,18 +15,21 @@
  * along with Project Chaplin. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package    Project Chaplin
- * @author     Dan Dart
- * @copyright  2012-2013 Project Chaplin
+ * @author     Nabil Freeman
+ * @copyright  2012-2018 Project Chaplin
  * @license    http://www.gnu.org/licenses/agpl-3.0.html GNU AGPL 3.0
  * @version    git
  * @link       https://github.com/danwdart/projectchaplin
 **/
-?>
-<p>
-Chaplin is copyright &copy; Project Chaplin. All videos are copyright &copy; their respective authors. | 
-<a href="https://github.com/danwdart/projectchaplin" target="_blank">Source</a> |
-<a href="/COPYING" target="_blank">Licence</a> |
-<a href="/LEGAL" target="_blank">Legal</a> |
-<a href="https://github.com/danwdart/projectchaplin/issues?state=open" target="_blank">Issues</a> |
-<a href="mailto:chaplin@kathiedart.co.uk" target="_blank">Contact</a>
-</p>
+
+#users {
+    margin: 0;
+}
+#users th {
+    border: 2px outset;
+    width: 150px;
+}
+#users td {
+    border: 1px solid black;
+    padding: 4px;
+}
