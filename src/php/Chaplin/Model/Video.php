@@ -184,12 +184,19 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
     public function getDescription()
     {
-        return str_replace(
-            "\n", "<br/>",
-            (new Linkify())->process(
-                $this->_getField(self::FIELD_DESCRIPTION, null)
-            )
+        $strDescription = $this->_getField(self::FIELD_DESCRIPTION, null);
+
+        $linkify = new Linkify(
+            [
+                "attr" => [
+                    "target" => "_blank"
+                ]
+            ]
         );
+
+        $strLinkified = $linkify->process($strDescription);
+
+        return nl2br($strLinkified);
     }
 
     public function setDescription($strDescription)

@@ -197,6 +197,7 @@ class Chaplin_Service_Vimeo_API
             $modelVideo,
             $strVideoId
         );
+        
         Chaplin_Gateway::getInstance()->getVideo_Vimeo()->save($modelYoutube);
 
         return $modelVideo;
