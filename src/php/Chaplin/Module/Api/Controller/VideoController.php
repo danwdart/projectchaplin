@@ -39,6 +39,7 @@ use Chaplin\Module\Api\Form\Video\{
 };
 use Chaplin_Service as Service;
 use Exception;
+use Misd\Linkify\Linkify;
 
 class VideoController extends ApiController
 {
@@ -185,8 +186,23 @@ class VideoController extends ApiController
                 ->getDownloadURL($strVideoId);
             $this->view->isLocal = true;
         }
+
+        $linkify = new Linkify(
+            [
+                "attr" => [
+                    "target" => "_blank"
+                ]
+            ]
+        );
+
         $this->view->strScheme = getenv("SCHEME");
-        $this->view->strTitle = $this->view->entryVideo->getSnippet()->title;
+        $this->view->strTitle = $entryVideo->getSnippet()->title;
+
+        $strDescription = $entryVideo->getSnippet()->description;
+
+        $strLinkified = $linkify->process($strDescription);
+
+        $this->view->description = nl2br($strLinkified);
     }
 
     public function importyoutubeAction()
@@ -214,7 +230,7 @@ class VideoController extends ApiController
             return;
         }
 
-        // Get the YT information
+        // Get the Vimeo information
         try {
             $vimeoService = Service::getInstance()->getVimeo();
             $entryVideo = $vimeoService->getVideoById($strVideoId);
@@ -230,7 +246,21 @@ class VideoController extends ApiController
             $this->view->isLocal = true;
         }
         $this->view->strScheme = getenv("SCHEME");
-        $this->view->strTitle = $this->view->entryVideo['name'];
+        $this->view->strTitle = $entryVideo['name'];
+
+        $linkify = new Linkify(
+            [
+                "attr" => [
+                    "target" => "_blank"
+                ]
+            ]
+        );
+
+        $strDescription = $entryVideo['description'];
+
+        $strLinkified = $linkify->process($strDescription);
+
+        $this->view->description = nl2br($strLinkified);
     }
 
     public function importvimeoAction()
