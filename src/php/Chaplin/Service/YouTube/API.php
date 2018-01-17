@@ -109,6 +109,10 @@ class Chaplin_Service_YouTube_API
 
     public function downloadVideo($strURL, $strPathToSave, &$ret)
     {
+        if ("true" === getenv("NO_UPLOADS")) {
+            return;
+        }
+
         $strCommandLine = self::LOCATION.
             " -4 --format=webm -o ".
             escapeshellarg($strPathToSave."/%(id)s.%(ext)s").
@@ -122,6 +126,10 @@ class Chaplin_Service_YouTube_API
 
     public function downloadThumbnail($strVideoId, $strPathToSave)
     {
+        if ("true" === getenv("NO_UPLOADS")) {
+            return;
+        }
+
         $entryVideo = $this->getVideoById($strVideoId);
 
         $strFilename = $strPathToSave.'/'.$entryVideo->id.'.webm.png';
@@ -136,6 +144,10 @@ class Chaplin_Service_YouTube_API
 
     public function importVideo(Chaplin_Model_User $modelUser, $strURL)
     {
+        if ("true" === getenv("NO_UPLOADS")) {
+            return;
+        }
+
         $strVideoId = $strURL;
 
         $entryVideo = $this->getVideoById($strVideoId);

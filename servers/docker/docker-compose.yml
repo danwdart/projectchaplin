@@ -41,6 +41,7 @@ services:
             - TWITTER_CONSUMER_KEY=${TWITTER_CONSUMER_KEY}
             - TWITTER_CONSUMER_SECRET=${TWITTER_CONSUMER_SECRET}
             - SCHEME=${SCHEME}
+            - NO_UPLOADS=${NO_UPLOADS}
         volumes:
             - uploads:/var/www/public/uploads
         depends_on:
@@ -70,6 +71,7 @@ services:
             - SMTP_PORT=${SMTP_PORT}
             - SMTP_USER=${SMTP_USER}
             - SMTP_PASSWORD=${SMTP_PASSWORD}
+            - NO_UPLOADS=${NO_UPLOADS}
         volumes:
             - uploads:/var/www/public/uploads
         depends_on:
@@ -100,6 +102,7 @@ services:
             - SMTP_USER=${SMTP_USER}
             - SMTP_PASSWORD=${SMTP_PASSWORD}
             - YOUTUBE_API_TOKEN=${YOUTUBE_API_TOKEN}
+            - NO_UPLOADS=${NO_UPLOADS}
         volumes:
             - uploads:/var/www/public/uploads
         depends_on:
@@ -132,6 +135,7 @@ services:
             - VIMEO_CLIENT_SECRET=${VIMEO_CLIENT_SECRET}
             - VIMEO_CLIENT_ID=${VIMEO_CLIENT_ID}
             - VIMEO_ACCESS_TOKEN=${VIMEO_ACCESS_TOKEN}
+            - NO_UPLOADS=${NO_UPLOADS}
         volumes:
             - uploads:/var/www/public/uploads
         depends_on:

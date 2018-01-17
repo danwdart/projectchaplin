@@ -32,6 +32,10 @@ class Chaplin_Service_Encoder_API
 
     public function convertFile($strFile, $strOut, $ret)
     {
+        if ("true" === getenv("NO_UPLOADS")) {
+            return;
+        }
+
         //TODO: stream status
         $strCommand = sprintf(
             self::CMD_CONVERT_FILE,
@@ -46,6 +50,10 @@ class Chaplin_Service_Encoder_API
 
     public function getThumbnail($strFile, $strOut, $ret)
     {
+        if ("true" === getenv("NO_UPLOADS")) {
+            return;
+        }
+
         $strCommand = sprintf(
             self::CMD_GET_THUMBNAIL,
             $strFile,
