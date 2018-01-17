@@ -25,33 +25,46 @@
 namespace Chaplin\Module\Cli\Controller;
 
 use Chaplin_Gateway as Gateway;
+use Chaplin_Model_User as ModelUser;
+use Chaplin_Model_User_Helper_UserType as UserType;
+use Zend_Db_Statement_Exception as StatementException;
 use Zend_Controller_Action as Controller;
 
-class CliController extends Controller
+class InitController extends Controller
 {
     public function preDispatch()
     {
         $this->_helper->viewRenderer->setNoRender(true);
     }
 
-    public function convertAction()
+    public function adminuserAction()
     {
-        Gateway::getInstance()
-            ->getVideo_Convert()
-            ->convert();
-    }
+        $strUsername = getenv("ADMIN_USERNAME");
+        $strPassword = getenv("ADMIN_PASSWORD");
+        $strFullName = getenv("ADMIN_FULL_NAME");
+        $strEmail = getenv("ADMIN_EMAIL");
 
-    public function youtubeAction()
-    {
-        Gateway::getInstance()
-            ->getVideo_Youtube()
-            ->youtube();
-    }
+        echo "Creating admin user with username = $strUsername, ".
+            "and password = $strPassword, ".
+            "with full name = $strFullName ".
+            "and email = $strEmail\n";
 
-    public function vimeoAction()
-    {
-        Gateway::getInstance()
-            ->getVideo_Vimeo()
-            ->vimeo();
+        $modelUser = ModelUser::create($strUsername, $strPassword);
+
+        $modelUser->setNick($strFullName);
+        $modelUser->setEmail($strEmail);
+        $modelUser->setUserType(new UserType(UserType::ID_GOD));
+
+        try {
+            Gateway::getUser()->save($modelUser);
+            echo "Success\n";
+        } catch (StatementException $e) {
+            // Catch duplicate key only
+            // hack: mysql
+            if (23000 !== $e->getCode()) {
+                throw $e;
+            }
+            echo "User already exists.";
+        }
     }
 }

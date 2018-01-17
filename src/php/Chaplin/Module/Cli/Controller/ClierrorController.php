@@ -48,7 +48,7 @@ class ClierrorController extends Controller
             flush();
             break;
         default:
-            echo 'something broke horribly'.PHP_EOL;
+            echo 'Exception caught'.PHP_EOL;
             echo get_class($errors->exception).PHP_EOL;
             echo $errors->exception->getMessage().PHP_EOL;
             echo $errors->exception->getTraceAsString().PHP_EOL;

@@ -48,6 +48,7 @@ Edits on the source repository will be propagated to the docker environment, and
 - Install the PHP in `src/php` by using `composer install`.
 - Install Nginx to serve PHP in `src/php/public`.
 - Run listeners in `src/php/cli/cli.php` like: `php cli.php cli youtube`, `php cli.php cli convert` and `php cli.php cli vimeo`.
+- Run one-time setup script in the same way like: `php cli.php init adminuser`.
 - Nginx configs are in `servers/nginx` and copy `servers/php-fpm/uploads.ini` to php-fpm's `conf.d`.
 - SQL schema is in `db/`.
 - Add appropriate hosts to `/etc/hosts` or use DNS.

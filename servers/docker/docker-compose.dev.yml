@@ -30,6 +30,12 @@ services:
             dockerfile: servers/docker/php/cli/vimeo/Dockerfile
         volumes:
             - ../../src/php:/var/www
+    init:
+        build:
+            context: ../..
+            dockerfile: servers/docker/php/init/Dockerfile
+        volumes:
+            - ../../src/php:/var/www
     nginx:
         build:
             context: ../..

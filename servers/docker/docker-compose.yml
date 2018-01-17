@@ -139,6 +139,36 @@ services:
             - mysql
             - rabbitmq
             - youtube_dl_api
+    init:
+        image: projectchaplin/init
+        environment:
+            - APPLICATION_ENV=${APPLICATION_ENV}
+            - SQL_ADAPTER=${SQL_ADAPTER}
+            - SQL_PASSWORD=${SQL_PASSWORD}
+            - SQL_USER=${SQL_USER}
+            - SQL_DATABASE=${SQL_DATABASE}
+            - SQL_HOST=${SQL_HOST}
+            - SQL_PORT=${SQL_PORT}
+            - AMQP_HOST=${AMQP_HOST}
+            - AMQP_PORT=${AMQP_PORT}
+            - AMQP_USER=${AMQP_USER}
+            - AMQP_PASSWORD=${AMQP_PASSWORD}
+            - AMQP_VHOST=${AMQP_VHOST}
+            - SMTP_HOST=${SMTP_HOST}
+            - SMTP_USE_TLS=${SMTP_USE_TLS}
+            - SMTP_PORT=${SMTP_PORT}
+            - SMTP_USER=${SMTP_USER}
+            - SMTP_PASSWORD=${SMTP_PASSWORD}
+            - ADMIN_USERNAME=${ADMIN_USERNAME}
+            - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+            - ADMIN_FULL_NAME=${ADMIN_FULL_NAME}
+            - ADMIN_EMAIL=${ADMIN_EMAIL}
+        volumes:
+            - uploads:/var/www/public/uploads
+        depends_on:
+            - redis
+            - mysql
+            - rabbitmq
     youtube_dl_api:
         image: robhor/youtube-dl-api-server
         volumes:
