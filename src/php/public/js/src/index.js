@@ -36,3 +36,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.css';
 import '../../css/chaplin.css';
 import '../../css/broadcast.css';
+import '../../css/filters.css';
+import '../../css/header.css';
+import '../../css/media.css';
+import '../../css/users.css';
+import '../../css/widgetbox.css';
