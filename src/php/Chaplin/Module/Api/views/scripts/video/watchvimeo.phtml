@@ -48,7 +48,9 @@
 	<br/>
 	<span class="text-sm"><?php echo $this->description; ?></span>
 	<br/>
+    <?php if (!$this->nouploads) : ?>
 	<a class="btn btn-success" href="/video/importvimeo/id/<?php echo substr($this->entryVideo['uri'], 8);?>"><i class="fa fa-download"></i> Import</a>
+    <?php endif; ?>
 	<?php if ($this->isLocal) : ?>
 	<a class="btn btn-primary" href="<?php echo $this->videoURL;?>"><i class="fa fa-download"></i> Download</a>
 	<?php endif; ?>

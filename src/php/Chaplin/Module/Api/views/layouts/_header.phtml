@@ -27,6 +27,7 @@ if(Chaplin_Auth::getInstance()->hasIdentity()) :
 	$modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser();
 	$bIsLoggedIn = true;
 endif;
+$bNoUploads = ("true" === getenv("NO_UPLOADS"));
 ?>
 
 <div class="wrap">
@@ -34,7 +35,9 @@ endif;
 		Chaplin
 	</div></a>
 	<div class="right">
+        <?php if (!$bNoUploads): ?>
 		<a href="/video/upload" class="upload button"><i class="fa fa-upload"></i> Upload</a>
+        <?php endif; ?>
 		<!--<a href="/broadcast" class="broadcast button"><i class="fa fa-video-camera"></i> Broadcast</a>-->
 
 		<span class="dropdown">

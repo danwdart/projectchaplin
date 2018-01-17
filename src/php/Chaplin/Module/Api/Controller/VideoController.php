@@ -203,10 +203,17 @@ class VideoController extends ApiController
         $strLinkified = $linkify->process($strDescription);
 
         $this->view->description = nl2br($strLinkified);
+
+        $this->view->nouploads = "true" === getenv("NO_UPLOADS");
     }
 
     public function importyoutubeAction()
     {
+        if ("true" === getenv("NO_UPLOADS")) {
+            $this->_redirect('/');
+            return;
+        }
+
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
             $this->_redirect('/');
@@ -261,10 +268,17 @@ class VideoController extends ApiController
         $strLinkified = $linkify->process($strDescription);
 
         $this->view->description = nl2br($strLinkified);
+
+        $this->view->nouploads = ("true" === getenv("NO_UPLOADS"));
     }
 
     public function importvimeoAction()
     {
+        if ("true" === getenv("NO_UPLOADS")) {
+            $this->_redirect('/');
+            return;
+        }
+
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
             $this->_redirect('/');
@@ -385,6 +399,11 @@ class VideoController extends ApiController
 
     public function uploadAction()
     {
+        if ("true" === getenv("NO_UPLOADS")) {
+            $this->_redirect('/');
+            return;
+        }
+
         $form = new FormUpload();
 
         if(!$this->_request->isPost()) {
@@ -509,6 +528,11 @@ class VideoController extends ApiController
 
     public function editAction()
     {
+        if ("true" === getenv("NO_UPLOADS")) {
+            $this->_redirect('/');
+            return;
+        }
+
         $this->view->strTitle = 'Edit Video - Chaplin';
         $modelUser = Auth::getInstance()
             ->hasIdentity()?
@@ -550,6 +574,11 @@ class VideoController extends ApiController
 
     public function deleteAction()
     {
+        if ("true" === getenv("NO_UPLOADS")) {
+            $this->_redirect('/');
+            return;
+        }
+
         $modelUser = Auth::getInstance()
             ->hasIdentity()?
             Auth::getInstance()

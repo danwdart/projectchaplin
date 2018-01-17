@@ -134,6 +134,10 @@ class Chaplin_Service_Vimeo_API
 
     public function downloadVideo($strURL, $strPathToSave, &$ret)
     {
+        if ("true" === getenv("NO_UPLOADS")) {
+            return;
+        }
+
         $strCommandLine = self::LOCATION.
             " --recode-video webm -o ".
             escapeshellarg($strPathToSave."/%(id)s.%(ext)s").
@@ -147,6 +151,10 @@ class Chaplin_Service_Vimeo_API
 
     public function downloadThumbnail($strVideoId, $strPathToSave)
     {
+        if ("true" === getenv("NO_UPLOADS")) {
+            return;
+        }
+
         $entryVideo = $this->getVideoById($strVideoId);
 
         $strFilename = $strPathToSave.'/'.$strVideoId.'.webm.png';
@@ -161,6 +169,10 @@ class Chaplin_Service_Vimeo_API
 
     public function importVideo(Chaplin_Model_User $modelUser, $strURL)
     {
+        if ("true" === getenv("NO_UPLOADS")) {
+            return;
+        }
+
         $strVideoId = $strURL;
 
         $entryVideo = $this->getVideoById($strVideoId);
@@ -197,7 +209,7 @@ class Chaplin_Service_Vimeo_API
             $modelVideo,
             $strVideoId
         );
-        
+
         Chaplin_Gateway::getInstance()->getVideo_Vimeo()->save($modelYoutube);
 
         return $modelVideo;
