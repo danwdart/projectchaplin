@@ -33,7 +33,7 @@
 <div class="row text-center">
 <?php foreach($this->ittVideos->items as $videoEntry):?>
     <a href="/video/watchyoutube/id/<?php echo $videoEntry->id->videoId;?>" data-next-page-token="<?php echo $this->ittVideos->nextPageToken; ?>">
-        <div class="thumb col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="thumb col-lg-3 col-md-4 col-sm-6 col-xs-12">
             <img src="<?php echo htmlentities($videoEntry->getSnippet()->thumbnails->high->url);?>" alt="View Video"/>
             <p><?php echo $videoEntry->getSnippet()->title;?></p>
         </div>
