@@ -23,22 +23,20 @@
  * @link       https://github.com/danwdart/projectchaplin
 **/
 ?>
-<div class="content-header">
+<h1>
     <?php if (!isset($this->ittVideos['data'][0])): ?>
     Videos
     <?php else: ?>
     Videos for user <?php echo $this->ittVideos['data'][0]['user']['name'] ?>
     <?php endif; ?>
-</div>
-<div class="content-centre">
+</h1>
+<div class="row text-center">
 <?php foreach($this->ittVideos['data'] as $videoEntry):?>
-<a href="/video/watchvimeo/id/<?php echo substr($videoEntry['uri'], 8);?>">
-<div class="thumb-wrapper">
-<div class="thumb-img">
-    <img src="<?php echo htmlentities($videoEntry['pictures']['sizes'][3]['link']);?>" alt="View Video"/>
-</div>
-<p><?php echo $videoEntry['name'];?></p>
-</div>
-</a>
+    <a href="/video/watchvimeo/id/<?php echo substr($videoEntry['uri'], 8);?>">
+        <div class="thumb col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <img src="<?php echo htmlentities($videoEntry['pictures']['sizes'][3]['link']);?>" alt="View Video"/>
+            <p><?php echo $videoEntry['name'];?></p>
+        </div>
+    </a>
 <?php endforeach;?>
 </div>

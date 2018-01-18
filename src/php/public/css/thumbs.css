@@ -1,0 +1,19 @@
+.thumb {
+    margin-bottom: 20px;
+}
+
+.thumb:hover {
+    text-decoration: underline;
+}
+
+.thumb p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.thumb img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+}
