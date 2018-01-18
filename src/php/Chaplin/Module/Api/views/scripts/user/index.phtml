@@ -31,45 +31,13 @@ $bIsMe = $this->modelUser
 	<?php echo $strNick;?>'s profile
 </h3>
 
-<div class="widgetbox text-center col-lg-6 offset-lg-6 col-md-8 offset-md-2 col-sm-12 col-xs-12 profile">
-	<?php if ($this->bIsMe) : ?>
-		<div class="widgettitle">Write about yourself</div>
-	<?php else : ?>
-		<div class="widgettitle">Profile information</div>
-	<?php endif; ?>
+<div class="widgetbox text-center col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-12 col-xs-12">
 
-	<div class="widgetbody p-3" style="">
-		<?php if ($this->bIsMe):?>
-			<textarea>
-		<?php else : ?>
-			<p>
-		<?php endif; ?>
-Some information about <?php echo $strNick;?> here. <?php echo $strNick;?> is cool. <?php echo $strNick;?> makes the best sandwiches.
-		<?php if ($this->bIsMe):?>
-			</textarea>
-		<?php else : ?>
-			</p>
-		<?php endif; ?>
-	</div>
+<div class="p-3">
+    <?php echo $strNick;?> lives here.
+</div>
 
 <?php if ($this->bIsMe) : ?>
-
-	<div class="widgettitle">Custom CSS</div>
-	<div class="widgetbody p-3" style="">
-
-<pre contenteditable>#secret{
-	display:none !important;
-}
-
-#foo.bar{
-	&:after{
-		display:inline-block;
-		content:'baz';
-	}
-}</pre>
-
-	</div>
-
 	<div class="widgettitle text-center p-3">
 	    Update your details
 	</div>

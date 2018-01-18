@@ -25,16 +25,16 @@
 ?>
 <div class="clearfix"></div>
 <br/>
-<div class="widgetbox col-lg-6 offset-lg-6 col-md-8 offset-md-2 col-sm-12 col-xs-12 text-center">
-	<div class="widgettitle text-center p-3">
-	    Login to Project Chaplin
-	</div>
-	<div class="widgetbody text-center p-3">
+<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-12 col-xs-12 text-center">
+	<h1 class="text-center p-3">
+	    Login
+	</h1>
+	<div class="text-center p-3">
 		<?php if ($this->messages) :
 			foreach($this->messages as $strMessage):
 				echo '<span class="text-success">'.$strMessage.'</span>';
 			endforeach;
-		endif;
-		echo $this->form; ?>
+		endif; ?>
+        <?php echo $this->form; ?>
 	</div>
 </div>
