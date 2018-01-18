@@ -101,12 +101,12 @@
 	if ('1' === $this->video->getYourVote()) :
 	echo '<i class="fa fa-arrow-up"></i>';
 	else:?>
-	<a class="atotext btn btn-default" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up"><i class="fa fa-arrow-up"></i></a>
+	<a class="atotext btn btn-secondary" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up"><i class="fa fa-arrow-up"></i></a>
 	<?php endif; echo ' / ';
 	if ('0' === $this->video->getYourVote()) :
 	echo '<i class="fa fa-arrow-down"></i>';
 	else:?>
-	<a class="atotext btn btn-default" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down"><i class="fa fa-arrow-down"></i></a>
+	<a class="atotext btn btn-secondary" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down"><i class="fa fa-arrow-down"></i></a>
 	<?php endif;?>&nbsp;&nbsp;
 	<?php endif; ?>
 	<a class="btn btn-primary" href="/video/download/id/<?php echo $this->video->getVideoId();?>"><i class="fa fa-download"></i> Download</a>
