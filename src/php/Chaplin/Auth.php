@@ -22,18 +22,22 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Auth extends Zend_Auth
+namespace Chaplin;
+
+use Zend_Auth as ZendAuth;
+
+class Auth extends ZendAuth
 {
     public static function getInstance()
-    {    
+    {
         if (null === self::$_instance) {
             self::$_instance = new self();
-        }    
+        }
 
         return self::$_instance;
     }
 
-    public static function inject(Zend_Auth $auth)
+    public static function inject(ZendAuth $auth)
     {
         self::$_instance = $auth;
     }

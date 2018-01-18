@@ -24,8 +24,8 @@
 **/
 namespace Chaplin\Module\Api\Controller;
 
-use Chaplin_Auth as Auth;
-use Chaplin_Auth_Adapter_Database as AuthAdapterDB;
+use Chaplin\Auth;
+use Chaplin\Auth\Adapter\Database as AuthAdapterDB;
 use Chaplin_Dao_Exception_User_NotFound as ExceptionUserNotFound;
 use Chaplin_Gateway as Gateway;
 use Chaplin_Model_User as ModelUser;
@@ -151,7 +151,8 @@ class LoginController extends Controller
             $user->save();
 
             // AJAX: Success
-            return $this->_redirect($this->_redirect_url);
+            $this->_redirect($this->_redirect_url);
+            return;
         }
         catch (StatementException $e) {
             $form->username->addError('Could not create account - a user aleady exists with that name');

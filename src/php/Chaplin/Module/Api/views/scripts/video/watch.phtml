@@ -97,7 +97,7 @@
     <p><?php echo $this->partial("partials/diasporashare.phtml"); ?></p>
     <?php endif; ?>
 	<br/>
-	<?php if(Chaplin_Auth::getInstance()->hasIdentity()):
+	<?php if(\Chaplin\Auth::getInstance()->hasIdentity()):
 	if ('1' === $this->video->getYourVote()) :
 	echo '<i class="fa fa-arrow-up"></i>';
 	else:?>
@@ -117,7 +117,7 @@
 	    <a class="btn btn-info" href="/video/edit/id/<?php echo $this->video->getVideoId();?>"><i class="fa fa-edit"></i> Edit</a>
 	<?php endif;?>
 	<br/>
-	<?php if(Chaplin_Auth::getInstance()->hasIdentity()): echo $this->formComment; else:
+	<?php if(\Chaplin\Auth::getInstance()->hasIdentity()): echo $this->formComment; else:
 	echo 'Login above to comment.'; endif;  ?>
 	<br/>
 	<div id="comments" rel="/video/comments/id/<?php echo $this->video->getVideoId();?>">

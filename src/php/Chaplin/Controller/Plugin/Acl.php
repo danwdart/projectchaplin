@@ -22,6 +22,8 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+use Chaplin\Auth;
+
 class Chaplin_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
 {
     private $_acl;
@@ -57,7 +59,7 @@ class Chaplin_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         $strController = $request->getControllerName();
         $strAction = $request->getActionName();
 
-        $auth = Chaplin_Auth::getInstance();
+        $auth = Auth::getInstance();
         $resource = $strModule.'/'.$strController;
         $role = $auth->hasIdentity() ?
             $auth->getIdentity()->getUser()->getUserType()->getUserType():

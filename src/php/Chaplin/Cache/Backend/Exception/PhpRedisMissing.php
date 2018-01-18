@@ -22,7 +22,9 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Cache_Backend_Exception_PhpRedisMissing extends Exception
+namespace Chaplin\Cache\Backend\Exception;
+
+class PhpRedisMissing extends \Exception
 {
     const MESSAGE = 'PhpRedis was not included in the options array of the backend';
 

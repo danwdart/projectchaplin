@@ -22,6 +22,8 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+use Chaplin\Cache\Backend\PhpRedis as BackendRedis;
+use Chaplin\Cache\Http\Client as CacheHttpClient;
 use Chaplin\Interfaces\Singleton as SingletonInterface;
 use Chaplin\Traits\Singleton as SingletonTrait;
 
@@ -50,7 +52,7 @@ class Chaplin_Service implements SingletonInterface
                         Chaplin_Dao_PhpRedis_Abstract::DEFAULT_REGISTRY_KEY
                     )
                 ];
-                $backendType = new Chaplin_Cache_Backend_PhpRedis(
+                $backendType = new BackendRedis(
                     $backendOptions
                 );
             } else {
@@ -78,7 +80,7 @@ class Chaplin_Service implements SingletonInterface
     public function getHttpClient()
     {
         $objClient = new Chaplin_Http_Client();
-        $objCache  = new Chaplin_Cache_Http_Client(
+        $objCache  = new CacheHttpClient(
             $objClient, $this->_getCache()
         );
         return new Chaplin_Service_Http_Client($objCache);

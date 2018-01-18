@@ -22,11 +22,15 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Auth_Identity
+namespace Chaplin\Auth;
+
+use Chaplin_Model_User as ModelUser;
+
+class Identity
 {
     private $_modelUser;
 
-    public function __construct(Chaplin_Model_User $modelUser)
+    public function __construct(ModelUser $modelUser)
     {
         $this->_modelUser = $modelUser;
     }

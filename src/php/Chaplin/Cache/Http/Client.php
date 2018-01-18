@@ -22,19 +22,26 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Cache_Http_Client
-    extends Chaplin_Cache_Abstract 
-    implements Chaplin_Http_Interface
+
+namespace Chaplin\Cache\Http;
+
+use Chaplin\Cache\CacheAbstract;
+use Chaplin_Http_Interface as HttpInterface;
+use Chaplin_Log as Log;
+use Zend_Cache_Core as Cache;
+use Zend_Log as ZendLog;
+
+class Client extends CacheAbstract implements HttpInterface
 {
     private $_objHttpClient;
 
-    public function __construct(Chaplin_Http_Interface $objHttpClient, Zend_Cache_Core $cacheHttpClient = null)
+    public function __construct(HttpInterface $objHttpClient, Cache $cacheHttpClient = null)
     {
         $this->_objHttpClient = $objHttpClient;
         $this->setCache($cacheHttpClient);
     }
-    
-    public function getPageBody($strURL, $intLogPriority = Zend_Log::ERR)
+
+    public function getPageBody($strURL, $intLogPriority = ZendLog::ERR)
     {
         $cacheKey   = $this->_getCacheKey(__METHOD__, $strURL);
         if (false === ($response = $this->_cacheLoadKey($cacheKey))) {
@@ -44,7 +51,7 @@ class Chaplin_Cache_Http_Client
         return $response;
     }
 
-    public function getObject($strURL, $intLogPriority = Zend_Log::ERR)
+    public function getObject($strURL, $intLogPriority = ZendLog::ERR)
     {
         $cacheKey   = $this->_getCacheKey(__METHOD__, $strURL);
         if (false === ($response = $this->_cacheLoadKey($cacheKey))) {
@@ -53,7 +60,7 @@ class Chaplin_Cache_Http_Client
         }
         return $response;
     }
-    
+
     public function scrapeXPath($strURL, $strXPath)
     {
         $cacheKey   = $this->_getCacheKey(__METHOD__, $strURL . 'X' . $strXPath);
@@ -64,13 +71,13 @@ class Chaplin_Cache_Http_Client
         return $response;
     }
 
-    public function getHttpResponse($strURL, $intLogPriority = Zend_Log::ERR, $bCache = true)
+    public function getHttpResponse($strURL, $intLogPriority = ZendLog::ERR, $bCache = true)
     {
         if(!$bCache) {
             return $this->_objHttpClient->getHttpResponse($strURL, $intLogPriority);
         }
-        
-        Chaplin_Log::getInstance()->log('Cache: trying to load ('.$strURL.')', $intLogPriority);
+
+        Log::getInstance()->log('Cache: trying to load ('.$strURL.')', $intLogPriority);
         $cacheKey = $this->_getCacheKey(__METHOD__, $strURL);
         if (false === ($response = $this->_cacheLoadKey($cacheKey))) {
             $response = $this->_objHttpClient->getHttpResponse($strURL, $intLogPriority);
@@ -78,10 +85,10 @@ class Chaplin_Cache_Http_Client
                 $this->_cacheSaveKey($cacheKey, $response);
             }
         }
-        Chaplin_Log::getInstance()->log('Cache: retrieved ('.$response->getBody().')', $intLogPriority);
+        Log::getInstance()->log('Cache: retrieved ('.$response->getBody().')', $intLogPriority);
         return $response;
     }
- 
+
     public function parseRawXPath($strData, $strXPath)
     {
         return $this->_objHttpClient->parseRawXPath($strData, $strXPath);

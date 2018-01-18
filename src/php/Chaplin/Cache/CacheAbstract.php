@@ -22,11 +22,15 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-abstract class Chaplin_Cache_Abstract
+namespace Chaplin\Cache;
+
+use Zend_Cache_Core as ZendCache;
+
+abstract class CacheAbstract
 {
     private $_zendCache;
-    
-    public function setCache(Zend_Cache_Core $zendCache   = null)
+
+    public function setCache(ZendCache $zendCache = null)
     {
         $this->_zendCache    = $zendCache;
     }
