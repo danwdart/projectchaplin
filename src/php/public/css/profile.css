@@ -36,18 +36,6 @@
     background-repeat: no-repeat;
 }
 
-.profiletitle {
-    padding-top: 150px;
-    position: relative;
-    text-align: center;
-    margin-top: 50px;
-    padding-bottom: 10px;
-    font-family: 'Colfax', 'Helvetica', Arial, sans-serif;
-    font-weight: 400;
-    font-size: 32px;
-    border-bottom: 1px solid #dedede;
-}
-
 .profileinfo {
     text-align:left;
     height: 150px;

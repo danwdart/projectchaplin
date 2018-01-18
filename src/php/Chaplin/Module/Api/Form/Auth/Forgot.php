@@ -35,14 +35,38 @@ class Forgot extends Form
         $this->setMethod('post');
 
         $username = new Text('username');
-        $username->setAttrib('placeholder', 'Username');
-        $username->removeDecorator('Label');
+        $username->setLabel("Username");
+        $username->setAttrib("class", "form-control");
+        $username->setAttrib('placeholder', 'johnsmith');
         $username->setAttrib('required', 'true');
 
         $submit = new Submit('Login');
-
-        $submit->removeDecorator('DtDdWrapper');
+        $submit->setAttrib("class", "btn btn-primary");
 
         $this->addElements(array($username, $submit));
+
+        $this->setDecorators(
+            [
+                'FormElements',
+                'Form'
+            ]
+        );
+
+        $this->setElementDecorators(
+            [
+                'ViewHelper',
+                'Label',
+                ['HtmlTag', ['tag' => 'div', 'class' => 'form-group']]
+            ]
+        );
+
+        $this->setElementDecorators(
+            [
+                'ViewHelper'
+            ],
+            [
+                "Login"
+            ]
+        );
     }
 }

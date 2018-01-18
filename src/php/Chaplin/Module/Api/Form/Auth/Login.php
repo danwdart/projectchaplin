@@ -37,38 +37,46 @@ class Login extends Form
         $this->setMethod('post');
         $this->setAction('/login?redirect=' . $this->_redirect_url);
 
-        $face = new Html('icon');
-        $face->setValue('<div class="face"></div>');
-        $face->removeDecorator('Label');
-        $this->addElement($face);
-
         $username = new Text('username');
-        $username->setAttrib('placeholder', 'Username');
-        $username->removeDecorator('Label');
+        $username->setLabel("Username");
+        $username->setAttrib('placeholder', 'johnsmith');
         $username->setAttrib('required', 'true');
+        $username->setAttrib("class", "form-control");
 
         $password = new Password('password');
-        $password->setAttrib('placeholder', 'Password');
-        $password->removeDecorator('Label');
+        $password->setLabel("Password");
+        $password->setAttrib('placeholder', 'password1');
         $password->setAttrib('required', 'true');
+        $password->setAttrib("class", "form-control");
 
         $submit = new Submit('Login');
-
+        $submit->setAttrib("class", "btn btn-primary");
         $submit->removeDecorator('DtDdWrapper');
 
-        $this->addElements(array($username, $password));
+        $this->addElements([$username, $password, $submit]);
 
-        $tag = new Html('forgotPassword');
-        $tag->setValue('<a href="/login/forgot">I don\'t know my password</a>');
-        $tag->removeDecorator('Label');
-        $this->addElement($tag);
+        $this->setDecorators(
+            [
+                'FormElements',
+                'Form'
+            ]
+        );
 
-        $this->addElement($submit);
+        $this->setElementDecorators(
+            [
+                'ViewHelper',
+                'Label',
+                ['HtmlTag', ['tag' => 'div', 'class' => 'form-group']]
+            ]
+        );
 
-        $tag2 = new Html('register');
-        $tag2->setValue('<a href="/login/register">No account? Register here</a>');
-        $tag2->removeDecorator('Label');
-        $this->addElement($tag2);
-
+        $this->setElementDecorators(
+            [
+                'ViewHelper'
+            ],
+            [
+                "Login"
+            ]
+        );
     }
 }

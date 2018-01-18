@@ -23,6 +23,7 @@
  * @link       https://github.com/danwdart/projectchaplin
 **/
 ?>
+<br/>
 <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-12 col-xs-12 text-center">
 	<h1 class="text-center p-3">
 	    Login
@@ -33,6 +34,13 @@
 				echo '<span class="text-success">'.$strMessage.'</span>';
 			endforeach;
 		endif; ?>
+        <div class="face"></div>
         <?php echo $this->form; ?>
+        <p>
+            <a href="/login/forgot">I don't know my password</a>
+        </p>
+        <p>
+            <a href="/login/register">No account? Register here</a>
+        </p>
 	</div>
 </div>

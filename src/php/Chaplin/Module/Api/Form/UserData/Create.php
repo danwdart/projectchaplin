@@ -39,12 +39,14 @@ class Create extends Form
         $this->setAction('/login/register');
 
         $username = new Text('username');
-        $username->setAttrib('placeholder', 'Username');
-        $username->removeDecorator('Label');
+        $username->setLabel("Username");
+        $username->setAttrib("class", "form-control");
+        $username->setAttrib('placeholder', 'johnsmith');
 
         $password = new Password('password');
-        $password->setAttrib('placeholder', 'Password');
-        $password->removeDecorator('Label');
+        $password->setLabel("Password");
+        $password->setAttrib("class", "form-control");
+        $password->setAttrib('placeholder', 'abcdefg');
         $password->addValidators(
             array(
             new ValidateStringLength(
@@ -56,8 +58,9 @@ class Create extends Form
         );
 
         $password2 = new Password('password2');
-        $password2->setAttrib('placeholder', 'Password (again)');
-        $password2->removeDecorator('Label');
+        $password2->setLabel("Password (again)");
+        $password2->setAttrib("class", "form-control");
+        $password2->setAttrib('placeholder', 'abcdefg');
         $password2->addValidators(
             array(
             new ValidateStringLength(
@@ -74,17 +77,43 @@ class Create extends Form
         );
 
         $fullname = new Text('fullname');
-        $fullname->setAttrib('placeholder', 'Full name');
-        $fullname->removeDecorator('Label');
+
+        $fullname->setLabel("Full Name");
+        $fullname->setAttrib("class", "form-control");
+        $fullname->setAttrib('placeholder', 'John Smith');
 
         $email = new Text('email');
-        $email->setAttrib('placeholder', 'Email address');
-        $email->removeDecorator('Label');
+        $email->setAttrib("type", "email");
+        $email->setAttrib("class", "form-control");
+        $email->setAttrib('placeholder', 'john@smith.com');
 
         $register = new Submit('Register');
-        $register->removeDecorator('DtDdWrapper');
-        $register->removeDecorator('Label');
+        $register->setAttrib("class", "btn btn-primary");
 
         $this->addElements(array($username, $password, $password2, $fullname, $email, $register));
+
+        $this->setDecorators(
+            [
+                'FormElements',
+                'Form'
+            ]
+        );
+
+        $this->setElementDecorators(
+            [
+                'ViewHelper',
+                'Label',
+                ['HtmlTag', ['tag' => 'div', 'class' => 'form-group']]
+            ]
+        );
+
+        $this->setElementDecorators(
+            [
+                'ViewHelper'
+            ],
+            [
+                "Register"
+            ]
+        );
     }
 }
