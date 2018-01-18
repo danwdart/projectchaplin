@@ -39,7 +39,7 @@ class Forgot extends Form
         $username->removeDecorator('Label');
         $username->setAttrib('required', 'true');
 
-        $submit = new Login('Login');
+        $submit = new Submit('Login');
 
         $submit->removeDecorator('DtDdWrapper');
 
