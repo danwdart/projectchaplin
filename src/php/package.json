@@ -20,9 +20,10 @@
     "url": "https://github.com/danwdart/projectchaplin/issues"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.0.0-beta.3",
     "font-awesome": "^4.7.0",
     "jquery": "^3.1.1",
+    "popper.js": "^1.12.9",
     "socket.io-client": "^2.0.4"
   },
   "devDependencies": {
