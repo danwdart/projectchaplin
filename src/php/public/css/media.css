@@ -1,0 +1,50 @@
+@media all and (orientation:portrait) {
+}
+
+@media all and (orientation:landscape) {
+}
+
+
+@media (max-width: 1000px) {
+    header input {
+        width: 100px;
+    }
+    header .right strong {
+        display:none;
+    }
+    header .left a i, header .right a i, header .middle h2 i {
+        font-size: 16pt;
+        height:20px;
+    }
+    #video, video, #videoarea {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 430px) {
+    header input {
+        width: 50px;
+    }
+    .thumb-wrapper {
+        margin: 1px;
+        padding: 1px;
+    }
+
+    .content-centre {
+        width: 99%;
+    }
+}
+
+@media (max-width: 345px) {
+    header .left a, header .right a, header .middle h2 {
+        font-size: 0;
+        padding: 5px;
+    }
+    header .left a i, header .right a i, header .middle h2 i {
+        font-size: 10pt;
+        height: 0;
+    }
+    header input {
+        width: 40px;
+    }
+}

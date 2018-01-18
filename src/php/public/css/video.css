@@ -1,0 +1,20 @@
+#infoarea {
+    padding: 5px;
+    width: 720px;
+    margin: 0 auto;
+}
+
+#videoarea {
+    text-align: center;
+}
+
+#video {
+    width: 720px;
+    text-align: center;
+    border: 5px outset;
+}
+
+#video::-webkit-media-controls-panel {
+    -webkit-appearance: none;
+    outline: none;
+}
