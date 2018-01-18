@@ -25,29 +25,22 @@
 $strNick = $this->modelUser->getNick();
 $bIsMe = $this->modelUser
 ?>
+<div class="text-center col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-12 col-xs-12">
+    <div class="face"></div>
+    <h3>
+    	<?php echo $strNick;?>'s profile
+    </h3>
+    <div class="p-3">
+        <?php echo $strNick;?> lives here.
+    </div>
 
-<h3 class="profiletitle">
-	<div class="face"></div>
-	<?php echo $strNick;?>'s profile
-</h3>
-
-<div class="widgetbox text-center col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-12 col-xs-12">
-
-<div class="p-3">
-    <?php echo $strNick;?> lives here.
-</div>
-
-<?php if ($this->bIsMe) : ?>
-	<div class="widgettitle text-center p-3">
-	    Update your details
-	</div>
-	<div class="widgetbody text-center p-3">
-	    <?php echo $this->form; ?>
-	</div>
-</div>
-
-<?php else : ?>
+    <?php if ($this->bIsMe) : ?>
+    	<div class="widgettitle text-center p-3">
+    	    Update your details
+    	</div>
+    	<div class="widgetbody text-center p-3">
+    	    <?php echo $this->form; ?>
+    	</div>
+    <?php endif; ?>
 
 </div>
-
-<?php endif; ?>

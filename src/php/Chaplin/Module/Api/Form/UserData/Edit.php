@@ -34,33 +34,66 @@ class Edit extends Form
     public function init()
     {
         $this->setMethod('post');
+
         $username = new Text('username');
-        $username->setAttrib('placeholder', 'Username');
-        $username->removeDecorator('Label');
+        $username->setLabel("Username");
+        $username->setAttrib("class", "form-control");
+        $username->setAttrib('placeholder', 'johnsmith');
 
         $oldpassword = new Password('oldpassword');
-        $oldpassword->setAttrib('placeholder', 'Old password');
-        $oldpassword->removeDecorator('Label');
+        $oldpassword->setLabel("Old Password");
+        $oldpassword->setAttrib("class", "form-control");
+        $oldpassword->setAttrib('placeholder', 'abcdefg');
 
         $password = new Password('password');
-        $password->setAttrib('placeholder', 'New password');
-        $password->removeDecorator('Label');
+        $password->setLabel("New Password");
+        $password->setAttrib("class", "form-control");
+        $password->setAttrib('placeholder', 'abcdefgh');
 
         $password2 = new Password('password2');
-        $password2->setAttrib('placeholder', 'New password (again)');
-        $password2->removeDecorator('Label');
+        $password2->setLabel("New Password (again)");
+        $password2->setAttrib("class", "form-control");
+        $password2->setAttrib('placeholder', 'abcdefgh');
 
         $fullname = new Text('fullname');
-        $fullname->setAttrib('placeholder', 'Full name');
-        $fullname->removeDecorator('Label');
+        $fullname->setLabel("Full Name");
+        $fullname->setAttrib("class", "form-control");
+        $fullname->setAttrib('placeholder', 'John Smith');
 
         $email = new Text('email');
-        $email->setAttrib('placeholder', 'Email address');
-        $email->removeDecorator('Label');
+        $email->setAttrib("type", "email");
+        $email->setLabel("Email Address");
+        $email->setAttrib("class", "form-control");
+        $email->setAttrib('placeholder', 'john@smith.com');
 
         $register = new Submit('Update');
-        $register->removeDecorator('DtDdWrapper');
+        $register->setAttrib("class", "btn btn-primary");
+
 
         $this->addElements(array($username, $oldpassword, $password, $password2, $fullname, $email, $register));
+
+        $this->setDecorators(
+            [
+                'FormElements',
+                'Form'
+            ]
+        );
+
+        $this->setElementDecorators(
+            [
+                'ViewHelper',
+                'Label',
+                ['HtmlTag', ['tag' => 'div', 'class' => 'form-group']]
+            ]
+        );
+
+        $this->setElementDecorators(
+            [
+                'ViewHelper'
+            ],
+            [
+                "Update"
+            ]
+        );
     }
 }

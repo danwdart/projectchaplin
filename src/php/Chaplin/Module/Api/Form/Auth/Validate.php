@@ -50,9 +50,11 @@ class Validate extends Form
         $token->setValue($this->_strToken);
 
         $password = new Password('password');
+        $password->setAttrib("class", "form-control");
         $password->setLabel('New Password:');
 
         $password2 = new Password('password2');
+        $password2->setAttrib("class", "form-control");
         $password2->addValidators(
             array(
             new ValidateStringLength(
@@ -67,11 +69,35 @@ class Validate extends Form
             )
             )
         );
-
         $password2->setLabel('Confirm Password:');
 
         $submit = new Submit('Reset');
+        $submit->setAttrib("class", "btn btn-primary");
 
         $this->addElements(array($token, $password, $password2, $submit));
+
+        $this->setDecorators(
+            [
+                'FormElements',
+                'Form'
+            ]
+        );
+
+        $this->setElementDecorators(
+            [
+                'ViewHelper',
+                'Label',
+                ['HtmlTag', ['tag' => 'div', 'class' => 'form-group']]
+            ]
+        );
+
+        $this->setElementDecorators(
+            [
+                'ViewHelper'
+            ],
+            [
+                "Reset"
+            ]
+        );
     }
 }
