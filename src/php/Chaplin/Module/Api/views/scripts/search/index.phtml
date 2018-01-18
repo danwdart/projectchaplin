@@ -29,7 +29,7 @@
 <div class="row text-center">
 <?php foreach($this->ittVideos as $modelVideo):?>
     <a href="/video/watch/id/<?php echo $modelVideo->getVideoId();?>">
-        <div class="thumb col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="thumb col-lg-3 col-md-4 col-sm-6 col-xs-12">
             <img src="<?php echo htmlentities($modelVideo->getThumbnail());?>" alt="View Video"/>
             <p><?php echo $modelVideo->getShortTitle();?></p>
         </div>
@@ -41,7 +41,7 @@
     <h2>Found YouTube user <?php echo $this->ytUser->getSnippet()->title; ?></h2>
     <div class="row text-center">
         <a href="/user/youtube/id/<?php echo $this->ytUser->id; ?>">
-            <div class="thumb col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="thumb col-lg-3 col-md-4 col-sm-6 col-xs-12">
                 <img src="<?php echo $this->ytUser->getSnippet()->thumbnails->high->url;?>" alt="View User"/>
                 <p><?php echo $this->ytUser->getSnippet()->title;?></p>
             </div>
@@ -53,7 +53,7 @@
     <h2>Found Vimeo user <?php echo $this->vimeoUser['name']; ?></h2>
     <div class="row text-center">
         <a href="/user/vimeo/id/<?php echo substr($this->vimeoUser['uri'], 8); ?>">
-            <div class="thumb col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="thumb col-lg-3 col-md-4 col-sm-6 col-xs-12">
                 <img src="" alt="View User"/>
                 <p><?php echo $this->vimeoUser['name'];?></p>
             </div>
@@ -65,7 +65,7 @@
 <div class="row text-center" id="youtubevids">
 <?php foreach($this->videoFeed->items as $ytVideo): ?>
     <a href="/video/watchyoutube/id/<?php echo $ytVideo->getId()->videoId; ?>">
-        <div class="thumb col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="thumb col-lg-3 col-md-4 col-sm-6 col-xs-12">
             <img src="<?php echo htmlentities($ytVideo->getSnippet()->getThumbnails()->high->url);?>" alt="View Video"/>
             <p><?php echo $ytVideo->getSnippet()->getTitle();?></p>
         </div>
@@ -78,7 +78,7 @@
 <?php if (isset($this->vimeoFeed['data'])):
 foreach($this->vimeoFeed['data'] as $arrVideo): ?>
     <a href="/video/watchvimeo/id/<?php echo substr($arrVideo['uri'], 8); ?>">
-        <div class="thumb col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="thumb col-lg-3 col-md-4 col-sm-6 col-xs-12">
             <img src="<?php echo htmlentities($arrVideo['pictures']['sizes'][3]['link']);?>" alt="View Video"/>
             <p><?php echo $arrVideo['name'];?></p>
         </div>
