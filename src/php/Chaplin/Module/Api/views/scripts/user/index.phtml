@@ -31,14 +31,14 @@ $bIsMe = $this->modelUser
 	<?php echo $strNick;?>'s profile
 </h3>
 
-<div class="widgetbox centre medium profile">
+<div class="widgetbox text-center col-lg-6 col-lg-offset-6 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 profile">
 	<?php if ($this->bIsMe) : ?>
 		<div class="widgettitle">Write about yourself</div>
 	<?php else : ?>
 		<div class="widgettitle">Profile information</div>
 	<?php endif; ?>
 
-	<div class="widgetbody space" style="">
+	<div class="widgetbody p-3" style="">
 		<?php if ($this->bIsMe):?>
 			<textarea>
 		<?php else : ?>
@@ -55,7 +55,7 @@ Some information about <?php echo $strNick;?> here. <?php echo $strNick;?> is co
 <?php if ($this->bIsMe) : ?>
 
 	<div class="widgettitle">Custom CSS</div>
-	<div class="widgetbody space" style="">
+	<div class="widgetbody p-3" style="">
 
 <pre contenteditable>#secret{
 	display:none !important;
@@ -70,10 +70,10 @@ Some information about <?php echo $strNick;?> here. <?php echo $strNick;?> is co
 
 	</div>
 
-	<div class="widgettitle centre space">
+	<div class="widgettitle text-center p-3">
 	    Update your details
 	</div>
-	<div class="widgetbody centre space">
+	<div class="widgetbody text-center p-3">
 	    <?php echo $this->form; ?>
 	</div>
 </div>

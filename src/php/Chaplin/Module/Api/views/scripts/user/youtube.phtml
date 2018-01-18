@@ -23,22 +23,20 @@
  * @link       https://github.com/danwdart/projectchaplin
 **/
 ?>
-<div class="content-header">
+<h1>
     <?php if (isset($this->ittVideos->items[0])): ?>
     Videos for user <?php echo $this->ittVideos->items[0]->getSnippet()->channelTitle; ?>
     <?php else: ?>
     Videos
     <?php endif; ?>
-</div>
-<div class="content-centre">
+</h1>
+<div class="row text-center">
 <?php foreach($this->ittVideos->items as $videoEntry):?>
-<a href="/video/watchyoutube/id/<?php echo $videoEntry->id->videoId;?>" data-next-page-token="<?php echo $this->ittVideos->nextPageToken; ?>">
-<div class="thumb-wrapper">
-<div class="thumb-img">
-    <img src="<?php echo htmlentities($videoEntry->getSnippet()->thumbnails->high->url);?>" alt="View Video"/>
-</div>
-<p><?php echo $videoEntry->getSnippet()->title;?></p>
-</div>
-</a>
+    <a href="/video/watchyoutube/id/<?php echo $videoEntry->id->videoId;?>" data-next-page-token="<?php echo $this->ittVideos->nextPageToken; ?>">
+        <div class="thumb col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <img src="<?php echo htmlentities($videoEntry->getSnippet()->thumbnails->high->url);?>" alt="View Video"/>
+            <p><?php echo $videoEntry->getSnippet()->title;?></p>
+        </div>
+    </a>
 <?php endforeach;?>
 </div>

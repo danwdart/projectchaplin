@@ -46,7 +46,7 @@
 	?> by <a href="/user/youtube/id/<?php echo $strChannelId; ?>"><?php echo $strName; ?></a>
 	</h3>
 	<br/>
-	<span class="text-sm"><?php echo $this->description; ?></span>
+	<small><?php echo $this->description; ?></small>
 	<br/>
     <?php if (!$this->nouploads) : ?>
 	<a class="btn btn-success" href="/video/importyoutube/id/<?php echo $this->entryVideo->id;?>"><i class="fa fa-download"></i> Import</a>
