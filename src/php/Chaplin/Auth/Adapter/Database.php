@@ -22,7 +22,15 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Auth_Adapter_Database implements Zend_Auth_Adapter_Interface
+namespace Chaplin\Auth\Adapter;
+
+use Chaplin\Auth\Identity;
+use Chaplin_Dao_Exception_User_NotFound as ExceptionUserNotFound;
+use Chaplin_Gateway as Gateway;
+use Zend_Auth_Adapter_Interface as AdapterInterface;
+use Zend_Auth_Result as Result;
+
+class Database implements AdapterInterface
 {
     private $_strUsername;
     private $_strPassword;
@@ -36,19 +44,19 @@ class Chaplin_Auth_Adapter_Database implements Zend_Auth_Adapter_Interface
     public function authenticate()
     {
         try {
-            $modelUser = Chaplin_Gateway::getInstance()
+            $modelUser = Gateway::getInstance()
                 ->getUser()
                 ->getByUsernameAndPassword(
                     $this->_strUsername,
                     $this->_strPassword
                 );
 
-            $identity = new Chaplin_Auth_Identity($modelUser);
+            $identity = new Identity($modelUser);
 
-            return new Zend_Auth_Result(Zend_Auth_Result::SUCCESS, $identity);
-        } catch(Chaplin_Dao_Exception_User_NotFound $e) {
-            return new Zend_Auth_Result(
-                Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID,
+            return new Result(Result::SUCCESS, $identity);
+        } catch(ExceptionUserNotFound $e) {
+            return new Result(
+                Result::FAILURE_CREDENTIAL_INVALID,
                 null,
                 array($e->getMessage())
             );

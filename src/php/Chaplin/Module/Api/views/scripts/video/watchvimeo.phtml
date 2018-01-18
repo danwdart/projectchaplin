@@ -55,6 +55,6 @@
 	<a class="btn btn-primary" href="<?php echo $this->videoURL;?>"><i class="fa fa-download"></i> Download</a>
 	<?php endif; ?>
 	<br/>
-	<?php if(Chaplin_Auth::getInstance()->hasIdentity()): echo $this->formComment; else:
+	<?php if(\Chaplin\Auth::getInstance()->hasIdentity()): echo $this->formComment; else:
 	echo 'Login above to comment.'; endif;  ?>
 </div>

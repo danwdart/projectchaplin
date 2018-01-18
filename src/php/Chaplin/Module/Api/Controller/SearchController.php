@@ -39,7 +39,8 @@ class SearchController extends ApiController
         $this->view->strTitle = $strSearchTerm.': Search - Chaplin';
 
         if(is_null($strSearchTerm)) {
-            return $this->_redirect('/');
+            $this->_redirect('/');
+            return;
         }
 
         try {
@@ -101,7 +102,8 @@ class SearchController extends ApiController
         $strSearchTerm = $this->_request->getQuery('search');
         $strSearchTerm = htmlentities($strSearchTerm);
         if(is_null($strSearchTerm)) {
-            return $this->_redirect('/');
+            $this->_redirect('/');
+            return;
         }
         $this->view->assign('strSearchTerm', $strSearchTerm);
 

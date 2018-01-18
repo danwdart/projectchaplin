@@ -22,6 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+use Chaplin\Auth;
 use Misd\Linkify\Linkify;
 
 class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
@@ -277,14 +278,14 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
     public function isMine()
     {
-        if (!Chaplin_Auth::getInstance()->hasIdentity()) {
+        if (!Auth::getInstance()->hasIdentity()) {
             return false;
         }
-        if (Chaplin_Auth::getInstance()->getIdentity()->getUser()->isGod()) {
+        if (Auth::getInstance()->getIdentity()->getUser()->isGod()) {
             // God users own everything, mwuhahaha
             return true;
         }
-        return Chaplin_Auth::getInstance()
+        return Auth::getInstance()
             ->getIdentity()
             ->getUser()
             ->getUsername() ==

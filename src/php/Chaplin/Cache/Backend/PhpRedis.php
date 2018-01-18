@@ -11,12 +11,20 @@
 
 /**
  * Redis adapter for Zend_Cache
- * 
+ *
  * @author  Soin Stoiana
  * @author  Colin Mollenhour
  * @version 0.0.1
 **/
-class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_Cache_Backend_ExtendedInterface
+namespace Chaplin\Cache\Backend;
+
+use Redis;
+use Zend_Cache as Cache;
+use Zend_Cache_Backend as Backend;
+use Zend_Cache_Backend_ExtendedInterface as BackendInterface;
+use Zend_Config as Config;
+
+class PhpRedis extends Backend implements BackendInterface
 {
 
     const SET_IDS  = 'zc:ids';
@@ -46,34 +54,33 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
      * Contruct Zend_Cache Redis backend
      *
      * @param  array $options
-     * @return \Chaplin_Cache_Backend_PhpRedis
     **/
     public function __construct($options = array())
     {
-        if ($options instanceof Zend_Config) {
+        if ($options instanceof Config) {
             $options = $options->toArray();
         }
-        
+
         if (isset($options['phpredis'])) {
             $this->_redis = $options['phpredis'];
         } else {
             if (empty($options['server']) ) {
-                Zend_Cache::throwException('Redis \'server\' not specified.');
+                Cache::throwException('Redis \'server\' not specified.');
             }
 
             if (empty($options['port']) ) {
-                Zend_Cache::throwException('Redis \'port\' not specified.');
+                Cache::throwException('Redis \'port\' not specified.');
             }
 
             $this->_redis = new Redis;
             if (! $this->_redis->connect($options['server'], $options['port']) ) {
-                Zend_Cache::throwException("Could not connect to Redis server {$options['server']}:{$options['port']}");
+                Cache::throwException("Could not connect to Redis server {$options['server']}:{$options['port']}");
             }
         }
 
         if (! empty($options['database'])) {
-            $this->_redis->select((int) $options['database']) or 
-              Zend_Cache::throwException('The redis database could not be selected.');
+            $this->_redis->select((int) $options['database']) or
+              Cache::throwException('The redis database could not be selected.');
         }
 
         if (isset($options['notMatchingTags']) ) {
@@ -373,17 +380,17 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
      * @throws Zend_Cache_Exception
      * @return boolean True if no problem
     **/
-    public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
+    public function clean($mode = Cache::CLEANING_MODE_ALL, $tags = array())
     {
         if ($tags && ! is_array($tags)) {
             $tags = array($tags);
         }
 
-        if ($mode == Zend_Cache::CLEANING_MODE_ALL) {
+        if ($mode == Cache::CLEANING_MODE_ALL) {
             return ($this->_redis->flushDb() == 'OK');
         }
 
-        if ($mode == Zend_Cache::CLEANING_MODE_OLD) {
+        if ($mode == Cache::CLEANING_MODE_OLD) {
             $this->_collectGarbage();
             return true;
         }
@@ -396,23 +403,23 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
 
         switch ($mode)
         {
-        case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
+        case Cache::CLEANING_MODE_MATCHING_TAG:
 
             $this->_removeByMatchingTags($tags);
             break;
 
-        case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
+        case Cache::CLEANING_MODE_NOT_MATCHING_TAG:
 
             $this->_removeByNotMatchingTags($tags);
             break;
 
-        case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+        case Cache::CLEANING_MODE_MATCHING_ANY_TAG:
 
             $this->_removeByMatchingAnyTags($tags);
             break;
 
         default:
-            Zend_Cache::throwException('Invalid mode for clean() method: '.$mode);
+            Cache::throwException('Invalid mode for clean() method: '.$mode);
         }
         return (bool) $result;
     }
@@ -439,7 +446,7 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
         parent::setDirectives($directives);
         $lifetime = $this->getLifetime(false);
         if ($lifetime > 2592000) {
-            Zend_Cache::throwException('Redis backend has a limit of 30 days (2592000 seconds) for the lifetime');
+            Cache::throwException('Redis backend has a limit of 30 days (2592000 seconds) for the lifetime');
         }
     }
 
@@ -496,7 +503,7 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
     public function getIdsNotMatchingTags($tags = array())
     {
         if (! $this->_notMatchingTags) {
-            Zend_Cache::throwException("notMatchingTags is currently disabled.");
+            Cache::throwException("notMatchingTags is currently disabled.");
         }
         return (array) $this->_redisVariadic('sDiff', self::SET_IDS, $this->_preprocessTagIds($tags));
     }
@@ -547,7 +554,7 @@ class Chaplin_Cache_Backend_PhpRedis extends Zend_Cache_Backend implements Zend_
 
         return array(
             'expire' => time() + $ttl,
-            'tags' => $tags, 
+            'tags' => $tags,
             'mtime' => $mtime,
         );
     }

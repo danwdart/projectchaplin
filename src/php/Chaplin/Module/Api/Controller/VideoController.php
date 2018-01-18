@@ -24,7 +24,7 @@
 **/
 namespace Chaplin\Module\Api\Controller;
 
-use Chaplin_Auth as Auth;
+use Chaplin\Auth;
 use Chaplin_Controller_Action_Api as ApiController;
 use Chaplin_Exception_NotFound as ExceptionNotFound;
 use Chaplin_Gateway as Gateway;

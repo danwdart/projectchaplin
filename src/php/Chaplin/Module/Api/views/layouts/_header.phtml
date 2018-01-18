@@ -23,8 +23,8 @@
  * @link       https://github.com/danwdart/projectchaplin
 **/
 $bIsLoggedIn = false;
-if(Chaplin_Auth::getInstance()->hasIdentity()) :
-	$modelUser = Chaplin_Auth::getInstance()->getIdentity()->getUser();
+if(\Chaplin\Auth::getInstance()->hasIdentity()) :
+	$modelUser = \Chaplin\Auth::getInstance()->getIdentity()->getUser();
 	$bIsLoggedIn = true;
 endif;
 $bNoUploads = ("true" === getenv("NO_UPLOADS"));
