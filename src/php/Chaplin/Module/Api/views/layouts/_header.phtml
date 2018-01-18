@@ -31,9 +31,12 @@ $bNoUploads = ("true" === getenv("NO_UPLOADS"));
 ?>
 
 <div class="wrap">
-	<a href="/"><div class="logo">
-		Chaplin
-	</div></a>
+	<a href="/">
+        <div class="logo"></div>
+        <div class="logoname hidden-xs">
+		    Chaplin
+	    </div>
+    </a>
 	<div class="right">
         <?php if (!$bNoUploads): ?>
 		<a href="/video/upload" class="upload button"><i class="fa fa-upload"></i> <span class="hidden-xs">Upload</span></a>
@@ -87,12 +90,11 @@ $bNoUploads = ("true" === getenv("NO_UPLOADS"));
 
 		</span>
 	</div>
-	<form class="hidden-xs search" action="/search" method="get">
+	<form class="search" action="/search" method="get">
 		<input type="search" id="search" required placeholder="Search for videos..."
 		<?php if (isset($this->strSearchTerm)) : echo 'value="'.$this->strSearchTerm.'"'; endif; ?> name="search"/>
 		<button type="submit"></button>
 	</form>
-    <form class="visible-xs search">S</forn>
 </div>
 
 

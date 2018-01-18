@@ -1,0 +1,40 @@
+h3.profiletitle {
+  padding-top: 150px;
+  position: relative;
+  text-align: center;
+  margin-top: 50px;
+  padding-bottom: 10px;
+  font-family: 'Colfax', 'Helvetica', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  border-bottom: 1px solid #dedede;
+}
+
+h3.profiletitle .face {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  margin-left: -60px;
+  width: 120px;
+  height: 120px;
+  background: red;
+  border-radius: 50%;
+  border: 1px solid #dedede;
+  background: url('/img/icon.png');
+  background: rgba(0, 0, 0, 0) url('/img/icon.svg');
+  background-size: 120px 120px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+h3.profiletitle .face:after {
+  content: '.';
+  visibility: hidden;
+}
+.profileinfo {
+    text-align:left;
+    height: 150px;
+}

@@ -23,34 +23,30 @@
  * @link       https://github.com/danwdart/projectchaplin
 **/
 ?>
-<div class="content-header">
+<h1>
     Latest Videos
-</div>
-<div class="content-centre">
-<?php foreach($this->ittFeaturedVideos as $modelVideo):?>
-<a href="/video/watch/id/<?php echo $modelVideo->getVideoId();?>">
-	<div class="video">
-		<div class="thumb-wrapper">
-		    <img class="thumb-img" src="<?php echo htmlentities($modelVideo->getThumbnail()).'?'.time();?>" alt="View Video"/>
-		</div>
-		<p><?php echo $modelVideo->getShortTitle();?></p>
-	</div>
-</a>
-<?php endforeach;?>
+</h1>
+<div class="row text-center">
+    <?php foreach($this->ittFeaturedVideos as $modelVideo):?>
+    <a href="/video/watch/id/<?php echo $modelVideo->getVideoId();?>">
+    	<div class="thumb col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    		<img src="<?php echo htmlentities($modelVideo->getThumbnail()).'?'.time();?>" alt="View Video"/>
+    		<p><?php echo $modelVideo->getShortTitle();?></p>
+    	</div>
+    </a>
+    <?php endforeach;?>
 </div>
 <?php if (!$this->ittNodes->isEmpty()) : ?>
 <div class="clearfix"></div>
-<div class="content-header">
+<h1>
     Videos from other nodes
 </div>
-<div class="content-centre">
+<div class="row text-center">
 <?php foreach($this->ittNodes as $modelNode) :
 foreach($modelNode->getFeaturedVideos() as $modelVideo):?>
 <a href="/video/watchremote/node/<?php echo $modelNode->getNodeId()?>/id/<?php echo $modelVideo->getVideoId();?>">
-	<div class="video">
-		<div class="thumb-wrapper">
-		    <img class="thumb-img" src="<?php echo htmlentities($modelVideo->getThumbnail()).'?'.time();?>" alt="View Video"/>
-		</div>
+	<div class="thumb col-lg-4 col-md-4 col-sm-6 col-xs-12">
+		<img src="<?php echo htmlentities($modelVideo->getThumbnail()).'?'.time();?>" alt="View Video"/>
 		<p><?php echo $modelVideo->getShortTitle();?></p>
 	</div>
 </a>
