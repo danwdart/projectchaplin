@@ -44,35 +44,23 @@ $bNoUploads = ("true" === getenv("NO_UPLOADS"));
 		<!--<a href="/broadcast" class="broadcast button"><i class="fa fa-video-camera"></i> Broadcast</a>-->
 
 		<span class="dropdown">
-			<a href="#" class="btn btn-transparent dropdown-toggle" data-toggle="dropdown">
-				<?php if($bIsLoggedIn): ?>
-					<span class="username d-none d-sm-inline">
-						<?php echo $modelUser->getNick(); ?>
-					</span>
-					<?php //echo $modelUser->getUserType()->getUserType();?>
-				<?php else: ?>
-					<span class="username nobold d-none d-sm-inline">
-						Not logged in
-					</span>
-				<?php endif; ?>
-				<span class="caret"></span></a>
-    			<ul class="dropdown-menu pull-right" role="menu">
+			<ul class="dropdown-menu pull-right" role="menu">
 
 				<?php if($bIsLoggedIn): ?>
 					<li>
-						<a href="/user/<?php echo $modelUser->getUsername();?>"><i class="fa fa-user"></i> <span class="d-none d-sm-inline">Profile</span></a>
+						<a href="/user/<?php echo $modelUser->getUsername();?>" class="dropdown-item"><i class="fa fa-user"></i> <span class="d-none d-sm-inline">Profile</span></a>
 					</li>
 					<li>
-						<a href="/logout"><i class="fa fa-sign-out"></i> <span class="d-none d-sm-inline">Logout</span></a>
+						<a href="/logout" class="dropdown-item"><i class="fa fa-sign-out"></i> <span class="d-none d-sm-inline">Logout</span></a>
 					</li>
 				<?php else: ?>
 					<li>
-						<a href="/login"><i class="fa fa-sign-in"></i> <span class="d-none d-sm-inline">Login</span></a>
+						<a href="/login" class="dropdown-item"><i class="fa fa-sign-in"></i> <span class="d-none d-sm-inline">Login</span></a>
 					</li>
 				<?php endif; ?>
 
 				<?php /*/if ($bIsLoggedIn && $modelUser->isGod()) :?>
-					<li class="divider"></li>
+					<li class="dropdown-divider"></li>
 					<li>
 						<a href="/admin/import"><i class="fa fa-download"></i> Import</a>
 					</li>
@@ -87,7 +75,18 @@ $bNoUploads = ("true" === getenv("NO_UPLOADS"));
 					</li>
 				<?php //endif; */ ?>
 			</ul>
-
+            <a href="#" class="btn btn-transparent dropdown-toggle" data-toggle="dropdown">
+				<?php if($bIsLoggedIn): ?>
+					<span class="username d-none d-sm-inline">
+						<?php echo $modelUser->getNick(); ?>
+					</span>
+					<?php //echo $modelUser->getUserType()->getUserType();?>
+				<?php else: ?>
+					<span class="username nobold d-none d-sm-inline">
+						Not logged in
+					</span>
+				<?php endif; ?>
+			</a>
 		</span>
 	</div>
 	<form class="search" action="/search" method="get">
