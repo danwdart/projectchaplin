@@ -26,7 +26,7 @@
 <?php if (isset($this->ittVideos['data'])):
     foreach($this->ittVideos['data'] as $videoEntry):?>
         <a href="/video/watchvimeo/id/<?php echo substr($videoEntry['uri'], 8);?>">
-            <div class="thumb col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <div class="thumb col-lg-3 col-md-4 col-sm-6 col-xs-6 col-xxs-12">
                 <img src="<?php echo htmlentities($videoEntry['pictures']['sizes'][3]['link']);?>" alt="View Video"/>
                 <p><?php echo $videoEntry['name'];?></p>
             </div>

@@ -33,25 +33,25 @@ $bNoUploads = ("true" === getenv("NO_UPLOADS"));
 <div class="wrap">
 	<a href="/">
         <div class="logo"></div>
-        <div class="logoname hidden-xs">
+        <div class="logoname d-none d-sm-block">
 		    Chaplin
 	    </div>
     </a>
 	<div class="right">
         <?php if (!$bNoUploads): ?>
-		<a href="/video/upload" class="upload button"><i class="fa fa-upload"></i> <span class="hidden-xs">Upload</span></a>
+		<a href="/video/upload" class="upload button"><i class="fa fa-upload"></i> <span class="d-none d-sm-inline">Upload</span></a>
         <?php endif; ?>
 		<!--<a href="/broadcast" class="broadcast button"><i class="fa fa-video-camera"></i> Broadcast</a>-->
 
 		<span class="dropdown">
 			<a href="#" class="btn btn-transparent dropdown-toggle" data-toggle="dropdown">
 				<?php if($bIsLoggedIn): ?>
-					<span class="username">
+					<span class="username d-none d-sm-inline">
 						<?php echo $modelUser->getNick(); ?>
 					</span>
 					<?php //echo $modelUser->getUserType()->getUserType();?>
 				<?php else: ?>
-					<span class="username nobold">
+					<span class="username nobold d-none d-sm-inline">
 						Not logged in
 					</span>
 				<?php endif; ?>
@@ -60,14 +60,14 @@ $bNoUploads = ("true" === getenv("NO_UPLOADS"));
 
 				<?php if($bIsLoggedIn): ?>
 					<li>
-						<a href="/user/<?php echo $modelUser->getUsername();?>"><i class="fa fa-user"></i> Profile</a>
+						<a href="/user/<?php echo $modelUser->getUsername();?>"><i class="fa fa-user"></i> <span class="d-none d-sm-inline">Profile</span></a>
 					</li>
 					<li>
-						<a href="/logout"><i class="fa fa-sign-out"></i> Logout</a>
+						<a href="/logout"><i class="fa fa-sign-out"></i> <span class="d-none d-sm-inline">Logout</span></a>
 					</li>
 				<?php else: ?>
 					<li>
-						<a href="/login"><i class="fa fa-sign-in"></i> Login</a>
+						<a href="/login"><i class="fa fa-sign-in"></i> <span class="d-none d-sm-inline">Login</span></a>
 					</li>
 				<?php endif; ?>
 
