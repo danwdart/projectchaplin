@@ -1,2 +1,35 @@
 <h1>Channel Manager</h1>
-Coming soon...
+
+<div class="row">
+    <div class="col-lg-12">
+        <a href="/channel/create" class="btn btn-primary">Create New Channel</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->channels as $channel): ?>
+                <tr>
+                    <td><?php echo $channel->name; ?></td>
+                    <td><?php echo $channel->description; ?></td>
+                    <td>
+                        <button class="btn btn-primary">
+                            Preview
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger">
+                            <i class="fa fa-close"></i>
+                        </button>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
