@@ -49,7 +49,7 @@ class LoginController extends Controller
 {
     private $_session;
 
-    public function indexAction()
+    public function getIndex()
     {
         $this->view->strTitle = 'Login - Chaplin';
         $form = new FormLogin();
@@ -58,10 +58,18 @@ class LoginController extends Controller
             $this->view->messages = $this->_helper->flashMessenger->getMessages();
         }
 
-        if(!$this->_request->isPost()) {
-            return $this->view->assign('form', $form);
-        }
+        $this->view->assign('form', $form);
+    }
 
+    public function postIndex()
+    {
+        $this->view->strTitle = 'Login - Chaplin';
+        $form = new FormLogin();
+
+        if ($this->_helper->flashMessenger->hasMessages()) {
+            $this->view->messages = $this->_helper->flashMessenger->getMessages();
+        }
+        
         $post = $this->_request->getPost();
 
         $username = $post['username'];
@@ -105,10 +113,9 @@ class LoginController extends Controller
         }
 
         $this->_redirect('/');
-        return;
     }
 
-    public function logoutAction()
+    public function getLogout()
     {
         $this->view->layout()->disableLayout();
         $renderer = $this->getHelper('ViewRenderer');
@@ -118,14 +125,18 @@ class LoginController extends Controller
         $this->_redirect($this->_redirect_url);
     }
 
-    public function registerAction()
+    public function getRegister()
     {
         $this->view->strTitle = 'Register - Chaplin';
         $form = new FormCreateUser();
 
-        if(!$this->_request->isPost()) {
-            return $this->view->assign('form', $form);
-        }
+        $this->view->assign('form', $form);
+    }
+
+    public function postRegister()
+    {
+        $this->view->strTitle = 'Register - Chaplin';
+        $form = new FormCreateUser();
 
         $post = $this->_request->getPost();
 
@@ -142,8 +153,7 @@ class LoginController extends Controller
         // TODO validate username
         // TODO validate password
         // TODO check if user exists
-        try
-        {
+        try {
             $user = ModelUser::create($username, $password);
             $user->setEmail($email);
             $user->setNick($fullname);
@@ -153,28 +163,32 @@ class LoginController extends Controller
             // AJAX: Success
             $this->_redirect($this->_redirect_url);
             return;
-        }
-        catch (StatementException $e) {
+        } catch (StatementException $e) {
             $form->username->addError('Could not create account - a user aleady exists with that name');
             $form->markAsError();
-            return $this->view->assign('form', $form);
-        }
-        catch(Exception $e)
-        {
+            $this->view->assign('form', $form);
+        } catch(Exception $e) {
             $form->username->addError('Could not create account. Reason: '.$e->getMessage());
             $form->markAsError();
-            return $this->view->assign('form', $form);
+            $this->view->assign('form', $form);
         }
     }
 
-    public function forgotAction()
+    public function getForgot()
     {
         $this->view->strTitle = 'Forgot - Chaplin';
 
         $form = new FormForgot();
-        if (!$this->_request->isPost()) {
-            return $this->view->form = $form;
-        }
+
+        $this->view->form = $form;
+    }
+
+    public function postForgot()
+    {
+        $this->view->strTitle = 'Forgot - Chaplin';
+
+        $form = new FormForgot();
+
         if (!$form->isValid($this->_request->getPost())) {
             return $this->view->form = $form;
         }
@@ -196,7 +210,7 @@ class LoginController extends Controller
         $this->_redirect('/login');
     }
 
-    public function validateAction()
+    public function getValidate()
     {
         $this->view->strTitle = 'Validate - Chaplin';
         $strToken = $this->_request->getParam('token', null);
@@ -213,6 +227,19 @@ class LoginController extends Controller
         if (!$form->isValid($this->_request->getPost())) {
             return $this->view->form = $form;
         }
+    }
+
+    public function postValidate()
+    {
+        $this->view->strTitle = 'Validate - Chaplin';
+
+        $strToken = $this->_request->getParam('token', null);
+
+        if (empty($strToken)) {
+            $this->_redirect('/login');
+        }
+
+        $form = new FormValidate($strToken);
 
         Gateway::getUser()
             ->updateByToken(
@@ -225,128 +252,5 @@ class LoginController extends Controller
             'You can now login below.'
         );
         $this->_redirect('/login');
-    }
-
-    public function oauthAction()
-    {
-        $strVhost = getenv("VHOST");
-
-        $oauth = include APPLICATION_PATH.'/config/oauth.php';
-
-        $strProvider = $this->_request->getParam('provider');
-        if (!isset($oauth[$strProvider])) {
-            die('invalid provider');
-        }
-        $arrOauth = $oauth[$strProvider];
-
-        $this->_helper->viewRenderer->setNoRender();
-        $this->_session = new SessionNS('oauth');
-
-        switch ($arrOauth['oauth_version']) {
-        case 2:
-
-            if (is_null($this->_request->getQuery('code'))) {
-                $state = md5(uniqid());
-
-                $this->_session->state = $state;
-
-                $url = $arrOauth['auth_uri'].
-                    '?client_id='.$arrOauth['client_id'].
-                    '&response_type=code'.
-                    '&scope='.$arrOauth['scope'].
-                    '&redirect_uri='.$arrOauth['redirect_uri'].
-                    '&state='.$state;
-
-                $this->_redirect($url);
-                return;
-            }
-            $state = $this->_session->state;
-            $getstate = $this->_request->getQuery('state');
-            if ($getstate != $state) {
-                die('Unauthorised, buddy. Hey:  ' . $getstate . ' ' . $state);
-            }
-            $this->_session->state = null;
-
-            $client = new HttpClient($arrOauth['token_uri']);
-            $client->setMethod(HttpClient::POST);
-            $client->setParameterPost(
-                [
-                'code' => $_GET['code'],
-                'client_id' => $arrOauth['client_id'],
-                'client_secret' => $arrOauth['client_secret'],
-                'redirect_uri' => $arrOauth['redirect_uri'],
-                'grant_type' => 'authorization_code'
-                ]
-            );
-            $response = $client->request('POST');
-            $body = $response->getBody();
-
-            $callback_decode = $arrOauth['callback_decode'];
-
-            $arrInfo = $callback_decode($body);
-
-            $strAccessToken = $arrInfo['access_token'];
-            $infoUri = $arrOauth['info_uri'].'?oauth_token='.   $strAccessToken;
-
-            $client = new HttpClient($infoUri);
-            $response = $client->request();
-            break;
-
-        case 1:
-            $consumer = new OauthConsumer($arrOauth);
-            $arrQuery = $this->_request->getQuery();
-            if (empty($arrQuery)
-                && is_null($this->_session->request_token)
-            ) {
-                $token = $consumer->getRequestToken();
-                $this->_session->request_token = serialize($token);
-                return $consumer->redirect();
-            }
-
-            $request_token = unserialize($this->_session->request_token);
-            if (!$request_token) {
-                $this->_session->request_token = null;
-                $this->_redirect($arrOauth['callbackUrl']);
-                return;
-            }
-
-            try {
-                $token = $consumer->getAccessToken(
-                    $arrQuery,
-                    unserialize($this->_session->request_token)
-                );
-            } catch (OauthException $e) {
-                $this->_session->request_token = null;
-                $this->_redirect($arrOauth['callbackUrl']);
-                return;
-            }
-
-            $this->_session->access_token = $token;
-            $this->_session->request_token = null;
-
-            $zendClient = $token->getHttpClient($arrOauth);
-            $zendClient->setMethod(HttpClient::GET);
-            $zendClient->setUri($arrOauth['info_uri']);
-            $response = $zendClient->request();
-            break;
-        default:
-            throw new Exception('unknown api version');
-        }
-
-        $arrResponse = Json::decode($response->getBody());
-        $email = $arrResponse[$arrOauth['key_email']];
-        echo 'Name: '.$arrResponse[$arrOauth['key_fullname']].'<br/>';
-        if (isset($arrOauth['key_firstname'])) {
-            echo 'First Name: '.$arrResponse[$arrOauth['key_firstname']].'<br/>';
-        }
-        if (isset($arrOauth['key_lastname'])) {
-            echo 'Last Name: '.$arrResponse[$arrOauth['key_lastname']].'<br/>';
-        }
-        if (isset($arrOauth['key_username'])) {
-            echo 'Username: '.$arrResponse[$arrOauth['key_username']].'<br/>';
-        }
-        if (isset($arrOauth['key_email'])) {
-            echo 'Email: '.$arrResponse[$arrOauth['key_email']];
-        }
     }
 }

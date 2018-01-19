@@ -31,7 +31,7 @@ use Exception;
 class ServicesController extends ApiController
 {
     // The OEmbed Service
-    public function oembedAction()
+    public function getOembed()
     {
         // currently we only support video oembeds
 

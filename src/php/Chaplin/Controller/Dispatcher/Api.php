@@ -29,6 +29,7 @@
 namespace Chaplin\Controller\Dispatcher;
 
 use Zend_Controller_Dispatcher_Standard as DispatcherStandard;
+use Zend_Controller_Request_Abstract as Request;
 
 class Api extends DispatcherStandard
 {
@@ -40,5 +41,21 @@ class Api extends DispatcherStandard
     public function formatModuleName($unformatted)
     {
         return ucfirst("Chaplin\\Module\\".$this->_formatName($unformatted));
+    }
+
+    public function getActionMethod(Request $request)
+    {
+        $action = $request->getActionName();
+        $strVerb = $request->getMethod();
+        if (empty($action)) {
+            $action = $this->getDefaultAction();
+            $request->setActionName($action);
+        }
+
+        $bIsXHR = $request->isXmlHttpRequest();
+
+        $formatted = $this->_formatName($action, true);
+
+        return strtolower($strVerb) . $formatted . ($bIsXHR ? "_API" : "");
     }
 }

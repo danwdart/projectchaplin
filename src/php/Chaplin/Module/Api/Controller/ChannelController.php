@@ -28,7 +28,7 @@ use Zend_Controller_Action as Controller;
 
 class ChannelController extends Controller
 {
-    public function indexAction()
+    public function getIndex()
     {
     }
 }
