@@ -30,5 +30,17 @@ class ChannelController extends Controller
 {
     public function getIndex()
     {
+        $this->view->channels = [
+            (object)[
+                "id" => 1,
+                "name" => "My Cool Channel",
+                "description" => "My description"
+            ]
+        ];
+    }
+
+    public function getCreate()
+    {
+        
     }
 }
