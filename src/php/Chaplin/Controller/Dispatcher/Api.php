@@ -40,7 +40,7 @@ class Api extends DispatcherStandard
 
     public function formatModuleName($unformatted)
     {
-        return ucfirst("Chaplin\\Module\\".$this->_formatName($unformatted));
+        return "Chaplin\\Module\\".ucfirst($this->_formatName($unformatted));
     }
 
     public function getActionMethod(Request $request)
