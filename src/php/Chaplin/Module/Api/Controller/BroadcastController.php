@@ -28,7 +28,7 @@ use Zend_Controller_Action as Controller;
 
 class BroadcastController extends Controller
 {
-    public function indexAction()
+    public function getIndex()
     {
         $this->view->scheme = getenv("SCHEME");
     }

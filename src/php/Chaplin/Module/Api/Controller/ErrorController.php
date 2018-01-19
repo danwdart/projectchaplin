@@ -30,7 +30,7 @@ use Zend_Controller_Plugin_ErrorHandler as ErrorHandler;
 
 class ErrorController extends Controller
 {
-    public function errorAction()
+    public function getError()
     {
         $errors = $this->_getParam('error_handler');
 
@@ -50,7 +50,7 @@ class ErrorController extends Controller
             // application error
             $this->getResponse()->setHttpResponseCode(500);
             $this->view->message = 'Application error';
-            if ($log = $this->getLog()) {
+            if ($log = $this->_getLog()) {
                 $log->crit($this->view->message . ': ' . $errors->exception->getMessage() . PHP_EOL . 'Exception Class: ' . get_class($errors->exception) . PHP_EOL . 'My Vhost: ' . $this->_request->getServer('HTTP_HOST') . PHP_EOL . 'My Host: ' . gethostname() . PHP_EOL . $errors->exception->getTraceAsString(), $errors->exception);
             }
         }
@@ -62,7 +62,7 @@ class ErrorController extends Controller
         $this->view->request   = $errors->request;
     }
 
-    public function getLog()
+    private function _getLog()
     {
         $bootstrap = $this->getInvokeArg('bootstrap');
         if (!$bootstrap->hasPluginResource('Log')) {
@@ -71,6 +71,4 @@ class ErrorController extends Controller
         $log = $bootstrap->getResource('Log');
         return $log;
     }
-
-
 }

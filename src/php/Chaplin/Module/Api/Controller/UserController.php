@@ -34,7 +34,7 @@ use Exception;
 
 class UserController extends ApiController
 {
-    public function indexAction()
+    public function getIndex()
     {
         $strUsername = $this->_request->getParam('id', null);
         if(is_null($strUsername)) {
@@ -48,10 +48,6 @@ class UserController extends ApiController
              ->getByUsername($strUsername);
         } catch(ExceptionUserNotFound $e) {
             $this->_redirect('/');
-        }
-
-        if ($this->_isAPICall()) {
-            return $this->view->assign($modelUser->toArray());
         }
 
         $this->view->bIsMe = Auth::getInstance()->hasIdentity() &&
@@ -77,6 +73,39 @@ class UserController extends ApiController
         if(!$this->_request->isPost()) {
             return $this->view->assign('form', $form);
         }
+    }
+
+    public function postIndex()
+    {
+        $strUsername = $this->_request->getParam('id', null);
+        if(is_null($strUsername)) {
+            $this->_redirect('/');
+            return;
+        }
+
+        try {
+            $modelUser = Gateway::getInstance()
+             ->getUser()
+             ->getByUsername($strUsername);
+        } catch(ExceptionUserNotFound $e) {
+            $this->_redirect('/');
+        }
+
+        $this->view->bIsMe = Auth::getInstance()->hasIdentity() &&
+         Auth::getInstance()->getIdentity()->getUser()->getUsername() ==
+          $modelUser->getUsername();
+
+        $this->view->modelUser = $modelUser;
+
+        if (!$this->view->bIsMe) {
+            return;
+        }
+
+        $this->view->strTitle = $modelUser->getNick().' - Chaplin';
+
+        $form = new FormEditUserData();
+
+        $user = Auth::getInstance()->getIdentity()->getUser();
 
         $post = $this->_request->getPost();
 
@@ -119,7 +148,28 @@ class UserController extends ApiController
         }
     }
 
-    public function youtubeAction()
+    public function getIndex_API()
+    {
+        $strUsername = $this->_request->getParam('id', null);
+
+        if(is_null($strUsername)) {
+            $this->view->assign([]);
+            return;
+        }
+
+        try {
+            $modelUser = Gateway::getInstance()
+             ->getUser()
+             ->getByUsername($strUsername);
+        } catch(ExceptionUserNotFound $e) {
+            $this->view->assign($modelUser->toArray());
+            return;
+        }
+
+        $this->view->assign($modelUser->toArray());
+    }
+
+    public function getYoutube()
     {
         $strPageToken = $this->_request->getQuery('pageToken', null);
         $strUsername = $this->_request->getParam('id', null);
@@ -137,7 +187,7 @@ class UserController extends ApiController
         }
     }
 
-    public function vimeoAction()
+    public function getVimeo()
     {
         $strPage = $this->_request->getQuery('page', 1);
         $intPage = intval($strPage);

@@ -43,7 +43,7 @@ use Misd\Linkify\Linkify;
 
 class VideoController extends ApiController
 {
-    public function watchAction()
+    public function getWatch()
     {
         $modelUser = Auth::getInstance()
             ->hasIdentity()?
@@ -61,10 +61,6 @@ class VideoController extends ApiController
         $modelVideo = Gateway::getInstance()
             ->getVideo()
             ->getByVideoId($strVideoId, $modelUser);
-
-        if ($this->_isAPICall()) {
-            return $this->view->assign($modelVideo->toArray());
-        }
 
         $this->view->strTitle = $modelVideo->getTitle();
 
@@ -88,9 +84,50 @@ class VideoController extends ApiController
 
         $formComment = new FormComment();
 
-        if(!$this->_request->isPost()) {
-            return $this->view->assign('formComment', $formComment);
+        $this->view->assign('formComment', $formComment);
+    }
+
+    public function postWatch()
+    {
+        $modelUser = Auth::getInstance()
+            ->hasIdentity()?
+            Auth::getInstance()
+                ->getIdentity()
+                ->getUser():
+            null;
+
+        $strVideoId = $this->_request->getParam('id', null);
+
+        if(is_null($strVideoId)) {
+            $this->_redirect('/');
+            return;
         }
+
+        $modelVideo = Gateway::getInstance()
+            ->getVideo()
+            ->getByVideoId($strVideoId, $modelUser);
+
+        $this->view->strTitle = $modelVideo->getTitle();
+
+        $ittComments = Gateway::getInstance()
+            ->getVideo_Comment()
+            ->getByVideoId($strVideoId);
+
+        $this->view->video = $modelVideo;
+        $this->view->assign('ittComments', $ittComments);
+
+        $this->view->vhost = getenv("SCHEME")."://".getenv("VHOST");
+
+        $url = $this->view->vhost.'/video/watch/id/'.$this->view->video->getVideoId();
+
+        $strShortHost = getenv("VHOST_SHORT");
+        $strShortURL = 'http://'.$strShortHost.'/'.
+            str_replace('/', '-', base64_encode(hex2bin($strVideoId)));
+        $this->view->assign('short', $strShortURL);
+
+        $this->view->facebookAppId = getenv("FACEBOOK_CLIENT_ID");
+
+        $formComment = new FormComment();
 
         if(!Auth::getInstance()->hasIdentity()) {
             $this->_redirect('/login');
@@ -98,12 +135,14 @@ class VideoController extends ApiController
         }
 
         if(!$formComment->isValid($this->_request->getPost())) {
-            return $this->view->assign('formComment', $formComment);
+            $this->view->assign('formComment', $formComment);
+            return;
         }
 
         $strComment = trim(htmlentities($formComment->Comment->getValue()));
         if (empty($strComment)) {
-            return $this->view->assign('formComment', $formComment);
+            $this->view->assign('formComment', $formComment);
+            return;
         }
 
         $modelComment = ModelComment::create(
@@ -116,7 +155,30 @@ class VideoController extends ApiController
             ->getVideo_Comment()
             ->save($modelComment);
 
-        return $this->view->assign('formComment', $formComment);
+        $this->view->assign('formComment', $formComment);
+    }
+
+    public function getWatch_API()
+    {
+        $modelUser = Auth::getInstance()
+            ->hasIdentity()?
+            Auth::getInstance()
+                ->getIdentity()
+                ->getUser():
+            null;
+
+        $strVideoId = $this->_request->getParam('id', null);
+
+        if(is_null($strVideoId)) {
+            $this->view->assign([]);
+            return;
+        }
+
+        $modelVideo = Gateway::getInstance()
+            ->getVideo()
+            ->getByVideoId($strVideoId, $modelUser);
+
+        $this->view->assign($modelVideo->toArray());
     }
 
     /*
@@ -152,18 +214,18 @@ class VideoController extends ApiController
     }
     */
 
-    public function watchshortAction()
+    public function getWatchshort()
     {
         $strId   = $this->_request->getParam('id');
         $strId   = str_replace('-', '/', $strId);
         $strId   = str_replace(' ', '+', $strId);
         $strId   = bin2hex(base64_decode($strId));
+        $strScheme = getenv("SCHEME");
         $strHost = getenv("VHOST");
-        $this->_redirect('https://'.$strHost.'/video/watch/id/'.$strId);
-        return;
+        $this->_redirect("$strScheme://$strHost/video/watch/id/$strId");
     }
 
-    public function watchyoutubeAction()
+    public function getWatchyoutube()
     {
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
@@ -180,6 +242,7 @@ class VideoController extends ApiController
             throw new ExceptionNotFound('Youtube Id = '.$strVideoId);
         }
         // This won't work remotely
+        // TODO local network same IP?
         if (in_array($this->_request->getClientIp(), ['127.0.0.1', '::1'])) {
             $this->view->videoURL = Service::getInstance()
                 ->getYouTube()
@@ -207,7 +270,7 @@ class VideoController extends ApiController
         $this->view->nouploads = "true" === getenv("NO_UPLOADS");
     }
 
-    public function importyoutubeAction()
+    public function getImportyoutube()
     {
         if ("true" === getenv("NO_UPLOADS")) {
             $this->_redirect('/');
@@ -229,7 +292,7 @@ class VideoController extends ApiController
         $this->_redirect('/video/watch/id/'.$modelVideo->getVideoId());
     }
 
-    public function watchvimeoAction()
+    public function getWatchvimeo()
     {
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
@@ -272,7 +335,7 @@ class VideoController extends ApiController
         $this->view->nouploads = ("true" === getenv("NO_UPLOADS"));
     }
 
-    public function importvimeoAction()
+    public function getImportvimeo()
     {
         if ("true" === getenv("NO_UPLOADS")) {
             $this->_redirect('/');
@@ -294,7 +357,7 @@ class VideoController extends ApiController
         $this->_redirect('/video/watch/id/'.$modelVideo->getVideoId());
     }
 
-    public function commentsAction()
+    public function getComments()
     {
         $this->_helper->layout()->disableLayout();
 
@@ -306,15 +369,24 @@ class VideoController extends ApiController
         $ittComments = Gateway::getInstance()
             ->getVideo_Comment()
             ->getByVideoId($strVideoId);
-
-        if ($this->_isAPICall()) {
-            return $this->view->assign($ittComments->toArray());
-        }
-
         $this->view->assign('comments', $ittComments);
     }
 
-    public function deletecommentAction()
+    public function getComments_API()
+    {
+        $strVideoId = $this->_request->getParam('id', null);
+        if(is_null($strVideoId)) {
+            throw new Exception('Invalid video');
+        }
+
+        $ittComments = Gateway::getInstance()
+            ->getVideo_Comment()
+            ->getByVideoId($strVideoId);
+
+        return $this->view->assign($ittComments->toArray());
+    }
+
+    public function getDeletecomment()
     {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
@@ -336,7 +408,7 @@ class VideoController extends ApiController
         $this->getResponse()->setHttpResponseCode(204);
     }
 
-    public function downloadAction()
+    public function getDownload()
     {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -368,7 +440,7 @@ class VideoController extends ApiController
         echo file_get_contents($strPath);
     }
 
-    public function voteAction()
+    public function getVote()
     {
         $strVideoId = $this->_request->getParam('id', null);
 
@@ -397,7 +469,7 @@ class VideoController extends ApiController
         }
     }
 
-    public function uploadAction()
+    public function getUpload()
     {
         if ("true" === getenv("NO_UPLOADS")) {
             $this->_redirect('/');
@@ -406,9 +478,17 @@ class VideoController extends ApiController
 
         $form = new FormUpload();
 
-        if(!$this->_request->isPost()) {
-            return $this->view->assign('form', $form);
+        $this->view->assign('form', $form);
+    }
+
+    public function postUpload_API()
+    {
+        if ("true" === getenv("NO_UPLOADS")) {
+            $this->_redirect('/');
+            return;
         }
+
+        $form = new FormUpload();
 
         if(!$form->isValid($this->_request->getPost())) {
             return $this->view->assign('form', $form);
@@ -477,7 +557,7 @@ class VideoController extends ApiController
         }
     }
 
-    public function nameAction()
+    public function getName()
     {
         // Not sure how to implement this yet
         // Will skip until I work it out
@@ -526,7 +606,7 @@ class VideoController extends ApiController
         */
     }
 
-    public function editAction()
+    public function getEdit()
     {
         if ("true" === getenv("NO_UPLOADS")) {
             $this->_redirect('/');
@@ -534,6 +614,7 @@ class VideoController extends ApiController
         }
 
         $this->view->strTitle = 'Edit Video - Chaplin';
+
         $modelUser = Auth::getInstance()
             ->hasIdentity()?
             Auth::getInstance()
@@ -542,6 +623,7 @@ class VideoController extends ApiController
             null;
 
         $strVideoId = $this->_request->getParam('id', null);
+
         if(is_null($strVideoId)) {
             $this->_redirect('/');
             return;
@@ -553,9 +635,37 @@ class VideoController extends ApiController
 
         $form = new FormEdit($modelVideo);
 
-        if (!$this->_request->isPost()) {
-            return $this->view->form = $form;
+        $this->view->form = $form;
+    }
+
+    public function postEdit()
+    {
+        if ("true" === getenv("NO_UPLOADS")) {
+            $this->_redirect('/');
+            return;
         }
+
+        $this->view->strTitle = 'Edit Video - Chaplin';
+
+        $modelUser = Auth::getInstance()
+            ->hasIdentity()?
+            Auth::getInstance()
+                ->getIdentity()
+                ->getUser():
+            null;
+
+        $strVideoId = $this->_request->getParam('id', null);
+
+        if(is_null($strVideoId)) {
+            $this->_redirect('/');
+            return;
+        }
+
+        $modelVideo = Gateway::getInstance()
+            ->getVideo()
+            ->getByVideoId($strVideoId, $modelUser);
+
+        $form = new FormEdit($modelVideo);
 
         if (!$form->isValid($this->_request->getPost())) {
             return $this->view->form = $form;
@@ -572,7 +682,7 @@ class VideoController extends ApiController
         return;
     }
 
-    public function deleteAction()
+    public function getDelete()
     {
         if ("true" === getenv("NO_UPLOADS")) {
             $this->_redirect('/');

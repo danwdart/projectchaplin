@@ -30,9 +30,32 @@ use Chaplin_Gateway as Gateway;
 
 class IndexController extends ApiController
 {
-    public function indexAction()
+    public function getIndex()
     {
         $this->view->strTitle = 'Home - Chaplin';
+
+        $modelUser = Auth::getInstance()
+            ->hasIdentity() ?
+            Auth::getInstance()
+                ->getIdentity()
+                ->getUser():
+            null;
+
+        $ittNodes = Gateway::getInstance()
+            ->getNode()
+            ->getAllNodes();
+
+        $this->view->ittNodes = $ittNodes;
+
+        $ittFeaturedVideos = Gateway::getInstance()
+            ->getVideo()
+            ->getFeaturedVideos($modelUser);
+
+        $this->view->assign('ittFeaturedVideos', $ittFeaturedVideos);
+    }
+
+    public function getIndex_API()
+    {
         $modelUser = Auth::getInstance()
             ->hasIdentity() ?
             Auth::getInstance()
@@ -44,16 +67,6 @@ class IndexController extends ApiController
             ->getVideo()
             ->getFeaturedVideos($modelUser);
 
-        if ($this->_isAPICall()) {
-            return $this->view->assign($ittFeaturedVideos->toArray());
-        }
-
-        $ittNodes = Gateway::getInstance()
-            ->getNode()
-            ->getAllNodes();
-
-        $this->view->ittNodes = $ittNodes;
-
-        $this->view->assign('ittFeaturedVideos', $ittFeaturedVideos);
+        $this->view->assign($ittFeaturedVideos->toArray());
     }
 }

@@ -32,17 +32,8 @@ use Zend_Uri_Exception as UriException;
 
 class SearchController extends ApiController
 {
-    public function indexAction()
+    private function _extractYouTubeID(string $strSearchTerm) : string
     {
-        $strSearchTerm = $this->_request->getQuery('search');
-        $strSearchTerm = htmlentities($strSearchTerm);
-        $this->view->strTitle = $strSearchTerm.': Search - Chaplin';
-
-        if(is_null($strSearchTerm)) {
-            $this->_redirect('/');
-            return;
-        }
-
         try {
             // TODO : search helper
             // Note: only full Scheme://FQDN/Path URLs are supported currently
@@ -60,6 +51,22 @@ class SearchController extends ApiController
             // That's fine
         }
 
+        return $strSearchTerm;
+    }
+
+    public function getIndex()
+    {
+        $strSearchTerm = $this->_request->getQuery('search');
+        $strSearchTerm = htmlentities($strSearchTerm);
+        $this->view->strTitle = $strSearchTerm.': Search - Chaplin';
+
+        if(is_null($strSearchTerm)) {
+            $this->_redirect('/');
+            return;
+        }
+
+        $strSearchTerm = $this->_extractYouTubeID($strSearchTerm);
+
         $ittVideos = Gateway::getInstance()
             ->getVideo()
             ->getBySearchTerms($strSearchTerm);
@@ -71,18 +78,17 @@ class SearchController extends ApiController
         $this->view->assign('strSearchTerm', $strSearchTerm);
         $this->view->assign('ittVideos', $ittVideos);
 
-        // Retrieve Youtube results
         $service = Service::getInstance();
 
+        // Retrieve Youtube results
         $serviceYouTube = $service->getYouTube();
-        $serviceVimeo = $service->getVimeo();
-
         $ytUser = $serviceYouTube->getUserProfile($strSearchTerm);
         $videoFeed = $serviceYouTube->search($strSearchTerm);
 
-        $vimeoFeed = $serviceVimeo->search($strSearchTerm);
-
+        // Retrieve Vimeo results
+        $serviceVimeo = $service->getVimeo();
         $vimeoUser = $serviceVimeo->getUserProfile($strSearchTerm);
+        $vimeoFeed = $serviceVimeo->search($strSearchTerm);
 
         $this->view->vimeoUser = $vimeoUser;
         $this->view->ytUser = $ytUser;
@@ -94,22 +100,39 @@ class SearchController extends ApiController
         $this->view->vimeoFeed = $vimeoFeed;
     }
 
-    public function youtubeAction()
+    public function getIndex_API()
     {
-        $this->_helper->layout()->disableLayout();
+        $strSearchTerm = htmlentities($this->_request->getQuery('search'));
+
+        if(is_null($strSearchTerm)) {
+            $this->view->assign([]);
+            return;
+        }
+
+        $ittVideos = Gateway::getInstance()
+            ->getVideo()
+            ->getBySearchTerms($strSearchTerm);
+
+        $this->view->assign($ittVideos->toArray());
+    }
+
+    public function getYoutube_API()
+    {
         $intSkip = $this->_request->getQuery('skip');
         $intLimit = $this->_request->getQuery('limit');
         $strSearchTerm = $this->_request->getQuery('search');
         $strSearchTerm = htmlentities($strSearchTerm);
+
         if(is_null($strSearchTerm)) {
             $this->_redirect('/');
             return;
         }
-        $this->view->assign('strSearchTerm', $strSearchTerm);
 
+        $this->view->assign('strSearchTerm', $strSearchTerm);
         // Retrieve Youtube results
 
         $serviceYouTube = Service::getInstance()->getYouTube();
+
         $videoFeed = $serviceYouTube->search($strSearchTerm, $intSkip, $intLimit);
 
         $this->view->videoFeed = $videoFeed;

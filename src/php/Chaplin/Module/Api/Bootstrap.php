@@ -38,6 +38,7 @@ class Bootstrap extends ModuleBootstrap
 
         $acl->add(new Acl('api/index'));
         $acl->add(new Acl('api/broadcast'));
+        $acl->add(new Acl('api/channel'));
         $acl->add(new Acl('api/error'));
         $acl->add(new Acl('api/login'));
         $acl->add(new Acl('api/search'));
@@ -47,6 +48,7 @@ class Bootstrap extends ModuleBootstrap
 
         $acl->allow(UserType::TYPE_GUEST, 'api/index');
         $acl->allow(UserType::TYPE_USER, 'api/broadcast');
+        $acl->allow(UserType::TYPE_USER, 'api/channel');
         $acl->allow(UserType::TYPE_GUEST, 'api/error');
         $acl->allow(UserType::TYPE_GUEST, 'api/login');
         $acl->allow(UserType::TYPE_GUEST, 'api/search');
