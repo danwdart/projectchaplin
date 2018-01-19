@@ -37,7 +37,7 @@ class InitController extends Controller
         $this->_helper->viewRenderer->setNoRender(true);
     }
 
-    public function adminuserAction()
+    public function cliAdminuser()
     {
         $strUsername = getenv("ADMIN_USERNAME");
         $strPassword = getenv("ADMIN_PASSWORD");

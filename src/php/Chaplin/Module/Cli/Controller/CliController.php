@@ -34,21 +34,21 @@ class CliController extends Controller
         $this->_helper->viewRenderer->setNoRender(true);
     }
 
-    public function convertAction()
+    public function cliConvert()
     {
         Gateway::getInstance()
             ->getVideo_Convert()
             ->convert();
     }
 
-    public function youtubeAction()
+    public function cliYoutube()
     {
         Gateway::getInstance()
             ->getVideo_Youtube()
             ->youtube();
     }
 
-    public function vimeoAction()
+    public function cliVimeo()
     {
         Gateway::getInstance()
             ->getVideo_Vimeo()
