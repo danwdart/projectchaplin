@@ -1,6 +1,6 @@
+assets
 db
-info
-scripts
+doc
 servers/docker
 src/js/node_modules
 src/php/vendor
