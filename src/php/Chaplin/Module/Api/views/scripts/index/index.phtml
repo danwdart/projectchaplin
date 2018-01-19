@@ -44,12 +44,12 @@
 <div class="row text-center">
 <?php foreach($this->ittNodes as $modelNode) :
 foreach($modelNode->getFeaturedVideos() as $modelVideo):?>
-<a href="/video/watchremote/node/<?php echo $modelNode->getNodeId()?>/id/<?php echo $modelVideo->getVideoId();?>">
-	<div class="thumb col-lg-3 col-md-4 col-sm-6 col-xs-6 col-xxs-12">
+<div class="thumb col-lg-3 col-md-4 col-sm-6 col-xs-6 col-xxs-12">
+    <a href="/video/watchremote/node/<?php echo $modelNode->getNodeId()?>/id/<?php echo $modelVideo->getVideoId();?>">
 		<img src="<?php echo htmlentities($modelVideo->getThumbnail()).'?'.time();?>" alt="View Video"/>
 		<p><?php echo $modelVideo->getShortTitle();?></p>
-	</div>
-</a>
+    </a>
+</div>
 <?php endforeach; endforeach;?>
 </div>
 <?php endif; ?>
