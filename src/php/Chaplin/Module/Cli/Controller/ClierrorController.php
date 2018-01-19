@@ -34,7 +34,7 @@ class ClierrorController extends Controller
         $this->_helper->viewRenderer->setNoRender(true);
     }
 
-    public function errorAction()
+    public function cliError()
     {
         $errors = $this->_getParam('error_handler');
 
