@@ -24,6 +24,7 @@
 **/
 namespace Chaplin\Module\Api\Controller;
 
+use Chaplin\Module\Api\Form\Channel\Create as FormCreateChannel;
 use Zend_Controller_Action as Controller;
 
 class ChannelController extends Controller
@@ -41,6 +42,6 @@ class ChannelController extends Controller
 
     public function getCreate()
     {
-        
+        $this->view->form = new FormCreateChannel();
     }
 }
