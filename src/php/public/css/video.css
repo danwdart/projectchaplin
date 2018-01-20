@@ -24,21 +24,23 @@
 **/
 
 #infoarea {
-    padding: 5px;
     width: 720px;
     margin: 0 auto;
 }
 
 #videoarea {
+    width: 720px;
+    margin: 0 auto;
     text-align: center;
+    border: 5px outset;
 }
 
 #video {
+    padding: 0;
     width: 720px;
     max-height: 480px;
     background-color: black;
     text-align: center;
-    border: 5px outset;
 }
 
 #video::-webkit-media-controls-panel {
