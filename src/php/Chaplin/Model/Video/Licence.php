@@ -20,13 +20,16 @@ class Chaplin_Model_Video_Licence
     const TEXT_CCBYNCND = 'CC-BY-NC-ND';
     const TEXT_CC0 = 'CC-0';
 
-    const URL_CCBY = 'http://creativecommons.org/licenses/by/3.0/';
-    const URL_CCBYSA = 'http://creativecommons.org/licenses/by-sa/3.0/';
-    const URL_CCBYND = 'http://creativecommons.org/licenses/by-nd/3.0/';
-    const URL_CCBYNC = 'http://creativecommons.org/licenses/by-nc/3.0/';
-    const URL_CCBYNCSA = 'http://creativecommons.org/licenses/by-nc-sa/3.0/';
-    const URL_CCBYNCND = 'http://creativecommons.org/licenses/by-nc-nd/3.0/';
-    const URL_CC0 = 'http://creativecommons.org/publicdomain/zero/1.0/';
+    const HOST_CC = "http://creativecommons.org";
+    const PATH_LICENCES = "/licenses";
+
+    const URL_CCBY = self::HOST_CC.'/by/3.0/';
+    const URL_CCBYSA = self::HOST_CC.'/licenses/by-sa/3.0/';
+    const URL_CCBYND = self::HOST_CC.'/licenses/by-nd/3.0/';
+    const URL_CCBYNC = self::HOST_CC.'/licenses/by-nc/3.0/';
+    const URL_CCBYNCSA = self::HOST_CC.'/licenses/by-nc-sa/3.0/';
+    const URL_CCBYNCND = self::HOST_CC.'/licenses/by-nc-nd/3.0/';
+    const URL_CC0 = self::HOST_CC.'/publicdomain/zero/1.0/';
 
     private static $_arrInfo = [
     self::ID_CCBY => [

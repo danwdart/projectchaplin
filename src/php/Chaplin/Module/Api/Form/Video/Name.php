@@ -42,17 +42,14 @@ class Name extends Form
     public function init()
     {
         $sfVideos = new ZendSubForm('Videos');
-        $sfVideos->setAttribs(array('style' => 'width: 800px; margin: 0 auto;'));
         foreach($this->_ittVideos as $modelVideo) {
             $subform = new SubForm($modelVideo);
             $sfVideos->addSubForm($subform, $modelVideo->getId());
         }
 
         $submit = new Submit('Save');
-        $submit->setAttribs(array('style' => 'clear:both; width: 140px; height: 40px;'));
 
         $this->addSubForm($sfVideos, 'Videos');
         $this->addElement($submit);
-        $this->setAttribs(array('style' => 'width: 800px;'));
     }
 }
