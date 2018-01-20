@@ -44,7 +44,6 @@ class Comment extends Form
         $comment = new Textarea('Comment');
         $comment->setAttribs(
             array(
-            'style' => 'width:250px;height:40px;margin:0;',
             'placeholder' => 'Your Comment'
             )
         );
@@ -52,5 +51,29 @@ class Comment extends Form
         $submit->setLabel('Say it!');
 
         $this->addElements(array($comment, $submit));
+
+        $this->setDecorators(
+            [
+                'FormElements',
+                'Form'
+            ]
+        );
+
+        $this->setElementDecorators(
+            [
+                'ViewHelper',
+                'Label',
+                ['HtmlTag', ['tag' => 'div', 'class' => 'form-group']]
+            ]
+        );
+
+        $this->setElementDecorators(
+            [
+                'ViewHelper'
+            ],
+            [
+                "Submit"
+            ]
+        );
     }
 }

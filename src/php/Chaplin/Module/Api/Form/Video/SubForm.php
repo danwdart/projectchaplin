@@ -54,25 +54,36 @@ class SubForm extends ZendSubForm
         $elImage = new Image('Image');
         $elImage->setImage($strImageURL);
         $elImage->setAttribs(['style' => 'max-width: 200px; height: 150px;']);
+
         $elTitle = new Text('Title');
+        $elTitle->setAttrib("class", "form-control");
         $elTitle->setLabel('Title');
         $elTitle->setValue($modelVideo->getSuggestedTitle());
         $elTitle->addValidators(['NotEmpty']);
+
         $elDescription = new Textarea('Description');
+        $elDescription->setAttrib("class", "form-control");
         $elDescription->setAttribs(['style' => 'width: 200px; height:75px;']);
         $elDescription->setLabel('Description');
         $elDescription->addValidators(['NotEmpty']);
+
         $elLicence = new Select('Licence');
+        $elLicence->setAttrib("class", "form-control");
         $elLicence->setMultiOptions(VideoLicence::getSelectOptions());
         $elLicence->setValue($modelVideo->getLicenceId());
         $elLicence->setLabel('Licence');
+
         $elPrivacy = new Select('Privacy');
+        $elPrivacy->setAttrib("class", "form-control");
         $elPrivacy->setLabel('Limit To');
         $elPrivacy->setValue($modelVideo->getPrivacyId());
         $elPrivacy->addValidators(['NotEmpty']);
         $elPrivacy->setMultiOptions(VideoPrivacy::getSelectOptions());
+
         $this->addElements([$elImage, $elTitle, $elDescription, $elLicence, $elPrivacy]);
+
         $this->setAttribs(['style' => 'float:left; width: 240px; padding: 5px; border: 0; margin: 5px']);
+
         $this->removeDecorator('DtDdWrapper');
     }
 }
