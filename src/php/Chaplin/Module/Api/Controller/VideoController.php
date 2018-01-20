@@ -481,7 +481,7 @@ class VideoController extends ApiController
         $this->view->assign('form', $form);
     }
 
-    public function postUpload_API()
+    public function postUpload()
     {
         if ("true" === getenv("NO_UPLOADS")) {
             $this->_redirect('/');
