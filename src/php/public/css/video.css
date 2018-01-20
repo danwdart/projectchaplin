@@ -35,6 +35,8 @@
 
 #video {
     width: 720px;
+    max-height: 480px;
+    background-color: black;
     text-align: center;
     border: 5px outset;
 }
