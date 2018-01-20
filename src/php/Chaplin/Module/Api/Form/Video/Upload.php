@@ -44,12 +44,13 @@ class Upload extends Form
 
         $upload = new File(
             'Files[]',
-            array(
+            [
                 'label' => 'Upload files...',
                 'multiple' => 'multiple',
                 'isArray' => true
-            )
+            ]
         );
+        $upload->setAttrib("class", "form-control");
         $upload->setDestination(getenv("UPLOADS_PATH"));
 
         $progress = new Hidden(
@@ -58,6 +59,7 @@ class Upload extends Form
         $progress->setValue('file');
 
         $submit = new Submit('Upload');
+        $submit->setAttrib("class", "btn btn-primary");
         $submit->setLabel('Upload');
 
         $this->addElements(array($progress, $upload, $submit));

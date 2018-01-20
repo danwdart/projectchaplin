@@ -63,7 +63,7 @@ class SubForm extends ZendSubForm
 
         $elDescription = new Textarea('Description');
         $elDescription->setAttrib("class", "form-control");
-        $elDescription->setAttribs(['style' => 'width: 200px; height:75px;']);
+        $elDescription->setAttrib("rows", 3);
         $elDescription->setLabel('Description');
         $elDescription->addValidators(['NotEmpty']);
 
@@ -82,8 +82,28 @@ class SubForm extends ZendSubForm
 
         $this->addElements([$elImage, $elTitle, $elDescription, $elLicence, $elPrivacy]);
 
-        $this->setAttribs(['style' => 'float:left; width: 240px; padding: 5px; border: 0; margin: 5px']);
+        $this->setDecorators(
+            [
+                'FormElements',
+                'Form'
+            ]
+        );
 
-        $this->removeDecorator('DtDdWrapper');
+        $this->setElementDecorators(
+            [
+                'ViewHelper',
+                'Label',
+                ['HtmlTag', ['tag' => 'div', 'class' => 'form-group']]
+            ]
+        );
+
+        $this->setElementDecorators(
+            [
+                'ViewHelper'
+            ],
+            [
+                "Save"
+            ]
+        );
     }
 }
