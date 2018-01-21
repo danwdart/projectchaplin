@@ -23,7 +23,6 @@
  * @link      https://github.com/danwdart/projectchaplin
 **/
 import $ from 'jquery';
-import k from './k';
 
 $(document).ready(() => {
     $('.effect').change(
@@ -55,54 +54,62 @@ $(document).ready(() => {
 
         }
     );
-    $('a.atotext').click(
-        function(e) {
-            e.preventDefault();
-            el = $(this);
-            $.ajax(
-                {
-                    url: $(this).attr('href'),
-                    method: 'GET',
-                    success: function() {
-                        el.after(el.html());
-                        el.hide();
-                    }
-                }
-            );
-            console.log('tried');
-            return false;
-        }
-    );
+    // <a class="ajax" rel="ready" href="http://clickedurl"></a>
+    // <div id="ready" rel="http://refreshfrom">Result</div>
     $('a.ajax').click(
         function(e) {
             e.preventDefault();
-            el = $(this);
+            const el = $(this);
             $.ajax(
                 {
                     url: el.attr('href'),
                     method: 'GET',
                     success: function() {
-                        rel = el.attr('rel');
-                        if (null != rel) {
-                            elRel = $('#'+rel);
-                            elRelUrl = elRel.attr('rel');
-                            if (null != elRelUrl) {
-                                $.ajax(
-                                    {
-                                        url: elRelUrl,
-                                        method: 'GET',
-                                        success: function(data) {
-                                            elRel.html(data);
-                                        }
-                                    }
-                                );
-                            }
+                        const rel = el.attr('data-result-in');
+                        if (null === rel) {
+                            return;
                         }
+                        const elRel = $('#'+rel),
+                            elRelUrl = elRel.attr('data-refresh-from');
+                        if (null === elRelUrl) {
+                            return;
+                        }
+                        $.ajax(
+                            {
+                                url: elRelUrl,
+                                method: 'GET',
+                                success: function(data) {
+                                    elRel.html(data);
+                                }
+                            }
+                        );
                     }
                 }
             )
         }
     )
+    $('.vote').click(function(e) {
+        e.preventDefault();
+        const $ups = $(".vote .ups"),
+            $downs = $(".vote .downs"),
+            url = $(this).attr("href");
+        console.log("Sending vote");
+        $.ajax(
+            {
+                url,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $ups.html(data.ups);
+                    $downs.html(data.downs);
+                },
+                error: function(err) {
+                    console.error(err);
+                }
+            }
+        )
+    })
+
     $('form.ajax input[type="submit"]').click(
         function(e) {
             e.preventDefault();
@@ -116,8 +123,8 @@ $(document).ready(() => {
                         parent.append('<span class="success">Comment posted... </span>');
                         parent.children('.success').fadeOut(3000, function() {$(this).remove();});
                     },
-                    failure: function() {
-                        parent.append('<span class="failure">Sorry, we couldn\'t post your comment.</span>');
+                    error: function() {
+                        parent.append('<span class="error">Sorry, we couldn\'t post your comment.</span>');
                     }
                 }
             );
@@ -133,7 +140,7 @@ $(document).ready(() => {
                             success: function(data) {
                                 el.html(data);
                             },
-                            failure: function() {
+                            error: function() {
                                 console.log('failed to update');
                             }
                         }
@@ -143,12 +150,4 @@ $(document).ready(() => {
             return false;
         }
     );
-
-
-    // nothing important :P
-    let kk = new k();
-    kk.code = function() {
-        $('#fun').show();
-    };
-    kk.load();
 });

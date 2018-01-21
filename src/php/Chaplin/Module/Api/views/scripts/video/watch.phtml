@@ -81,7 +81,6 @@
     <br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
 	<br/><?php echo $this->video->getDescription(); ?>
 	<p>Short URL: <input type="text" disabled value="<?php echo $this->short; ?>"/></p>
-	<p><strong>&uparrow; <?php echo $this->video->getVotesUp(); ?> / <?php echo $this->video->getVotesDown(); ?> &downarrow;</strong></p>
     <?php if ($this->video->getPrivacy()->isPublic()): ?>
         <div class="row bg-light">
             <div class="col-lg-2 col-md-2 col-sm-4 col-12">
@@ -109,18 +108,18 @@
     <br/><br/>
     <div class="btn-group">
     	<?php if(\Chaplin\Auth::getInstance()->hasIdentity()): ?>
-           <a class="atotext btn btn-secondary<?php echo (1 === $this->video->getYourVote()) ? " active" : ""; ?>" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up">
-               <i class="fa fa-arrow-up"></i>
+           <a class="vote btn btn-secondary<?php echo (1 === $this->video->getYourVote()) ? " active" : ""; ?>" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up">
+               <span class="ups"><?php echo $this->video->getVotesUp(); ?></span>&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>
            </a>
-           <a class="atotext btn btn-secondary<?php echo (0 === $this->video->getYourVote()) ? " active" : ""; ?>" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down">
-               <i class="fa fa-arrow-down"></i>
+           <a class="vote btn btn-secondary<?php echo (0 === $this->video->getYourVote()) ? " active" : ""; ?>" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down">
+               <span class="downs"><?php echo $this->video->getVotesDown(); ?></span>&nbsp;&nbsp;<i class="fa fa-arrow-down"></i>
            </a>
     	<?php endif; ?>
     </div>
 	<br/><br/>
 	<?php if(\Chaplin\Auth::getInstance()->hasIdentity()): echo $this->formComment; else: echo 'Login above to comment.'; endif; ?>
 	<br/>
-	<div id="comments" rel="/video/comments/id/<?php echo $this->video->getVideoId();?>">
+	<div id="comments" data-refresh-from="/video/comments/id/<?php echo $this->video->getVideoId();?>">
 		<?php foreach($this->ittComments as $modelComment):?>
 		<p>
 			<i>
@@ -129,7 +128,7 @@
 			<?php echo $modelComment->getComment();?>
 			<?php if ($modelComment->isMine()): ?>
 				<a class="ajax" href="/video/deletecomment/id/<?php echo $modelComment->getCommentId(); ?>"
-					rel="comments">
+					data-results-in="comments">
 				(X)
 				</a>
 			<?php endif;?>

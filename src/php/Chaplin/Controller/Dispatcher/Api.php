@@ -57,7 +57,7 @@ class Api extends DispatcherStandard
         $formatted = $this->_formatName($action, true);
 
         if ("Error" == $formatted) {
-            $strVerb = "all";
+            return "allError";
         }
 
         return strtolower($strVerb) . $formatted . ($bIsXHR ? "_API" : "");
