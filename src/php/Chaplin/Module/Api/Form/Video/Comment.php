@@ -35,22 +35,49 @@ class Comment extends Form
         $this->setAction('');
         $this->setMethod('post');
         $this->setAttribs(
-            array(
-            'class' => 'ajax',
-            'rel' => 'comments'
-            )
+            [
+                'class' => 'ajax',
+                'rel' => 'comments'
+            ]
         );
 
         $comment = new Textarea('Comment');
         $comment->setAttribs(
-            array(
-            'style' => 'width:250px;height:40px;margin:0;',
-            'placeholder' => 'Your Comment'
-            )
+            [
+                "class" => "form-control",
+                'placeholder' => 'What a great video!',
+                'rows' => 2
+            ]
         );
+
         $submit = new Submit('Submit');
+        $submit->setAttrib("class", "btn btn-primary");
         $submit->setLabel('Say it!');
 
         $this->addElements(array($comment, $submit));
+
+        $this->setDecorators(
+            [
+                'FormElements',
+                'Form'
+            ]
+        );
+
+        $this->setElementDecorators(
+            [
+                'ViewHelper',
+                'Label',
+                ['HtmlTag', ['tag' => 'div', 'class' => 'form-group']]
+            ]
+        );
+
+        $this->setElementDecorators(
+            [
+                'ViewHelper'
+            ],
+            [
+                "Submit"
+            ]
+        );
     }
 }
