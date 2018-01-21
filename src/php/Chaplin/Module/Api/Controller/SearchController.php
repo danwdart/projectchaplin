@@ -116,7 +116,7 @@ class SearchController extends ApiController
         $this->view->assign($ittVideos->toArray());
     }
 
-    public function getYoutube_API()
+    public function getYoutube()
     {
         $intSkip = $this->_request->getQuery('skip');
         $intLimit = $this->_request->getQuery('limit');

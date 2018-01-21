@@ -29,51 +29,47 @@
 <link rel="alternate" type="application/xml+oembed"
   href="<?php echo $this->vhost ?>/services/oembed?url=<?php echo $this->vhost ?>/video/watch/id/<?php echo $this->video->getVideoId() ?>&format=xml"
   title="<?php echo $this->video->getTitle() ?>" />
-<!-- Facebook Meta Tags -->
-<meta property="og:url"           content="<?php echo $this->vhost ?>/video/watch/id/<?php echo $this->video->getVideoId() ?>" />
-<meta property="og:type"          content="website" />
-<meta property="og:title"         content="<?php echo $this->video->getTitle() ?> on Chaplin" />
-<meta property="og:description"   content="<?php echo urlencode($this->video->getDescription()) ?>" />
-<meta property="og:image"         content="<?php echo $this->vhost ?>/uploads/<?php echo $this->video->getFilename() ?>.png" />
-<!-- Load Facebook SDK for JavaScript -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.7&appId=<? echo $this->facebookAppId ?>";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<!-- End Facebook Meta Tags -->
 
+<?php echo $this->partial("partials/fbsdk.phtml", [
+    "url" => $this->vhost ."/video/watch/id/". $this->video->getVideoId(),
+    "title" => $this->video->getTitle()." on Chaplin",
+    "description" => urlencode($this->video->getDescription()),
+    "image" => $this->vhost . $this->video->getFilename() . ".png",
+    "facebookAppId" => $this->facebookAppId
+]); ?>
 <h1><?php echo $this->video->getTitle();?></h1>
-<div id="videoarea">
-	<video id="video" controls poster="<?php echo $this->video->getFilename().'.png?'.time();?>">
+<div class="row text-center" id="videoarea">
+	<video class="col-lg-12" id="video" controls poster="<?php echo $this->video->getFilename().'.png?'.time();?>">
         <source src="<?php echo $this->video->getFilename().'?'.time();?>"/>
 	</video>
-	<div id="fun">
-		<button id="slower">&laquo; Slow Motion</button>
-		<button id="normalspeed">Normal Speed</button>
-		<button id="faster">Fast Forward &raquo;</button>
-		<select class="effect">
-			<option class="filter" value="none">-- Select Effect --</option>
-		    <option class="filter" value="blur">Blur</option>
-		    <option class="filter" value="gray">Grey</option>
-		    <option class="filter" value="sepia">Sepia</option>
-		    <option class="filter" value="bright">Bright</option>
-		    <option class="filter" value="highcontrast">Contrast</option>
-		    <option class="filter" value="colour">Colourful</option>
-		    <option class="filter" value="invert">Invert</option>
-		    <option class="filter" value="saturate">Saturate</option>
-		    <option class="filter" value="earthquake">Earthquake!</option>
-		    <option class="filter" value="br">Barrel Roll!</option>
-		    <option class="filter" value="drunk">Drunk!</option>
-		</select>
-	</div>
+    <div class="btn-group btn-block">
+        <button class="ml-0 col-2 infinite btn btn-secondary"><i class="fa fa-refresh"></i> Loop</button>
+        <button class="ml-0 col-2 btn btn-secondary" id="slower">&laquo; Slow</button>
+        <button class="ml-0 col-2 btn btn-secondary" id="normalspeed">Normal</button>
+        <button class="ml-0 col-2 btn btn-secondary" id="faster">Fast &raquo;</button>
+        <select class="ml-0 col-4 btn btn-secondary effect">
+            <option class="filter" value="none">-- Select Effect --</option>
+            <option class="filter" value="blur">Blur</option>
+            <option class="filter" value="gray">Grey</option>
+            <option class="filter" value="sepia">Sepia</option>
+            <option class="filter" value="bright">Bright</option>
+            <option class="filter" value="highcontrast">Contrast</option>
+            <option class="filter" value="colour">Colourful</option>
+            <option class="filter" value="invert">Invert</option>
+            <option class="filter" value="saturate">Saturate</option>
+            <option class="filter" value="earthquake">Earthquake!</option>
+            <option class="filter" value="br">Barrel Roll!</option>
+            <option class="filter" value="drunk">Drunk!</option>
+        </select>
+    </div>
 </div>
 <div id="infoarea">
-    <button class="infinite btn btn-primary"><i class="fa fa-refresh"></i> Loop</button>
-	<br/>
+    <?php if ($this->video->isMine()): ?>
+        <br/>
+        <a class="btn btn-info" href="/video/edit/id/<?php echo $this->video->getVideoId();?>"><i class="fa fa-edit"></i> Edit</a>
+	    <a class="btn btn-danger" href="/video/delete/id/<?php echo $this->video->getVideoId();?>"><i class="fa fa-times-circle"></i> Delete</a>
+        <br/>
+	<?php endif; ?>
 	<br/>Uploaded by: <a href="/user/<?php echo $this->video->getUsername(); ?>"><?php echo $this->video->getUsername(); ?></a>
 	<br/>Uploaded on <?php echo date('d/m/Y H:i', $this->video->getTimeCreated());?> (<?php echo $this->video->getTimeAgo(); ?>)
     <?php if ($this->video->getSource()): ?>
@@ -85,42 +81,45 @@
     <br/>Licence: <a href="<?php echo $this->video->getLicence()->getURL(); ?>"><?php echo $this->video->getLicence()->getText(); ?></a>
 	<br/><?php echo $this->video->getDescription(); ?>
 	<p>Short URL: <input type="text" disabled value="<?php echo $this->short; ?>"/></p>
-	<p><strong>&uparrow; <?php echo $this->video->getVotesUp(); ?> / <?php echo $this->video->getVotesDown(); ?> &downarrow;</strong></p>
     <?php if ($this->video->getPrivacy()->isPublic()): ?>
-    <p><?php echo $this->partial("partials/twittershare.phtml"); ?></p>
-    <p><?php echo $this->partial("partials/facebookshare.phtml", [
-        'vhost' => $this->vhost,
-        'video' => $this->video
-    ]); ?></p>
-    <p><?php echo $this->partial("partials/gplusshare.phtml"); ?></p>
-    <p><?php echo $this->partial("partials/gnusocialshare.phtml"); ?></p>
-    <p><?php echo $this->partial("partials/diasporashare.phtml"); ?></p>
+        <div class="row bg-light">
+            <div class="col-lg-2 col-md-2 col-sm-4 col-12">
+                <?php echo $this->partial("partials/twittershare.phtml"); ?>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-4 col-12">
+                <?php echo $this->partial("partials/facebookshare.phtml", [
+                    'vhost' => $this->vhost,
+                    'video' => $this->video
+                ]); ?>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-4 col-12">
+                <?php echo $this->partial("partials/gplusshare.phtml"); ?>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-12">
+                <?php echo $this->partial("partials/gnusocialshare.phtml"); ?>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-12">
+                <?php echo $this->partial("partials/diasporashare.phtml"); ?>
+            </div>
+        </div>
     <?php endif; ?>
 	<br/>
-	<?php if(\Chaplin\Auth::getInstance()->hasIdentity()):
-	if ('1' === $this->video->getYourVote()) :
-	echo '<i class="fa fa-arrow-up"></i>';
-	else:?>
-	<a class="atotext btn btn-secondary" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up"><i class="fa fa-arrow-up"></i></a>
-	<?php endif; echo ' / ';
-	if ('0' === $this->video->getYourVote()) :
-	echo '<i class="fa fa-arrow-down"></i>';
-	else:?>
-	<a class="atotext btn btn-secondary" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down"><i class="fa fa-arrow-down"></i></a>
-	<?php endif;?>&nbsp;&nbsp;
-	<?php endif; ?>
 	<a class="btn btn-primary" href="/video/download/id/<?php echo $this->video->getVideoId();?>"><i class="fa fa-download"></i> Download</a>
-	<?php
-		if ($this->video->isMine()):
-	?>
-	    <a class="btn btn-danger" href="/video/delete/id/<?php echo $this->video->getVideoId();?>"><i class="fa fa-times-circle"></i> Delete</a>
-	    <a class="btn btn-info" href="/video/edit/id/<?php echo $this->video->getVideoId();?>"><i class="fa fa-edit"></i> Edit</a>
-	<?php endif;?>
+    <br/><br/>
+    <div class="btn-group">
+    	<?php if(\Chaplin\Auth::getInstance()->hasIdentity()): ?>
+           <a class="vote btn btn-secondary<?php echo (1 === $this->video->getYourVote()) ? " active" : ""; ?>" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/up">
+               <span class="ups"><?php echo $this->video->getVotesUp(); ?></span>&nbsp;&nbsp;<i class="fa fa-arrow-up"></i>
+           </a>
+           <a class="vote btn btn-secondary<?php echo (0 === $this->video->getYourVote()) ? " active" : ""; ?>" href="/video/vote/id/<?php echo $this->video->getVideoId();?>/vote/down">
+               <span class="downs"><?php echo $this->video->getVotesDown(); ?></span>&nbsp;&nbsp;<i class="fa fa-arrow-down"></i>
+           </a>
+    	<?php endif; ?>
+    </div>
+	<br/><br/>
+	<?php if(\Chaplin\Auth::getInstance()->hasIdentity()): echo $this->formComment; else: echo 'Login above to comment.'; endif; ?>
 	<br/>
-	<?php if(\Chaplin\Auth::getInstance()->hasIdentity()): echo $this->formComment; else:
-	echo 'Login above to comment.'; endif;  ?>
-	<br/>
-	<div id="comments" rel="/video/comments/id/<?php echo $this->video->getVideoId();?>">
+	<div id="comments" data-refresh-from="/video/comments/id/<?php echo $this->video->getVideoId();?>">
 		<?php foreach($this->ittComments as $modelComment):?>
 		<p>
 			<i>
@@ -129,7 +128,7 @@
 			<?php echo $modelComment->getComment();?>
 			<?php if ($modelComment->isMine()): ?>
 				<a class="ajax" href="/video/deletecomment/id/<?php echo $modelComment->getCommentId(); ?>"
-					rel="comments">
+					data-results-in="comments">
 				(X)
 				</a>
 			<?php endif;?>

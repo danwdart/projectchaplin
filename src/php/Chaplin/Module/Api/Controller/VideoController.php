@@ -440,7 +440,7 @@ class VideoController extends ApiController
         echo file_get_contents($strPath);
     }
 
-    public function getVote()
+    public function getVote_API()
     {
         $strVideoId = $this->_request->getParam('id', null);
 
@@ -455,7 +455,6 @@ class VideoController extends ApiController
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-
         $strVote = $this->_request->getParam('vote', null);
         if(is_null($strVideoId)) {
             $this->_redirect('/');
@@ -467,6 +466,19 @@ class VideoController extends ApiController
         } elseif('down' == $strVote) {
             Gateway::getVote()->addVote($modelUser, $modelVideo, 0);
         }
+
+        // Refresh my video
+        $modelVideo = Gateway::getInstance()
+            ->getVideo()
+            ->getByVideoId($strVideoId, $modelUser);
+
+        // hack for no view
+        echo json_encode(
+            [
+                "ups" => $modelVideo->getVotesUp(),
+                "downs" => $modelVideo->getVotesDown()
+            ]
+        );
     }
 
     public function getUpload()
@@ -481,7 +493,7 @@ class VideoController extends ApiController
         $this->view->assign('form', $form);
     }
 
-    public function postUpload_API()
+    public function postUpload()
     {
         if ("true" === getenv("NO_UPLOADS")) {
             $this->_redirect('/');

@@ -41,11 +41,30 @@ class Edit extends Form
     public function init()
     {
         $subform = new SubForm($this->_modelVideo);
+
         $submit = new Submit('Save');
-        $submit->setAttribs(array('style' => 'clear:both; width: 140px; height: 40px;'));
+        $submit->setAttrib("class", "btn btn-primary");
 
         $this->addSubForm($subform, 'Video');
         $this->addElement($submit);
-        $this->setAttribs(array('style' => 'width: 800px; margin: 0 auto;'));
+
+        // subform would need special decorators
+
+        $this->setElementDecorators(
+            [
+                'ViewHelper',
+                'Label',
+                ['HtmlTag', ['tag' => 'div', 'class' => 'form-group']]
+            ]
+        );
+
+        $this->setElementDecorators(
+            [
+                'ViewHelper'
+            ],
+            [
+                "Save"
+            ]
+        );
     }
 }

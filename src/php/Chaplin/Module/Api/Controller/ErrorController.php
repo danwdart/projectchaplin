@@ -30,7 +30,7 @@ use Zend_Controller_Plugin_ErrorHandler as ErrorHandler;
 
 class ErrorController extends Controller
 {
-    public function getError()
+    public function allError()
     {
         $errors = $this->_getParam('error_handler');
 

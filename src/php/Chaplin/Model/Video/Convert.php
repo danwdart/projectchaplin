@@ -63,7 +63,7 @@ class Chaplin_Model_Video_Convert
             ->getVideo()
             ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
 
-        $strFullPath = APPLICATION_PATH.'/../public';
+        $strFullPath = APPLICATION_PATH.'/public';
 
         $strFilenameRawFullPath = $strFullPath.$modelVideo->getFilename();
 
