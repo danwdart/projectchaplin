@@ -24,7 +24,7 @@
 **/
 namespace Chaplin\Application\Bootstrap;
 
-use Chaplin_Config_Sessions as ConfigSessions;
+use Chaplin\Config\Sessions as ConfigSessions;
 use Chaplin_Controller_Action_Helper_RestContextSwitch as RestContextSwitch;
 use Chaplin_Controller_Plugin_Acl as PluginAcl;
 use Chaplin_Controller_Plugin_Api as PluginApi;

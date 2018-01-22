@@ -22,58 +22,48 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-abstract class Chaplin_Config_Abstract
+namespace Chaplin\Config;
+
+use Chaplin\Config\Exception\{
+    ConfigClassNotFound as ConfigClassNotFoundException,
+    FileLinkNotFound as FileLinkNotFoundException,
+    FileNotFound as FileNotFoundException,
+    NonexistentKey as NonexistentKeyException,
+    UnknownConfigFile as UnknownConfigFileException
+};
+use Chaplin\Interfaces\MultiSingleton as MultiSingletonInterface;
+use Chaplin\Traits\MultiSingleton as MultiSingletonTrait;
+
+abstract class ConfigAbstract implements MultiSingletonInterface
 {
-    private static $_arrInstances;
+    use MultiSingletonTrait;
+
+    const CONFIG_TEMPLATE = "Zend_Config_";
 
     protected $_zendConfig;
-
-    public static function getInstance()
-    {
-        $strClass = get_called_class();
-        if(isset(self::$_arrInstances[$strClass])) {
-            return self::$_arrInstances[$strClass];
-        }
-
-        $instance = new $strClass();
-        self::$_arrInstances[$strClass] = $instance;
-        return $instance;
-    }
-
-    public static function inject(Chaplin_Config_Abstract $mockInstance)
-    {
-        $strClass = get_called_class();
-        self::$_arrInstances[$strClass] = $mockInstance;
-        return $mockInstance;
-    }
-
-    public static function reset()
-    {
-        self::$_arrInstances = array();
-    }
 
     private function __construct()
     {
         $strConfigFile = $this->_getConfigFile();
 
         if (empty($strConfigFile)) {
-            throw new Exception('Unknown config file for class '.get_class($this));
+            throw new UnknownConfigFileException(get_class($this));
         }
 
         if (!realpath($strConfigFile)) {
-            throw new Exception('Cannot find file link '.$strConfigFile);
+            throw new FileLinkNotFoundException($strConfigFile);
         }
 
         $strConfigFile = realpath($strConfigFile);
 
         if(!file_exists($strConfigFile)) {
-            throw new Exception('Config file '.$strConfigFile.' not found.');
+            throw new FileNotFoundException($strConfigFile);
         }
 
-        $strConfigClass = 'Zend_Config_'.ucwords($this->_getConfigType());
+        $strConfigClass = self::CONFIG_TEMPLATE.ucwords($this->_getConfigType());
 
         if(!class_exists($strConfigClass)) {
-            throw new Exception('Config class '.$strConfigClass.' does not exist');
+            throw new ConfigClassNotFoundException($strConfigClass);
         }
 
         $this->_zendConfig = new $strConfigClass(
@@ -89,9 +79,7 @@ abstract class Chaplin_Config_Abstract
     protected function _getValue($strValue, $strKey)
     {
         if(is_null($strValue)) {
-            throw new Exception(
-                'Nonexistent key: '.$strKey.' on '.APPLICATION_ENV
-            );
+            throw new NonexistentKeyException($strKey, APPLICATION_ENV);
         }
 
         return $strValue;

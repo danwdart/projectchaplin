@@ -22,6 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+use Chaplin\Config\Amqp as ConfigAmqp;
 use PhpAmqpLib\Connection\AMQPStreamConnection as Connection;
 use PhpAmqpLib\Message\AMQPMessage as Message;
 
@@ -58,7 +59,7 @@ class Chaplin_Dao_Amqp_Exchange
 
         $this->_strExchangeName = $strExchangeName;
 
-        $arrExchanges = Chaplin_Config_Amqp::getInstance()
+        $arrExchanges = ConfigAmqp::getInstance()
             ->getConfigArray();
 
         if (!isset($arrExchanges[$strExchangeName])

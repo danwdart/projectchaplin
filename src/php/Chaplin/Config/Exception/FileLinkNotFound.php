@@ -22,24 +22,14 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-namespace Chaplin\Config;
+namespace Chaplin\Config\Exception;
 
-class Amqp extends ConfigAbstract
+class FileLinkNotFound extends ExceptionAbstract
 {
-    const CONFIG_TYPE = 'Json';
+    const MESSAGE = "Cannot find file link %s";
 
-    protected function _getConfigType()
+    public function __construct($strFile)
     {
-        return self::CONFIG_TYPE;
-    }
-
-    protected function _getConfigFile()
-    {
-        return APPLICATION_PATH.'/config/amqp.json';
-    }
-
-    public function getConfigArray()
-    {
-        return $this->_getValue($this->_zendConfig->exchanges, 'exchanges')->toArray();
+        parent::__construct(sprintf(self::MESSAGE, $strFile));
     }
 }

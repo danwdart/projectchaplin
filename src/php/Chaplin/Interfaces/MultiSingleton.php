@@ -22,24 +22,11 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-namespace Chaplin\Config;
+declare(strict_types=1);
 
-class Amqp extends ConfigAbstract
+namespace Chaplin\Interfaces;
+
+interface MultiSingleton
 {
-    const CONFIG_TYPE = 'Json';
-
-    protected function _getConfigType()
-    {
-        return self::CONFIG_TYPE;
-    }
-
-    protected function _getConfigFile()
-    {
-        return APPLICATION_PATH.'/config/amqp.json';
-    }
-
-    public function getConfigArray()
-    {
-        return $this->_getValue($this->_zendConfig->exchanges, 'exchanges')->toArray();
-    }
+    public static function getInstance();
 }
