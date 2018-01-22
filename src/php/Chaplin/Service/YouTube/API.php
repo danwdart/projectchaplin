@@ -34,7 +34,8 @@ class Chaplin_Service_YouTube_API
         $youtube = new Google_Service_YouTube($client);
 
         return $youtube->search->listSearch(
-            'id,snippet', [
+            'id,snippet',
+            [
             'q' => $strSearchTerm,
             //'pageToken' => $page,
             'maxResults' => $intLimit,
@@ -53,7 +54,8 @@ class Chaplin_Service_YouTube_API
         $youtube = new Google_Service_YouTube($client);
 
         $list = $youtube->videos->listVideos(
-            'id,snippet', [
+            'id,snippet',
+            [
             'id' => $strId
             ]
         );
@@ -69,7 +71,8 @@ class Chaplin_Service_YouTube_API
         $youtube = new Google_Service_YouTube($client);
 
         $list = $youtube->channels->listChannels(
-            'id,snippet', [
+            'id,snippet',
+            [
             'forUsername' => $strSearchTerm
             ]
         );

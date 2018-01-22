@@ -30,11 +30,9 @@ use Chaplin_Dao_Exception_User_NotFound as ExceptionUserNotFound;
 use Chaplin_Gateway as Gateway;
 use Chaplin_Model_User as ModelUser;
 use Chaplin_Model_User_Helper_UserType as UserType;
-use Chaplin\Module\Api\Form\Auth\{
-    Forgot as FormForgot,
-    Login as FormLogin,
-    Validate as FormValidate
-};
+use Chaplin\Module\Api\Form\Auth\Forgot as FormForgot;
+use Chaplin\Module\Api\Form\Auth\Login as FormLogin;
+use Chaplin\Module\Api\Form\Auth\Validate as FormValidate;
 use Chaplin\Module\Api\Form\UserData\Create as FormCreateUser;
 use Exception;
 use Zend_Controller_Action as Controller;
@@ -75,7 +73,7 @@ class LoginController extends Controller
         $username = $post['username'];
         $password = $post['password'];
 
-        if(isset($post['Register'])) {
+        if (isset($post['Register'])) {
             $this->_redirect('/login/register');
             return;
         }
@@ -85,12 +83,12 @@ class LoginController extends Controller
             return;
         }
 
-        if(!$form->isValid($post)) {
+        if (!$form->isValid($post)) {
             $this->view->assign('form', $form);
             return;
         }
 
-        if(!isset($post['Login'])) {
+        if (!isset($post['Login'])) {
             $form->password->addError('Invalid Action');
             $this->view->assign('form', $form);
             return;
@@ -99,7 +97,7 @@ class LoginController extends Controller
         $adapter = new AuthAdapterDB($username, $password);
         $auth = Auth::getInstance();
         $auth->authenticate($adapter);
-        if(!$auth->hasIdentity()) {
+        if (!$auth->hasIdentity()) {
             $form->password->addError('Wrong username or password.');
             $form->markAsError();
             return $this->view->assign('form', $form);
@@ -140,7 +138,7 @@ class LoginController extends Controller
 
         $post = $this->_request->getPost();
 
-        if(!$form->isValid($post)) {
+        if (!$form->isValid($post)) {
             return $this->view->assign('form', $form);
         }
 
@@ -167,7 +165,7 @@ class LoginController extends Controller
             $form->username->addError('Could not create account - a user aleady exists with that name');
             $form->markAsError();
             $this->view->assign('form', $form);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $form->username->addError('Could not create account. Reason: '.$e->getMessage());
             $form->markAsError();
             $this->view->assign('form', $form);
@@ -199,7 +197,6 @@ class LoginController extends Controller
 
             Gateway::getEmail()
                 ->resetPassword($modelUser);
-
         } catch (ExceptionUserNotFound $e) {
         }
 

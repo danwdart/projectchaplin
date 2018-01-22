@@ -81,7 +81,8 @@ class Chaplin_Service implements SingletonInterface
     {
         $objClient = new Chaplin_Http_Client();
         $objCache  = new CacheHttpClient(
-            $objClient, $this->_getCache()
+            $objClient,
+            $this->_getCache()
         );
         return new Chaplin_Service_Http_Client($objCache);
     }

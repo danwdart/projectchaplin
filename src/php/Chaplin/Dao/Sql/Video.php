@@ -22,9 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Dao_Sql_Video
-    extends Chaplin_Dao_Sql_Abstract
-    implements Chaplin_Dao_Interface_Video
+class Chaplin_Dao_Sql_Video extends Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface_Video
 {
     const TABLE = 'Videos';
 
@@ -44,7 +42,7 @@ class Chaplin_Dao_Sql_Video
     {
         $strSql = 'SELECT * FROM %s WHERE '.
             Chaplin_Model_Video::FIELD_PRIVACY.' = "'.Chaplin_Model_Video_Privacy::ID_PUBLIC.
-            ((is_null($modelUser))? '"' : 
+            ((is_null($modelUser))? '"' :
             '" OR '.
             Chaplin_Model_Video::FIELD_USERNAME .' = "'.$modelUser->getUsername().'"').
             ' ORDER BY TimeCreated DESC';
@@ -60,13 +58,13 @@ class Chaplin_Dao_Sql_Video
             ', (SELECT Vote FROM Votes WHERE VideoId = ? '.((is_null($modelUser))?'':'AND Username = ?').' LIMIT 1) AS YourVote'.
             ' FROM %s WHERE %s = ? AND ('.
             Chaplin_Model_Video::FIELD_PRIVACY.' = "'.Chaplin_Model_Video_Privacy::ID_PUBLIC.
-            ((is_null($modelUser))? '")' : 
+            ((is_null($modelUser))? '")' :
             '" OR '.
             Chaplin_Model_Video::FIELD_USERNAME .' = "'.$modelUser->getUsername().'")');
 
         $arrRow = $this->_getAdapter()->fetchRow(
             sprintf($strSql, self::TABLE, self::PK),
-            (is_null($modelUser) ? 
+            (is_null($modelUser) ?
                 [$strVideoId, $strVideoId, $strVideoId, $strVideoId]:
                 [$strVideoId, $strVideoId, $strVideoId, $modelUser->getUsername(), $strVideoId]
             )
@@ -94,7 +92,7 @@ class Chaplin_Dao_Sql_Video
         return $this->_delete($modelVideo);
     }
 
-    protected function _sqlToModel(Array $arrSql)
+    protected function _sqlToModel(array $arrSql)
     {
         $arrModel = parent::_sqlToModel($arrSql);
         unset($arrModel['Fb_Pos']);
@@ -108,7 +106,7 @@ class Chaplin_Dao_Sql_Video
         return $arrModel;
     }
 
-    protected function _modelToSql(Array $arrModel)
+    protected function _modelToSql(array $arrModel)
     {
         $arrSql = parent::_modelToSql($arrModel);
         if (isset($arrSql[Chaplin_Model_Video::FIELD_TIMECREATED])) {

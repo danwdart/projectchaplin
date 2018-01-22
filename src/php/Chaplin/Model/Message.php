@@ -22,8 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-abstract class Chaplin_Model_Message
-    extends Chaplin_Model_Field_Hash
+abstract class Chaplin_Model_Message extends Chaplin_Model_Field_Hash
 {
     const FIELD_MESSAGEID = 'MessageId';
     const FIELD_MAILTEMPLATE = 'MailTemplate';
@@ -64,8 +63,8 @@ abstract class Chaplin_Model_Message
         $strSubject,
         $strText,
         $intPriority = self::PRIORITY_NORMAL
-    )
-    {
+    ) {
+    
         $modelMessage = new static();
         $modelMessage->_setField(self::FIELD_MESSAGEID, md5(uniqid()));
         $modelMessage->_setField(
@@ -111,7 +110,7 @@ abstract class Chaplin_Model_Message
             $modelUser = Chaplin_Gateway::getInstance()
             ->getUser()
             ->getByUsername($strUsername);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return;
         }
 

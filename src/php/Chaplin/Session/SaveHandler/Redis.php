@@ -31,8 +31,7 @@
  */
 use Chaplin\Config\Sessions as ConfigSessions;
 
-class Chaplin_Session_SaveHandler_Redis
-    implements Zend_Session_SaveHandler_Interface
+class Chaplin_Session_SaveHandler_Redis implements Zend_Session_SaveHandler_Interface
 {
     const c_ZNAME = 'Chaplin_SessionSet';
 

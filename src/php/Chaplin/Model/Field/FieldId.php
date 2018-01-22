@@ -22,8 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_Field_FieldId
-    extends Chaplin_Model_Field_Abstract
+class Chaplin_Model_Field_FieldId extends Chaplin_Model_Field_Abstract
 {
     private $_mixedValue;
     
@@ -45,4 +44,4 @@ class Chaplin_Model_Field_FieldId
     {
         return $this->_mixedValue;
     }
-}  
+}

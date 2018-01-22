@@ -15,7 +15,7 @@ trait MultiSingleton
     {
     }
 
-    public static function __callStatic($strMethod, Array $arrArgs)
+    public static function __callStatic($strMethod, array $arrArgs)
     {
         $strClass = get_called_class();
 
@@ -28,7 +28,7 @@ trait MultiSingleton
     public static function getInstance()
     {
         $strClass = get_called_class();
-        if(isset(self::$_arrInstances[$strClass])) {
+        if (isset(self::$_arrInstances[$strClass])) {
             return self::$_arrInstances[$strClass];
         }
 

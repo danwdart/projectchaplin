@@ -126,8 +126,8 @@ class Chaplin_Service_Http_Client
         $strURL,
         $intLogPriority = Zend_Log::ERR,
         $bCache = true
-    )
-    {
+    ) {
+    
         return $this->_objHttpClient->getHttpResponse(
             $strURL,
             $intLogPriority,

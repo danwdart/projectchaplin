@@ -22,8 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Gateway_Video
-    extends Chaplin_Gateway_Abstract
+class Chaplin_Gateway_Video extends Chaplin_Gateway_Abstract
 {
     private $_daoVideo;
 
@@ -54,7 +53,7 @@ class Chaplin_Gateway_Video
     
     public function getBySearchTerms($strSearchTerms)
     {
-        return $this->_daoVideo->getBySearchTerms($strSearchTerms);   
+        return $this->_daoVideo->getBySearchTerms($strSearchTerms);
     }
 
     public function delete(Chaplin_Model_Video $modelVideo)

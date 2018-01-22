@@ -22,9 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_Video_Vimeo
-    extends Chaplin_Model_Field_Hash
-    implements Chaplin_Model_Interface_Message
+class Chaplin_Model_Video_Vimeo extends Chaplin_Model_Field_Hash implements Chaplin_Model_Interface_Message
 {
     const FIELD_VIMEOID = 'VimeoId';
     const FIELD_VIDEOID = 'VideoId';

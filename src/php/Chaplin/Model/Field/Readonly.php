@@ -22,15 +22,14 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_Field_Readonly
-    extends Chaplin_Model_Field_Abstract
+class Chaplin_Model_Field_Readonly extends Chaplin_Model_Field_Abstract
 {
     private $_mixedValue;
     
     public function setFromData($mixedValue)
     {
         $this->_mixedValue = $mixedValue;
-    }       
+    }
     
     public function setValue($mixedValue)
     {
@@ -43,4 +42,4 @@ class Chaplin_Model_Field_Readonly
             $mixedDefault:
             $this->_mixedValue;
     }
-}  
+}

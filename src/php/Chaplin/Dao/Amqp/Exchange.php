@@ -26,8 +26,7 @@ use Chaplin\Config\Amqp as ConfigAmqp;
 use PhpAmqpLib\Connection\AMQPStreamConnection as Connection;
 use PhpAmqpLib\Message\AMQPMessage as Message;
 
-class Chaplin_Dao_Amqp_Exchange
-    implements Chaplin_Dao_Interface
+class Chaplin_Dao_Amqp_Exchange implements Chaplin_Dao_Interface
 {
     const CONFIG_TYPE = 'Type';
     const CONFIG_FLAGS = 'Flags';
@@ -77,8 +76,8 @@ class Chaplin_Dao_Amqp_Exchange
 
     private static function _getConnection(
         string $strType
-    ): Connection
-    {
+    ): Connection {
+    
         if (is_null(self::$_amqpConnections[$strType])) {
             self::$_amqpConnections[$strType] = new Connection(
                 getenv("AMQP_HOST"),
@@ -152,7 +151,7 @@ class Chaplin_Dao_Amqp_Exchange
             $arrFlags[self::FLAG_AUTODELETE] ?? false
         );
 
-        foreach($arrKeys as $strQueueKey) {
+        foreach ($arrKeys as $strQueueKey) {
             $strBindingKey = is_null($strQueueKey)?'#':$strQueueKey;
             $channel->queue_bind(
                 $strQueue,
@@ -228,8 +227,8 @@ class Chaplin_Dao_Amqp_Exchange
     public function publish(
         Chaplin_Model_Field_Hash $message,
         $strRoutingKey
-    ) : void
-    {
+    ) : void {
+    
         $connection = $this->_getConnection(self::TYPE_READ);
         $channel = $connection->channel();
 

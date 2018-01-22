@@ -37,7 +37,7 @@ class UserController extends ApiController
     public function getIndex()
     {
         $strUsername = $this->_request->getParam('id', null);
-        if(is_null($strUsername)) {
+        if (is_null($strUsername)) {
             $this->_redirect('/');
             return;
         }
@@ -46,7 +46,7 @@ class UserController extends ApiController
             $modelUser = Gateway::getInstance()
              ->getUser()
              ->getByUsername($strUsername);
-        } catch(ExceptionUserNotFound $e) {
+        } catch (ExceptionUserNotFound $e) {
             $this->_redirect('/');
         }
 
@@ -70,7 +70,7 @@ class UserController extends ApiController
         $form->fullname->setValue($user->getNick());
         $form->email->setValue($user->getEmail());
 
-        if(!$this->_request->isPost()) {
+        if (!$this->_request->isPost()) {
             return $this->view->assign('form', $form);
         }
     }
@@ -78,7 +78,7 @@ class UserController extends ApiController
     public function postIndex()
     {
         $strUsername = $this->_request->getParam('id', null);
-        if(is_null($strUsername)) {
+        if (is_null($strUsername)) {
             $this->_redirect('/');
             return;
         }
@@ -87,7 +87,7 @@ class UserController extends ApiController
             $modelUser = Gateway::getInstance()
              ->getUser()
              ->getByUsername($strUsername);
-        } catch(ExceptionUserNotFound $e) {
+        } catch (ExceptionUserNotFound $e) {
             $this->_redirect('/');
         }
 
@@ -109,11 +109,11 @@ class UserController extends ApiController
 
         $post = $this->_request->getPost();
 
-        if(!$form->isValid($post)) {
+        if (!$form->isValid($post)) {
             return $this->view->assign('form', $form);
         }
 
-        if(!isset($post['Update'])) {
+        if (!isset($post['Update'])) {
             $form->Update->addError('Invalid Request');
             return $this->view->assign('form', $form);
         }
@@ -124,15 +124,14 @@ class UserController extends ApiController
         $email = $post['email'];
         $fullname = $post['fullname'];
 
-        if(!$user->verifyPassword($oldpassword)) {
+        if (!$user->verifyPassword($oldpassword)) {
             $form->oldpassword->addError('Incorrect old password.');
             return $this->view->assign('form', $form);
         }
         // @TODO add valid email
         // @TODO add valid Username
         // @TODO add valid password
-        try
-        {
+        try {
             if (!empty($password) && !empty($password2) && $password == $password2) {
                 $user->setPassword($password);
             }
@@ -140,9 +139,7 @@ class UserController extends ApiController
             $user->setNick($fullname);
             $user->save();
             $this->_redirect('/');
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             $form->Save->addError('An error occurred whilst saving your details. Please try again.');
             return $this->view->assign('form', $form);
         }
@@ -152,7 +149,7 @@ class UserController extends ApiController
     {
         $strUsername = $this->_request->getParam('id', null);
 
-        if(is_null($strUsername)) {
+        if (is_null($strUsername)) {
             $this->view->assign([]);
             return;
         }
@@ -161,7 +158,7 @@ class UserController extends ApiController
             $modelUser = Gateway::getInstance()
              ->getUser()
              ->getByUsername($strUsername);
-        } catch(ExceptionUserNotFound $e) {
+        } catch (ExceptionUserNotFound $e) {
             $this->view->assign($modelUser->toArray());
             return;
         }

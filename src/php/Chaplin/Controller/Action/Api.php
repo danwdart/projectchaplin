@@ -1,12 +1,12 @@
 <?php
-class Chaplin_Controller_Action_Api
-    extends Zend_Controller_Action
+class Chaplin_Controller_Action_Api extends Zend_Controller_Action
 {
     final public function init()
     {
         $this->_helper->getHelper('restContextSwitch')
             ->setContext(
-                'html', [
+                'html',
+                [
                  'suffix'    => '',
                  'headers'   => [
                      'Content-Type' => 'text/html; Charset=UTF-8',

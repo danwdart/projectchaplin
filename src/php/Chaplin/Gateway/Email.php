@@ -1,6 +1,5 @@
 <?php
-class Chaplin_Gateway_Email
-    extends Chaplin_Gateway_Abstract
+class Chaplin_Gateway_Email extends Chaplin_Gateway_Abstract
 {
     private $_daoExchange;
 
@@ -14,16 +13,16 @@ class Chaplin_Gateway_Email
         $strSubject,
         $strTemplate,
         $arrParams
-    )
-    {
+    ) {
+    
 
         $this->_daoExchange->email($modelUser, $strSubject, $strTemplate, $arrParams);
     }
 
     public function videoFinished(
         Chaplin_Model_Video $modelVideo
-    )
-    {
+    ) {
+    
 
         $strUsername = $modelVideo->getUsername();
         $modelUser = Chaplin_Gateway::getUser()->getByUsername($strUsername);
@@ -41,8 +40,8 @@ class Chaplin_Gateway_Email
 
     public function resetPassword(
         Chaplin_Model_User $modelUser
-    )
-    {
+    ) {
+    
         $strVhost = getenv("VHOST");
 
         $strValidationToken = $modelUser->resetPassword();

@@ -60,7 +60,7 @@ class SearchController extends ApiController
         $strSearchTerm = htmlentities($strSearchTerm);
         $this->view->strTitle = $strSearchTerm.': Search - Chaplin';
 
-        if(is_null($strSearchTerm)) {
+        if (is_null($strSearchTerm)) {
             $this->_redirect('/');
             return;
         }
@@ -104,7 +104,7 @@ class SearchController extends ApiController
     {
         $strSearchTerm = htmlentities($this->_request->getQuery('search'));
 
-        if(is_null($strSearchTerm)) {
+        if (is_null($strSearchTerm)) {
             $this->view->assign([]);
             return;
         }
@@ -123,7 +123,7 @@ class SearchController extends ApiController
         $strSearchTerm = $this->_request->getQuery('search');
         $strSearchTerm = htmlentities($strSearchTerm);
 
-        if(is_null($strSearchTerm)) {
+        if (is_null($strSearchTerm)) {
             $this->_redirect('/');
             return;
         }

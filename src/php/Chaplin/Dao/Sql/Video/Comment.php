@@ -22,9 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Dao_Sql_Video_Comment
-    extends Chaplin_Dao_Sql_Abstract
-    implements Chaplin_Dao_Interface_Video_Comment
+class Chaplin_Dao_Sql_Video_Comment extends Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface_Video_Comment
 {
     const TABLE = 'Videos_Comments';
 
@@ -74,7 +72,7 @@ class Chaplin_Dao_Sql_Video_Comment
         return $this->_deleteWhere($this->_getPrimaryKey(), $strCommentId);
     }
 
-    protected function _sqlToModel(Array $arrSql)
+    protected function _sqlToModel(array $arrSql)
     {
         $arrModel = parent::_sqlToModel($arrSql);
         return $arrModel;
@@ -88,7 +86,7 @@ class Chaplin_Dao_Sql_Video_Comment
     public function convertToModel($arrData)
     {
         return Chaplin_Model_Video_Comment::createFromData(
-            $this, 
+            $this,
             $this->_sqlToModel($arrData)
         );
     }

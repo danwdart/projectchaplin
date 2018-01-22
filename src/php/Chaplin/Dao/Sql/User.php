@@ -56,7 +56,7 @@ class Chaplin_Dao_Sql_User extends Chaplin_Dao_Sql_Abstract implements Chaplin_D
 
         $arrRow = $this->_getAdapter()->fetchRow(sprintf($strSql, self::TABLE), $arrCredentials);
 
-        if(empty($arrRow)) {
+        if (empty($arrRow)) {
             throw new Chaplin_Dao_Exception_User_NotFound();
         }
 
@@ -69,7 +69,7 @@ class Chaplin_Dao_Sql_User extends Chaplin_Dao_Sql_Abstract implements Chaplin_D
 
         $arrRow = $this->_getAdapter()->fetchRow(sprintf($strSql, self::TABLE), $strUsername);
 
-        if(empty($arrRow)) {
+        if (empty($arrRow)) {
             throw new Chaplin_Dao_Exception_User_NotFound();
         }
 

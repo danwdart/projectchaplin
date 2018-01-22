@@ -49,7 +49,7 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
 
     protected function _getAdapter()
     {
-        if(!self::$_zendDb instanceof Zend_Db_Adapter_Abstract) {
+        if (!self::$_zendDb instanceof Zend_Db_Adapter_Abstract) {
             throw new Chaplin_Dao_Sql_Exception_NoAdapter();
         }
         return self::$_zendDb;
@@ -61,19 +61,19 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
 
     abstract public function convertToModel($arrData);
 
-    protected function _modelToSql(Array $arrModel)
+    protected function _modelToSql(array $arrModel)
     {
         return $arrModel;
     }
 
-    protected function _sqlToModel(Array $arrSql)
+    protected function _sqlToModel(array $arrSql)
     {
         return $arrSql;
     }
 
     private function _textToSafe($strText)
     {
-        if('UTF-8' != mb_detect_encoding($strText)) {
+        if ('UTF-8' != mb_detect_encoding($strText)) {
             $strText = mb_convert_encoding($strText, 'UTF-8');
         }
         return $strText;
@@ -120,21 +120,21 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
         return $this->_deleteWhere($this->_getPrimaryKey(), $strId);
     }
 
-    private function _getUpdateArray(Array $collFields)
+    private function _getUpdateArray(array $collFields)
     {
         $arrUpdate = array();
-        foreach($collFields as $strFieldName => $objField) {
-            if($objField->bIsDirty()) {
+        foreach ($collFields as $strFieldName => $objField) {
+            if ($objField->bIsDirty()) {
                 $strClass = get_class($objField);
-                switch($strClass) {
-                case 'Chaplin_Model_Field_Field':
-                case 'Chaplin_Model_Field_FieldId':
-                    $arrUpdate[$strFieldName] = $this->_textToSafe($objField->getValue(null));
-                    break;
-                case 'Chaplin_Model_Field_Readonly':
-                    break;
-                default:
-                    throw new Exception('Unmanaged class: '.$strClass);
+                switch ($strClass) {
+                    case 'Chaplin_Model_Field_Field':
+                    case 'Chaplin_Model_Field_FieldId':
+                        $arrUpdate[$strFieldName] = $this->_textToSafe($objField->getValue(null));
+                        break;
+                    case 'Chaplin_Model_Field_Readonly':
+                        break;
+                    default:
+                        throw new Exception('Unmanaged class: '.$strClass);
                 }
             }
         }

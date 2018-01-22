@@ -31,12 +31,10 @@ use Chaplin_Gateway as Gateway;
 use Chaplin_Model_Video as ModelVideo;
 use Chaplin_Model_Video_Comment as ModelComment;
 use Chaplin_Model_Video_Convert as ModelConvert;
-use Chaplin\Module\Api\Form\Video\{
-    Comment as FormComment,
-    Edit as FormEdit,
-    Name as FormName,
-    Upload as FormUpload
-};
+use Chaplin\Module\Api\Form\Video\Comment as FormComment;
+use Chaplin\Module\Api\Form\Video\Edit as FormEdit;
+use Chaplin\Module\Api\Form\Video\Name as FormName;
+use Chaplin\Module\Api\Form\Video\Upload as FormUpload;
 use Chaplin_Service as Service;
 use Exception;
 use Misd\Linkify\Linkify;
@@ -53,7 +51,7 @@ class VideoController extends ApiController
             null;
 
         $strVideoId = $this->_request->getParam('id', null);
-        if(is_null($strVideoId)) {
+        if (is_null($strVideoId)) {
             $this->_redirect('/');
             return;
         }
@@ -98,7 +96,7 @@ class VideoController extends ApiController
 
         $strVideoId = $this->_request->getParam('id', null);
 
-        if(is_null($strVideoId)) {
+        if (is_null($strVideoId)) {
             $this->_redirect('/');
             return;
         }
@@ -129,12 +127,12 @@ class VideoController extends ApiController
 
         $formComment = new FormComment();
 
-        if(!Auth::getInstance()->hasIdentity()) {
+        if (!Auth::getInstance()->hasIdentity()) {
             $this->_redirect('/login');
             return;
         }
 
-        if(!$formComment->isValid($this->_request->getPost())) {
+        if (!$formComment->isValid($this->_request->getPost())) {
             $this->view->assign('formComment', $formComment);
             return;
         }
@@ -169,7 +167,7 @@ class VideoController extends ApiController
 
         $strVideoId = $this->_request->getParam('id', null);
 
-        if(is_null($strVideoId)) {
+        if (is_null($strVideoId)) {
             $this->view->assign([]);
             return;
         }
@@ -228,7 +226,7 @@ class VideoController extends ApiController
     public function getWatchyoutube()
     {
         $strVideoId = $this->_request->getParam('id', null);
-        if(is_null($strVideoId)) {
+        if (is_null($strVideoId)) {
             $this->_redirect('/');
             return;
         }
@@ -278,7 +276,7 @@ class VideoController extends ApiController
         }
 
         $strVideoId = $this->_request->getParam('id', null);
-        if(is_null($strVideoId)) {
+        if (is_null($strVideoId)) {
             $this->_redirect('/');
             return;
         }
@@ -295,7 +293,7 @@ class VideoController extends ApiController
     public function getWatchvimeo()
     {
         $strVideoId = $this->_request->getParam('id', null);
-        if(is_null($strVideoId)) {
+        if (is_null($strVideoId)) {
             $this->_redirect('/');
             return;
         }
@@ -343,7 +341,7 @@ class VideoController extends ApiController
         }
 
         $strVideoId = $this->_request->getParam('id', null);
-        if(is_null($strVideoId)) {
+        if (is_null($strVideoId)) {
             $this->_redirect('/');
             return;
         }
@@ -362,7 +360,7 @@ class VideoController extends ApiController
         $this->_helper->layout()->disableLayout();
 
         $strVideoId = $this->_request->getParam('id', null);
-        if(is_null($strVideoId)) {
+        if (is_null($strVideoId)) {
             throw new Exception('Invalid video');
         }
 
@@ -375,7 +373,7 @@ class VideoController extends ApiController
     public function getComments_API()
     {
         $strVideoId = $this->_request->getParam('id', null);
-        if(is_null($strVideoId)) {
+        if (is_null($strVideoId)) {
             throw new Exception('Invalid video');
         }
 
@@ -414,7 +412,7 @@ class VideoController extends ApiController
         $this->_helper->viewRenderer->setNoRender(true);
 
         $strVideoId = $this->_request->getParam('id', null);
-        if(is_null($strVideoId)) {
+        if (is_null($strVideoId)) {
             $this->_redirect('/');
             return;
         }
@@ -432,10 +430,12 @@ class VideoController extends ApiController
         // read/etc/protect later?
         $strPath = realpath(APPLICATION_PATH.'/../public'.$modelVideo->getFilename());
         $this->getResponse()->setHeader(
-            'Content-Type', 'video/webm'
+            'Content-Type',
+            'video/webm'
         );
         $this->getResponse()->setHeader(
-            'Content-Disposition', 'attachment; filename='.basename($modelVideo->getFilename())
+            'Content-Disposition',
+            'attachment; filename='.basename($modelVideo->getFilename())
         );
         echo file_get_contents($strPath);
     }
@@ -456,14 +456,14 @@ class VideoController extends ApiController
         $this->_helper->viewRenderer->setNoRender(true);
 
         $strVote = $this->_request->getParam('vote', null);
-        if(is_null($strVideoId)) {
+        if (is_null($strVideoId)) {
             $this->_redirect('/');
             return;
         }
 
         if ('up' == $strVote) {
             Gateway::getVote()->addVote($modelUser, $modelVideo, 1);
-        } elseif('down' == $strVote) {
+        } elseif ('down' == $strVote) {
             Gateway::getVote()->addVote($modelUser, $modelVideo, 0);
         }
 
@@ -502,13 +502,13 @@ class VideoController extends ApiController
 
         $form = new FormUpload();
 
-        if(!$form->isValid($this->_request->getPost())) {
+        if (!$form->isValid($this->_request->getPost())) {
             return $this->view->assign('form', $form);
         }
         // We can't directly receive multiple files
 
         $adapter = $form->Files->getTransferAdapter();
-        foreach($adapter->getFileInfo() as $info) {
+        foreach ($adapter->getFileInfo() as $info) {
             if (!$adapter->receive($info['name'])) {
                 die(print_r($adapter->getMessages(), true));
             }
@@ -545,7 +545,7 @@ class VideoController extends ApiController
             $strError = Service::getInstance()
                 ->getEncoder()
                 ->getThumbnail($strFilename, $strPathToThumb, $ret);
-            if(0 != $ret) {
+            if (0 != $ret) {
                 die(var_dump($strError));
             }
 
@@ -636,7 +636,7 @@ class VideoController extends ApiController
 
         $strVideoId = $this->_request->getParam('id', null);
 
-        if(is_null($strVideoId)) {
+        if (is_null($strVideoId)) {
             $this->_redirect('/');
             return;
         }
@@ -668,7 +668,7 @@ class VideoController extends ApiController
 
         $strVideoId = $this->_request->getParam('id', null);
 
-        if(is_null($strVideoId)) {
+        if (is_null($strVideoId)) {
             $this->_redirect('/');
             return;
         }
@@ -685,7 +685,7 @@ class VideoController extends ApiController
 
         $arrVideos = $this->_request->getPost('Video', array());
 
-        if($modelVideo->isMine()) {
+        if ($modelVideo->isMine()) {
             $modelVideo->setFromAPIArray($arrVideos);
             $modelVideo->save();
         }
@@ -708,13 +708,13 @@ class VideoController extends ApiController
                 ->getUser():
             null;
 
-        if(!Auth::getInstance()->hasIdentity()) {
+        if (!Auth::getInstance()->hasIdentity()) {
             $this->_redirect('/login');
             return;
         }
 
         $strVideoId = $this->_request->getParam('id', null);
-        if(is_null($strVideoId)) {
+        if (is_null($strVideoId)) {
             $this->_redirect('/');
             return;
         }

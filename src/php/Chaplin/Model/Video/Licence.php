@@ -67,7 +67,7 @@ class Chaplin_Model_Video_Licence
     public static function getSelectOptions()
     {
         $arrOut = [];
-        foreach(self::$_arrInfo as $strId => $arrOption) {
+        foreach (self::$_arrInfo as $strId => $arrOption) {
             $arrOut[$strId] = $arrOption[self::FIELD_TEXT];
         }
         return $arrOut;

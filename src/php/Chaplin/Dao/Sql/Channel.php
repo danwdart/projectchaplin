@@ -22,9 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Dao_Sql_Channel
-    extends Chaplin_Dao_Sql_Abstract
-    implements Chaplin_Dao_Interface_Channel
+class Chaplin_Dao_Sql_Channel extends Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface_Channel
 {
     const TABLE = 'Channels';
     
@@ -53,13 +51,14 @@ class Chaplin_Dao_Sql_Channel
 
         $arrRow = $this->_getAdapter()->fetchRow(
             sprintf(
-                $strSql, 
+                $strSql,
                 self::TABLE,
                 self::PK
-            ), $strChannelId
+            ),
+            $strChannelId
         );
 
-        if(empty($arrRow)) {
+        if (empty($arrRow)) {
             throw new Exception('No Channel named '.$strChannelId);
         }
 

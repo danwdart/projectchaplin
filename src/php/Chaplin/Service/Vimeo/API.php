@@ -118,9 +118,11 @@ class Chaplin_Service_Vimeo_API
         }
 
         return $lib->request(
-            '/users/'.$strChannelId.'/videos', [
+            '/users/'.$strChannelId.'/videos',
+            [
             'page' => $intPage
-            ], 'GET'
+            ],
+            'GET'
         )['body'];
     }
 

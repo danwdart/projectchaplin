@@ -64,16 +64,16 @@ class PhpRedis extends Backend implements BackendInterface
         if (isset($options['phpredis'])) {
             $this->_redis = $options['phpredis'];
         } else {
-            if (empty($options['server']) ) {
+            if (empty($options['server'])) {
                 Cache::throwException('Redis \'server\' not specified.');
             }
 
-            if (empty($options['port']) ) {
+            if (empty($options['port'])) {
                 Cache::throwException('Redis \'port\' not specified.');
             }
 
             $this->_redis = new Redis;
-            if (! $this->_redis->connect($options['server'], $options['port']) ) {
+            if (! $this->_redis->connect($options['server'], $options['port'])) {
                 Cache::throwException("Could not connect to Redis server {$options['server']}:{$options['port']}");
             }
         }
@@ -83,15 +83,15 @@ class PhpRedis extends Backend implements BackendInterface
               Cache::throwException('The redis database could not be selected.');
         }
 
-        if (isset($options['notMatchingTags']) ) {
+        if (isset($options['notMatchingTags'])) {
             $this->_notMatchingTags = (bool) $options['notMatchingTags'];
         }
 
-        if (isset($options['exactMtime']) ) {
+        if (isset($options['exactMtime'])) {
             $this->_exactMtime = (bool) $options['exactMtime'];
         }
 
-        if (isset($options['automatic_cleaning_factor']) ) {
+        if (isset($options['automatic_cleaning_factor'])) {
             $this->_options['automatic_cleaning_factor'] = (int) $options['automatic_cleaning_factor'];
         } else {
             $this->_options['automatic_cleaning_factor'] = 20000;
@@ -146,7 +146,8 @@ class PhpRedis extends Backend implements BackendInterface
     **/
     public function save($data, $id, $tags = array(), $specificLifetime = false)
     {
-        if (!is_array($tags)) { $tags = array($tags);
+        if (!is_array($tags)) {
+            $tags = array($tags);
         }
 
         $lifetime = $this->getLifetime($specificLifetime);
@@ -158,7 +159,7 @@ class PhpRedis extends Backend implements BackendInterface
             $result = $this->_redis->set(self::PREFIX_DATA . $id, $data);
         }
 
-        if ($result == 'OK' ) {
+        if ($result == 'OK') {
             // Set the modified time
             if ($this->_exactMtime) {
                 if ($lifetime) {
@@ -334,7 +335,8 @@ class PhpRedis extends Backend implements BackendInterface
         $tags = (array) $this->_redis->sMembers(self::SET_TAGS);
         foreach ($tags as $tag) {
             $tagMembers = $this->_redis->sMembers(self::PREFIX_TAG_IDS . $tag);
-            if (! count($tagMembers)) { continue;
+            if (! count($tagMembers)) {
+                continue;
             }
             $expired = array();
             foreach ($tagMembers as $id) {
@@ -345,7 +347,8 @@ class PhpRedis extends Backend implements BackendInterface
                     $expired[] = $id;
                 }
             }
-            if (! count($expired)) { continue;
+            if (! count($expired)) {
+                continue;
             }
 
             if (count($expired) == count($tagMembers)) {
@@ -401,25 +404,21 @@ class PhpRedis extends Backend implements BackendInterface
 
         $result = true;
 
-        switch ($mode)
-        {
-        case Cache::CLEANING_MODE_MATCHING_TAG:
+        switch ($mode) {
+            case Cache::CLEANING_MODE_MATCHING_TAG:
+                $this->_removeByMatchingTags($tags);
+                break;
 
-            $this->_removeByMatchingTags($tags);
-            break;
+            case Cache::CLEANING_MODE_NOT_MATCHING_TAG:
+                $this->_removeByNotMatchingTags($tags);
+                break;
 
-        case Cache::CLEANING_MODE_NOT_MATCHING_TAG:
+            case Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+                $this->_removeByMatchingAnyTags($tags);
+                break;
 
-            $this->_removeByNotMatchingTags($tags);
-            break;
-
-        case Cache::CLEANING_MODE_MATCHING_ANY_TAG:
-
-            $this->_removeByMatchingAnyTags($tags);
-            break;
-
-        default:
-            Cache::throwException('Invalid mode for clean() method: '.$mode);
+            default:
+                Cache::throwException('Invalid mode for clean() method: '.$mode);
         }
         return (bool) $result;
     }
@@ -664,5 +663,4 @@ class PhpRedis extends Backend implements BackendInterface
         }
         $this->_redis->del(self::PREFIX_ID_TAGS . $id);
     }
-
 }
