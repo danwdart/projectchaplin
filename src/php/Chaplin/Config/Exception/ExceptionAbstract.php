@@ -22,24 +22,9 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-namespace Chaplin\Config;
+namespace Chaplin\Config\Exception;
 
-class Amqp extends ConfigAbstract
+class ExceptionAbstract extends \Exception
 {
-    const CONFIG_TYPE = 'Json';
 
-    protected function _getConfigType()
-    {
-        return self::CONFIG_TYPE;
-    }
-
-    protected function _getConfigFile()
-    {
-        return APPLICATION_PATH.'/config/amqp.json';
-    }
-
-    public function getConfigArray()
-    {
-        return $this->_getValue($this->_zendConfig->exchanges, 'exchanges')->toArray();
-    }
 }

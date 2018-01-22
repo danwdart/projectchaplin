@@ -22,6 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+use Chaplin\Config\Gateways as ConfigGateways;
 use Chaplin\Interfaces\Singleton as SingletonInterface;
 use Chaplin\Traits\Singleton as SingletonTrait;
 
@@ -31,7 +32,7 @@ class Chaplin_Gateway implements SingletonInterface
 
     public function getGateway($strName)
     {
-        $configGateways = Chaplin_Config_Gateways::getInstance();
+        $configGateways = ConfigGateways::getInstance();
         $strDaoType = $configGateways->getDaoType($strName);
         $param = $configGateways->getParam($strName);
 

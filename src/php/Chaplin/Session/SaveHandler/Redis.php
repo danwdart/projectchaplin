@@ -29,6 +29,8 @@
  * The original licence was BSD:
  * http://www.opensource.org/licenses/bsd-license.php
  */
+use Chaplin\Config\Sessions as ConfigSessions;
+
 class Chaplin_Session_SaveHandler_Redis
     implements Zend_Session_SaveHandler_Interface
 {
@@ -68,7 +70,7 @@ class Chaplin_Session_SaveHandler_Redis
             $options = $options->toArray();
         }
 
-        $configSessions = Chaplin_Config_Sessions::getInstance();
+        $configSessions = ConfigSessions::getInstance();
 
         // Set default lifetime
         $this->_options['lifetime'] =
