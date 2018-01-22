@@ -51,7 +51,7 @@ class Chaplin_Model_User_Helper_UserType
 
     public function __construct($intTypeId)
     {
-        if(!isset(self::$_arrTypes[$intTypeId])) {
+        if (!isset(self::$_arrTypes[$intTypeId])) {
             throw new Chaplin_Model_User_Helper_Exception_UnknownType($intTypeId);
         }
         $this->_intTypeId = $intTypeId;

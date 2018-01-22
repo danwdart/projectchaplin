@@ -76,16 +76,11 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         if (isset($this->_arrPageBody[$url])) {
             return $this->_arrPageBody[$url];
         }
-        try
-        {
+        try {
             $this->_zendHttpClient->setUri($url);
-        }
-        catch(Zend_Http_Client_Exception $e)
-        {
+        } catch (Zend_Http_Client_Exception $e) {
             throw new Chaplin_Http_Exception_InvalidURL($url, $e);
-        }
-        catch(Zend_Uri_Exception $e)
-        {
+        } catch (Zend_Uri_Exception $e) {
             Chaplin_Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url, $intLogPriority);
             throw new Chaplin_Http_Exception_InvalidURL($url, $e);
         }
@@ -119,17 +114,12 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         if (isset($this->_arrPageBody[$url])) {
             return $this->_arrPageBody[$url];
         }
-        try
-        {
+        try {
             $this->_zendHttpClient->setUri($url);
             $this->_zendHttpClient->setHeaders('Accept', 'application/json');
-        }
-        catch(Zend_Http_Client_Exception $e)
-        {
+        } catch (Zend_Http_Client_Exception $e) {
             throw new Chaplin_Http_Exception_InvalidURL($url, $e);
-        }
-        catch(Zend_Uri_Exception $e)
-        {
+        } catch (Zend_Uri_Exception $e) {
             Chaplin_Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url, $intLogPriority);
             throw new Chaplin_Http_Exception_InvalidURL($url, $e);
         }
@@ -161,16 +151,11 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         // Make sure the URL has no spaces - re-encoding screws it up
           $url = str_replace(' ', '%20', $url);
 
-        try
-          {
+        try {
             $this->_zendHttpClient->setUri($url);
-        }
-        catch(Zend_Http_Client_Exception $e)
-          {
+        } catch (Zend_Http_Client_Exception $e) {
             throw new Chaplin_Http_Exception_InvalidURL($url, $e);
-        }
-        catch(Zend_Uri_Exception $e)
-          {
+        } catch (Zend_Uri_Exception $e) {
             Chaplin_Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url);
             throw new Chaplin_Http_Exception_InvalidURL($url, $e);
         }
@@ -297,16 +282,11 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         // Make sure the URL has no spaces - re-encoding screws it up
         $url = str_replace(' ', '%20', $url);
 
-        try
-        {
+        try {
             $this->_zendHttpClient->setUri($url);
-        }
-        catch(Zend_Http_Client_Exception $e)
-        {
+        } catch (Zend_Http_Client_Exception $e) {
             throw new Chaplin_Http_Exception_InvalidURL($url, $e);
-        }
-        catch(Zend_Uri_Exception $e)
-        {
+        } catch (Zend_Uri_Exception $e) {
             Chaplin_Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url);
             throw new Chaplin_Http_Exception_InvalidURL($url, $e);
         }
@@ -343,8 +323,7 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
     {
         try {
             $strRedirectContent = $this->_parseXPath($strURL, $strPageBody, "//meta[@http-equiv='refresh']/@content");
-        }
-        catch(Chaplin_Http_Exception_XPathCannotFind $e) {
+        } catch (Chaplin_Http_Exception_XPathCannotFind $e) {
             // We didn't find a redirect tag
             return $strPageBody;
         }
@@ -387,7 +366,8 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         }
 
          /* return if already absolute URL**/
-        if (parse_url($strRelativePath, PHP_URL_SCHEME) != '') { return $strRelativePath;
+        if (parse_url($strRelativePath, PHP_URL_SCHEME) != '') {
+            return $strRelativePath;
         }
 
         // YES, this IS strPageURL, because we want to parse out most of it and append the relative path to it!
@@ -406,7 +386,7 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
 
         /* replace '//' or '/./' or '/foo/../' with '/'**/
         $strRegex = array('#(/\.?/)#', '#/(?!\.\.)[^/]+/\.\./#');
-        for($n=1; $n>0; $strAbsolutePath = preg_replace($strRegex, '/', $strAbsolutePath, -1, $n)) {
+        for ($n=1; $n>0; $strAbsolutePath = preg_replace($strRegex, '/', $strAbsolutePath, -1, $n)) {
         }
 
         // If somehow we don't end up with a scheme, add the one from the URL

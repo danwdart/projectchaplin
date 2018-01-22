@@ -42,7 +42,7 @@ class Name extends Form
     public function init()
     {
         $sfVideos = new ZendSubForm('Videos');
-        foreach($this->_ittVideos as $modelVideo) {
+        foreach ($this->_ittVideos as $modelVideo) {
             $subform = new SubForm($modelVideo);
             $sfVideos->addSubForm($subform, $modelVideo->getId());
         }

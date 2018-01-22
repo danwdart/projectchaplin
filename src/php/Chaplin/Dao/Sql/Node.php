@@ -22,9 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Dao_Sql_Node
-    extends Chaplin_Dao_Sql_Abstract
-    implements Chaplin_Dao_Interface_Node
+class Chaplin_Dao_Sql_Node extends Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface_Node
 {
     const TABLE = 'Nodes';
     
@@ -53,13 +51,14 @@ class Chaplin_Dao_Sql_Node
 
         $arrRow = $this->_getAdapter()->fetchRow(
             sprintf(
-                $strSql, 
+                $strSql,
                 self::TABLE,
                 self::PK
-            ), $strNodeId
+            ),
+            $strNodeId
         );
 
-        if(empty($arrRow)) {
+        if (empty($arrRow)) {
             throw new Exception('No node named '.$strNodeId);
         }
 

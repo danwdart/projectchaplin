@@ -22,8 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-abstract class Chaplin_Dao_PhpRedis_Abstract
-    implements Chaplin_Dao_Interface
+abstract class Chaplin_Dao_PhpRedis_Abstract implements Chaplin_Dao_Interface
 {
     const DEFAULT_REGISTRY_KEY = 'RedisRegistry';
     
@@ -40,7 +39,7 @@ abstract class Chaplin_Dao_PhpRedis_Abstract
     **/
     protected function _getRedis()
     {
-        if(is_null($this->_redis)) {
+        if (is_null($this->_redis)) {
             $this->_redis = Zend_Registry::get(self::DEFAULT_REGISTRY_KEY);
         }
         
@@ -50,7 +49,7 @@ abstract class Chaplin_Dao_PhpRedis_Abstract
     /**
      * Injects a redis instance for testing
      *
-     * @param  Redis $redis 
+     * @param  Redis $redis
      * @return void
      * @author Dan Dart <chaplin@dandart.co.uk>
     **/

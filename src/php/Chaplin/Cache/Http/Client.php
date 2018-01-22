@@ -73,7 +73,7 @@ class Client extends CacheAbstract implements HttpInterface
 
     public function getHttpResponse($strURL, $intLogPriority = ZendLog::ERR, $bCache = true)
     {
-        if(!$bCache) {
+        if (!$bCache) {
             return $this->_objHttpClient->getHttpResponse($strURL, $intLogPriority);
         }
 
@@ -81,7 +81,7 @@ class Client extends CacheAbstract implements HttpInterface
         $cacheKey = $this->_getCacheKey(__METHOD__, $strURL);
         if (false === ($response = $this->_cacheLoadKey($cacheKey))) {
             $response = $this->_objHttpClient->getHttpResponse($strURL, $intLogPriority);
-            if(200 == $response->getStatus()) {
+            if (200 == $response->getStatus()) {
                 $this->_cacheSaveKey($cacheKey, $response);
             }
         }

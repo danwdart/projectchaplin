@@ -22,9 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_Video_Convert
-    extends Chaplin_Model_Field_Hash
-    implements Chaplin_Model_Interface_Message
+class Chaplin_Model_Video_Convert extends Chaplin_Model_Field_Hash implements Chaplin_Model_Interface_Message
 {
     const FIELD_VIDEOID = 'VideoId';
 
@@ -79,7 +77,7 @@ class Chaplin_Model_Video_Convert
             ->getEncoder()
             ->convertFile($strFilenameRawFullPath, $strPathToWebm, $ret);
 
-        if(0 != $ret) {
+        if (0 != $ret) {
             throw new Exception('Unable to convert: '.$strFilenameRawFullPath);
         }
 

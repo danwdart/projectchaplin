@@ -88,7 +88,7 @@ class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
             $response = Chaplin_Service::getInstance()
                 ->getHttpClient()
                 ->getHttpResponse($this->getStatusURL(), null, 0);
-            if(200 == $response->getStatus()) {
+            if (200 == $response->getStatus()) {
                 $this->_setField(self::FIELD_ACTIVE, 1);
                 $this->save();
                 return true;

@@ -57,7 +57,7 @@ class Chaplin_Gateway implements SingletonInterface
         return new $strGatewayClass($dao);
     }
 
-    public function __call($strMethod, Array $arrParams)
+    public function __call($strMethod, array $arrParams)
     {
         if ('get' != substr($strMethod, 0, 3)) {
             throw new Exception('Invalid method: '.__CLASS__.'::'.$strMethod);
@@ -66,7 +66,7 @@ class Chaplin_Gateway implements SingletonInterface
         return $this->getGateway($strGatewayType);
     }
 
-    public static function __callStatic(string $strMethod, Array $arrParams)
+    public static function __callStatic(string $strMethod, array $arrParams)
     {
         return call_user_func_array(
             [

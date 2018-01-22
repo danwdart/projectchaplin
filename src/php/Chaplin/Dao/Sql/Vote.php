@@ -22,9 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Dao_Sql_Vote
-    extends Chaplin_Dao_Sql_Abstract
-    implements Chaplin_Dao_Interface_Vote
+class Chaplin_Dao_Sql_Vote extends Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface_Vote
 {
     const TABLE = 'Votes';
 
@@ -44,7 +42,7 @@ class Chaplin_Dao_Sql_Vote
         $this->_getAdapter()->query(
             'INSERT INTO '.self::TABLE.' SET '.
             'Vote = ?, Username = ?, VideoId = ? ON DUPLICATE KEY UPDATE Vote = ?',
-            [   
+            [
                 $intVote,
                 $modelUser->getUsername(),
                 $modelVideo->getVideoId(),
@@ -53,11 +51,11 @@ class Chaplin_Dao_Sql_Vote
         );
     }
 
-    protected function _sqlToModel(Array $arrSql)
+    protected function _sqlToModel(array $arrSql)
     {
     }
 
-    protected function _modelToSql(Array $arrModel)
+    protected function _modelToSql(array $arrModel)
     {
     }
 

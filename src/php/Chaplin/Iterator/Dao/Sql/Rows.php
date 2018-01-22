@@ -32,7 +32,7 @@ class Chaplin_Iterator_Dao_Sql_Rows implements Chaplin_Iterator_Interface
     private $_intReturnRows;
     private $_arrRows;
 
-    public function __construct(Array $arrRows, Chaplin_Dao_Sql_Abstract $daoInterface)
+    public function __construct(array $arrRows, Chaplin_Dao_Sql_Abstract $daoInterface)
     {
         $this->_arrRows = $arrRows;
         $this->_daoInterface = $daoInterface;
@@ -111,7 +111,7 @@ class Chaplin_Iterator_Dao_Sql_Rows implements Chaplin_Iterator_Interface
      *  @param:  $arrColumns     Associative array of Key => value (1 = ASC, -1 = DESC)
      *  @return: $this (this is a fluent interface)
      **/
-    public function sort(Array $arrColumns = array())
+    public function sort(array $arrColumns = array())
     {
         throw new BadMethodCallException(__METHOD__);
     }
@@ -125,7 +125,7 @@ class Chaplin_Iterator_Dao_Sql_Rows implements Chaplin_Iterator_Interface
     public function toArray()
     {
         $arrOut = [];
-        foreach($this as $item) {
+        foreach ($this as $item) {
             $arrOut[] = $item->toArray();
         }
         return $arrOut;

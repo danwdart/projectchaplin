@@ -24,13 +24,11 @@
 **/
 namespace Chaplin\Config;
 
-use Chaplin\Config\Exception\{
-    ConfigClassNotFound as ConfigClassNotFoundException,
-    FileLinkNotFound as FileLinkNotFoundException,
-    FileNotFound as FileNotFoundException,
-    NonexistentKey as NonexistentKeyException,
-    UnknownConfigFile as UnknownConfigFileException
-};
+use Chaplin\Config\Exception\ConfigClassNotFound as ConfigClassNotFoundException;
+use Chaplin\Config\Exception\FileLinkNotFound as FileLinkNotFoundException;
+use Chaplin\Config\Exception\FileNotFound as FileNotFoundException;
+use Chaplin\Config\Exception\NonexistentKey as NonexistentKeyException;
+use Chaplin\Config\Exception\UnknownConfigFile as UnknownConfigFileException;
 use Chaplin\Interfaces\MultiSingleton as MultiSingletonInterface;
 use Chaplin\Traits\MultiSingleton as MultiSingletonTrait;
 
@@ -56,13 +54,13 @@ abstract class ConfigAbstract implements MultiSingletonInterface
 
         $strConfigFile = realpath($strConfigFile);
 
-        if(!file_exists($strConfigFile)) {
+        if (!file_exists($strConfigFile)) {
             throw new FileNotFoundException($strConfigFile);
         }
 
         $strConfigClass = self::CONFIG_TEMPLATE.ucwords($this->_getConfigType());
 
-        if(!class_exists($strConfigClass)) {
+        if (!class_exists($strConfigClass)) {
             throw new ConfigClassNotFoundException($strConfigClass);
         }
 
@@ -78,7 +76,7 @@ abstract class ConfigAbstract implements MultiSingletonInterface
 
     protected function _getValue($strValue, $strKey)
     {
-        if(is_null($strValue)) {
+        if (is_null($strValue)) {
             throw new NonexistentKeyException($strKey, APPLICATION_ENV);
         }
 
@@ -87,7 +85,7 @@ abstract class ConfigAbstract implements MultiSingletonInterface
 
     protected function _getOptionalValue($strValue, $mixedDefault)
     {
-        if(is_null($strValue)) {
+        if (is_null($strValue)) {
             return $mixedDefault;
         }
 

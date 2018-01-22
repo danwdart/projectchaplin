@@ -29,7 +29,9 @@ class ChaplinModules extends ResourceModules
                     ) {
                         throw new ResourceException(
                             sprintf(
-                                $eMsgTpl, $module, $bootstrapClass
+                                $eMsgTpl,
+                                $module,
+                                $bootstrapClass
                             )
                         );
                     } elseif ($default == $module) {
@@ -38,7 +40,9 @@ class ChaplinModules extends ResourceModules
                             if (!class_exists($bootstrapClass, false)) {
                                 throw new ResourceException(
                                     sprintf(
-                                        $eMsgTpl, $module, $bootstrapClass
+                                        $eMsgTpl,
+                                        $module,
+                                        $bootstrapClass
                                     )
                                 );
                             }

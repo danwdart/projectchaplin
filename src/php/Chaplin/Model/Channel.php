@@ -22,8 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_Channel
-    extends Chaplin_Model_Field_Hash
+class Chaplin_Model_Channel extends Chaplin_Model_Field_Hash
 {
     const FIELD_CHANNELID = 'ChannelId';
     const FIELD_FULLNAME = 'FullName';

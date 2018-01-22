@@ -197,7 +197,7 @@ class Api extends ZendBootstrap
     {
         try {
             parent::_bootstrap($resource);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             echo '<pre>'.$e->getMessage().PHP_EOL.$e->getTraceAsString().'</pre>';
         }
     }
@@ -206,7 +206,7 @@ class Api extends ZendBootstrap
     {
         try {
             parent::run();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             echo '<pre>'.$e->getMessage().PHP_EOL.$e->getTraceAsString().'</pre>';
         }
     }

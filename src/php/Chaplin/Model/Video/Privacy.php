@@ -29,7 +29,7 @@ class Chaplin_Model_Video_Privacy
     public static function getSelectOptions()
     {
         $arrOut = [];
-        foreach(self::$_arrInfo as $strId => $arrOption) {
+        foreach (self::$_arrInfo as $strId => $arrOption) {
             $arrOut[$strId] = $arrOption[self::FIELD_DESC];
         }
         return $arrOut;

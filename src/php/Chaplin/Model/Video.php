@@ -95,14 +95,15 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
     public static function create(
         Chaplin_Model_User $modelUser,
-        $strFilename, // form element?
+        $strFilename,
+        // form element?
         $strThumbURL,
         $strTitle,
         $strDescription,
         $strUploader,
         $strSource
-    )
-    {
+    ) {
+    
         $video = new self();
         $video->_bIsNew = true;
         $video->_setField(self::FIELD_VIDEOID, md5(uniqid()));
@@ -126,7 +127,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         return $this->getVideoId();
     }
 
-    public function setFromAPIArray(Array $arrVideo)
+    public function setFromAPIArray(array $arrVideo)
     {
         foreach ($arrVideo as $strKey => $strValue) {
             $strValue = (string)$strValue;

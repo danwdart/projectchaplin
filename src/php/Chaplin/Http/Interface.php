@@ -33,16 +33,16 @@ interface Chaplin_Http_Interface
     /**
      * Try to use the client to get the page body
      *
-     * @param  string $strURL 
+     * @param  string $strURL
      * @return string
      * @author Dan Dart <chaplin@dandart.co.uk>
     **/
     public function getPageBody($url);
     /**
-     * Use use the client to parse the page 
+     * Use use the client to parse the page
      *
-     * @param  string $strURL 
-     * @param  string $strXPath 
+     * @param  string $strURL
+     * @param  string $strXPath
      * @return string
      * @author Tim Langley
     **/

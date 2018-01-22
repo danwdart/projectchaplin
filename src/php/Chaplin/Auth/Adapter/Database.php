@@ -54,7 +54,7 @@ class Database implements AdapterInterface
             $identity = new Identity($modelUser);
 
             return new Result(Result::SUCCESS, $identity);
-        } catch(ExceptionUserNotFound $e) {
+        } catch (ExceptionUserNotFound $e) {
             return new Result(
                 Result::FAILURE_CREDENTIAL_INVALID,
                 null,

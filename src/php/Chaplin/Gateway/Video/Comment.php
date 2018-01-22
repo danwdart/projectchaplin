@@ -22,8 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Gateway_Video_Comment
-    extends Chaplin_Gateway_Abstract
+class Chaplin_Gateway_Video_Comment extends Chaplin_Gateway_Abstract
 {
     private $_daoComment;
 
