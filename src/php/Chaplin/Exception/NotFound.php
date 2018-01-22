@@ -1,6 +1,5 @@
 <?php
-class Chaplin_Exception_NotFound
-    extends Exception
+class Chaplin_Exception_NotFound extends Exception
 {
     const MESSAGE = 'Page not found (%s)';
 
