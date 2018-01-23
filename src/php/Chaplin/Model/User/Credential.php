@@ -22,19 +22,27 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_User_Credential extends Chaplin_Model_Field_Hash
+
+namespace Chaplin\Model\User;
+
+use Chaplin\Model\Field\Hash;
+use Chaplin\Model\User;
+
+
+
+class Credential extends Hash
 {
     const FIELD_ServiceName = 'ServiceName';
     const FIELD_ServiceURL  = 'ServiceURL';
     const FIELD_AccessToken = 'AccessToken';
 
     protected $_arrFields = array(
-        self::FIELD_ServiceName => 'Chaplin_Model_Field_Field',
-        self::FIELD_ServiceURL  => 'Chaplin_Model_Field_Field',
-        self::FIELD_AccessToken => 'Chaplin_Model_Field_Field'
+        self::FIELD_ServiceName => 'Chaplin\\Model\\Field\\Field',
+        self::FIELD_ServiceURL  => 'Chaplin\\Model\\Field\\Field',
+        self::FIELD_AccessToken => 'Chaplin\\Model\\Field\\Field'
     );
 
-    public static function create(Chaplin_Model_User $modelUser, $strServiceName, $strServiceURL, $strAccessToken)
+    public static function create(User $modelUser, $strServiceName, $strServiceURL, $strAccessToken)
     {
         $credential = new self();
         $credential->_setField(self::FIELD_ServiceName, $strServiceName);

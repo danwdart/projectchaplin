@@ -22,15 +22,32 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-interface Chaplin_Dao_Interface_User extends Chaplin_Dao_Interface
+
+namespace Chaplin\Http;
+
+/**
+ * Interface for relevant Http_Client interfaces so we can mock Zend_Http_Client
+ *
+ * @package default
+ * @author  Dan Dart <chaplin@dandart.co.uk>
+**/
+interface HttpInterface
 {
-    public function getAllUsers();
-    
-    public function getByUsernameAndPassword($strUsername, $strPassword);
-    
-    public function getByUsername($strUsername);
-
-    public function save(Chaplin_Model_User $modelUser);
-
-    public function updateByToken($strToken, $strPassword);
+    /**
+     * Try to use the client to get the page body
+     *
+     * @param  string $strURL
+     * @return string
+     * @author Dan Dart <chaplin@dandart.co.uk>
+    **/
+    public function getPageBody($url);
+    /**
+     * Use use the client to parse the page
+     *
+     * @param  string $strURL
+     * @param  string $strXPath
+     * @return string
+     * @author Tim Langley
+    **/
+    public function scrapeXPath($strURL, $strXPath);
 }

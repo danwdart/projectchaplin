@@ -1,5 +1,11 @@
 <?php
-class Chaplin_Controller_Action_Helper_RestContextSwitch extends Zend_Controller_Action_Helper_ContextSwitch
+namespace Chaplin\Controller\Action\Helper;
+
+use Zend_Controller_Action_Helper_ContextSwitch;
+use Zend_Controller_Action_Exception;
+use Zend_Layout;
+
+class RestContextSwitch extends Zend_Controller_Action_Helper_ContextSwitch
 {
     public function getActionContexts($action = null)
     {

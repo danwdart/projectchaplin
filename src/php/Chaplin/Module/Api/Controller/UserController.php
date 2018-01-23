@@ -25,11 +25,11 @@
 namespace Chaplin\Module\Api\Controller;
 
 use Chaplin\Auth;
-use Chaplin_Controller_Action_Api as ApiController;
-use Chaplin_Dao_Exception_User_NotFound as ExceptionUserNotFound;
-use Chaplin_Gateway as Gateway;
+use Chaplin\Controller\Action\Api as ApiController;
+use Chaplin\Dao\Exception\User\NotFound as ExceptionUserNotFound;
+use Chaplin\Gateway;
 use Chaplin\Module\Api\Form\UserData\Edit as FormEditUserData;
-use Chaplin_Service as Service;
+use Chaplin\Service;
 use Exception;
 
 class UserController extends ApiController

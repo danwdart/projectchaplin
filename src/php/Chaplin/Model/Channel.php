@@ -22,19 +22,28 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_Channel extends Chaplin_Model_Field_Hash
+
+namespace Chaplin\Model;
+
+use Chaplin\Model\Field\Hash;
+use Chaplin\Model\User;
+use Chaplin\Gateway;
+
+
+
+class Channel extends Hash
 {
     const FIELD_CHANNELID = 'ChannelId';
     const FIELD_FULLNAME = 'FullName';
     const FIELD_USERNAME = 'Username';
 
     protected $_arrFields = array(
-        self::FIELD_CHANNELID => array('Class' => 'Chaplin_Model_Field_FieldId'),
-        self::FIELD_FULLNAME => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_USERNAME => array('Class' => 'Chaplin_Model_Field_Field'),
+        self::FIELD_CHANNELID => array('Class' => 'Chaplin\\Model\\Field\\FieldId'),
+        self::FIELD_FULLNAME => array('Class' => 'Chaplin\\Model\\Field\\Field'),
+        self::FIELD_USERNAME => array('Class' => 'Chaplin\\Model\\Field\\Field'),
     );
 
-    public static function create($strChannelId, $strFullName, Chaplin_Model_User $modelUser)
+    public static function create($strChannelId, $strFullName, User $modelUser)
     {
         $modelChannel = new self();
         $modelChannel->_bIsNew = true;
@@ -61,7 +70,7 @@ class Chaplin_Model_Channel extends Chaplin_Model_Field_Hash
 
     public function getUser()
     {
-        return Chaplin_Gateway::getUser()
+        return Gateway::getUser()
             ->getByUsername(
                 $this->_getField(self::FIELD_USERNAME, null)
             );
@@ -69,11 +78,11 @@ class Chaplin_Model_Channel extends Chaplin_Model_Field_Hash
 
     public function delete()
     {
-        return Chaplin_Gateway::getInstance()->getChannel()->delete($this);
+        return Gateway::getInstance()->getChannel()->delete($this);
     }
 
     public function save()
     {
-        return Chaplin_Gateway::getInstance()->getChannel()->save($this);
+        return Gateway::getInstance()->getChannel()->save($this);
     }
 }

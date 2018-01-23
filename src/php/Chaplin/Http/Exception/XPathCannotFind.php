@@ -22,7 +22,14 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Http_Exception_XPathCannotFind extends Exception
+
+namespace Chaplin\Http\Exception;
+
+use Exception;
+
+
+
+class XPathCannotFind extends Exception
 {
     const MESSAGE = 'Could not find an element for query "%s" while scraping URL';
 

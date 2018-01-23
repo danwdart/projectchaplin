@@ -22,7 +22,20 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
+
+namespace Chaplin\Model;
+
+use Chaplin\Model\Field\Hash;
+use Chaplin\Service;
+use Exception;
+use Zend_Http_Client_Adapter_Exception;
+use Chaplin\Model\Video;
+use Chaplin\Iterator\Api\ModelArray;
+use Chaplin\Gateway;
+
+
+
+class Node extends Hash
 {
     const FIELD_NODEID = 'NodeId';
     const FIELD_IP = 'IP';
@@ -30,10 +43,10 @@ class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
     const FIELD_ACTIVE = 'Active';
 
     protected $_arrFields = array(
-        self::FIELD_NODEID => array('Class' => 'Chaplin_Model_Field_FieldId'),
-        self::FIELD_IP => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_NAME => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_ACTIVE => array('Class' => 'Chaplin_Model_Field_Field')
+        self::FIELD_NODEID => array('Class' => 'Chaplin\\Model\\Field\\FieldId'),
+        self::FIELD_IP => array('Class' => 'Chaplin\\Model\\Field\\Field'),
+        self::FIELD_NAME => array('Class' => 'Chaplin\\Model\\Field\\Field'),
+        self::FIELD_ACTIVE => array('Class' => 'Chaplin\\Model\\Field\\Field')
     );
 
     public static function create($strIP, $strName)
@@ -85,7 +98,7 @@ class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
     public function ping()
     {
         try {
-            $response = Chaplin_Service::getInstance()
+            $response = Service::getInstance()
                 ->getHttpClient()
                 ->getHttpResponse($this->getStatusURL(), null, 0);
             if (200 == $response->getStatus()) {
@@ -105,7 +118,7 @@ class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
     {
         $strURL = $this->getRoot().$url;
         try {
-            return Chaplin_Service::getInstance()
+            return Service::getInstance()
                 ->getHttpClient()
                 ->getObject($strURL);
         } catch (Zend_Http_Client_Adapter_Exception $e) {
@@ -117,22 +130,22 @@ class Chaplin_Model_Node extends Chaplin_Model_Field_Hash
     {
         // todo header
         $arrVideo = $this->_get('/video/watch/id/'.$strVideoId.'?format=json');
-        return Chaplin_Model_Video::createFromAPIResponse($arrVideo, $this->getRoot());
+        return Video::createFromAPIResponse($arrVideo, $this->getRoot());
     }
 
     public function getFeaturedVideos()
     {
         $arrVideo = $this->_get('/?format=json');
-        return new Chaplin_Iterator_Api_ModelArray('Chaplin_Model_Video', $this->getRoot(), $arrVideo);
+        return new ModelArray("Chaplin\\Model\\Video", $this->getRoot(), $arrVideo);
     }
 
     public function delete()
     {
-        return Chaplin_Gateway::getInstance()->getNode()->delete($this);
+        return Gateway::getInstance()->getNode()->delete($this);
     }
 
     public function save()
     {
-        return Chaplin_Gateway::getInstance()->getNode()->save($this);
+        return Gateway::getInstance()->getNode()->save($this);
     }
 }

@@ -24,7 +24,7 @@
 **/
 namespace Chaplin\Module\Api\Controller;
 
-use Chaplin_Exception_NotFound as ExceptionNotFound;
+use Chaplin\Exception\NotFound as ExceptionNotFound;
 use Zend_Controller_Action as Controller;
 use Zend_Controller_Plugin_ErrorHandler as ErrorHandler;
 

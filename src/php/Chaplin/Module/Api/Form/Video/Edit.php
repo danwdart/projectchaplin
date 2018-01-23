@@ -24,7 +24,7 @@
 **/
 namespace Chaplin\Module\Api\Form\Video;
 
-use Chaplin_Model_Video as ModelVideo;
+use Chaplin\Model\Video as ModelVideo;
 use Zend_Form as Form;
 use Zend_Form_Element_Submit as Submit;
 

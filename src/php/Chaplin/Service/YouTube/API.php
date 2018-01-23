@@ -22,7 +22,18 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Service_YouTube_API
+
+namespace Chaplin\Service\YouTube;
+
+use Google_Client;
+use Google_Service_YouTube;
+use Chaplin\Model\User;
+use Chaplin\Model\Video;
+use Chaplin\Model\Video\Licence;
+use Chaplin\Model\Video\Youtube;
+use Chaplin\Gateway;
+
+class API
 {
     const LOCATION = 'youtube-dl';
 
@@ -145,7 +156,7 @@ class Chaplin_Service_YouTube_API
         return '/uploads/'.basename($strFilename);
     }
 
-    public function importVideo(Chaplin_Model_User $modelUser, $strURL)
+    public function importVideo(User $modelUser, $strURL)
     {
         if ("true" === getenv("NO_UPLOADS")) {
             return;
@@ -164,7 +175,7 @@ class Chaplin_Service_YouTube_API
             getenv("UPLOADS_PATH")
         );
 
-        $modelVideo = Chaplin_Model_Video::create(
+        $modelVideo = Video::create(
             $modelUser,
             $strRelaFile,
             $strThumbnail,
@@ -174,15 +185,15 @@ class Chaplin_Service_YouTube_API
             $strURL
         );
         // All YouTube imports are CC-BY
-        $modelVideo->setLicence(Chaplin_Model_Video_Licence::ID_CCBY);
+        $modelVideo->setLicence(Licence::ID_CCBY);
         $modelVideo->save();
 
         // msg
-        $modelYoutube = Chaplin_Model_Video_Youtube::create(
+        $modelYoutube = Youtube::create(
             $modelVideo,
             $strVideoId
         );
-        Chaplin_Gateway::getInstance()->getVideo_Youtube()->save($modelYoutube);
+        Gateway::getInstance()->getVideo_Youtube()->save($modelYoutube);
 
         return $modelVideo;
     }

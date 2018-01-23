@@ -22,7 +22,17 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Dao_Sql_Vote extends Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface_Vote
+
+namespace Chaplin\Dao\Sql;
+
+use Chaplin\Dao\Sql\SqlAbstract;
+use Chaplin\Dao\Interfaces\Vote as InterfaceVote;
+use Chaplin\Model\User as ModelUser;
+use Chaplin\Model\Video as ModelVideo;
+
+
+
+class Vote extends SqlAbstract implements InterfaceVote
 {
     const TABLE = 'Votes';
 
@@ -37,7 +47,7 @@ class Chaplin_Dao_Sql_Vote extends Chaplin_Dao_Sql_Abstract implements Chaplin_D
         return null;
     }
 
-    public function addVote(Chaplin_Model_User $modelUser, Chaplin_Model_Video $modelVideo, $intVote)
+    public function addVote(ModelUser $modelUser, ModelVideo $modelVideo, $intVote)
     {
         $this->_getAdapter()->query(
             'INSERT INTO '.self::TABLE.' SET '.

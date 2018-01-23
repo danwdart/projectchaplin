@@ -22,7 +22,14 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Http_Exception_Unsuccessful extends Chaplin_Http_Exception
+
+namespace Chaplin\Http\Exception;
+
+use Chaplin\Http\Exception;
+
+
+
+class Unsuccessful extends Exception
 {
     const MESSAGE = 'HTTP request for url %s was unsuccessful (Error code %s).';
     

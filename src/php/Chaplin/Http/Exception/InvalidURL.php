@@ -22,7 +22,14 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Http_Exception_InvalidURL extends Chaplin_Http_Exception
+
+namespace Chaplin\Http\Exception;
+
+use Chaplin\Http\Exception;
+
+
+
+class InvalidURL extends Exception
 {
     const MESSAGE = '%s was an invalid URL, reason: %s';
     

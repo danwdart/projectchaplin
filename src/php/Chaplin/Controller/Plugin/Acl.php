@@ -22,9 +22,23 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+
+namespace Chaplin\Controller\Plugin;
+
+use Zend_Controller_Plugin_Abstract;
+use Zend_Acl;
+use Zend_Controller_Request_Abstract;
+use Zend_Controller_Front;
+use Zend_Reflection_Class;
+use Zend_Controller_Action_HelperBroker;
+use Chaplin\Model\User\Helper\UserType;
+use Zend_Session_Namespace;
+
+
+
 use Chaplin\Auth;
 
-class Chaplin_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
+class Acl extends Zend_Controller_Plugin_Abstract
 {
     private $_acl;
 
@@ -63,7 +77,7 @@ class Chaplin_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         $resource = $strModule.'/'.$strController;
         $role = $auth->hasIdentity() ?
             $auth->getIdentity()->getUser()->getUserType()->getUserType():
-            Chaplin_Model_User_Helper_UserType::TYPE_GUEST;
+            UserType::TYPE_GUEST;
 
         if (false === strpos($request->getRequestUri(), 'login')
             && $this->_acl->isAllowed($role, strtolower($resource), $strAction)

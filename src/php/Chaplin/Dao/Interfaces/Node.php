@@ -22,39 +22,19 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-abstract class Chaplin_Dao_PhpRedis_Abstract implements Chaplin_Dao_Interface
-{
-    const DEFAULT_REGISTRY_KEY = 'RedisRegistry';
-    
-    /**
-     * Redis instance
-    **/
-    private $_redis;
-    
-    /**
-     * Gets the Redis instance
-     *
-     * @return Redis
-     * @author Dan Dart <chaplin@dandart.co.uk>
-    **/
-    protected function _getRedis()
-    {
-        if (is_null($this->_redis)) {
-            $this->_redis = Zend_Registry::get(self::DEFAULT_REGISTRY_KEY);
-        }
-        
-        return $this->_redis;
-    }
 
-    /**
-     * Injects a redis instance for testing
-     *
-     * @param  Redis $redis
-     * @return void
-     * @author Dan Dart <chaplin@dandart.co.uk>
-    **/
-    public function inject(Redis $redis)
-    {
-        $this->_redis = $redis;
-    }
+namespace Chaplin\Dao\Interfaces;
+
+use Chaplin\Dao\DaoInterface;
+use Chaplin\Model\Node as ModelNode;
+
+interface Node extends DaoInterface
+{
+    public function getAllNodes();
+
+    public function getByNodeId($strNodeId);
+
+    public function delete(ModelNode $modelNode);
+
+    public function save(ModelNode $modelNode);
 }

@@ -22,7 +22,15 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Iterator_Api_ModelArray implements Chaplin_Iterator_Interface
+
+namespace Chaplin\Iterator\Api;
+
+use Chaplin\Iterator\IteratorInterface;
+use BadMethodCallException;
+
+
+
+class ModelArray implements IteratorInterface
 {
     private $_daoInterface;
     private $_bEmpty        = false;

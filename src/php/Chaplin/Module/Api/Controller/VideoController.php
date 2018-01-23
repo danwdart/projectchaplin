@@ -25,17 +25,17 @@
 namespace Chaplin\Module\Api\Controller;
 
 use Chaplin\Auth;
-use Chaplin_Controller_Action_Api as ApiController;
-use Chaplin_Exception_NotFound as ExceptionNotFound;
-use Chaplin_Gateway as Gateway;
-use Chaplin_Model_Video as ModelVideo;
-use Chaplin_Model_Video_Comment as ModelComment;
-use Chaplin_Model_Video_Convert as ModelConvert;
+use Chaplin\Controller\Action\Api as ApiController;
+use Chaplin\Exception\NotFound as ExceptionNotFound;
+use Chaplin\Gateway;
+use Chaplin\Model\Video as ModelVideo;
+use Chaplin\Model\Video\Comment as ModelComment;
+use Chaplin\Model\Video\Convert as ModelConvert;
 use Chaplin\Module\Api\Form\Video\Comment as FormComment;
 use Chaplin\Module\Api\Form\Video\Edit as FormEdit;
 use Chaplin\Module\Api\Form\Video\Name as FormName;
 use Chaplin\Module\Api\Form\Video\Upload as FormUpload;
-use Chaplin_Service as Service;
+use Chaplin\Service;
 use Exception;
 use Misd\Linkify\Linkify;
 

@@ -22,7 +22,20 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Dao_Sql_Video extends Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface_Video
+
+namespace Chaplin\Dao\Sql;
+
+use Chaplin\Dao\Sql\SqlAbstract;
+use Chaplin\Dao\Interfaces\Video as InterfaceVideo;
+use Chaplin\Model\User;
+use Chaplin\Model\Video as ModelVideo;
+use Chaplin\Model\Video\Privacy;
+use Chaplin\Iterator\Dao\Sql\Rows;
+use Chaplin\Dao\Exception\Video\NotFound;
+
+
+
+class Video extends SqlAbstract implements InterfaceVideo
 {
     const TABLE = 'Videos';
 
@@ -38,29 +51,29 @@ class Chaplin_Dao_Sql_Video extends Chaplin_Dao_Sql_Abstract implements Chaplin_
         return self::PK;
     }
 
-    public function getFeaturedVideos(Chaplin_Model_User $modelUser = null)
+    public function getFeaturedVideos(User $modelUser = null)
     {
         $strSql = 'SELECT * FROM %s WHERE '.
-            Chaplin_Model_Video::FIELD_PRIVACY.' = "'.Chaplin_Model_Video_Privacy::ID_PUBLIC.
+            ModelVideo::FIELD_PRIVACY.' = "'.Privacy::ID_PUBLIC.
             ((is_null($modelUser))? '"' :
             '" OR '.
-            Chaplin_Model_Video::FIELD_USERNAME .' = "'.$modelUser->getUsername().'"').
+            ModelVideo::FIELD_USERNAME .' = "'.$modelUser->getUsername().'"').
             ' ORDER BY TimeCreated DESC';
         $arrRows = $this->_getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
-        return new Chaplin_Iterator_Dao_Sql_Rows($arrRows, $this);
+        return new Rows($arrRows, $this);
     }
-    
-    public function getByVideoId($strVideoId, Chaplin_Model_User $modelUser = null)
+
+    public function getByVideoId($strVideoId, User $modelUser = null)
     {
         $strSql = 'select Videos.*, '.
-            '(SELECT COUNT(*) AS COUNT FROM Votes WHERE VideoId = ? AND Vote = 1) AS '.Chaplin_Model_Video::FIELD_VOTESUP.
-            ', (SELECT COUNT(*) AS COUNT FROM Votes WHERE VideoId = ? AND Vote = 0) AS '.Chaplin_Model_Video::FIELD_VOTESDOWN.
+            '(SELECT COUNT(*) AS COUNT FROM Votes WHERE VideoId = ? AND Vote = 1) AS '.ModelVideo::FIELD_VOTESUP.
+            ', (SELECT COUNT(*) AS COUNT FROM Votes WHERE VideoId = ? AND Vote = 0) AS '.ModelVideo::FIELD_VOTESDOWN.
             ', (SELECT Vote FROM Votes WHERE VideoId = ? '.((is_null($modelUser))?'':'AND Username = ?').' LIMIT 1) AS YourVote'.
             ' FROM %s WHERE %s = ? AND ('.
-            Chaplin_Model_Video::FIELD_PRIVACY.' = "'.Chaplin_Model_Video_Privacy::ID_PUBLIC.
+            ModelVideo::FIELD_PRIVACY.' = "'.Privacy::ID_PUBLIC.
             ((is_null($modelUser))? '")' :
             '" OR '.
-            Chaplin_Model_Video::FIELD_USERNAME .' = "'.$modelUser->getUsername().'")');
+            ModelVideo::FIELD_USERNAME .' = "'.$modelUser->getUsername().'")');
 
         $arrRow = $this->_getAdapter()->fetchRow(
             sprintf($strSql, self::TABLE, self::PK),
@@ -70,7 +83,7 @@ class Chaplin_Dao_Sql_Video extends Chaplin_Dao_Sql_Abstract implements Chaplin_
             )
         );
         if (false === $arrRow) {
-            throw new Chaplin_Dao_Exception_Video_NotFound($strVideoId);
+            throw new NotFound($strVideoId);
         }
         return $this->convertToModel($arrRow);
     }
@@ -78,16 +91,16 @@ class Chaplin_Dao_Sql_Video extends Chaplin_Dao_Sql_Abstract implements Chaplin_
     public function getBySearchTerms($strSearchTerms)
     {
         // todo fill in
-        return new Chaplin_Iterator_Dao_Sql_Rows([], $this);
+        return new Rows([], $this);
     }
-    
-    public function getByUser(Chaplin_Model_User $modelUser)
+
+    public function getByUser(User $modelUser)
     {
         // todo fill in
-        return new Chaplin_Iterator_Dao_Sql_Rows([], $this);
+        return new Rows([], $this);
     }
-            
-    public function delete(Chaplin_Model_Video $modelVideo)
+
+    public function delete(ModelVideo $modelVideo)
     {
         return $this->_delete($modelVideo);
     }
@@ -97,10 +110,10 @@ class Chaplin_Dao_Sql_Video extends Chaplin_Dao_Sql_Abstract implements Chaplin_
         $arrModel = parent::_sqlToModel($arrSql);
         unset($arrModel['Fb_Pos']);
         unset($arrModel['Fb_Neg']);
-        if (isset($arrModel[Chaplin_Model_Video::FIELD_TIMECREATED])) {
-            $arrModel[Chaplin_Model_Video::FIELD_TIMECREATED] =
+        if (isset($arrModel[ModelVideo::FIELD_TIMECREATED])) {
+            $arrModel[ModelVideo::FIELD_TIMECREATED] =
                 $this->_sqlDateTimeToTimestamp(
-                    $arrModel[Chaplin_Model_Video::FIELD_TIMECREATED]
+                    $arrModel[ModelVideo::FIELD_TIMECREATED]
                 );
         }
         return $arrModel;
@@ -109,22 +122,22 @@ class Chaplin_Dao_Sql_Video extends Chaplin_Dao_Sql_Abstract implements Chaplin_
     protected function _modelToSql(array $arrModel)
     {
         $arrSql = parent::_modelToSql($arrModel);
-        if (isset($arrSql[Chaplin_Model_Video::FIELD_TIMECREATED])) {
-            $arrSql[Chaplin_Model_Video::FIELD_TIMECREATED] =
+        if (isset($arrSql[ModelVideo::FIELD_TIMECREATED])) {
+            $arrSql[ModelVideo::FIELD_TIMECREATED] =
                 $this->_timestampToSqlDateTime(
-                    $arrSql[Chaplin_Model_Video::FIELD_TIMECREATED]
+                    $arrSql[ModelVideo::FIELD_TIMECREATED]
                 );
         }
         return $arrSql;
     }
 
-    public function save(Chaplin_Model_Video $modelVideo)
+    public function save(ModelVideo $modelVideo)
     {
         return $this->_save($modelVideo);
     }
 
     public function convertToModel($arrData)
     {
-        return Chaplin_Model_Video::createFromData($this, $this->_sqlToModel($arrData));
+        return ModelVideo::createFromData($this, $this->_sqlToModel($arrData));
     }
 }

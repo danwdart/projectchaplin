@@ -25,8 +25,8 @@
 namespace Chaplin\Auth\Adapter;
 
 use Chaplin\Auth\Identity;
-use Chaplin_Dao_Exception_User_NotFound as ExceptionUserNotFound;
-use Chaplin_Gateway as Gateway;
+use Chaplin\Dao\Exception\User\NotFound as ExceptionUserNotFound;
+use Chaplin\Gateway;
 use Zend_Auth_Adapter_Interface as AdapterInterface;
 use Zend_Auth_Result as Result;
 

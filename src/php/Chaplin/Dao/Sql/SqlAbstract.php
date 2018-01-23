@@ -22,7 +22,20 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
+
+namespace Chaplin\Dao\Sql;
+
+use Chaplin\Dao\DaoInterface;
+use Zend_Db;
+use Zend_Db_Adapter_Abstract;
+use Chaplin\Dao\Sql\Exception\NoAdapter;
+use DateTime;
+use Chaplin\Model\Field\Hash;
+use Exception;
+
+
+
+abstract class SqlAbstract implements DaoInterface
 {
     const DATETIME_SQL = 'Y-m-d H:i:s';
 
@@ -50,7 +63,7 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
     protected function _getAdapter()
     {
         if (!self::$_zendDb instanceof Zend_Db_Adapter_Abstract) {
-            throw new Chaplin_Dao_Sql_Exception_NoAdapter();
+            throw new NoAdapter();
         }
         return self::$_zendDb;
     }
@@ -91,7 +104,7 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
         return $dt->getTimestamp();
     }
 
-    protected function _save(Chaplin_Model_Field_Hash $hash)
+    protected function _save(Hash $hash)
     {
         $strTable = $this->_getTable();
         $collFields = $hash->getFields($this);
@@ -110,7 +123,7 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
         $this->_getAdapter()->delete($this->_getTable(), $strWhere);
     }
 
-    protected function _delete(Chaplin_Model_Field_Hash $hash)
+    protected function _delete(Hash $hash)
     {
         return $this->_deleteById($hash->getId());
     }
@@ -127,11 +140,11 @@ abstract class Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface
             if ($objField->bIsDirty()) {
                 $strClass = get_class($objField);
                 switch ($strClass) {
-                    case 'Chaplin_Model_Field_Field':
-                    case 'Chaplin_Model_Field_FieldId':
+                    case 'Chaplin\\Model\\Field\\Field':
+                    case 'Chaplin\\Model\\Field\\FieldId':
                         $arrUpdate[$strFieldName] = $this->_textToSafe($objField->getValue(null));
                         break;
-                    case 'Chaplin_Model_Field_Readonly':
+                    case 'Chaplin\\Model\\Field\\Readonly':
                         break;
                     default:
                         throw new Exception('Unmanaged class: '.$strClass);

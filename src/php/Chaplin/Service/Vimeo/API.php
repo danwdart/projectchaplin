@@ -22,9 +22,17 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+
+namespace Chaplin\Service\Vimeo;
+
+use Chaplin\Model\User;
+use Chaplin\Model\Video;
+use Chaplin\Model\Video\Licence;
+use Chaplin\Model\Video\Vimeo as ModelVideoVimeo;
+use Chaplin\Gateway;
 use Vimeo\Vimeo;
 
-class Chaplin_Service_Vimeo_API
+class API
 {
     const LOCATION = 'youtube-dl --verbose';
 
@@ -169,7 +177,7 @@ class Chaplin_Service_Vimeo_API
         return '/uploads/'.basename($strFilename);
     }
 
-    public function importVideo(Chaplin_Model_User $modelUser, $strURL)
+    public function importVideo(User $modelUser, $strURL)
     {
         if ("true" === getenv("NO_UPLOADS")) {
             return;
@@ -188,7 +196,7 @@ class Chaplin_Service_Vimeo_API
             getenv("UPLOADS_PATH")
         );
 
-        $modelVideo = Chaplin_Model_Video::create(
+        $modelVideo = Video::create(
             $modelUser,
             $strRelaFile,
             $strThumbnail,
@@ -199,7 +207,7 @@ class Chaplin_Service_Vimeo_API
         );
         // All YouTube imports are CC-BY
         $modelVideo->setLicence(
-            Chaplin_Model_Video_Licence::createWithVimeoId(
+            Licence::createWithVimeoId(
                 $entryVideo['license']
             )
             ->getId()
@@ -207,12 +215,12 @@ class Chaplin_Service_Vimeo_API
         $modelVideo->save();
 
         // msg
-        $modelYoutube = Chaplin_Model_Video_Vimeo::create(
+        $modelYoutube = ModelVideoVimeo::create(
             $modelVideo,
             $strVideoId
         );
 
-        Chaplin_Gateway::getInstance()->getVideo_Vimeo()->save($modelYoutube);
+        Gateway::getInstance()->getVideo_Vimeo()->save($modelYoutube);
 
         return $modelVideo;
     }

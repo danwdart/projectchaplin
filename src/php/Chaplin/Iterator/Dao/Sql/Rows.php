@@ -22,7 +22,16 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Iterator_Dao_Sql_Rows implements Chaplin_Iterator_Interface
+
+namespace Chaplin\Iterator\Dao\Sql;
+
+use Chaplin\Iterator\IteratorInterface;
+use Chaplin\Dao\Sql\SqlAbstract;
+use BadMethodCallException;
+
+
+
+class Rows implements IteratorInterface
 {
     private $_daoInterface;
     private $_bEmpty        = false;
@@ -32,7 +41,7 @@ class Chaplin_Iterator_Dao_Sql_Rows implements Chaplin_Iterator_Interface
     private $_intReturnRows;
     private $_arrRows;
 
-    public function __construct(array $arrRows, Chaplin_Dao_Sql_Abstract $daoInterface)
+    public function __construct(array $arrRows, SqlAbstract $daoInterface)
     {
         $this->_arrRows = $arrRows;
         $this->_daoInterface = $daoInterface;

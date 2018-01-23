@@ -22,11 +22,20 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+
+namespace Chaplin\Dao\Amqp;
+
+use Chaplin\Dao\DaoInterface;
+use Closure;
+use Exception;
+use Zend_Json;
+use Zend_Json_Exception;
+use Chaplin\Model\Field\Hash;
 use Chaplin\Config\Amqp as ConfigAmqp;
 use PhpAmqpLib\Connection\AMQPStreamConnection as Connection;
 use PhpAmqpLib\Message\AMQPMessage as Message;
 
-class Chaplin_Dao_Amqp_Exchange implements Chaplin_Dao_Interface
+class Exchange implements DaoInterface
 {
     const CONFIG_TYPE = 'Type';
     const CONFIG_FLAGS = 'Flags';
@@ -77,7 +86,7 @@ class Chaplin_Dao_Amqp_Exchange implements Chaplin_Dao_Interface
     private static function _getConnection(
         string $strType
     ): Connection {
-    
+
         if (is_null(self::$_amqpConnections[$strType])) {
             self::$_amqpConnections[$strType] = new Connection(
                 getenv("AMQP_HOST"),
@@ -225,10 +234,10 @@ class Chaplin_Dao_Amqp_Exchange implements Chaplin_Dao_Interface
     *  @param: $modelMessage
     **/
     public function publish(
-        Chaplin_Model_Field_Hash $message,
+        Hash $message,
         $strRoutingKey
     ) : void {
-    
+
         $connection = $this->_getConnection(self::TYPE_READ);
         $channel = $connection->channel();
 
@@ -253,7 +262,7 @@ class Chaplin_Dao_Amqp_Exchange implements Chaplin_Dao_Interface
         $connection->close();
     }
 
-    public function save(Chaplin_Model_Field_Hash $model) : void
+    public function save(Hash $model) : void
     {
         $this->publish($model, $model->getRoutingKey());
     }

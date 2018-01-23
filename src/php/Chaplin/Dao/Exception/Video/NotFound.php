@@ -22,10 +22,17 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Dao_Exception_Video_NotFound extends Chaplin_Exception_NotFound
+
+namespace Chaplin\Dao\Exception\Video;
+
+use Chaplin\Exception\NotFound as ExceptionNotFound;
+
+
+
+class NotFound extends ExceptionNotFound
 {
     const MESSAGE = 'Video by id (%s) not found.';
-    
+
     public function __construct($strVideoId)
     {
         parent::__construct(sprintf(self::MESSAGE, $strVideoId));

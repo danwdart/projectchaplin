@@ -22,16 +22,26 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Gateway_Vote extends Chaplin_Gateway_Abstract
+
+namespace Chaplin\Gateway;
+
+use Chaplin\Gateway\GatewayAbstract;
+use Chaplin\Dao\Interfaces\Vote as InterfaceVote;
+use Chaplin\Model\User;
+use Chaplin\Model\Video;
+
+
+
+class Vote extends GatewayAbstract
 {
     private $_daoVote;
 
-    public function __construct(Chaplin_Dao_Interface_Vote $daoVote)
+    public function __construct(InterfaceVote $daoVote)
     {
         $this->_daoVote = $daoVote;
     }
 
-    public function addVote(Chaplin_Model_User $modelUser, Chaplin_Model_Video $modelVideo, $intVote)
+    public function addVote(User $modelUser, Video $modelVideo, $intVote)
     {
         return $this->_daoVote->addVote($modelUser, $modelVideo, $intVote);
     }

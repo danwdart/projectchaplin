@@ -1,5 +1,12 @@
 <?php
-class Chaplin_Controller_Action_Api extends Zend_Controller_Action
+
+
+namespace Chaplin\Controller\Action;
+
+use Zend_Controller_Action;
+
+
+class Api extends Zend_Controller_Action
 {
     final public function init()
     {
