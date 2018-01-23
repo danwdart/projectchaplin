@@ -30,8 +30,6 @@ use Chaplin\Dao\Interfaces\Vote as InterfaceVote;
 use Chaplin\Model\User;
 use Chaplin\Model\Video;
 
-
-
 class Vote extends GatewayAbstract
 {
     private $_daoVote;

@@ -31,8 +31,6 @@ use Chaplin\Model\Field\Hash;
 use OutOfBoundsException;
 use Exception;
 
-
-
 class Collection implements Iterator, Countable
 {
     private $_intIndex = 0;

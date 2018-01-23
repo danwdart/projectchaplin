@@ -32,8 +32,6 @@ use Chaplin\Service;
 use Chaplin\Gateway;
 use Exception;
 
-
-
 class Youtube extends Hash implements Message
 {
     const FIELD_YTID = 'YTId';

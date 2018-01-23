@@ -39,8 +39,6 @@ use DOMXPath;
 use Chaplin\Http\Exception\XPathCannotFind;
 use Chaplin\Http\Exception\XPathNotUnique;
 
-
-
 /**
  * Wrapper to the Zend HTTP Client - just so we can use this interface
  * This only does GET requests right now - to do POST extend this - for one, the arrPageBody[url] needs some more

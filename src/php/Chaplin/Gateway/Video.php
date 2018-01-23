@@ -30,8 +30,6 @@ use Chaplin\Dao\Interfaces\Video as InterfaceVideo;
 use Chaplin\Model\User;
 use Chaplin\Model\Video as ModelVideo;
 
-
-
 class Video extends GatewayAbstract
 {
     private $_daoVideo;

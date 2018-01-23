@@ -29,8 +29,6 @@ use Chaplin\Gateway\GatewayAbstract;
 use Chaplin\Dao\Interfaces\Video\Comment as InterfaceVideoComment;
 use Chaplin\Model\Video\Comment as ModelVideoComment;
 
-
-
 class Comment extends GatewayAbstract
 {
     private $_daoComment;

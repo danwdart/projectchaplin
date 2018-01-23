@@ -29,8 +29,6 @@ use Chaplin\Gateway\GatewayAbstract;
 use Chaplin\Dao\Interfaces\User as InterfaceUser;
 use Chaplin\Model\User as ModelUser;
 
-
-
 class User extends GatewayAbstract
 {
     private $_daoUser;

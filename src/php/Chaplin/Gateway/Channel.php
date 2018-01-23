@@ -29,8 +29,6 @@ use Chaplin\Gateway\GatewayAbstract;
 use Chaplin\Dao\Interfaces\Channel as InterfaceChannel;
 use Chaplin\Model\Channel as ModelChannel;
 
-
-
 class Channel extends GatewayAbstract
 {
     private $_daoChannel;

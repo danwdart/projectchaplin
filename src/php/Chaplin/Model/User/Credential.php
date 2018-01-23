@@ -28,8 +28,6 @@ namespace Chaplin\Model\User;
 use Chaplin\Model\Field\Hash;
 use Chaplin\Model\User;
 
-
-
 class Credential extends Hash
 {
     const FIELD_ServiceName = 'ServiceName';

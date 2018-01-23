@@ -33,8 +33,6 @@ use Chaplin\Model\Video;
 use Chaplin\Iterator\Api\ModelArray;
 use Chaplin\Gateway;
 
-
-
 class Node extends Hash
 {
     const FIELD_NODEID = 'NodeId';

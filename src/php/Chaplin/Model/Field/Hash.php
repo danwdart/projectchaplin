@@ -32,8 +32,6 @@ use Chaplin\Dao\DaoInterface;
 use Iterator;
 use Exception;
 
-
-
 class Hash extends FieldAbstract implements JsonSerializable
 {
     

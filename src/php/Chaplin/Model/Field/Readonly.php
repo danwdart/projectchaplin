@@ -28,8 +28,6 @@ namespace Chaplin\Model\Field;
 use Chaplin\Model\Field\FieldAbstract;
 use Exception;
 
-
-
 class Readonly extends FieldAbstract
 {
     private $_mixedValue;

@@ -29,8 +29,6 @@ use Chaplin\Gateway\GatewayAbstract;
 use Chaplin\Dao\Amqp\Exchange;
 use Chaplin\Model\Video\Youtube as ModelVideoYoutube;
 
-
-
 class Youtube extends GatewayAbstract
 {
     private $_daoExchange;

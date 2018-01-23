@@ -29,8 +29,6 @@ use Chaplin\Gateway\GatewayAbstract;
 use Chaplin\Dao\Interfaces\Node as InterfaceNode;
 use Chaplin\Model\Node as ModelNode;
 
-
-
 class Node extends GatewayAbstract
 {
     private $_daoNode;
