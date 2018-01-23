@@ -27,7 +27,7 @@ namespace Chaplin\Dao\Sql;
 
 use Chaplin\Dao\Sql\SqlAbstract;
 use Chaplin\Dao\Interfaces\Video as InterfaceVideo;
-use Chaplin\Model\User;
+use Chaplin\Model\User as ModelUser;
 use Chaplin\Model\Video as ModelVideo;
 use Chaplin\Model\Video\Privacy;
 use Chaplin\Iterator\Dao\Sql\Rows;
@@ -49,7 +49,7 @@ class Video extends SqlAbstract implements InterfaceVideo
         return self::PK;
     }
 
-    public function getFeaturedVideos(User $modelUser = null)
+    public function getFeaturedVideos(ModelUser $modelUser = null)
     {
         $strSql = 'SELECT * FROM %s WHERE '.
             ModelVideo::FIELD_PRIVACY.' = "'.Privacy::ID_PUBLIC.
@@ -61,7 +61,7 @@ class Video extends SqlAbstract implements InterfaceVideo
         return new Rows($arrRows, $this);
     }
 
-    public function getByVideoId($strVideoId, User $modelUser = null)
+    public function getByVideoId($strVideoId, ModelUser $modelUser = null)
     {
         $strSql = 'select Videos.*, '.
             '(SELECT COUNT(*) AS COUNT FROM Votes WHERE VideoId = ? AND Vote = 1) AS '.ModelVideo::FIELD_VOTESUP.
@@ -92,7 +92,7 @@ class Video extends SqlAbstract implements InterfaceVideo
         return new Rows([], $this);
     }
 
-    public function getByUser(User $modelUser)
+    public function getByUser(ModelUser $modelUser)
     {
         // todo fill in
         return new Rows([], $this);
@@ -100,7 +100,7 @@ class Video extends SqlAbstract implements InterfaceVideo
 
     public function delete(ModelVideo $modelVideo)
     {
-        return $this->delete($modelVideo);
+        return $this->deleteModel($modelVideo);
     }
 
     protected function sqlToModel(array $arrSql)
@@ -131,7 +131,7 @@ class Video extends SqlAbstract implements InterfaceVideo
 
     public function save(ModelVideo $modelVideo)
     {
-        return $this->save($modelVideo);
+        return $this->saveModel($modelVideo);
     }
 
     public function convertToModel($arrData)

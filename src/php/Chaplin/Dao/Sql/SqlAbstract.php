@@ -102,7 +102,7 @@ abstract class SqlAbstract implements DaoInterface
         return $dt->getTimestamp();
     }
 
-    protected function save(Hash $hash)
+    protected function saveModel(Hash $hash)
     {
         $strTable = $this->getTable();
         $collFields = $hash->getFields($this);
@@ -121,7 +121,7 @@ abstract class SqlAbstract implements DaoInterface
         $this->getAdapter()->delete($this->getTable(), $strWhere);
     }
 
-    protected function delete(Hash $hash)
+    protected function deleteModel(Hash $hash)
     {
         return $this->deleteById($hash->getId());
     }
