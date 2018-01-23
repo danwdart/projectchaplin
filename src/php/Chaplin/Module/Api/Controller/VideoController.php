@@ -156,7 +156,7 @@ class VideoController extends ApiController
         $this->view->assign('formComment', $formComment);
     }
 
-    public function getWatch_API()
+    public function getWatchAPI()
     {
         $modelUser = Auth::getInstance()
             ->hasIdentity()?
@@ -370,7 +370,7 @@ class VideoController extends ApiController
         $this->view->assign('comments', $ittComments);
     }
 
-    public function getComments_API()
+    public function getCommentsAPI()
     {
         $strVideoId = $this->_request->getParam('id', null);
         if (is_null($strVideoId)) {
@@ -440,7 +440,7 @@ class VideoController extends ApiController
         echo file_get_contents($strPath);
     }
 
-    public function getVote_API()
+    public function getVoteAPI()
     {
         $strVideoId = $this->_request->getParam('id', null);
 

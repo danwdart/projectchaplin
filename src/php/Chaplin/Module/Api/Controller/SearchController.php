@@ -100,7 +100,7 @@ class SearchController extends ApiController
         $this->view->vimeoFeed = $vimeoFeed;
     }
 
-    public function getIndex_API()
+    public function getIndexAPI()
     {
         $strSearchTerm = htmlentities($this->_request->getQuery('search'));
 

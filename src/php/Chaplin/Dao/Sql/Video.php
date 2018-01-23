@@ -64,9 +64,13 @@ class Video extends SqlAbstract implements InterfaceVideo
     public function getByVideoId($strVideoId, ModelUser $modelUser = null)
     {
         $strSql = 'select Videos.*, '.
-            '(SELECT COUNT(*) AS COUNT FROM Votes WHERE VideoId = ? AND Vote = 1) AS '.ModelVideo::FIELD_VOTESUP.
-            ', (SELECT COUNT(*) AS COUNT FROM Votes WHERE VideoId = ? AND Vote = 0) AS '.ModelVideo::FIELD_VOTESDOWN.
-            ', (SELECT Vote FROM Votes WHERE VideoId = ? '.((is_null($modelUser))?'':'AND Username = ?').' LIMIT 1) AS YourVote'.
+            '(SELECT COUNT(*) AS COUNT FROM Votes WHERE '.
+            ' VideoId = ? AND Vote = 1) AS '.ModelVideo::FIELD_VOTESUP.
+            ', (SELECT COUNT(*) AS COUNT FROM Votes WHERE VideoId = ? '.
+            'AND Vote = 0) AS '.ModelVideo::FIELD_VOTESDOWN.
+            ', (SELECT Vote FROM Votes WHERE VideoId = ? '.
+            ((is_null($modelUser))?'':'AND Username = ?').
+            ' LIMIT 1) AS YourVote'.
             ' FROM %s WHERE %s = ? AND ('.
             ModelVideo::FIELD_PRIVACY.' = "'.Privacy::ID_PUBLIC.
             ((is_null($modelUser))? '")' :

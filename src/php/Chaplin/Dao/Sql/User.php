@@ -99,7 +99,7 @@ class User extends SqlAbstract implements InterfaceUser
     public function updateByToken($strToken, $strPassword)
     {
         $arrData = [
-            ModelUser::FIELD_Password =>
+            ModelUser::FIELD_PASSWORD =>
                 ModelUser::encodePassword($strPassword),
             ModelUser::FIELD_VALIDATION => null,
             ModelUser::FIELD_HASH => ModelUser::HASH_SHA512
