@@ -6,6 +6,5 @@ before_script:
     - cd src/php
     - composer install
 script:
-    - cd src/php
     - vendor/bin/phpstan analyse Chaplin
     - vendor/bin/phpcs --standard=PSR2 Chaplin
