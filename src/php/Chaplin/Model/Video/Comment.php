@@ -22,10 +22,16 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-use Chaplin\Auth;
 
-class Chaplin_Model_Video_Comment
-    extends Chaplin_Model_Field_Hash
+namespace Chaplin\Model\Video;
+
+use Chaplin\Auth;
+use Chaplin\Model\Field\Hash;
+use Chaplin\Model\Video;
+use Chaplin\Model\User;
+use Chaplin\Gateway;
+
+class Comment extends Hash
 {
     const FIELD_COMMENTID = 'CommentId';
     const FIELD_VIDEOID = 'VideoId';
@@ -34,18 +40,18 @@ class Chaplin_Model_Video_Comment
     //Feedback
 
     protected $_arrFields = array(
-        self::FIELD_COMMENTID => array('Class' => 'Chaplin_Model_Field_FieldId'),
-        self::FIELD_VIDEOID => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_USERNAME => array('Class' => 'Chaplin_Model_Field_Field'),
-        self::FIELD_COMMENT => array('Class' => 'Chaplin_Model_Field_Field')
+        self::FIELD_COMMENTID => array('Class' => 'Chaplin\\Model\\Field\\FieldId'),
+        self::FIELD_VIDEOID => array('Class' => 'Chaplin\\Model\\Field\\Field'),
+        self::FIELD_USERNAME => array('Class' => 'Chaplin\\Model\\Field\\Field'),
+        self::FIELD_COMMENT => array('Class' => 'Chaplin\\Model\\Field\\Field')
     );
 
     public static function create(
-        Chaplin_Model_Video $modelVideo,
-        Chaplin_Model_User $modelUser,
+        Video $modelVideo,
+        User $modelUser,
         $strComment
-    )
-    {
+    ) {
+
 
         $comment = new self();
         $comment->_setField(self::FIELD_COMMENTID, md5(uniqid()));
@@ -73,8 +79,8 @@ class Chaplin_Model_Video_Comment
     private $_modelUser;
     public function getUser()
     {
-        if(is_null($this->_modelUser)) {
-            $this->_modelUser = Chaplin_Gateway::getInstance()
+        if (is_null($this->_modelUser)) {
+            $this->_modelUser = Gateway::getInstance()
                 ->getUser()
                 ->getByUsername($this->getUsername());
         }
@@ -88,10 +94,10 @@ class Chaplin_Model_Video_Comment
 
     public function isMine()
     {
-        if(!Auth::getInstance()->hasIdentity()) {
+        if (!Auth::getInstance()->hasIdentity()) {
             return false;
         }
-        if(Auth::getInstance()->getIdentity()->getUser()->isGod()) {
+        if (Auth::getInstance()->getIdentity()->getUser()->isGod()) {
             // God users own everything, mwuhahaha
             return true;
         }

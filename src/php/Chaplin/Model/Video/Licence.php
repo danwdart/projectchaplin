@@ -1,5 +1,12 @@
 <?php
-class Chaplin_Model_Video_Licence
+
+
+namespace Chaplin\Model\Video;
+
+use OutOfBoundsException;
+
+
+class Licence
 {
     const FIELD_TEXT = 'Text';
     const FIELD_URL = 'URL';
@@ -67,7 +74,7 @@ class Chaplin_Model_Video_Licence
     public static function getSelectOptions()
     {
         $arrOut = [];
-        foreach(self::$_arrInfo as $strId => $arrOption) {
+        foreach (self::$_arrInfo as $strId => $arrOption) {
             $arrOut[$strId] = $arrOption[self::FIELD_TEXT];
         }
         return $arrOut;

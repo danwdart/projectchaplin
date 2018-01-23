@@ -22,7 +22,14 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Dao_Exception_User_NotFound extends Zend_Exception
+
+namespace Chaplin\Dao\Exception\User;
+
+use Zend_Exception;
+
+
+
+class NotFound extends Zend_Exception
 {
     const MESSAGE = 'User with specified credentials was not found.';
 

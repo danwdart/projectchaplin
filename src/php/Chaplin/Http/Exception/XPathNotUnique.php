@@ -22,10 +22,17 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Http_Exception_XPathNotUnique extends Chaplin_Exception
+
+namespace Chaplin\Http\Exception;
+
+use Exception;
+
+
+
+class XPathNotUnique extends Exception
 {
     const MESSAGE = 'Could not find a unique element for query "%s" while scraping URL';
-    
+
     public function __construct($strRef)
     {
         parent::__construct(sprintf(self::MESSAGE, $strRef));

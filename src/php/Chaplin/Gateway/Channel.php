@@ -22,12 +22,20 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Gateway_Channel
-    extends Chaplin_Gateway_Abstract
+
+namespace Chaplin\Gateway;
+
+use Chaplin\Gateway\GatewayAbstract;
+use Chaplin\Dao\Interfaces\Channel as InterfaceChannel;
+use Chaplin\Model\Channel as ModelChannel;
+
+
+
+class Channel extends GatewayAbstract
 {
     private $_daoChannel;
 
-    public function __construct(Chaplin_Dao_Interface_Channel $daoChannel)
+    public function __construct(InterfaceChannel $daoChannel)
     {
         $this->_daoChannel = $daoChannel;
     }
@@ -41,8 +49,8 @@ class Chaplin_Gateway_Channel
     {
         return $this->_daoChannel->getByChannelId($strChannelId);
     }
-    
-    public function delete(Chaplin_Model_Channel $modelChannel)
+
+    public function delete(ModelChannel $modelChannel)
     {
         return $this->_daoChannel->delete($modelChannel);
     }
@@ -52,7 +60,7 @@ class Chaplin_Gateway_Channel
         return $this->_daoChannel->deleteById($strId);
     }
 
-    public function save(Chaplin_Model_Channel $modelChannel)
+    public function save(ModelChannel $modelChannel)
     {
         return $this->_daoChannel->save($modelChannel);
     }

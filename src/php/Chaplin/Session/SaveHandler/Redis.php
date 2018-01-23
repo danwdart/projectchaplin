@@ -23,16 +23,28 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+
+namespace Chaplin\Session\SaveHandler;
+
 /**
  * This file was partially ripped off from Rediska
  * The original author was Ivan Shumkov
  * The original licence was BSD:
  * http://www.opensource.org/licenses/bsd-license.php
  */
-class Chaplin_Session_SaveHandler_Redis
-    implements Zend_Session_SaveHandler_Interface
+
+use Chaplin\Config\Sessions as ConfigSessions;
+use Zend_Session_SaveHandler_Interface;
+use Zend_Config;
+use Exception;
+use Zend_Registry;
+use Zend_Session;
+use Zend_Session_SaveHandler_Exception;
+use Redis as PhpRedis;
+
+class Redis implements Zend_Session_SaveHandler_Interface
 {
-    const c_ZNAME = 'Chaplin_SessionSet';
+    const c_ZNAME = 'Chaplin\SessionSet';
 
     /**
    * PhpRedis instance
@@ -52,9 +64,9 @@ class Chaplin_Session_SaveHandler_Redis
    * @var array
   **/
     protected $_options = array(
-    'keyprefix' => 'PHPSESSIONS_',
-    'lifetime'  => null,
-    'registrykey' => null
+        'keyprefix' => 'PHPSESSIONS_',
+        'lifetime'  => null,
+        'registrykey' => null
     );
 
     /**
@@ -68,7 +80,7 @@ class Chaplin_Session_SaveHandler_Redis
             $options = $options->toArray();
         }
 
-        $configSessions = Chaplin_Config_Sessions::getInstance();
+        $configSessions = ConfigSessions::getInstance();
 
         // Set default lifetime
         $this->_options['lifetime'] =
@@ -222,7 +234,7 @@ class Chaplin_Session_SaveHandler_Redis
    * Set options array
    *
    * @param  array $options Options (see $_options description)
-   * @return Chaplin_Session_SaveHandler_Redis
+   * @return self
   **/
     public function setOptions(array $options)
     {
@@ -243,7 +255,7 @@ class Chaplin_Session_SaveHandler_Redis
    * @throws Zend_Session_SaveHandler_Exception
    * @param  string $name  Name of option
    * @param  mixed  $value Value of option
-   * @return Chaplin_Session_SaveHandler_Redis
+   * @return self
   **/
     public function setOption($name, $value)
     {
@@ -283,9 +295,9 @@ class Chaplin_Session_SaveHandler_Redis
    * Set PhpRedis instance
    *
    * @param  PhpRedis $phpredis
-   * @return Chaplin_Session_SaveHandler_Redis
+   * @return self
   **/
-    public function setPhpRedis(Redis $phpredis)
+    public function setPhpRedis(PhpRedis $phpredis)
     {
         $this->_phpredis = $phpredis;
 
@@ -297,7 +309,7 @@ class Chaplin_Session_SaveHandler_Redis
    *
    * @return PhpRedis
   **/
-    public function getPhpRedis()
+    public function getPhpRedis() : PhpRedis
     {
         return $this->_phpredis;
     }

@@ -24,9 +24,9 @@
 **/
 namespace Chaplin\Module\Cli\Controller;
 
-use Chaplin_Gateway as Gateway;
-use Chaplin_Model_User as ModelUser;
-use Chaplin_Model_User_Helper_UserType as UserType;
+use Chaplin\Gateway;
+use Chaplin\Model\User as ModelUser;
+use Chaplin\Model\User\Helper\UserType;
 use Zend_Db_Statement_Exception as StatementException;
 use Zend_Controller_Action as Controller;
 

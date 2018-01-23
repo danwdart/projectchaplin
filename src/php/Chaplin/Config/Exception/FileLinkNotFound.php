@@ -22,14 +22,14 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-abstract class Chaplin_Model_Field_Abstract
+namespace Chaplin\Config\Exception;
+
+class FileLinkNotFound extends ExceptionAbstract
 {
-    protected $_bIsDirty = false;
-    
-    public function bIsDirty()
+    const MESSAGE = "Cannot find file link %s";
+
+    public function __construct($strFile)
     {
-        return $this->_bIsDirty;
+        parent::__construct(sprintf(self::MESSAGE, $strFile));
     }
-    
-    abstract public function getValue($mixedDefault);
 }

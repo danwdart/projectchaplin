@@ -22,15 +22,14 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-interface Chaplin_Dao_Interface_User extends Chaplin_Dao_Interface
+namespace Chaplin\Config\Exception;
+
+class NonexistentKey extends ExceptionAbstract
 {
-    public function getAllUsers();
-    
-    public function getByUsernameAndPassword($strUsername, $strPassword);
-    
-    public function getByUsername($strUsername);
+    const MESSAGE = "Nonexistent key: %s on %s";
 
-    public function save(Chaplin_Model_User $modelUser);
-
-    public function updateByToken($strToken, $strPassword);
+    public function __construct($strKey, $strAppEnv)
+    {
+        parent::__construct(sprintf(self::MESSAGE, $strKey, $strAppEnv));
+    }
 }

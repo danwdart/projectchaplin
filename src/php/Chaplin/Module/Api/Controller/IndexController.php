@@ -25,8 +25,8 @@
 namespace Chaplin\Module\Api\Controller;
 
 use Chaplin\Auth;
-use Chaplin_Controller_Action_Api as ApiController;
-use Chaplin_Gateway as Gateway;
+use Chaplin\Controller\Action\Api as ApiController;
+use Chaplin\Gateway;
 
 class IndexController extends ApiController
 {

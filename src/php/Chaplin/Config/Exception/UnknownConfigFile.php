@@ -22,13 +22,14 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-interface Chaplin_Dao_Interface_Node extends Chaplin_Dao_Interface
-{
-    public function getAllNodes();
-    
-    public function getByNodeId($strNodeId);
-    
-    public function delete(Chaplin_Model_Node $modelNode);
+namespace Chaplin\Config\Exception;
 
-    public function save(Chaplin_Model_Node $modelNode);
+class UnknownConfigFile extends ExceptionAbstract
+{
+    const MESSAGE = "Unknown config file for class %s";
+
+    public function __construct($strClass)
+    {
+        parent::__construct(sprintf(self::MESSAGE, $strClass));
+    }
 }

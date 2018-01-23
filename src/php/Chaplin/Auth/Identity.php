@@ -24,7 +24,7 @@
 **/
 namespace Chaplin\Auth;
 
-use Chaplin_Model_User as ModelUser;
+use Chaplin\Model\User as ModelUser;
 
 class Identity
 {

@@ -25,8 +25,8 @@
 namespace Chaplin\Auth\Adapter;
 
 use Chaplin\Auth\Identity;
-use Chaplin_Dao_Exception_User_NotFound as ExceptionUserNotFound;
-use Chaplin_Gateway as Gateway;
+use Chaplin\Dao\Exception\User\NotFound as ExceptionUserNotFound;
+use Chaplin\Gateway;
 use Zend_Auth_Adapter_Interface as AdapterInterface;
 use Zend_Auth_Result as Result;
 
@@ -54,7 +54,7 @@ class Database implements AdapterInterface
             $identity = new Identity($modelUser);
 
             return new Result(Result::SUCCESS, $identity);
-        } catch(ExceptionUserNotFound $e) {
+        } catch (ExceptionUserNotFound $e) {
             return new Result(
                 Result::FAILURE_CREDENTIAL_INVALID,
                 null,

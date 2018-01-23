@@ -22,7 +22,12 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Dao_Sql_Exception_NoAdapter extends Exception
+
+namespace Chaplin\Dao\Sql\Exception;
+
+use Exception;
+
+class NoAdapter extends Exception
 {
     const MESSAGE = 'No SQL adapter present';
 

@@ -22,12 +22,20 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Gateway_Video_Vimeo
-    extends Chaplin_Gateway_Abstract
+
+namespace Chaplin\Gateway\Video;
+
+use Chaplin\Gateway\GatewayAbstract;
+use Chaplin\Dao\Amqp\Exchange;
+use Chaplin\Model\Video\Vimeo as ModelVideoVimeo;
+
+
+
+class Vimeo extends GatewayAbstract
 {
     private $_daoExchange;
 
-    public function __construct(Chaplin_Dao_Amqp_Exchange $daoExchange)
+    public function __construct(Exchange $daoExchange)
     {
         $this->_daoExchange = $daoExchange;
     }
@@ -36,13 +44,13 @@ class Chaplin_Gateway_Video_Vimeo
     {
         echo 'Listening on vimeo';
         $queueName = 'vimeo';
-        $callback = function (Chaplin_Model_Video_Vimeo $msg) {
+        $callback = function (ModelVideoVimeo $msg) {
             $msg->process();
         };
         $this->_daoExchange->listen($queueName, $callback);
     }
 
-    public function save(Chaplin_Model_Video_Vimeo $modelVimeo)
+    public function save(ModelVideoVimeo $modelVimeo)
     {
         return $this->_daoExchange->save($modelVimeo);
     }

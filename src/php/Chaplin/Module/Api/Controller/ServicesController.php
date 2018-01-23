@@ -22,10 +22,10 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-namespace Chaplin\Module\Cli\Api\Controller;
+namespace Chaplin\Module\Api\Controller;
 
-use Chaplin_Controller_Action_Api as ApiController;
-use Chaplin_Gateway as Gateway;
+use Chaplin\Controller\Action\Api as ApiController;
+use Chaplin\Gateway;
 use Exception;
 
 class ServicesController extends ApiController

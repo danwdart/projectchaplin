@@ -22,15 +22,19 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-interface Chaplin_Dao_Interface_Video_Comment extends Chaplin_Dao_Interface
+
+namespace Chaplin\Dao\Interfaces;
+
+use Chaplin\Dao\DaoInterface;
+use Chaplin\Model\Node as ModelNode;
+
+interface Node extends DaoInterface
 {
-    public function getById($strId);
+    public function getAllNodes();
 
-    public function getByVideoId($strVideoId);
+    public function getByNodeId($strNodeId);
 
-    public function save(Chaplin_Model_Video_Comment $modelComment);
+    public function delete(ModelNode $modelNode);
 
-    public function delete(Chaplin_Model_Video_Comment $modelComment);
-
-    public function deleteById($strComment);
+    public function save(ModelNode $modelNode);
 }

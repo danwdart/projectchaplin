@@ -22,9 +22,19 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_Field_Hash
-    extends Chaplin_Model_Field_Abstract
-    implements JsonSerializable
+
+namespace Chaplin\Model\Field;
+
+use Chaplin\Model\Field\FieldAbstract;
+use JsonSerializable;
+use OutOfBoundsException;
+use Chaplin\Dao\DaoInterface;
+use Iterator;
+use Exception;
+
+
+
+class Hash extends FieldAbstract implements JsonSerializable
 {
     
     protected $_arrFields = array();
@@ -43,10 +53,10 @@ class Chaplin_Model_Field_Hash
         throw new OutOfBoundsException('getId needs to be overridden!');
     }
 
-    public static function createFromData(Chaplin_Dao_Interface $dao, Array $arrArray)
+    public static function createFromData(DaoInterface $dao, array $arrArray)
     {
         $hash = new static();
-        foreach($arrArray as $strField => $mixedValue) {
+        foreach ($arrArray as $strField => $mixedValue) {
             $hash->_getFieldObject($strField)->setFromData($mixedValue);
         }
         $hash->_bIsNew = false;
@@ -54,11 +64,11 @@ class Chaplin_Model_Field_Hash
         return $hash;
     }
 
-    public static function createFromAPIResponse(Array $arrAPI, $strURLPrefix)
+    public static function createFromAPIResponse(array $arrAPI, $strURLPrefix)
     {
         $hash = new static();
         $hash->_strURLPrefix = $strURLPrefix;
-        foreach($arrAPI as $strField => $mixedValue) {
+        foreach ($arrAPI as $strField => $mixedValue) {
             $hash->_getFieldObject($strField)->setFromData($mixedValue);
         }
         $hash->_bIsNew = false;
@@ -66,20 +76,20 @@ class Chaplin_Model_Field_Hash
         return $hash;
     }
 
-    public static function createFromIterator(Iterator $itt, Array $arrArray)
+    public static function createFromIterator(Iterator $itt, array $arrArray)
     {
         $hash = new static();
-        foreach($arrArray as $strField => $mixedValue) {
+        foreach ($arrArray as $strField => $mixedValue) {
             $hash->_getFieldObject($strField)->setFromData($mixedValue);
         }
         $hash->_bIsNew = false;
         
-        return $hash;   
+        return $hash;
     }
 
     protected function __construct()
     {
-        foreach($this->_arrFields as $strField => $arrClassArray) {
+        foreach ($this->_arrFields as $strField => $arrClassArray) {
             $strClass = $arrClassArray['Class'];
             $strParam = isset($arrClassArray['Param'])?$arrClassArray['Param']:null;
             $this->_collFields[$strField] = new $strClass($strParam);
@@ -101,7 +111,7 @@ class Chaplin_Model_Field_Hash
         return $this;
     }
     
-    public function getFields(Chaplin_Dao_Interface $dao)
+    public function getFields(DaoInterface $dao)
     {
         return $this->_collFields;
     }
@@ -118,7 +128,7 @@ class Chaplin_Model_Field_Hash
     {
         try {
             return $this->_getFieldObject($strName)->getValue($mixedDefault);
-        } catch(OutOfBoundsException $e) {
+        } catch (OutOfBoundsException $e) {
             return $mixedDefault;
         }
     }
@@ -133,32 +143,31 @@ class Chaplin_Model_Field_Hash
         return $this->toArray();
     }
     
-    private function _getModelArray(Array $arrFields)
+    private function _getModelArray(array $arrFields)
     {
         $arrOut = array();
-        foreach($this->_collFields as $strFieldName => $objField) {
+        foreach ($this->_collFields as $strFieldName => $objField) {
             $strClass = get_class($objField);
-            switch($strClass) {
-            case 'Chaplin_Model_Field_Field':
-            case 'Chaplin_Model_Field_Readonly':
-            case 'Chaplin_Model_Field_FieldId':
-                $arrOut[$strFieldName] = $objField->getValue(null);
-                break;
-            case 'Chaplin_Model_Field_Collection':
-                foreach($objField as $hash) {
-                    foreach(
-                        $this->_getModelArray(
+            switch ($strClass) {
+                case 'Chaplin\\Model\\Field\\Field':
+                case 'Chaplin\\Model\\Field\\Readonly':
+                case 'Chaplin\\Model\\Field\\FieldId':
+                    $arrOut[$strFieldName] = $objField->getValue(null);
+                    break;
+                case 'Chaplin\\Model\\Field\\Collection':
+                    foreach ($objField as $hash) {
+                        foreach ($this->_getModelArray(
                             $hash->_collFields
                         ) as $strField => $mixedValue) {
-                        if (!isset($arrOut[$strFieldName])) {
-                            $arrOut[$strFieldName] = [];
+                            if (!isset($arrOut[$strFieldName])) {
+                                    $arrOut[$strFieldName] = [];
+                            }
+                            $arrOut[$strFieldName][$strField] = $mixedValue;
                         }
-                        $arrOut[$strFieldName][$strField] = $mixedValue;
                     }
-                }
-                break;
-            default:
-                throw new Exception('Not Implemented class '.$strClass);
+                    break;
+                default:
+                    throw new Exception('Not Implemented class '.$strClass);
             }
         }
         return $arrOut;

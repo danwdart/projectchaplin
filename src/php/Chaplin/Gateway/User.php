@@ -22,12 +22,20 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Gateway_User
-    extends Chaplin_Gateway_Abstract
+
+namespace Chaplin\Gateway;
+
+use Chaplin\Gateway\GatewayAbstract;
+use Chaplin\Dao\Interfaces\User as InterfaceUser;
+use Chaplin\Model\User as ModelUser;
+
+
+
+class User extends GatewayAbstract
 {
     private $_daoUser;
 
-    public function __construct(Chaplin_Dao_Interface_User $daoUser)
+    public function __construct(InterfaceUser $daoUser)
     {
         $this->_daoUser = $daoUser;
     }
@@ -41,18 +49,18 @@ class Chaplin_Gateway_User
     {
         return $this->_daoUser->getByUsernameAndPassword($strUsername, $strPassword);
     }
-    
+
     public function getByUsername($strUsername)
     {
         return $this->_daoUser->getByUsername($strUsername);
     }
-    
-    public function delete(Chaplin_Model_User $modelUser)
+
+    public function delete(ModelUser $modelUser)
     {
         $this->_daoUser->delete($modelUser);
     }
 
-    public function save(Chaplin_Model_User $modelUser)
+    public function save(ModelUser $modelUser)
     {
         $this->_daoUser->save($modelUser);
     }

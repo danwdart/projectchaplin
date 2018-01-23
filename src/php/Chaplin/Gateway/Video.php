@@ -22,47 +22,56 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Gateway_Video
-    extends Chaplin_Gateway_Abstract
+
+namespace Chaplin\Gateway;
+
+use Chaplin\Gateway\GatewayAbstract;
+use Chaplin\Dao\Interfaces\Video as InterfaceVideo;
+use Chaplin\Model\User;
+use Chaplin\Model\Video as ModelVideo;
+
+
+
+class Video extends GatewayAbstract
 {
     private $_daoVideo;
 
-    public function __construct(Chaplin_Dao_Interface_Video $daoVideo)
+    public function __construct(InterfaceVideo $daoVideo)
     {
         $this->_daoVideo = $daoVideo;
     }
 
-    public function getFeaturedVideos(Chaplin_Model_User $modelUser = null)
+    public function getFeaturedVideos(User $modelUser = null)
     {
         return $this->_daoVideo->getFeaturedVideos($modelUser);
     }
 
-    public function getByVideoId($strVideoId, Chaplin_Model_User $modelUser = null)
+    public function getByVideoId($strVideoId, User $modelUser = null)
     {
         return $this->_daoVideo->getByVideoId($strVideoId, $modelUser);
     }
     
-    public function getByUser(Chaplin_Model_User $modelUser)
+    public function getByUser(User $modelUser)
     {
         return $this->_daoVideo->getByUser($modelUser);
     }
     
-    public function getByUserUnnamed(Chaplin_Model_User $modelUser)
+    public function getByUserUnnamed(User $modelUser)
     {
         return $this->_daoVideo->getByUserUnnamed($modelUser);
     }
     
     public function getBySearchTerms($strSearchTerms)
     {
-        return $this->_daoVideo->getBySearchTerms($strSearchTerms);   
+        return $this->_daoVideo->getBySearchTerms($strSearchTerms);
     }
 
-    public function delete(Chaplin_Model_Video $modelVideo)
+    public function delete(ModelVideo $modelVideo)
     {
         return $this->_daoVideo->delete($modelVideo);
     }
 
-    public function save(Chaplin_Model_Video $modelVideo)
+    public function save(ModelVideo $modelVideo)
     {
         return $this->_daoVideo->save($modelVideo);
     }

@@ -22,7 +22,14 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_User_Helper_UserType
+
+namespace Chaplin\Model\User\Helper;
+
+use Chaplin\Model\User\Helper\Exception\UnknownType;
+
+
+
+class UserType
 {
     const TYPE_GUEST = 'Guest';
     const TYPE_USER = 'User';
@@ -51,8 +58,8 @@ class Chaplin_Model_User_Helper_UserType
 
     public function __construct($intTypeId)
     {
-        if(!isset(self::$_arrTypes[$intTypeId])) {
-            throw new Chaplin_Model_User_Helper_Exception_UnknownType($intTypeId);
+        if (!isset(self::$_arrTypes[$intTypeId])) {
+            throw new UnknownType($intTypeId);
         }
         $this->_intTypeId = $intTypeId;
     }

@@ -22,7 +22,17 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_User extends Chaplin_Model_Field_Hash
+
+namespace Chaplin\Model;
+
+use Chaplin\Model\Field\Hash;
+use ArrayObject;
+use Chaplin\Model\User\Helper\UserType;
+use Chaplin\Gateway;
+
+
+
+class User extends Hash
 {
     const FIELD_Username = 'Username';
     const FIELD_Password = 'Password';
@@ -38,15 +48,15 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
     const HASH_SHA512 = 'sha512';
 
     protected $_arrFields = [
-        self::FIELD_Username => ['Class' => 'Chaplin_Model_Field_FieldId'],
-        self::FIELD_Password => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_Nick => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_Email => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_UserTypeId => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_VALIDATION => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_HASH => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_Username => ['Class' => 'Chaplin\\Model\\Field\\FieldId'],
+        self::FIELD_Password => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_Nick => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_Email => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_UserTypeId => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_VALIDATION => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_HASH => ['Class' => 'Chaplin\\Model\\Field\\Field'],
         self::CHILD_ASSOC_Credentials => [
-            'Class' => 'Chaplin_Model_Field_Collection'
+            'Class' => 'Chaplin\\Model\\Field\\Collection'
         ]
     ];
 
@@ -137,15 +147,15 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
 
     public function getUserType()
     {
-        return new Chaplin_Model_User_Helper_UserType($this->_getField(self::FIELD_UserTypeId, Chaplin_Model_User_Helper_UserType::ID_GUEST));
+        return new UserType($this->_getField(self::FIELD_UserTypeId, UserType::ID_GUEST));
     }
 
     public function isGod()
     {
-        return (Chaplin_Model_User_Helper_UserType::TYPE_GOD == $this->getUserType()->getUserType());
+        return (UserType::TYPE_GOD == $this->getUserType()->getUserType());
     }
 
-    public function setUserType(Chaplin_Model_User_Helper_UserType $helperUserType)
+    public function setUserType(UserType $helperUserType)
     {
         $this->_setField(self::FIELD_UserTypeId, $helperUserType->getUserTypeId());
     }
@@ -162,11 +172,11 @@ class Chaplin_Model_User extends Chaplin_Model_Field_Hash
 
     public function delete()
     {
-        return Chaplin_Gateway::getInstance()->getUser()->delete($this);
+        return Gateway::getInstance()->getUser()->delete($this);
     }
 
     public function save()
     {
-        return Chaplin_Gateway::getInstance()->getUser()->save($this);
+        return Gateway::getInstance()->getUser()->save($this);
     }
 }

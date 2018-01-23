@@ -15,7 +15,7 @@ trait Singleton
     {
     }
 
-    public static function __callStatic($strMethod, Array $arrArgs)
+    public static function __callStatic($strMethod, array $arrArgs)
     {
         return call_user_func_array(
             [self::getInstance(), $strMethod],

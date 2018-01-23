@@ -22,12 +22,19 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Dao_Sql_Channel
-    extends Chaplin_Dao_Sql_Abstract
-    implements Chaplin_Dao_Interface_Channel
+
+namespace Chaplin\Dao\Sql;
+
+use Chaplin\Dao\Sql\SqlAbstract;
+use Chaplin\Dao\Interfaces\Channel as InterfaceChannel;
+use Chaplin\Iterator\Dao\Sql\Rows;
+use Exception;
+use Chaplin\Model\Channel as ModelChannel;
+
+class Channel extends SqlAbstract implements InterfaceChannel
 {
     const TABLE = 'Channels';
-    
+
     const PK = 'ChannelId';
 
     protected function _getTable()
@@ -44,29 +51,30 @@ class Chaplin_Dao_Sql_Channel
     {
         $strSql = 'SELECT * FROM %s';
         $arrRows = $this->_getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
-        return new Chaplin_Iterator_Dao_Sql_Rows($arrRows, $this);
+        return new Rows($arrRows, $this);
     }
-    
+
     public function getByChannelId($strChannelId)
     {
         $strSql = 'SELECT * FROM %s WHERE %s = ?';
 
         $arrRow = $this->_getAdapter()->fetchRow(
             sprintf(
-                $strSql, 
+                $strSql,
                 self::TABLE,
                 self::PK
-            ), $strChannelId
+            ),
+            $strChannelId
         );
 
-        if(empty($arrRow)) {
+        if (empty($arrRow)) {
             throw new Exception('No Channel named '.$strChannelId);
         }
 
         return $this->convertToModel($arrRow);
     }
-    
-    public function delete(Chaplin_Model_Channel $modelChannel)
+
+    public function delete(ModelChannel $modelChannel)
     {
         return $this->_delete($modelChannel);
     }
@@ -76,13 +84,13 @@ class Chaplin_Dao_Sql_Channel
         return $this->_deleteById($strId);
     }
 
-    public function save(Chaplin_Model_Channel $modelChannel)
+    public function save(ModelChannel $modelChannel)
     {
         return $this->_save($modelChannel);
     }
 
     public function convertToModel($arrData)
     {
-        return Chaplin_Model_Channel::createFromData($this, $this->_sqlToModel($arrData));
+        return ModelChannel::createFromData($this, $this->_sqlToModel($arrData));
     }
 }

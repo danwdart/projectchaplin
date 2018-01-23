@@ -22,8 +22,9 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Config_Gateways
-    extends Chaplin_Config_Abstract
+namespace Chaplin\Config;
+
+class Gateways extends ConfigAbstract
 {
     const CONFIG_TYPE = 'Ini';
 

@@ -27,7 +27,7 @@ namespace Chaplin\Module\Api\Form\Video;
 use Zend_Form as Form;
 use Zend_Form_Element_Submit as Submit;
 use Zend_Form_SubForm as ZendSubForm;
-use Chaplin_Iterator_Interface as Itt;
+use Chaplin\Iterator\IteratorInterface as Itt;
 
 class Name extends Form
 {
@@ -42,7 +42,7 @@ class Name extends Form
     public function init()
     {
         $sfVideos = new ZendSubForm('Videos');
-        foreach($this->_ittVideos as $modelVideo) {
+        foreach ($this->_ittVideos as $modelVideo) {
             $subform = new SubForm($modelVideo);
             $sfVideos->addSubForm($subform, $modelVideo->getId());
         }

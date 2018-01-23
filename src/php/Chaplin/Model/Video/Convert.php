@@ -22,19 +22,29 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_Video_Convert
-    extends Chaplin_Model_Field_Hash
-    implements Chaplin_Model_Interface_Message
+
+namespace Chaplin\Model\Video;
+
+use Chaplin\Model\Field\Hash;
+use Chaplin\Model\Interfaces\Message;
+use Chaplin\Model\Video;
+use Chaplin\Gateway;
+use Chaplin\Service;
+use Exception;
+
+
+
+class Convert extends Hash implements Message
 {
     const FIELD_VIDEOID = 'VideoId';
 
     private $_modelVideo;
 
     protected $_arrFields = [
-        self::FIELD_VIDEOID => ['Class' => 'Chaplin_Model_Field_Field']
+        self::FIELD_VIDEOID => ['Class' => 'Chaplin\\Model\\Field\\Field']
     ];
 
-    public static function create(Chaplin_Model_Video $modelVideo)
+    public static function create(Video $modelVideo)
     {
         $msgVideo = new self();
         $msgVideo->_setField(self::FIELD_VIDEOID, $modelVideo->getVideoId());
@@ -50,7 +60,7 @@ class Chaplin_Model_Video_Convert
     private function _getModelVideo()
     {
         if (is_null($this->_modelVideo)) {
-            $this->_modelVideo = Chaplin_Gateway::getInstance()
+            $this->_modelVideo = Gateway::getInstance()
                 ->getVideo()
                 ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
         }
@@ -59,7 +69,7 @@ class Chaplin_Model_Video_Convert
 
     public function process()
     {
-        $modelVideo = Chaplin_Gateway::getInstance()
+        $modelVideo = Gateway::getInstance()
             ->getVideo()
             ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
 
@@ -75,11 +85,11 @@ class Chaplin_Model_Video_Convert
 
         $ret = 0;
 
-        $strError = Chaplin_Service::getInstance()
+        $strError = Service::getInstance()
             ->getEncoder()
             ->convertFile($strFilenameRawFullPath, $strPathToWebm, $ret);
 
-        if(0 != $ret) {
+        if (0 != $ret) {
             throw new Exception('Unable to convert: '.$strFilenameRawFullPath);
         }
 
@@ -93,7 +103,7 @@ class Chaplin_Model_Video_Convert
         $modelVideo->save();
 
         try {
-            Chaplin_Gateway::getEmail()
+            Gateway::getEmail()
                 ->videoFinished($modelVideo);
             echo '"Video Finished" email successfully sent.'.PHP_EOL;
         } catch (Exception $e) {

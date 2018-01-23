@@ -22,11 +22,20 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+
+namespace Chaplin\Dao\Amqp;
+
+use Chaplin\Dao\DaoInterface;
+use Closure;
+use Exception;
+use Zend_Json;
+use Zend_Json_Exception;
+use Chaplin\Model\Field\Hash;
+use Chaplin\Config\Amqp as ConfigAmqp;
 use PhpAmqpLib\Connection\AMQPStreamConnection as Connection;
 use PhpAmqpLib\Message\AMQPMessage as Message;
 
-class Chaplin_Dao_Amqp_Exchange
-    implements Chaplin_Dao_Interface
+class Exchange implements DaoInterface
 {
     const CONFIG_TYPE = 'Type';
     const CONFIG_FLAGS = 'Flags';
@@ -58,7 +67,7 @@ class Chaplin_Dao_Amqp_Exchange
 
         $this->_strExchangeName = $strExchangeName;
 
-        $arrExchanges = Chaplin_Config_Amqp::getInstance()
+        $arrExchanges = ConfigAmqp::getInstance()
             ->getConfigArray();
 
         if (!isset($arrExchanges[$strExchangeName])
@@ -76,8 +85,8 @@ class Chaplin_Dao_Amqp_Exchange
 
     private static function _getConnection(
         string $strType
-    ): Connection
-    {
+    ): Connection {
+
         if (is_null(self::$_amqpConnections[$strType])) {
             self::$_amqpConnections[$strType] = new Connection(
                 getenv("AMQP_HOST"),
@@ -151,7 +160,7 @@ class Chaplin_Dao_Amqp_Exchange
             $arrFlags[self::FLAG_AUTODELETE] ?? false
         );
 
-        foreach($arrKeys as $strQueueKey) {
+        foreach ($arrKeys as $strQueueKey) {
             $strBindingKey = is_null($strQueueKey)?'#':$strQueueKey;
             $channel->queue_bind(
                 $strQueue,
@@ -225,10 +234,10 @@ class Chaplin_Dao_Amqp_Exchange
     *  @param: $modelMessage
     **/
     public function publish(
-        Chaplin_Model_Field_Hash $message,
+        Hash $message,
         $strRoutingKey
-    ) : void
-    {
+    ) : void {
+
         $connection = $this->_getConnection(self::TYPE_READ);
         $channel = $connection->channel();
 
@@ -253,7 +262,7 @@ class Chaplin_Dao_Amqp_Exchange
         $connection->close();
     }
 
-    public function save(Chaplin_Model_Field_Hash $model) : void
+    public function save(Hash $model) : void
     {
         $this->publish($model, $model->getRoutingKey());
     }
