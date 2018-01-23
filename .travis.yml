@@ -1,0 +1,28 @@
+matrix:
+    include:
+        - language: php
+            php: 7.2
+            before_script:
+                - cd src/php
+                - composer install
+            script:
+                - vendor/bin/phpstan analyse Chaplin
+        - language: php
+            php: 7.2
+            before_script:
+                - cd src/php
+                - composer install
+            script:
+                - vendor/bin/phpcs --standard=PSR2 Chaplin
+        - language: javascript
+            before_script:
+                - cd src/php
+                - npm install
+                - npm run build
+            script:
+                - node_modules/.bin/eslint
+        - language: javascript
+            before_script:
+                - cd src/js
+            script:
+                - node_modules/.bin/eslint
