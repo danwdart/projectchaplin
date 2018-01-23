@@ -36,40 +36,40 @@ class Convert extends Hash implements Message
 {
     const FIELD_VIDEOID = 'VideoId';
 
-    private $_modelVideo;
+    private $modelVideo;
 
-    protected $_arrFields = [
+    protected $arrFields = [
         self::FIELD_VIDEOID => ['Class' => 'Chaplin\\Model\\Field\\Field']
     ];
 
     public static function create(Video $modelVideo)
     {
         $msgVideo = new self();
-        $msgVideo->_setField(self::FIELD_VIDEOID, $modelVideo->getVideoId());
-        $msgVideo->_modelVideo = $modelVideo;
+        $msgVideo->setField(self::FIELD_VIDEOID, $modelVideo->getVideoId());
+        $msgVideo->modelVideo = $modelVideo;
         return $msgVideo;
     }
 
     public function getId()
     {
-        return $this->_getField(self::FIELD_VIDEOID, null);
+        return $this->getField(self::FIELD_VIDEOID, null);
     }
 
-    private function _getModelVideo()
+    private function getModelVideo()
     {
-        if (is_null($this->_modelVideo)) {
-            $this->_modelVideo = Gateway::getInstance()
+        if (is_null($this->modelVideo)) {
+            $this->modelVideo = Gateway::getInstance()
                 ->getVideo()
-                ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
+                ->getByVideoId($this->getField(self::FIELD_VIDEOID, null));
         }
-        return $this->_modelVideo;
+        return $this->modelVideo;
     }
 
     public function process()
     {
         $modelVideo = Gateway::getInstance()
             ->getVideo()
-            ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
+            ->getByVideoId($this->getField(self::FIELD_VIDEOID, null));
 
         $strFullPath = APPLICATION_PATH.'/public';
 
@@ -113,7 +113,7 @@ class Convert extends Hash implements Message
 
     public function getRoutingKey()
     {
-        return 'video.convert.'.$this->_getModelVideo()->getUsername();
+        return 'video.convert.'.$this->getModelVideo()->getUsername();
     }
 
     public function getExchangeName()

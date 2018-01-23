@@ -42,7 +42,7 @@ class ServicesController extends ApiController
         if (false === strpos($strVideoURL, $vhost)) {
             $arrOut = ['error' => 'Video not in current server.'];
             $this->getResponse()->setHttpResponseCode(404);
-            return $this->_forceAPI($arrOut);
+            return $this->forceAPI($arrOut);
         }
 
         $arrMatches = [];
@@ -58,7 +58,7 @@ class ServicesController extends ApiController
         ) {
             $arrOut = ['error' => 'Request shows not a video resource'];
             $this->getResponse()->setHttpResponseCode(404);
-            return $this->_forceAPI($arrOut);
+            return $this->forceAPI($arrOut);
         }
 
         $strVideoId = $arrMatches[1];
@@ -69,13 +69,13 @@ class ServicesController extends ApiController
         } catch (Exception $e) {
             $arrOut = ['error' => 'Video not found: ',$strVideoId];
             $this->getResponse()->setHttpResponseCode(404);
-            return $this->_forceAPI($arrOut);
+            return $this->forceAPI($arrOut);
         }
 
         if ($video->getPrivacy()->isPrivate()) {
             $arrOut = ['error' => 'Private Video'];
             $this->getResponse()->setHttpResponseCode(401);
-            return $this->_forceAPI($arrOut);
+            return $this->forceAPI($arrOut);
         }
 
         $arrOut = [
@@ -91,6 +91,6 @@ class ServicesController extends ApiController
          'provider_url' =>  $vhost
         ];
 
-        return $this->_forceAPI($arrOut);
+        return $this->forceAPI($arrOut);
     }
 }

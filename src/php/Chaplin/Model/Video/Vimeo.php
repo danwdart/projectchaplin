@@ -37,7 +37,7 @@ class Vimeo extends Hash implements Message
     const FIELD_VIMEOID = 'VimeoId';
     const FIELD_VIDEOID = 'VideoId';
 
-    protected $_arrFields = [
+    protected $arrFields = [
         self::FIELD_VIMEOID => ['Class' => 'Chaplin\\Model\\Field\\Field'],
         self::FIELD_VIDEOID => ['Class' => 'Chaplin\\Model\\Field\\Field']
     ];
@@ -45,19 +45,19 @@ class Vimeo extends Hash implements Message
     public static function create(Video $modelVideo, $strVimeoId)
     {
         $msgTest = new self();
-        $msgTest->_setField(self::FIELD_VIDEOID, $modelVideo->getVideoId());
-        $msgTest->_setField(self::FIELD_VIMEOID, $strVimeoId);
+        $msgTest->setField(self::FIELD_VIDEOID, $modelVideo->getVideoId());
+        $msgTest->setField(self::FIELD_VIMEOID, $strVimeoId);
         return $msgTest;
     }
 
-    private function _getVimeoId()
+    private function getVimeoId()
     {
-        return $this->_getField(self::FIELD_VIMEOID, null);
+        return $this->getField(self::FIELD_VIMEOID, null);
     }
 
     public function process()
     {
-        echo 'Downloading '.$this->_getVimeoId().PHP_EOL;
+        echo 'Downloading '.$this->getVimeoId().PHP_EOL;
         ob_flush();
         flush();
 
@@ -65,23 +65,23 @@ class Vimeo extends Hash implements Message
         $ret = null;
         $strOut = Service::getInstance()
             ->getVimeo()
-            ->downloadVideo($this->_getVimeoId(), getenv("UPLOADS_PATH"), $ret);
+            ->downloadVideo($this->getVimeoId(), getenv("UPLOADS_PATH"), $ret);
 
         echo $strOut;
         ob_flush();
         flush();
         if (0 == $ret) {
-            echo 'Downloaded '.$this->_getVimeoId().PHP_EOL;
+            echo 'Downloaded '.$this->getVimeoId().PHP_EOL;
         } else {
-            echo 'Failed to download '.$this->_getVimeoId().PHP_EOL;
-            throw new \Exception('Failed to download '.$this->_getVimeoId().' because: '.$strOut);
+            echo 'Failed to download '.$this->getVimeoId().PHP_EOL;
+            throw new \Exception('Failed to download '.$this->getVimeoId().' because: '.$strOut);
         }
         ob_flush();
         flush();
 
         $modelVideo = Gateway::getInstance()
             ->getVideo()
-            ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
+            ->getByVideoId($this->getField(self::FIELD_VIDEOID, null));
 
         try {
             Gateway::getEmail()
@@ -96,7 +96,7 @@ class Vimeo extends Hash implements Message
 
     public function getRoutingKey()
     {
-        return 'video.vimeo.'.$this->_getVimeoId();
+        return 'video.vimeo.'.$this->getVimeoId();
     }
 
     public function getExchangeName()

@@ -38,11 +38,11 @@ abstract class ConfigAbstract implements MultiSingletonInterface
 
     const CONFIG_TEMPLATE = "Zend_Config_";
 
-    protected $_zendConfig;
+    protected $zendConfig;
 
     private function __construct()
     {
-        $strConfigFile = $this->_getConfigFile();
+        $strConfigFile = $this->getConfigFile();
 
         if (empty($strConfigFile)) {
             throw new UnknownConfigFileException(get_class($this));
@@ -58,23 +58,23 @@ abstract class ConfigAbstract implements MultiSingletonInterface
             throw new FileNotFoundException($strConfigFile);
         }
 
-        $strConfigClass = self::CONFIG_TEMPLATE.ucwords($this->_getConfigType());
+        $strConfigClass = self::CONFIG_TEMPLATE.ucwords($this->getConfigType());
 
         if (!class_exists($strConfigClass)) {
             throw new ConfigClassNotFoundException($strConfigClass);
         }
 
-        $this->_zendConfig = new $strConfigClass(
+        $this->zendConfig = new $strConfigClass(
             $strConfigFile,
             APPLICATION_ENV
         );
     }
 
-    abstract protected function _getConfigFile();
+    abstract protected function getConfigFile();
 
-    abstract protected function _getConfigType();
+    abstract protected function getConfigType();
 
-    protected function _getValue($strValue, $strKey)
+    protected function getValue($strValue, $strKey)
     {
         if (is_null($strValue)) {
             throw new NonexistentKeyException($strKey, APPLICATION_ENV);
@@ -83,7 +83,7 @@ abstract class ConfigAbstract implements MultiSingletonInterface
         return $strValue;
     }
 
-    protected function _getOptionalValue($strValue, $mixedDefault)
+    protected function getOptionalValue($strValue, $mixedDefault)
     {
         if (is_null($strValue)) {
             return $mixedDefault;

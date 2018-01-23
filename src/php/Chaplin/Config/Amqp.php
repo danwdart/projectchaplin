@@ -28,18 +28,18 @@ class Amqp extends ConfigAbstract
 {
     const CONFIG_TYPE = 'Json';
 
-    protected function _getConfigType()
+    protected function getConfigType()
     {
         return self::CONFIG_TYPE;
     }
 
-    protected function _getConfigFile()
+    protected function getConfigFile()
     {
         return APPLICATION_PATH.'/config/amqp.json';
     }
 
     public function getConfigArray()
     {
-        return $this->_getValue($this->_zendConfig->exchanges, 'exchanges')->toArray();
+        return $this->getValue($this->zendConfig->exchanges, 'exchanges')->toArray();
     }
 }

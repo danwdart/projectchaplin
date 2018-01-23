@@ -37,18 +37,18 @@ use Zend_Form_SubForm as ZendSubForm;
 
 class SubForm extends ZendSubForm
 {
-    private $_modelVideo;
+    private $modelVideo;
 
     public function __construct(ModelVideo $modelVideo)
     {
-        $this->_modelVideo = $modelVideo;
+        $this->modelVideo = $modelVideo;
 
         parent::__construct();
     }
 
     public function init()
     {
-        $modelVideo = $this->_modelVideo;
+        $modelVideo = $this->modelVideo;
 
         $strImageURL = $modelVideo->getThumbnail();
         $elImage = new Image('Image');

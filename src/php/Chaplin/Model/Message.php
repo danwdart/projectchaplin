@@ -50,7 +50,7 @@ abstract class Message extends Hash
     const PRIORITY_NORMAL = 0;
     const PRIORITY_LOW = -1;
 
-    protected $_arrFields = [
+    protected $arrFields = [
         self::FIELD_MESSAGEID => ['Class' => 'Chaplin\\Model\\Field\\FieldId'],
         self::FIELD_RECIPIENT => ['Class' => 'Chaplin\\Model\\Field\\Field'],
         self::FIELD_SENDER => ['Class' => 'Chaplin\\Model\\Field\\Field'],
@@ -77,25 +77,25 @@ abstract class Message extends Hash
     ) {
 
         $modelMessage = new static();
-        $modelMessage->_setField(self::FIELD_MESSAGEID, md5(uniqid()));
-        $modelMessage->_setField(
+        $modelMessage->setField(self::FIELD_MESSAGEID, md5(uniqid()));
+        $modelMessage->setField(
             self::FIELD_RECIPIENT,
             $modelUserRecipient->getUsername()
         );
-        $modelMessage->_setField(
+        $modelMessage->setField(
             self::FIELD_SENDER,
             $modelUserSender->getUsername()
         );
-        $modelMessage->_setField(self::FIELD_SUBJECT, $strSubject);
-        $modelMessage->_setField(self::FIELD_TEXT, $strText);
-        $modelMessage->_setField(self::FIELD_DATE_TIMECREATED, time());
-        $modelMessage->_setField(self::FIELD_PRIORITY, $intPriority);
+        $modelMessage->setField(self::FIELD_SUBJECT, $strSubject);
+        $modelMessage->setField(self::FIELD_TEXT, $strText);
+        $modelMessage->setField(self::FIELD_DATE_TIMECREATED, time());
+        $modelMessage->setField(self::FIELD_PRIORITY, $intPriority);
         return $modelMessage;
     }
 
     public function getId()
     {
-        return $this->_getField(self::FIELD_MESSAGEID, null);
+        return $this->getField(self::FIELD_MESSAGEID, null);
     }
 
     public function save()
@@ -108,7 +108,7 @@ abstract class Message extends Hash
 
     public function process()
     {
-        $strUsername = $this->_getField(
+        $strUsername = $this->getField(
             self::FIELD_RECIPIENT,
             null
         );
@@ -131,12 +131,12 @@ abstract class Message extends Hash
 
         $strPathToTemplateHtml = getenv("EMAILS_PATH").
             '/html/'.
-            $this->_getField(self::FIELD_MAILTEMPLATE, null).
+            $this->getField(self::FIELD_MAILTEMPLATE, null).
             '.mustache';
 
         $strPathToTemplateText = getenv("EMAILS_PATH").
             '/text/'.
-            $this->_getField(self::FIELD_MAILTEMPLATE, null).
+            $this->getField(self::FIELD_MAILTEMPLATE, null).
             '.mustache';
 
         $strTemplateHtml = file_get_contents($strPathToTemplateHtml);
@@ -145,18 +145,18 @@ abstract class Message extends Hash
 
         $strMessageHtml = $m->render(
             $strTemplateHtml,
-            $this->_getField(self::FIELD_PARAMS, array())
+            $this->getField(self::FIELD_PARAMS, array())
         );
         $strMessageText = $m->render(
             $strTemplateText,
-            $this->_getField(self::FIELD_PARAMS, array())
+            $this->getField(self::FIELD_PARAMS, array())
         );
 
         $strVhost = getenv("VHOST");
 
         $mail = new Zend_Mail();
         $mail->setFrom('chaplin@'.$strVhost, 'Chaplin');
-        $mail->setSubject($this->_getField(self::FIELD_TITLE, null));
+        $mail->setSubject($this->getField(self::FIELD_TITLE, null));
         $mail->addTo($modelUser->getEmail());
         $mail->setBodyHtml($strMessageHtml);
         $mail->setBodyText($strMessageText);
@@ -169,7 +169,7 @@ abstract class Message extends Hash
     {
         return 'message.'.
         $this->getType().'.'.
-        $this->_getField(self::FIELD_USERNAME, null);
+        $this->getField(self::FIELD_USERNAME, null);
     }
 
     public function getExchangeName()

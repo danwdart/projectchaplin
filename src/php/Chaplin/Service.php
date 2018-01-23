@@ -44,11 +44,11 @@ class Service implements SingletonInterface
 
     const LIFETIME_SECS = 1800;
 
-    private $_zendCache;
+    private $zendCache;
 
-    private function _getCache()
+    private function getCache()
     {
-        if (is_null($this->_zendCache)) {
+        if (is_null($this->zendCache)) {
             //@TODO - probably put this in a config file
             $frontendOptions = [
                 'lifetime' => self::LIFETIME_SECS,
@@ -73,19 +73,19 @@ class Service implements SingletonInterface
                 $backendType = 'File';
             }
 
-            $this->_zendCache = Zend_Cache::factory(
+            $this->zendCache = Zend_Cache::factory(
                 'Core',
                 $backendType,
                 $frontendOptions,
                 $backendOptions
             );
         }
-        return $this->_zendCache;
+        return $this->zendCache;
     }
 
     public function setCache(Zend_Cache $zendCache)
     {
-        $this->_zendCache   = $zendCache;
+        $this->zendCache   = $zendCache;
     }
 
     public function getHttpClient()
@@ -93,7 +93,7 @@ class Service implements SingletonInterface
         $objClient = new ChaplinHttpClient();
         $objCache  = new CacheHttpClient(
             $objClient,
-            $this->_getCache()
+            $this->getCache()
         );
         return new ServiceHttpClient($objCache);
     }

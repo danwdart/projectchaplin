@@ -39,12 +39,12 @@ class Video extends SqlAbstract implements InterfaceVideo
 
     const PK = 'VideoId';
 
-    protected function _getTable()
+    protected function getTable()
     {
         return self::TABLE;
     }
 
-    protected function _getPrimaryKey()
+    protected function getPrimaryKey()
     {
         return self::PK;
     }
@@ -57,7 +57,7 @@ class Video extends SqlAbstract implements InterfaceVideo
             '" OR '.
             ModelVideo::FIELD_USERNAME .' = "'.$modelUser->getUsername().'"').
             ' ORDER BY TimeCreated DESC';
-        $arrRows = $this->_getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
+        $arrRows = $this->getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
         return new Rows($arrRows, $this);
     }
 
@@ -73,7 +73,7 @@ class Video extends SqlAbstract implements InterfaceVideo
             '" OR '.
             ModelVideo::FIELD_USERNAME .' = "'.$modelUser->getUsername().'")');
 
-        $arrRow = $this->_getAdapter()->fetchRow(
+        $arrRow = $this->getAdapter()->fetchRow(
             sprintf($strSql, self::TABLE, self::PK),
             (is_null($modelUser) ?
                 [$strVideoId, $strVideoId, $strVideoId, $strVideoId]:
@@ -100,29 +100,29 @@ class Video extends SqlAbstract implements InterfaceVideo
 
     public function delete(ModelVideo $modelVideo)
     {
-        return $this->_delete($modelVideo);
+        return $this->delete($modelVideo);
     }
 
-    protected function _sqlToModel(array $arrSql)
+    protected function sqlToModel(array $arrSql)
     {
-        $arrModel = parent::_sqlToModel($arrSql);
+        $arrModel = parent::sqlToModel($arrSql);
         unset($arrModel['Fb_Pos']);
         unset($arrModel['Fb_Neg']);
         if (isset($arrModel[ModelVideo::FIELD_TIMECREATED])) {
             $arrModel[ModelVideo::FIELD_TIMECREATED] =
-                $this->_sqlDateTimeToTimestamp(
+                $this->sqlDateTimeToTimestamp(
                     $arrModel[ModelVideo::FIELD_TIMECREATED]
                 );
         }
         return $arrModel;
     }
 
-    protected function _modelToSql(array $arrModel)
+    protected function modelToSql(array $arrModel)
     {
-        $arrSql = parent::_modelToSql($arrModel);
+        $arrSql = parent::modelToSql($arrModel);
         if (isset($arrSql[ModelVideo::FIELD_TIMECREATED])) {
             $arrSql[ModelVideo::FIELD_TIMECREATED] =
-                $this->_timestampToSqlDateTime(
+                $this->timestampToSqlDateTime(
                     $arrSql[ModelVideo::FIELD_TIMECREATED]
                 );
         }
@@ -131,11 +131,11 @@ class Video extends SqlAbstract implements InterfaceVideo
 
     public function save(ModelVideo $modelVideo)
     {
-        return $this->_save($modelVideo);
+        return $this->save($modelVideo);
     }
 
     public function convertToModel($arrData)
     {
-        return ModelVideo::createFromData($this, $this->_sqlToModel($arrData));
+        return ModelVideo::createFromData($this, $this->sqlToModel($arrData));
     }
 }

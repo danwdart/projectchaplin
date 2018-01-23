@@ -34,7 +34,7 @@ class Credential extends Hash
     const FIELD_ServiceURL  = 'ServiceURL';
     const FIELD_AccessToken = 'AccessToken';
 
-    protected $_arrFields = array(
+    protected $arrFields = array(
         self::FIELD_ServiceName => 'Chaplin\\Model\\Field\\Field',
         self::FIELD_ServiceURL  => 'Chaplin\\Model\\Field\\Field',
         self::FIELD_AccessToken => 'Chaplin\\Model\\Field\\Field'
@@ -43,24 +43,24 @@ class Credential extends Hash
     public static function create(User $modelUser, $strServiceName, $strServiceURL, $strAccessToken)
     {
         $credential = new self();
-        $credential->_setField(self::FIELD_ServiceName, $strServiceName);
-        $credential->_setField(self::FIELD_ServiceURL, $strServiceURL);
-        $credential->_setField(self::FIELD_AccessToken, $strAccessToken);
+        $credential->setField(self::FIELD_ServiceName, $strServiceName);
+        $credential->setField(self::FIELD_ServiceURL, $strServiceURL);
+        $credential->setField(self::FIELD_AccessToken, $strAccessToken);
         return $credential;
     }
 
     public function getServiceName()
     {
-        return $this->_getField(self::FIELD_ServiceName, null);
+        return $this->getField(self::FIELD_ServiceName, null);
     }
 
     public function getServiceURL()
     {
-        return $this->_getField(self::FIELD_ServiceURL, null);
+        return $this->getField(self::FIELD_ServiceURL, null);
     }
 
     public function getAccessToken()
     {
-        return $this->_getField(self::FIELD_AccessToken, null);
+        return $this->getField(self::FIELD_AccessToken, null);
     }
 }

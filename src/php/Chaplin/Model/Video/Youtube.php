@@ -37,7 +37,7 @@ class Youtube extends Hash implements Message
     const FIELD_YTID = 'YTId';
     const FIELD_VIDEOID = 'VideoId';
 
-    protected $_arrFields = [
+    protected $arrFields = [
         self::FIELD_YTID => ['Class' => 'Chaplin\\Model\\Field\\Field'],
         self::FIELD_VIDEOID => ['Class' => 'Chaplin\\Model\\Field\\Field']
     ];
@@ -45,19 +45,19 @@ class Youtube extends Hash implements Message
     public static function create(Video $modelVideo, $strYouTubeId)
     {
         $msgTest = new self();
-        $msgTest->_setField(self::FIELD_VIDEOID, $modelVideo->getVideoId());
-        $msgTest->_setField(self::FIELD_YTID, $strYouTubeId);
+        $msgTest->setField(self::FIELD_VIDEOID, $modelVideo->getVideoId());
+        $msgTest->setField(self::FIELD_YTID, $strYouTubeId);
         return $msgTest;
     }
 
-    private function _getYouTubeId()
+    private function getYouTubeId()
     {
-        return $this->_getField(self::FIELD_YTID, null);
+        return $this->getField(self::FIELD_YTID, null);
     }
 
     public function process()
     {
-        echo 'Downloading '.$this->_getYouTubeId().PHP_EOL;
+        echo 'Downloading '.$this->getYouTubeId().PHP_EOL;
         ob_flush();
         flush();
 
@@ -65,23 +65,23 @@ class Youtube extends Hash implements Message
         $ret = null;
         $strOut = Service::getInstance()
             ->getYoutube()
-            ->downloadVideo($this->_getYouTubeId(), getenv("UPLOADS_PATH"), $ret);
+            ->downloadVideo($this->getYouTubeId(), getenv("UPLOADS_PATH"), $ret);
 
         echo $strOut;
         ob_flush();
         flush();
         if (0 == $ret) {
-            echo 'Downloaded '.$this->_getYouTubeId().PHP_EOL;
+            echo 'Downloaded '.$this->getYouTubeId().PHP_EOL;
         } else {
-            echo 'Failed to download '.$this->_getYouTubeId().' because '.$strOut;
-            throw new \Exception('Failed to download '.$this->_getYouTubeId().' because '.$strOut);
+            echo 'Failed to download '.$this->getYouTubeId().' because '.$strOut;
+            throw new \Exception('Failed to download '.$this->getYouTubeId().' because '.$strOut);
         }
         ob_flush();
         flush();
 
         $modelVideo = Gateway::getInstance()
             ->getVideo()
-            ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
+            ->getByVideoId($this->getField(self::FIELD_VIDEOID, null));
 
         try {
             Gateway::getEmail()
@@ -96,7 +96,7 @@ class Youtube extends Hash implements Message
 
     public function getRoutingKey()
     {
-        return 'video.youtube.'.$this->_getYouTubeId();
+        return 'video.youtube.'.$this->getYouTubeId();
     }
 
     public function getExchangeName()

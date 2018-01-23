@@ -43,7 +43,7 @@ class UserType
     const ID_MINION = 4;
     const ID_GOD = 5;
 
-    private static $_arrTypes = array(
+    private static $arrTypes = array(
         self::ID_GUEST => self::TYPE_GUEST,
         self::ID_USER => self::TYPE_USER,
         self::ID_SILVER => self::TYPE_SILVER,
@@ -52,23 +52,23 @@ class UserType
         self::ID_GOD => self::TYPE_GOD
     );
 
-    private $_intTypeId;
+    private $intTypeId;
 
     public function __construct($intTypeId)
     {
-        if (!isset(self::$_arrTypes[$intTypeId])) {
+        if (!isset(self::$arrTypes[$intTypeId])) {
             throw new UnknownType($intTypeId);
         }
-        $this->_intTypeId = $intTypeId;
+        $this->intTypeId = $intTypeId;
     }
 
     public function getUserTypeId()
     {
-        return $this->_intTypeId;
+        return $this->intTypeId;
     }
 
     public function getUserType()
     {
-        return self::$_arrTypes[$this->_intTypeId];
+        return self::$arrTypes[$this->intTypeId];
     }
 }

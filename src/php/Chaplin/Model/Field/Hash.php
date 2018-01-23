@@ -35,15 +35,15 @@ use Exception;
 class Hash extends FieldAbstract implements JsonSerializable
 {
     
-    protected $_arrFields = array();
-    protected $_collFields = array();
-    protected $_bIsNew = true;
+    protected $arrFields = array();
+    protected $collFields = array();
+    protected $bIsNew = true;
     // Only used for API=based items
-    protected $_strURLPrefix;
+    protected $strURLPrefix;
 
     public function bIsNew()
     {
-        return $this->_bIsNew;
+        return $this->bIsNew;
     }
 
     public function getId()
@@ -55,9 +55,9 @@ class Hash extends FieldAbstract implements JsonSerializable
     {
         $hash = new static();
         foreach ($arrArray as $strField => $mixedValue) {
-            $hash->_getFieldObject($strField)->setFromData($mixedValue);
+            $hash->getFieldObject($strField)->setFromData($mixedValue);
         }
-        $hash->_bIsNew = false;
+        $hash->bIsNew = false;
         
         return $hash;
     }
@@ -65,11 +65,11 @@ class Hash extends FieldAbstract implements JsonSerializable
     public static function createFromAPIResponse(array $arrAPI, $strURLPrefix)
     {
         $hash = new static();
-        $hash->_strURLPrefix = $strURLPrefix;
+        $hash->strURLPrefix = $strURLPrefix;
         foreach ($arrAPI as $strField => $mixedValue) {
-            $hash->_getFieldObject($strField)->setFromData($mixedValue);
+            $hash->getFieldObject($strField)->setFromData($mixedValue);
         }
-        $hash->_bIsNew = false;
+        $hash->bIsNew = false;
         
         return $hash;
     }
@@ -78,30 +78,30 @@ class Hash extends FieldAbstract implements JsonSerializable
     {
         $hash = new static();
         foreach ($arrArray as $strField => $mixedValue) {
-            $hash->_getFieldObject($strField)->setFromData($mixedValue);
+            $hash->getFieldObject($strField)->setFromData($mixedValue);
         }
-        $hash->_bIsNew = false;
+        $hash->bIsNew = false;
         
         return $hash;
     }
 
     protected function __construct()
     {
-        foreach ($this->_arrFields as $strField => $arrClassArray) {
+        foreach ($this->arrFields as $strField => $arrClassArray) {
             $strClass = $arrClassArray['Class'];
             $strParam = isset($arrClassArray['Param'])?$arrClassArray['Param']:null;
-            $this->_collFields[$strField] = new $strClass($strParam);
+            $this->collFields[$strField] = new $strClass($strParam);
         }
     }
 
     public function __get($strProperty)
     {
-        return $this->_getField($strProperty, null);
+        return $this->getField($strProperty, null);
     }
 
     public function __set($strProperty, $strValue)
     {
-        $this->_setField($strProperty, $strValue);
+        $this->setField($strProperty, $strValue);
     }
     
     public function getValue($mixedDefault)
@@ -111,21 +111,21 @@ class Hash extends FieldAbstract implements JsonSerializable
     
     public function getFields(DaoInterface $dao)
     {
-        return $this->_collFields;
+        return $this->collFields;
     }
     
-    private function _getFieldObject($strName)
+    private function getFieldObject($strName)
     {
-        if (!isset($this->_collFields[$strName])) {
+        if (!isset($this->collFields[$strName])) {
             throw new OutOfBoundsException('Invalid field: '.$strName);
         }
-        return $this->_collFields[$strName];
+        return $this->collFields[$strName];
     }
     
-    protected function _getField($strName, $mixedDefault)
+    protected function getField($strName, $mixedDefault)
     {
         try {
-            return $this->_getFieldObject($strName)->getValue($mixedDefault);
+            return $this->getFieldObject($strName)->getValue($mixedDefault);
         } catch (OutOfBoundsException $e) {
             return $mixedDefault;
         }
@@ -133,7 +133,7 @@ class Hash extends FieldAbstract implements JsonSerializable
 
     public function toArray()
     {
-        return $this->_getModelArray($this->_collFields);
+        return $this->getModelArray($this->collFields);
     }
 
     public function jsonSerialize()
@@ -141,10 +141,10 @@ class Hash extends FieldAbstract implements JsonSerializable
         return $this->toArray();
     }
     
-    private function _getModelArray(array $arrFields)
+    private function getModelArray(array $arrFields)
     {
         $arrOut = array();
-        foreach ($this->_collFields as $strFieldName => $objField) {
+        foreach ($this->collFields as $strFieldName => $objField) {
             $strClass = get_class($objField);
             switch ($strClass) {
                 case 'Chaplin\\Model\\Field\\Field':
@@ -154,8 +154,8 @@ class Hash extends FieldAbstract implements JsonSerializable
                     break;
                 case 'Chaplin\\Model\\Field\\Collection':
                     foreach ($objField as $hash) {
-                        foreach ($this->_getModelArray(
-                            $hash->_collFields
+                        foreach ($this->getModelArray(
+                            $hash->collFields
                         ) as $strField => $mixedValue) {
                             if (!isset($arrOut[$strFieldName])) {
                                     $arrOut[$strFieldName] = [];
@@ -171,10 +171,10 @@ class Hash extends FieldAbstract implements JsonSerializable
         return $arrOut;
     }
 
-    protected function _setField($strName, $mixedValue)
+    protected function setField($strName, $mixedValue)
     {
-        $this->_getFieldObject($strName)->setValue($mixedValue);
-        $this->_bIsDirty = true;
+        $this->getFieldObject($strName)->setValue($mixedValue);
+        $this->bIsDirty = true;
         return $this;
     }
 }

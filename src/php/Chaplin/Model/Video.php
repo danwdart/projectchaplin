@@ -63,7 +63,7 @@ class Video extends Hash
     const FIELD_ARRAY_NOTTAGS = 'NotTags';
     const CHILD_ASSOC_COMMENTS = 'Comments';
 
-    protected $_arrFields = [
+    protected $arrFields = [
         self::FIELD_VIDEOID         => [
             'Class' => 'Chaplin\\Model\\Field\\FieldId'
         ],
@@ -113,20 +113,20 @@ class Video extends Hash
     ) {
 
         $video = new self();
-        $video->_bIsNew = true;
-        $video->_setField(self::FIELD_VIDEOID, md5(uniqid()));
-        $video->_setField(self::FIELD_TIMECREATED, time());
-        $video->_setField(self::FIELD_USERNAME, $modelUser->getUsername());
-        $video->_setField(self::FIELD_FILENAME, $strFilename);
-        $video->_setField(self::FIELD_THUMBNAIL, $strThumbURL);
-        $video->_setField(self::FIELD_TITLE, $strTitle);
-        $video->_setField(
+        $video->bIsNew = true;
+        $video->setField(self::FIELD_VIDEOID, md5(uniqid()));
+        $video->setField(self::FIELD_TIMECREATED, time());
+        $video->setField(self::FIELD_USERNAME, $modelUser->getUsername());
+        $video->setField(self::FIELD_FILENAME, $strFilename);
+        $video->setField(self::FIELD_THUMBNAIL, $strThumbURL);
+        $video->setField(self::FIELD_TITLE, $strTitle);
+        $video->setField(
             self::FIELD_PRIVACY,
             Privacy::ID_PUBLIC
         );
-        $video->_setField(self::FIELD_DESCRIPTION, $strDescription);
-        $video->_setField(self::FIELD_UPLOADER, $strUploader);
-        $video->_setField(self::FIELD_SOURCE, $strSource);
+        $video->setField(self::FIELD_DESCRIPTION, $strDescription);
+        $video->setField(self::FIELD_UPLOADER, $strUploader);
+        $video->setField(self::FIELD_SOURCE, $strSource);
         return $video;
     }
 
@@ -139,18 +139,18 @@ class Video extends Hash
     {
         foreach ($arrVideo as $strKey => $strValue) {
             $strValue = (string)$strValue;
-            $this->_setField($strKey, $strValue);
+            $this->setField($strKey, $strValue);
         }
     }
 
     public function getVideoId()
     {
-        return $this->_getField(self::FIELD_VIDEOID, null);
+        return $this->getField(self::FIELD_VIDEOID, null);
     }
 
     public function getTitle()
     {
-        return $this->_getField(self::FIELD_TITLE, null);
+        return $this->getField(self::FIELD_TITLE, null);
     }
 
     public function getShortTitle()
@@ -160,7 +160,7 @@ class Video extends Hash
 
     public function getFilename()
     {
-        return $this->_strURLPrefix.$this->_getField(
+        return $this->strURLPrefix.$this->getField(
             self::FIELD_FILENAME,
             null
         );
@@ -168,7 +168,7 @@ class Video extends Hash
 
     public function setFilename($strFilename)
     {
-        return $this->_setField(self::FIELD_FILENAME, $strFilename);
+        return $this->setField(self::FIELD_FILENAME, $strFilename);
     }
 
     public function getFilenameRoot()
@@ -186,7 +186,7 @@ class Video extends Hash
 
     public function getThumbnail()
     {
-        return $this->_strURLPrefix.$this->_getField(
+        return $this->strURLPrefix.$this->getField(
             self::FIELD_THUMBNAIL,
             null
         );
@@ -194,7 +194,7 @@ class Video extends Hash
 
     public function getDescription()
     {
-        $strDescription = $this->_getField(self::FIELD_DESCRIPTION, null);
+        $strDescription = $this->getField(self::FIELD_DESCRIPTION, null);
 
         $linkify = new Linkify(
             [
@@ -211,32 +211,32 @@ class Video extends Hash
 
     public function setDescription($strDescription)
     {
-        return $this->_setField(self::FIELD_DESCRIPTION, $strDescription);
+        return $this->setField(self::FIELD_DESCRIPTION, $strDescription);
     }
 
     public function getSource()
     {
-        return $this->_getField(self::FIELD_SOURCE, null);
+        return $this->getField(self::FIELD_SOURCE, null);
     }
 
     public function getUploader()
     {
-        return $this->_getField(self::FIELD_UPLOADER, null);
+        return $this->getField(self::FIELD_UPLOADER, null);
     }
 
     public function getComments()
     {
-        return $this->_getField(self::CHILD_ASSOC_COMMENTS, array());
+        return $this->getField(self::CHILD_ASSOC_COMMENTS, array());
     }
 
     public function setLicence($strLicence)
     {
-        return $this->_setField(self::FIELD_LICENCE, $strLicence);
+        return $this->setField(self::FIELD_LICENCE, $strLicence);
     }
 
     public function getLicenceId()
     {
-        return $this->_getField(
+        return $this->getField(
             self::FIELD_LICENCE,
             Licence::ID_CCBYSA
         );
@@ -249,7 +249,7 @@ class Video extends Hash
 
     public function getPrivacyId()
     {
-        return $this->_getField(
+        return $this->getField(
             self::FIELD_PRIVACY,
             Privacy::ID_PUBLIC
         );
@@ -262,27 +262,27 @@ class Video extends Hash
 
     public function getTimeCreated()
     {
-        return $this->_getField(self::FIELD_TIMECREATED, null);
+        return $this->getField(self::FIELD_TIMECREATED, null);
     }
 
     public function getUsername()
     {
-        return $this->_getField(self::FIELD_USERNAME, null);
+        return $this->getField(self::FIELD_USERNAME, null);
     }
 
     public function getVotesUp()
     {
-        return $this->_getField(self::FIELD_VOTESUP, 0);
+        return $this->getField(self::FIELD_VOTESUP, 0);
     }
 
     public function getVotesDown()
     {
-        return $this->_getField(self::FIELD_VOTESDOWN, 0);
+        return $this->getField(self::FIELD_VOTESDOWN, 0);
     }
 
     public function getYourVote()
     {
-        return $this->_getField(self::FIELD_YOURVOTE, null);
+        return $this->getField(self::FIELD_YOURVOTE, null);
     }
 
     public function isMine()

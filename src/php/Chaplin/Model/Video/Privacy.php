@@ -19,7 +19,7 @@ class Privacy
     const DESC_PUBLIC = 'Everyone';
     const DESC_PRIVATE = 'Only yourself';
 
-    private static $_arrInfo = [
+    private static $arrInfo = [
     self::ID_PUBLIC => [
     self::FIELD_TEXT    => self::TEXT_PUBLIC,
     self::FIELD_DESC    => self::DESC_PUBLIC
@@ -30,12 +30,12 @@ class Privacy
     ]
     ];
 
-    private $_strId;
+    private $strId;
 
     public static function getSelectOptions()
     {
         $arrOut = [];
-        foreach (self::$_arrInfo as $strId => $arrOption) {
+        foreach (self::$arrInfo as $strId => $arrOption) {
             $arrOut[$strId] = $arrOption[self::FIELD_DESC];
         }
         return $arrOut;
@@ -43,30 +43,30 @@ class Privacy
 
     public function __construct($strId)
     {
-        if (!isset(self::$_arrInfo[$strId])) {
+        if (!isset(self::$arrInfo[$strId])) {
             throw new OutOfBoundsException('Invalid id: '.$strId);
         }
 
-        $this->_strId = $strId;
+        $this->strId = $strId;
     }
 
     public function getText()
     {
-        return self::$_arrInfo[$this->_strId][self::FIELD_TEXT];
+        return self::$arrInfo[$this->strId][self::FIELD_TEXT];
     }
 
     public function getDescription()
     {
-        return self::$_arrInfo[$this->_strId][self::FIELD_DESC];
+        return self::$arrInfo[$this->strId][self::FIELD_DESC];
     }
 
     public function isPublic()
     {
-        return self::ID_PUBLIC == $this->_strId;
+        return self::ID_PUBLIC == $this->strId;
     }
 
     public function isPrivate()
     {
-        return self::ID_PRIVATE == $this->_strId;
+        return self::ID_PRIVATE == $this->strId;
     }
 }

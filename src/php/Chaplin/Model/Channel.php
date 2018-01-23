@@ -35,7 +35,7 @@ class Channel extends Hash
     const FIELD_FULLNAME = 'FullName';
     const FIELD_USERNAME = 'Username';
 
-    protected $_arrFields = array(
+    protected $arrFields = array(
         self::FIELD_CHANNELID => array('Class' => 'Chaplin\\Model\\Field\\FieldId'),
         self::FIELD_FULLNAME => array('Class' => 'Chaplin\\Model\\Field\\Field'),
         self::FIELD_USERNAME => array('Class' => 'Chaplin\\Model\\Field\\Field'),
@@ -44,33 +44,33 @@ class Channel extends Hash
     public static function create($strChannelId, $strFullName, User $modelUser)
     {
         $modelChannel = new self();
-        $modelChannel->_bIsNew = true;
-        $modelChannel->_setField(self::FIELD_CHANNELID, $strChannelId);
-        $modelChannel->_setField(self::FIELD_FULLNAME, $strFullName);
-        $modelChannel->_setField(self::FIELD_USERNAME, $modelUser->getUsername());
+        $modelChannel->bIsNew = true;
+        $modelChannel->setField(self::FIELD_CHANNELID, $strChannelId);
+        $modelChannel->setField(self::FIELD_FULLNAME, $strFullName);
+        $modelChannel->setField(self::FIELD_USERNAME, $modelUser->getUsername());
         return $modelChannel;
     }
 
     public function getId()
     {
-        return $this->_getField(self::FIELD_CHANNELID, null);
+        return $this->getField(self::FIELD_CHANNELID, null);
     }
 
     public function getChannelId()
     {
-        return $this->_getField(self::FIELD_CHANNELID, null);
+        return $this->getField(self::FIELD_CHANNELID, null);
     }
 
     public function getFullName()
     {
-        return $this->_getField(self::FIELD_FULLNAME, null);
+        return $this->getField(self::FIELD_FULLNAME, null);
     }
 
     public function getUser()
     {
         return Gateway::getUser()
             ->getByUsername(
-                $this->_getField(self::FIELD_USERNAME, null)
+                $this->getField(self::FIELD_USERNAME, null)
             );
     }
 

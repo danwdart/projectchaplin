@@ -31,35 +31,35 @@ use Chaplin\Model\Node as ModelNode;
 
 class Node extends GatewayAbstract
 {
-    private $_daoNode;
+    private $daoNode;
 
     public function __construct(InterfaceNode $daoNode)
     {
-        $this->_daoNode = $daoNode;
+        $this->daoNode = $daoNode;
     }
 
     public function getAllNodes()
     {
-        return $this->_daoNode->getAllNodes();
+        return $this->daoNode->getAllNodes();
     }
 
     public function getByNodeId($strNodeId)
     {
-        return $this->_daoNode->getByNodeId($strNodeId);
+        return $this->daoNode->getByNodeId($strNodeId);
     }
 
     public function delete(ModelNode $modelNode)
     {
-        return $this->_daoNode->delete($modelNode);
+        return $this->daoNode->delete($modelNode);
     }
 
     public function deleteById($strId)
     {
-        return $this->_daoNode->deleteById($strId);
+        return $this->daoNode->deleteById($strId);
     }
 
     public function save(ModelNode $modelNode)
     {
-        return $this->_daoNode->save($modelNode);
+        return $this->daoNode->save($modelNode);
     }
 }

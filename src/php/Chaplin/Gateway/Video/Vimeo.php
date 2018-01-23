@@ -31,11 +31,11 @@ use Chaplin\Model\Video\Vimeo as ModelVideoVimeo;
 
 class Vimeo extends GatewayAbstract
 {
-    private $_daoExchange;
+    private $daoExchange;
 
     public function __construct(Exchange $daoExchange)
     {
-        $this->_daoExchange = $daoExchange;
+        $this->daoExchange = $daoExchange;
     }
 
     public function vimeo()
@@ -45,11 +45,11 @@ class Vimeo extends GatewayAbstract
         $callback = function (ModelVideoVimeo $msg) {
             $msg->process();
         };
-        $this->_daoExchange->listen($queueName, $callback);
+        $this->daoExchange->listen($queueName, $callback);
     }
 
     public function save(ModelVideoVimeo $modelVimeo)
     {
-        return $this->_daoExchange->save($modelVimeo);
+        return $this->daoExchange->save($modelVimeo);
     }
 }

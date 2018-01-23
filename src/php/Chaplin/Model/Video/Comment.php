@@ -39,7 +39,7 @@ class Comment extends Hash
     const FIELD_COMMENT = 'Comment';
     //Feedback
 
-    protected $_arrFields = array(
+    protected $arrFields = array(
         self::FIELD_COMMENTID => array('Class' => 'Chaplin\\Model\\Field\\FieldId'),
         self::FIELD_VIDEOID => array('Class' => 'Chaplin\\Model\\Field\\Field'),
         self::FIELD_USERNAME => array('Class' => 'Chaplin\\Model\\Field\\Field'),
@@ -54,42 +54,42 @@ class Comment extends Hash
 
 
         $comment = new self();
-        $comment->_setField(self::FIELD_COMMENTID, md5(uniqid()));
-        $comment->_setField(self::FIELD_VIDEOID, $modelVideo->getVideoId());
-        $comment->_setField(self::FIELD_USERNAME, $modelUser->getUsername());
-        $comment->_setField(self::FIELD_COMMENT, $strComment);
+        $comment->setField(self::FIELD_COMMENTID, md5(uniqid()));
+        $comment->setField(self::FIELD_VIDEOID, $modelVideo->getVideoId());
+        $comment->setField(self::FIELD_USERNAME, $modelUser->getUsername());
+        $comment->setField(self::FIELD_COMMENT, $strComment);
         return $comment;
     }
 
     public function getId()
     {
-        return $this->_getField(self::FIELD_COMMENTID, null);
+        return $this->getField(self::FIELD_COMMENTID, null);
     }
 
     public function getCommentId()
     {
-        return $this->_getField(self::FIELD_COMMENTID, null);
+        return $this->getField(self::FIELD_COMMENTID, null);
     }
 
     public function getUsername()
     {
-        return $this->_getField(self::FIELD_USERNAME, null);
+        return $this->getField(self::FIELD_USERNAME, null);
     }
 
-    private $_modelUser;
+    private $modelUser;
     public function getUser()
     {
-        if (is_null($this->_modelUser)) {
-            $this->_modelUser = Gateway::getInstance()
+        if (is_null($this->modelUser)) {
+            $this->modelUser = Gateway::getInstance()
                 ->getUser()
                 ->getByUsername($this->getUsername());
         }
-        return $this->_modelUser;
+        return $this->modelUser;
     }
 
     public function getComment()
     {
-        return $this->_getField(self::FIELD_COMMENT, null);
+        return $this->getField(self::FIELD_COMMENT, null);
     }
 
     public function isMine()

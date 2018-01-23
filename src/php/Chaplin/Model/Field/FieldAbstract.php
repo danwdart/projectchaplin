@@ -27,11 +27,11 @@ namespace Chaplin\Model\Field;
 
 abstract class FieldAbstract
 {
-    protected $_bIsDirty = false;
+    protected $bIsDirty = false;
     
     public function bIsDirty()
     {
-        return $this->_bIsDirty;
+        return $this->bIsDirty;
     }
     
     abstract public function getValue($mixedDefault);

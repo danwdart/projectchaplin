@@ -30,11 +30,11 @@ use Exception;
 
 class Readonly extends FieldAbstract
 {
-    private $_mixedValue;
+    private $mixedValue;
     
     public function setFromData($mixedValue)
     {
-        $this->_mixedValue = $mixedValue;
+        $this->mixedValue = $mixedValue;
     }
     
     public function setValue($mixedValue)
@@ -44,8 +44,8 @@ class Readonly extends FieldAbstract
         
     public function getValue($mixedDefault)
     {
-        return (is_null($this->_mixedValue))?
+        return (is_null($this->mixedValue))?
             $mixedDefault:
-            $this->_mixedValue;
+            $this->mixedValue;
     }
 }

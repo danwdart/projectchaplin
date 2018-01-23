@@ -27,6 +27,7 @@ namespace Chaplin\Http;
 
 use Chaplin\Http\HttpInterface;
 use Zend_Http_Client;
+use Zend_Http_Response;
 use Zend_Log;
 use Zend_Http_Client_Exception;
 use Chaplin\Http\Exception\InvalidURL;
@@ -48,7 +49,7 @@ use Chaplin\Http\Exception\XPathNotUnique;
 **/
 class Client implements HttpInterface
 {
-    private $_zendHttpClient;
+    private $zendHttpClient;
 
     /**
      * Save a new Zend_Http_Client in the object
@@ -58,11 +59,11 @@ class Client implements HttpInterface
     **/
     public function __construct(Zend_Http_Client $client = null)
     {
-        $this->_zendHttpClient = $client;
+        $this->zendHttpClient = $client;
         if (is_null($client)) {
-            $this->_zendHttpClient  = new Zend_Http_Client();
+            $this->zendHttpClient  = new Zend_Http_Client();
         }
-            $this->_zendHttpClient->setConfig(
+            $this->zendHttpClient->setConfig(
                 array(
                 'timeout' => 30
                 )
@@ -74,7 +75,7 @@ class Client implements HttpInterface
      *
      * @var array
     **/
-    private $_arrPageBody = array();
+    private $arrPageBody = array();
 
     /**
      * Get the page body from a URL
@@ -90,11 +91,11 @@ class Client implements HttpInterface
         // Make sure the URL has no spaces - re-encoding screws it up
         $url = str_replace(' ', '%20', $url);
 
-        if (isset($this->_arrPageBody[$url])) {
-            return $this->_arrPageBody[$url];
+        if (isset($this->arrPageBody[$url])) {
+            return $this->arrPageBody[$url];
         }
         try {
-            $this->_zendHttpClient->setUri($url);
+            $this->zendHttpClient->setUri($url);
         } catch (Zend_Http_Client_Exception $e) {
             throw new InvalidURL($url, $e);
         } catch (Zend_Uri_Exception $e) {
@@ -102,7 +103,7 @@ class Client implements HttpInterface
             throw new InvalidURL($url, $e);
         }
 
-        $httpResponse = $this->_zendHttpClient->request();
+        $httpResponse = $this->zendHttpClient->_request();
 
         // Log if priority added - and if 200 don't log the body
         // Tim hates this - but is there another way?
@@ -118,9 +119,9 @@ class Client implements HttpInterface
             throw new Unsuccessful($url, $httpResponse->getStatus());
         }
 
-        $this->_arrPageBody[$url] = $this->_checkForMetaRedirect($url, $httpResponse->getBody());
+        $this->arrPageBody[$url] = $this->checkForMetaRedirect($url, $httpResponse->getBody());
 
-        return $this->_arrPageBody[$url];
+        return $this->arrPageBody[$url];
     }
 
     public function getObject($url, $intLogPriority = Zend_Log::ERR)
@@ -128,12 +129,12 @@ class Client implements HttpInterface
         // Make sure the URL has no spaces - re-encoding screws it up
         $url = str_replace(' ', '%20', $url);
 
-        if (isset($this->_arrPageBody[$url])) {
-            return $this->_arrPageBody[$url];
+        if (isset($this->arrPageBody[$url])) {
+            return $this->arrPageBody[$url];
         }
         try {
-            $this->_zendHttpClient->setUri($url);
-            $this->_zendHttpClient->setHeaders('Accept', 'application/json');
+            $this->zendHttpClient->setUri($url);
+            $this->zendHttpClient->setHeaders('Accept', 'application/json');
         } catch (Zend_Http_Client_Exception $e) {
             throw new InvalidURL($url, $e);
         } catch (Zend_Uri_Exception $e) {
@@ -141,7 +142,7 @@ class Client implements HttpInterface
             throw new InvalidURL($url, $e);
         }
 
-        $httpResponse = $this->_zendHttpClient->request();
+        $httpResponse = $this->zendHttpClient->_request();
 
         // Log if priority added - and if 200 don't log the body
         // Tim hates this - but is there another way?
@@ -157,9 +158,9 @@ class Client implements HttpInterface
             throw new Unsuccessful($url, $httpResponse->getStatus());
         }
 
-        $this->_arrPageBody[$url] = $this->_checkForMetaRedirect($url, $httpResponse->getBody());
+        $this->arrPageBody[$url] = $this->checkForMetaRedirect($url, $httpResponse->getBody());
 
-        return $this->_arrPageBody[$url];
+        return $this->arrPageBody[$url];
     }
 
 
@@ -169,7 +170,7 @@ class Client implements HttpInterface
           $url = str_replace(' ', '%20', $url);
 
         try {
-            $this->_zendHttpClient->setUri($url);
+            $this->zendHttpClient->setUri($url);
         } catch (Zend_Http_Client_Exception $e) {
             throw new InvalidURL($url, $e);
         } catch (Zend_Uri_Exception $e) {
@@ -177,7 +178,7 @@ class Client implements HttpInterface
             throw new InvalidURL($url, $e);
         }
 
-          $httpResponse = $this->_zendHttpClient->request();
+          $httpResponse = $this->zendHttpClient->_request();
 
           // Log if priority added - and if 200 don't log the body
           // Tim hates this - but is there another way?
@@ -189,7 +190,7 @@ class Client implements HttpInterface
             }
         }
 
-          $this->_arrPageBody[$url] = $this->_checkForMetaRedirect($url, $httpResponse->getBody());
+          $this->arrPageBody[$url] = $this->checkForMetaRedirect($url, $httpResponse->getBody());
 
           return $httpResponse;
     }
@@ -205,7 +206,7 @@ class Client implements HttpInterface
     public function scrapeXPath($strURL, $strXPath)
     {
         $strPageBody = $this->getPageBody($strURL);
-        $strElement = $this->_parseXPath($strURL, $strPageBody, $strXPath);
+        $strElement = $this->parseXPath($strURL, $strPageBody, $strXPath);
         return $strElement;
     }
 
@@ -300,7 +301,7 @@ class Client implements HttpInterface
         $url = str_replace(' ', '%20', $url);
 
         try {
-            $this->_zendHttpClient->setUri($url);
+            $this->zendHttpClient->setUri($url);
         } catch (Zend_Http_Client_Exception $e) {
             throw new InvalidURL($url, $e);
         } catch (Zend_Uri_Exception $e) {
@@ -308,7 +309,7 @@ class Client implements HttpInterface
             throw new InvalidURL($url, $e);
         }
 
-        $httpResponse = $this->_zendHttpClient->request();
+        $httpResponse = $this->zendHttpClient->_request();
 
         // Log if priority added - and if 200 don't log the body
         // Tim hates this - but is there another way?
@@ -325,21 +326,21 @@ class Client implements HttpInterface
         return $httpResponse;
     }
 
-    protected function _parseXPath($strURL, $strPageBody, $strXPath)
+    protected function parseXPath($strURL, $strPageBody, $strXPath)
     {
         $value = $this->parseRawHtmlXPath($strPageBody, $strXPath);
 
         if (strpos($strXPath, '/@src') !== false || strpos($strXPath, '/@href') !== false) {
-            $value = $this->_getAbsoluteURL($strURL, $value);
+            $value = $this->getAbsoluteURL($strURL, $value);
         }
 
         return $value;
     }
 
-    protected function _checkForMetaRedirect($strURL, $strPageBody)
+    protected function checkForMetaRedirect($strURL, $strPageBody)
     {
         try {
-            $strRedirectContent = $this->_parseXPath($strURL, $strPageBody, "//meta[@http-equiv='refresh']/@content");
+            $strRedirectContent = $this->parseXPath($strURL, $strPageBody, "//meta[@http-equiv='refresh']/@content");
         } catch (XPathCannotFind $e) {
             // We didn't find a redirect tag
             return $strPageBody;
@@ -362,7 +363,7 @@ class Client implements HttpInterface
         $arrNewURL = explode('url=', $strRedirectContent, 2);
         $strNewURL = $arrNewURL[1];
 
-        $strNewURL = $this->_getAbsoluteURL($strURL, $strNewURL);
+        $strNewURL = $this->getAbsoluteURL($strURL, $strNewURL);
 
         if ($strNewURL != $strURL) {
             return $this->getPageBody($strNewURL);
@@ -371,7 +372,7 @@ class Client implements HttpInterface
         return $strPageBody;
     }
 
-    protected function _getAbsoluteURL($strPageURL, $strRelativePath)
+    protected function getAbsoluteURL($strPageURL, $strRelativePath)
     {
         // If Relative URLs contain '../' at the beginning, they can either refer to the current directory
 

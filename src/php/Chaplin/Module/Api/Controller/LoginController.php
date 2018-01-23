@@ -45,7 +45,7 @@ use Zend_Session_Namespace as SessionNS;
 
 class LoginController extends Controller
 {
-    private $_session;
+    private $session;
 
     public function getIndex()
     {
@@ -74,12 +74,12 @@ class LoginController extends Controller
         $password = $post['password'];
 
         if (isset($post['Register'])) {
-            $this->_redirect('/login/register');
+            $this->redirect('/login/register');
             return;
         }
 
         if (isset($post['Forgot'])) {
-            $this->_redirect('/login/forgot');
+            $this->redirect('/login/forgot');
             return;
         }
 
@@ -105,12 +105,12 @@ class LoginController extends Controller
 
         $login = new SessionNS('login');
         if (!is_null($login->url)) {
-            $this->_redirect($login->url);
+            $this->redirect($login->url);
             $login->url = null;
             return;
         }
 
-        $this->_redirect('/');
+        $this->redirect('/');
     }
 
     public function getLogout()
@@ -120,7 +120,7 @@ class LoginController extends Controller
         $renderer->setNoRender(true);
 
         Auth::getInstance()->clearIdentity();
-        $this->_redirect($this->_redirect_url);
+        $this->redirect($this->redirect_url);
     }
 
     public function getRegister()
@@ -159,7 +159,7 @@ class LoginController extends Controller
             $user->save();
 
             // AJAX: Success
-            $this->_redirect($this->_redirect_url);
+            $this->redirect($this->redirect_url);
             return;
         } catch (StatementException $e) {
             $form->username->addError('Could not create account - a user aleady exists with that name');
@@ -204,7 +204,7 @@ class LoginController extends Controller
             'You should soon receive an email containing<br/>'.
             'instructions on how to set your password.'
         );
-        $this->_redirect('/login');
+        $this->redirect('/login');
     }
 
     public function getValidate()
@@ -212,7 +212,7 @@ class LoginController extends Controller
         $this->view->strTitle = 'Validate - Chaplin';
         $strToken = $this->_request->getParam('token', null);
         if (empty($strToken)) {
-            $this->_redirect('/login');
+            $this->redirect('/login');
         }
 
         $form = new FormValidate($strToken);
@@ -233,7 +233,7 @@ class LoginController extends Controller
         $strToken = $this->_request->getParam('token', null);
 
         if (empty($strToken)) {
-            $this->_redirect('/login');
+            $this->redirect('/login');
         }
 
         $form = new FormValidate($strToken);
@@ -248,6 +248,6 @@ class LoginController extends Controller
             'If a user account exists then your password has been set.<br/>'.
             'You can now login below.'
         );
-        $this->_redirect('/login');
+        $this->redirect('/login');
     }
 }
