@@ -1,25 +1,11 @@
 language: php
 dist: xenial
-env:
-  - TRAVIS_NODE_VERSION="9.4"
 php:
     - '7.2'
-node_js:
-    - '9.4'
 before_script:
-    - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
-    - npm -g install snyk
     - cd src/php
-    - snyk wizard
     - composer install
-    - npm install
-    - npm run build
-    - cd ../js
-    - npm install
 script:
     - cd src/php
     - vendor/bin/phpstan analyse Chaplin
     - vendor/bin/phpcs --standard=PSR2 Chaplin
-    - node_modules/.bin/eslint
-    - cd ../js
-    - node_modules/.bin/eslint
