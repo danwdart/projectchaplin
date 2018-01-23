@@ -76,17 +76,12 @@ class Node extends SqlAbstract implements InterfaceNode
 
     public function delete(ModelNode $modelNode)
     {
-        return $this->delete($modelNode);
-    }
-
-    public function deleteById($strId)
-    {
-        return $this->deleteById($strId);
+        return $this->deleteModel($modelNode);
     }
 
     public function save(ModelNode $modelNode)
     {
-        return $this->save($modelNode);
+        return $this->saveModel($modelNode);
     }
 
     public function convertToModel($arrData)

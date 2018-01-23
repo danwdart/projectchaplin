@@ -73,7 +73,7 @@ class Comment extends SqlAbstract implements InterfaceComment
 
     public function delete(ModelComment $modelComment)
     {
-        return $this->delete($modelComment);
+        return $this->deleteModel($modelComment);
     }
 
     public function deleteById($strCommentId)
@@ -89,7 +89,7 @@ class Comment extends SqlAbstract implements InterfaceComment
 
     public function save(ModelComment $modelComment)
     {
-        return $this->save($modelComment);
+        return $this->saveModel($modelComment);
     }
 
     public function convertToModel($arrData)

@@ -88,7 +88,7 @@ class User extends SqlAbstract implements InterfaceUser
 
     public function save(ModelUser $modelUser)
     {
-        return $this->save($modelUser);
+        return $this->saveModel($modelUser);
     }
 
     public function convertToModel($arrData)

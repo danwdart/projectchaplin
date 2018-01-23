@@ -76,17 +76,12 @@ class Channel extends SqlAbstract implements InterfaceChannel
 
     public function delete(ModelChannel $modelChannel)
     {
-        return $this->delete($modelChannel);
-    }
-
-    public function deleteById($strId)
-    {
-        return $this->deleteById($strId);
+        return $this->deleteModel($modelChannel);
     }
 
     public function save(ModelChannel $modelChannel)
     {
-        return $this->save($modelChannel);
+        return $this->saveModel($modelChannel);
     }
 
     public function convertToModel($arrData)
