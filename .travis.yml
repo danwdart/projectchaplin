@@ -12,12 +12,12 @@ before_script:
     - composer install
     - npm install
     - npm run build
-    - cd ../src/js
+    - cd ../js
     - npm install
 script:
     - cd src/php
     - vendor/bin/phpstan analyse Chaplin
     - vendor/bin/phpcs --standard=PSR2 Chaplin
     - node_modules/.bin/eslint
-    - cd ../src/js
+    - cd ../js
     - node_modules/.bin/eslint
