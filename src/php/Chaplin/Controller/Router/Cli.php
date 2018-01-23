@@ -22,9 +22,16 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Controller_Router_Cli
-    extends Zend_Controller_Router_Abstract
-    implements Zend_Controller_Router_Interface
+
+namespace Chaplin\Controller\Router;
+
+use Zend_Controller_Router_Abstract;
+use Zend_Controller_Router_Interface;
+use Zend_Controller_Request_Abstract;
+
+
+
+class Cli extends Zend_Controller_Router_Abstract implements Zend_Controller_Router_Interface
 {
     public function assemble($userParams, $name = null, $reset = false, $encode = true)
     {

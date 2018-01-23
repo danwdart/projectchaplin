@@ -22,8 +22,14 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Iterator_Filter_File
-    extends FilterIterator
+
+namespace Chaplin\Iterator\Filter;
+
+use FilterIterator;
+
+
+
+class File extends FilterIterator
 {
     private $_strAcceptableTypes;
 
@@ -34,7 +40,7 @@ class Chaplin_Iterator_Filter_File
 
     public function accept()
     {
-        return parent::current()->isFile() && 
+        return parent::current()->isFile() &&
          preg_match('/\\.('.$this->_strAcceptableTypes.')$/i', parent::current()->getFilename()) &&
          false === strpos(parent::current()->getPathname(), realpath(APPLICATION_PATH.'/..'));
     }

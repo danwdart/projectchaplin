@@ -1,32 +1,42 @@
 <?php
-class Chaplin_Gateway_Email
-    extends Chaplin_Gateway_Abstract
+
+
+namespace Chaplin\Gateway;
+
+use Chaplin\Gateway\GatewayAbstract;
+use Chaplin\Dao\Smtp\Exchange;
+use Chaplin\Model\User;
+use Chaplin\Model\Video;
+use Chaplin\Gateway;
+
+
+class Email extends GatewayAbstract
 {
     private $_daoExchange;
 
-    public function __construct(Chaplin_Dao_Smtp_Exchange $daoExchange)
+    public function __construct(Exchange $daoExchange)
     {
         $this->_daoExchange = $daoExchange;
     }
 
     public function email(
-        Chaplin_Model_User $modelUser,
+        User $modelUser,
         $strSubject,
         $strTemplate,
         $arrParams
-    )
-    {
+    ) {
+    
 
         $this->_daoExchange->email($modelUser, $strSubject, $strTemplate, $arrParams);
     }
 
     public function videoFinished(
-        Chaplin_Model_Video $modelVideo
-    )
-    {
+        Video $modelVideo
+    ) {
+    
 
         $strUsername = $modelVideo->getUsername();
-        $modelUser = Chaplin_Gateway::getUser()->getByUsername($strUsername);
+        $modelUser = Gateway::getUser()->getByUsername($strUsername);
 
         $this->_daoExchange->email(
             $modelUser,
@@ -40,15 +50,15 @@ class Chaplin_Gateway_Email
     }
 
     public function resetPassword(
-        Chaplin_Model_User $modelUser
-    )
-    {
+        User $modelUser
+    ) {
+    
         $strVhost = getenv("VHOST");
 
         $strValidationToken = $modelUser->resetPassword();
         // Let's make sure that we save before we send the email.
         // It's a bit odd but it ensures atomic saves.
-        Chaplin_Gateway::getUser()->save($modelUser);
+        Gateway::getUser()->save($modelUser);
 
         $this->_daoExchange->email(
             $modelUser,

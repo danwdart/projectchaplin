@@ -1,5 +1,7 @@
 <?php
-interface Chaplin_Model_Interface_Message
+namespace Chaplin\Model\Interfaces;
+
+interface Message
 {
     public function getExchangeName();
 

@@ -22,20 +22,27 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+
+namespace Chaplin;
+
+use Chaplin\Config\Gateways as ConfigGateways;
 use Chaplin\Interfaces\Singleton as SingletonInterface;
 use Chaplin\Traits\Singleton as SingletonTrait;
+use Exception;
 
-class Chaplin_Gateway implements SingletonInterface
+class Gateway implements SingletonInterface
 {
     use SingletonTrait;
 
     public function getGateway($strName)
     {
-        $configGateways = Chaplin_Config_Gateways::getInstance();
+        $configGateways = ConfigGateways::getInstance();
         $strDaoType = $configGateways->getDaoType($strName);
         $param = $configGateways->getParam($strName);
 
-        $strGatewayClass = 'Chaplin_Gateway_'.$strName;
+        $strClassEnd = str_replace("_", "\\", $strName);
+
+        $strGatewayClass = 'Chaplin\\Gateway\\'.$strClassEnd;
 
         if (!is_null($configGateways->getDaoName($strName))) {
             $strName = $configGateways->getDaoName($strName);
@@ -43,7 +50,7 @@ class Chaplin_Gateway implements SingletonInterface
         if (is_null($strDaoType)) {
             throw new Exception('Dao Type is null for '.$strName);
         }
-        $strDaoClass = 'Chaplin_Dao_'.$strDaoType.'_'.$strName;
+        $strDaoClass = 'Chaplin\\Dao\\'.$strDaoType.'\\'.$strClassEnd;
 
         if (!class_exists($strGatewayClass)) {
             throw new Exception('Class does not exist: '.$strGatewayClass);
@@ -56,7 +63,7 @@ class Chaplin_Gateway implements SingletonInterface
         return new $strGatewayClass($dao);
     }
 
-    public function __call($strMethod, Array $arrParams)
+    public function __call($strMethod, array $arrParams)
     {
         if ('get' != substr($strMethod, 0, 3)) {
             throw new Exception('Invalid method: '.__CLASS__.'::'.$strMethod);
@@ -65,7 +72,7 @@ class Chaplin_Gateway implements SingletonInterface
         return $this->getGateway($strGatewayType);
     }
 
-    public static function __callStatic(string $strMethod, Array $arrParams)
+    public static function __callStatic(string $strMethod, array $arrParams)
     {
         return call_user_func_array(
             [

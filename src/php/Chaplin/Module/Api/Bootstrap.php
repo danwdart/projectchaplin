@@ -24,7 +24,7 @@
 **/
 namespace Chaplin\Module\Api;
 
-use Chaplin_Model_User_Helper_UserType as UserType;
+use Chaplin\Model\User\Helper\UserType;
 use Zend_Acl_Resource as Acl;
 use Zend_Application_Module_Bootstrap as ModuleBootstrap;
 use Zend_Registry as Reg;

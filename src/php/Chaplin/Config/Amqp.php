@@ -22,8 +22,9 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Config_Amqp
-    extends Chaplin_Config_Abstract
+namespace Chaplin\Config;
+
+class Amqp extends ConfigAbstract
 {
     const CONFIG_TYPE = 'Json';
 

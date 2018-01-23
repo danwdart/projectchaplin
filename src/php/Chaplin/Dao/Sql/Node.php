@@ -22,12 +22,21 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Dao_Sql_Node
-    extends Chaplin_Dao_Sql_Abstract
-    implements Chaplin_Dao_Interface_Node
+
+namespace Chaplin\Dao\Sql;
+
+use Chaplin\Dao\Sql\SqlAbstract;
+use Chaplin\Dao\Interfaces\Node as InterfaceNode;
+use Chaplin\Iterator\Dao\Sql\Rows;
+use Exception;
+use Chaplin\Model\Node as ModelNode;
+
+
+
+class Node extends SqlAbstract implements InterfaceNode
 {
     const TABLE = 'Nodes';
-    
+
     const PK = 'NodeId';
 
     protected function _getTable()
@@ -44,29 +53,30 @@ class Chaplin_Dao_Sql_Node
     {
         $strSql = 'SELECT * FROM %s';
         $arrRows = $this->_getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
-        return new Chaplin_Iterator_Dao_Sql_Rows($arrRows, $this);
+        return new Rows($arrRows, $this);
     }
-    
+
     public function getByNodeId($strNodeId)
     {
         $strSql = 'SELECT * FROM %s WHERE %s = ?';
 
         $arrRow = $this->_getAdapter()->fetchRow(
             sprintf(
-                $strSql, 
+                $strSql,
                 self::TABLE,
                 self::PK
-            ), $strNodeId
+            ),
+            $strNodeId
         );
 
-        if(empty($arrRow)) {
+        if (empty($arrRow)) {
             throw new Exception('No node named '.$strNodeId);
         }
 
         return $this->convertToModel($arrRow);
     }
-    
-    public function delete(Chaplin_Model_Node $modelNode)
+
+    public function delete(ModelNode $modelNode)
     {
         return $this->_delete($modelNode);
     }
@@ -76,13 +86,13 @@ class Chaplin_Dao_Sql_Node
         return $this->_deleteById($strId);
     }
 
-    public function save(Chaplin_Model_Node $modelNode)
+    public function save(ModelNode $modelNode)
     {
         return $this->_save($modelNode);
     }
 
     public function convertToModel($arrData)
     {
-        return Chaplin_Model_Node::createFromData($this, $this->_sqlToModel($arrData));
+        return ModelNode::createFromData($this, $this->_sqlToModel($arrData));
     }
 }

@@ -22,7 +22,18 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Dao_Sql_User extends Chaplin_Dao_Sql_Abstract implements Chaplin_Dao_Interface_User
+
+namespace Chaplin\Dao\Sql;
+
+use Chaplin\Dao\Sql\SqlAbstract;
+use Chaplin\Dao\Interfaces\User as InterfaceUser;
+use Chaplin\Iterator\Dao\Sql\Rows;
+use Chaplin\Model\User as ModelUser;
+use Chaplin\Dao\Exception\User\NotFound;
+
+
+
+class User extends SqlAbstract implements InterfaceUser
 {
     const TABLE = 'Users';
 
@@ -42,22 +53,22 @@ class Chaplin_Dao_Sql_User extends Chaplin_Dao_Sql_Abstract implements Chaplin_D
     {
         $strSql = 'SELECT * FROM %s';
         $arrRows = $this->_getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
-        return new Chaplin_Iterator_Dao_Sql_Rows($arrRows, $this);
+        return new Rows($arrRows, $this);
     }
 
     public function getByUsernameAndPassword($strUsername, $strPassword)
     {
         $arrCredentials = array(
-            Chaplin_Model_User::encodeUsername($strUsername),
-            Chaplin_Model_User::encodePassword($strPassword)
+            ModelUser::encodeUsername($strUsername),
+            ModelUser::encodePassword($strPassword)
         );
 
         $strSql = 'SELECT * FROM %s WHERE Username = ? AND Password = ?';
 
         $arrRow = $this->_getAdapter()->fetchRow(sprintf($strSql, self::TABLE), $arrCredentials);
 
-        if(empty($arrRow)) {
-            throw new Chaplin_Dao_Exception_User_NotFound();
+        if (empty($arrRow)) {
+            throw new NotFound();
         }
 
         return $this->convertToModel($arrRow);
@@ -69,31 +80,31 @@ class Chaplin_Dao_Sql_User extends Chaplin_Dao_Sql_Abstract implements Chaplin_D
 
         $arrRow = $this->_getAdapter()->fetchRow(sprintf($strSql, self::TABLE), $strUsername);
 
-        if(empty($arrRow)) {
-            throw new Chaplin_Dao_Exception_User_NotFound();
+        if (empty($arrRow)) {
+            throw new NotFound();
         }
 
         return $this->convertToModel($arrRow);
     }
 
 
-    public function save(Chaplin_Model_User $modelUser)
+    public function save(ModelUser $modelUser)
     {
         return $this->_save($modelUser);
     }
 
     public function convertToModel($arrData)
     {
-        return Chaplin_Model_User::createFromData($this, $this->_sqlToModel($arrData));
+        return ModelUser::createFromData($this, $this->_sqlToModel($arrData));
     }
 
     public function updateByToken($strToken, $strPassword)
     {
         $arrData = [
-            Chaplin_Model_User::FIELD_Password =>
-                Chaplin_Model_User::encodePassword($strPassword),
-            Chaplin_Model_User::FIELD_VALIDATION => null,
-            Chaplin_Model_User::FIELD_HASH => Chaplin_Model_User::HASH_SHA512
+            ModelUser::FIELD_Password =>
+                ModelUser::encodePassword($strPassword),
+            ModelUser::FIELD_VALIDATION => null,
+            ModelUser::FIELD_HASH => ModelUser::HASH_SHA512
         ];
 
         $intNumUpdated = $this->_getAdapter()
@@ -101,7 +112,7 @@ class Chaplin_Dao_Sql_User extends Chaplin_Dao_Sql_Abstract implements Chaplin_D
                 $this->_getTable(),
                 $arrData,
                 $this->_getAdapter()->quoteInto(
-                    Chaplin_Model_User::FIELD_VALIDATION.' = ?',
+                    ModelUser::FIELD_VALIDATION.' = ?',
                     $strToken
                 )
             );

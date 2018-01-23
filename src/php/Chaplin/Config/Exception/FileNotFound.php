@@ -22,7 +22,14 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-interface Chaplin_Dao_Interface_Vote extends Chaplin_Dao_Interface
+namespace Chaplin\Config\Exception;
+
+class FileNotFound extends ExceptionAbstract
 {
-    public function addVote(Chaplin_Model_User $modelUser, Chaplin_Model_Video $modelVideo, $intVote);
+    const MESSAGE = "Config file %s not found.";
+
+    public function __construct($strFile)
+    {
+        parent::__construct(sprintf(self::MESSAGE, $strFile));
+    }
 }

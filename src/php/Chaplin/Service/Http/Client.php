@@ -22,24 +22,31 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+
+namespace Chaplin\Service\Http;
+
+use Chaplin\Http\HttpInterface;
+use Zend_Log;
+use Zend_Json;
+
 /**
  * The hook that Service->getHttpClient() provides
  *
  * @package default
  * @author  Dan Dart <chaplin@dandart.co.uk>
 **/
-class Chaplin_Service_Http_Client
+class Client
 {
     protected $_objHttpClient;
 
     /**
      * Create the object from the interface
      *
-     * @param Chaplin_Http_Interface $objHttpClient This needs mocking
+     * @param Chaplin\Http\Interface $objHttpClient This needs mocking
      *
      * @author Dan Dart <chaplin@dandart.co.uk>
     **/
-    public function __construct(Chaplin_Http_Interface $objHttpClient)
+    public function __construct(HttpInterface $objHttpClient)
     {
         $this->_objHttpClient = $objHttpClient;
     }
@@ -126,8 +133,8 @@ class Chaplin_Service_Http_Client
         $strURL,
         $intLogPriority = Zend_Log::ERR,
         $bCache = true
-    )
-    {
+    ) {
+
         return $this->_objHttpClient->getHttpResponse(
             $strURL,
             $intLogPriority,

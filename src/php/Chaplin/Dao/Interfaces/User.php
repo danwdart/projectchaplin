@@ -22,17 +22,21 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-interface Chaplin_Dao_Interface_Video extends Chaplin_Dao_Interface
+
+namespace Chaplin\Dao\Interfaces;
+
+use Chaplin\Dao\DaoInterface;
+use Chaplin\Model\User as ModelUser;
+
+interface User extends DaoInterface
 {
-    public function getFeaturedVideos(Chaplin_Model_User $modelUser = null);
-    
-    public function getByVideoId($strVideoId, Chaplin_Model_User $modelUser = null);
+    public function getAllUsers();
 
-    public function getBySearchTerms($strSearchTerms);
-    
-    public function getByUser(Chaplin_Model_User $modelUser);
-            
-    public function delete(Chaplin_Model_Video $modelVideo);
+    public function getByUsernameAndPassword($strUsername, $strPassword);
 
-    public function save(Chaplin_Model_Video $modelVideo);
+    public function getByUsername($strUsername);
+
+    public function save(ModelUser $modelUser);
+
+    public function updateByToken($strToken, $strPassword);
 }

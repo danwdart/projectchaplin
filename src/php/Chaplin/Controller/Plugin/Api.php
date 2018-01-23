@@ -22,8 +22,15 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Controller_Plugin_Api
-    extends Zend_Controller_Plugin_Abstract
+
+namespace Chaplin\Controller\Plugin;
+
+use Zend_Controller_Plugin_Abstract;
+use Zend_Controller_Request_Abstract;
+
+
+
+class Api extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {

@@ -22,37 +22,32 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-interface Chaplin_Iterator_Interface extends Countable, ArrayAccess, SeekableIterator
+
+namespace Chaplin\Http;
+
+/**
+ * Interface for relevant Http_Client interfaces so we can mock Zend_Http_Client
+ *
+ * @package default
+ * @author  Dan Dart <chaplin@dandart.co.uk>
+**/
+interface HttpInterface
 {
-    const SORT_ASC = 1;
-    const SORT_DESC = -1; 
-    const SORT_NUM_ASC = 2;
-    const SORT_NUM_DESC = -2; 
     /**
-     *  Returns whether the Iterator is empty (ie no data passed in)
+     * Try to use the client to get the page body
      *
-     *  @return: true | false;
+     * @param  string $strURL
+     * @return string
+     * @author Dan Dart <chaplin@dandart.co.uk>
     **/
-    public function isEmpty();
+    public function getPageBody($url);
     /**
-     *  Limits the number of rows to be returned in the cursor
+     * Use use the client to parse the page
      *
-     *  @param:  $intNoRows  = number of rows to return
-     *  @return: $this (this is a fluent interface)
+     * @param  string $strURL
+     * @param  string $strXPath
+     * @return string
+     * @author Tim Langley
     **/
-    public function limit($intNoRows);
-    /**
-     *  Skips the first  $intNoRows
-     *
-     *  @param:  $intNoRows  = number of rows to skip
-     *  @return: $this (this is a fluent interface)
-    **/
-    public function skip($intNoRows);
-    /**
-     *  Sorts the cursor 
-     *
-     *  @param:  $arrColumns     Associative array of Key => value
-     *  @return: $this (this is a fluent interface)
-    **/
-    public function sort(Array $arrColumns = array());
+    public function scrapeXPath($strURL, $strXPath);
 }

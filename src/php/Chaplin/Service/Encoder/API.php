@@ -22,7 +22,10 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Service_Encoder_API
+
+namespace Chaplin\Service\Encoder;
+
+class API
 {
     const THUMBNAIL_DEFAULT_TIME = 0;
 

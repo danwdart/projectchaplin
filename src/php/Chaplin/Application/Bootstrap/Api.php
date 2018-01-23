@@ -24,11 +24,11 @@
 **/
 namespace Chaplin\Application\Bootstrap;
 
-use Chaplin_Config_Sessions as ConfigSessions;
-use Chaplin_Controller_Action_Helper_RestContextSwitch as RestContextSwitch;
-use Chaplin_Controller_Plugin_Acl as PluginAcl;
-use Chaplin_Controller_Plugin_Api as PluginApi;
-use Chaplin_Model_User_Helper_UserType as UserType;
+use Chaplin\Config\Sessions as ConfigSessions;
+use Chaplin\Controller\Action\Helper\RestContextSwitch as RestContextSwitch;
+use Chaplin\Controller\Plugin\Acl as PluginAcl;
+use Chaplin\Controller\Plugin\Api as PluginApi;
+use Chaplin\Model\User\Helper\UserType as UserType;
 use Exception;
 use Zend_Acl as Acl;
 use Zend_Acl_Role as Role;
@@ -101,7 +101,7 @@ class Api extends ZendBootstrap
     protected function _initApi()
     {
         $this->bootstrap('frontController');
-        HelperBroker::addPrefix("Chaplin_Controller_Action_Helper");
+        HelperBroker::addPrefix("Chaplin\\Controller\\Action\\Helper\\");
         HelperBroker::addHelper(new RestContextSwitch());
         $this->frontController->registerPlugin(new PluginApi());
     }
@@ -197,7 +197,7 @@ class Api extends ZendBootstrap
     {
         try {
             parent::_bootstrap($resource);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             echo '<pre>'.$e->getMessage().PHP_EOL.$e->getTraceAsString().'</pre>';
         }
     }
@@ -206,7 +206,7 @@ class Api extends ZendBootstrap
     {
         try {
             parent::run();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             echo '<pre>'.$e->getMessage().PHP_EOL.$e->getTraceAsString().'</pre>';
         }
     }

@@ -29,10 +29,9 @@ video.encode.[username]
 BODY
 The body of the messages are encoded as JSON and are as follows:
 {
-    "MessageClass": "Chaplin_Model_Video_Convert",
+    "MessageClass": "Chaplin\Model\Video\Convert",
     "VideoId": "[Video Id]"
 }
 
 CHANGES
 If you require changes, create an issue about it and it will be considered if it does not break any existing scheme.
-

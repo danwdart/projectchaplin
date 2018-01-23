@@ -22,16 +22,23 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Dao_Smtp_Exchange
-    implements Chaplin_Dao_Interface
+
+namespace Chaplin\Dao\Smtp;
+
+use Chaplin\Dao\DaoInterface;
+use Chaplin\Model\User;
+use Zend_Mail;
+use Mustache_Engine;
+
+class Exchange implements DaoInterface
 {
     public function email(
-        Chaplin_Model_User $modelUser,
+        User $modelUser,
         $strSubject,
         $strTemplate,
         $arrParams
-    )
-    {
+    ) {
+
         $strVhost = getenv("VHOST");
 
         $mail = new Zend_Mail();

@@ -22,9 +22,16 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Dao_Sql_Video_Comment
-    extends Chaplin_Dao_Sql_Abstract
-    implements Chaplin_Dao_Interface_Video_Comment
+
+namespace Chaplin\Dao\Sql\Video;
+
+use Chaplin\Dao\Sql\SqlAbstract;
+use Chaplin\Dao\Interfaces\Video\Comment as InterfaceComment;
+use Chaplin\Dao\Exception\Video\NotFound;
+use Chaplin\Model\Video\Comment as ModelComment;
+use Chaplin\Iterator\Dao\Sql\Rows;
+
+class Comment extends SqlAbstract implements InterfaceComment
 {
     const TABLE = 'Videos_Comments';
 
@@ -45,11 +52,11 @@ class Chaplin_Dao_Sql_Video_Comment
         $strSql = 'SELECT * FROM %s WHERE %s = ?';
         $arrRow = $this->_getAdapter()->fetchRow(sprintf($strSql, self::TABLE, self::PK), $strId);
         if (false === $arrRow) {
-            throw new Chaplin_Dao_Exception_Video_NotFound($strId);
+            throw new NotFound($strId);
         }
         return $this->convertToModel($arrRow);
     }
-    
+
     public function getByVideoId($strVideoId)
     {
         $strSql = 'SELECT * FROM %s WHERE %s = ?';
@@ -57,14 +64,14 @@ class Chaplin_Dao_Sql_Video_Comment
             sprintf(
                 $strSql,
                 self::TABLE,
-                Chaplin_Model_Video_Comment::FIELD_VIDEOID
+                ModelComment::FIELD_VIDEOID
             ),
             $strVideoId
         );
-        return new Chaplin_Iterator_Dao_Sql_Rows($arrRows, $this);
+        return new Rows($arrRows, $this);
     }
 
-    public function delete(Chaplin_Model_Video_Comment $modelComment)
+    public function delete(ModelComment $modelComment)
     {
         return $this->_delete($modelComment);
     }
@@ -74,21 +81,21 @@ class Chaplin_Dao_Sql_Video_Comment
         return $this->_deleteWhere($this->_getPrimaryKey(), $strCommentId);
     }
 
-    protected function _sqlToModel(Array $arrSql)
+    protected function _sqlToModel(array $arrSql)
     {
         $arrModel = parent::_sqlToModel($arrSql);
         return $arrModel;
     }
 
-    public function save(Chaplin_Model_Video_Comment $modelComment)
+    public function save(ModelComment $modelComment)
     {
         return $this->_save($modelComment);
     }
 
     public function convertToModel($arrData)
     {
-        return Chaplin_Model_Video_Comment::createFromData(
-            $this, 
+        return ModelComment::createFromData(
+            $this,
             $this->_sqlToModel($arrData)
         );
     }

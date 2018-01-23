@@ -22,7 +22,10 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Http_Exception extends Exception
+
+namespace Chaplin\Http;
+
+class Exception extends \Exception
 {
-    
+
 }

@@ -50,7 +50,7 @@ class Cli extends ZendBootstrap
     {
         try {
             parent::_bootstrap($resource);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             echo $e->getMessage();
             flush();
         }
@@ -59,7 +59,7 @@ class Cli extends ZendBootstrap
     {
         try {
             parent::run();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             echo $e->getMessage();
             ob_flush();
             flush();

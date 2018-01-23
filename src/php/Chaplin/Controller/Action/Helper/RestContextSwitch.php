@@ -1,6 +1,11 @@
 <?php
-class Chaplin_Controller_Action_Helper_RestContextSwitch
-    extends Zend_Controller_Action_Helper_ContextSwitch
+namespace Chaplin\Controller\Action\Helper;
+
+use Zend_Controller_Action_Helper_ContextSwitch;
+use Zend_Controller_Action_Exception;
+use Zend_Layout;
+
+class RestContextSwitch extends Zend_Controller_Action_Helper_ContextSwitch
 {
     public function getActionContexts($action = null)
     {
@@ -89,15 +94,11 @@ class Chaplin_Controller_Action_Helper_RestContextSwitch
         if (null !== ($callback = $this->getCallback($context, self::TRIGGER_INIT))) {
             if (is_string($callback) && method_exists($this, $callback)) {
                 $this->$callback();
-            }
-            else if (is_string($callback) && function_exists($callback)) {
+            } elseif (is_string($callback) && function_exists($callback)) {
                 $callback();
-            }
-            else if (is_array($callback)) {
+            } elseif (is_array($callback)) {
                 call_user_func($callback);
-            }
-            else
-            {
+            } else {
                 throw new Zend_Controller_Action_Exception(
                     sprintf('Invalid context callback registered for context "%s"', $context)
                 );
