@@ -22,26 +22,31 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+namespace Chaplin\Model;
 
-// Define path to application directory
-defined('APPLICATION_PATH')
-    || define(
-        'APPLICATION_PATH',
-        realpath(
-            dirname(__FILE__) . '/../application'
-        )
-    );
+use PHPUnit\Framework\TestCase;
 
-// Define application environment
-defined('APPLICATION_ENV')
-    || define(
-        'APPLICATION_ENV',
-        (
-            getenv('APPLICATION_ENV') ?? 'testing'
-        )
-    );
+class UserTest extends TestCase
+{
+    public function testGetSetUsername()
+    {
+        $strUsername = 'Username';
+        $strPassword = 'Password';
+        $modelUser = User::create($strUsername, $strPassword);
+        $this->assertEquals(
+            strtolower($strUsername),
+            $modelUser->getUsername()
+        );
+    }
 
-
-require_once APPLICATION_PATH.'/../vendor/autoload.php';
-
-Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
+    public function testGetSetNick()
+    {
+        $strUsername = 'Username';
+        $strPassword = 'Password';
+        $modelUser = User::create($strUsername, $strPassword);
+        $strNick = 'Dan';
+        $this->assertNull($modelUser->getNick());
+        $modelUser->setNick($strNick);
+        $this->assertEquals($strNick, $modelUser->getNick());
+    }
+}
