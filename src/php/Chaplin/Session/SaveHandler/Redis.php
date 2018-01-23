@@ -51,19 +51,19 @@ class Redis implements Zend_Session_SaveHandler_Interface
    *
    * @var PhpRedis
   **/
-    protected $_phpredis;
+    protected $phpredis;
 
     /**
    * Sessions set
   **/
-    protected $_set;
+    protected $set;
 
     /**
    * Configuration
    *
    * @var array
   **/
-    protected $_options = array(
+    protected $options = array(
         'keyprefix' => 'PHPSESSIONS_',
         'lifetime'  => null,
         'registrykey' => null
@@ -83,11 +83,11 @@ class Redis implements Zend_Session_SaveHandler_Interface
         $configSessions = ConfigSessions::getInstance();
 
         // Set default lifetime
-        $this->_options['lifetime'] =
+        $this->options['lifetime'] =
             (int)$configSessions->getRememberMeSeconds();
 
         // Set default keyprefix
-        $this->_options['keyprefix'] =
+        $this->options['keyprefix'] =
             (int)$configSessions->getName();
 
         $this->setOptions($options);
@@ -95,15 +95,15 @@ class Redis implements Zend_Session_SaveHandler_Interface
         if (is_null($options['registrykey'])) {
             throw new Exception('registrykey is not set');
         }
-        $this->_phpredis = Zend_Registry::get($options['registrykey']);
+        $this->phpredis = Zend_Registry::get($options['registrykey']);
 
-        foreach ($this->_options as $name => $value) {
+        foreach ($this->options as $name => $value) {
             if (isset($options[$name])) {
                 unset($options[$name]);
             }
         }
 
-        $this->_set = array();
+        $this->set = array();
     }
 
     /**
@@ -146,7 +146,7 @@ class Redis implements Zend_Session_SaveHandler_Interface
   **/
     public function read($id)
     {
-        return $this->_phpredis->get($this->_getKeyName($id));
+        return $this->phpredis->get($this->getKeyName($id));
     }
 
     /**
@@ -158,18 +158,18 @@ class Redis implements Zend_Session_SaveHandler_Interface
   **/
     public function write($id, $data)
     {
-        $this->_phpredis->zAdd(
+        $this->phpredis->zAdd(
             self::c_ZNAME,
             1,
             $id
         );
 
-        $reply = $this->_phpredis->set($this->_getKeyName($id), $data);
+        $reply = $this->phpredis->set($this->getKeyName($id), $data);
 
         if ($reply) {
-            $this->_phpredis->expire(
-                $this->_getKeyName($id),
-                $this->_options['lifetime']
+            $this->phpredis->expire(
+                $this->getKeyName($id),
+                $this->options['lifetime']
             );
         }
 
@@ -184,12 +184,12 @@ class Redis implements Zend_Session_SaveHandler_Interface
   **/
     public function destroy($id)
     {
-        $this->_phpredis->zDelete(
+        $this->phpredis->zDelete(
             self::c_ZNAME,
             $id
         );
 
-        return $this->_phpredis->delete($this->_getKeyName($id));
+        return $this->phpredis->delete($this->getKeyName($id));
     }
 
     /**
@@ -202,11 +202,11 @@ class Redis implements Zend_Session_SaveHandler_Interface
     {
         // Gets all the elements at this ordered set.
         // Returns index-array(val1,val2)
-        $sessions = $this->_phpredis->zRange(self::c_ZNAME, 0, -1);
+        $sessions = $this->phpredis->zRange(self::c_ZNAME, 0, -1);
         foreach ($sessions as &$session) {
             // Converts the sessions array into an array(key1,key2)
             // (keys are prefix + val)
-            $session = $this->_getKeyName($session);
+            $session = $this->getKeyName($session);
         }
 
         // TODO: May by use TTL? Need benchmark.
@@ -214,16 +214,16 @@ class Redis implements Zend_Session_SaveHandler_Interface
         // This is the wrong thing to use. A correct command would be something
         // that is called with array(key1,key2) and returns array(key1 => val1)
         // and no val2 if it doesn't exist
-        //$lifeSession = $this->_phpredis->get($sessions);
+        //$lifeSession = $this->phpredis->get($sessions);
 
         foreach ($sessions as $session) {
-            if (false == $this->_phpredis->get($session)) {
+            if (false == $this->phpredis->get($session)) {
                 // If it doesn't exist anymore in our range, delete it!
                 $sessionWithoutPrefix = substr(
                     $session,
-                    strlen($this->_options['keyprefix'])
+                    strlen($this->options['keyprefix'])
                 );
-                $this->_phpredis->delete($sessionWithoutPrefix);
+                $this->phpredis->delete($sessionWithoutPrefix);
             }
         }
 
@@ -261,13 +261,13 @@ class Redis implements Zend_Session_SaveHandler_Interface
     {
         $lowerName = strtolower($name);
 
-        if (!array_key_exists($lowerName, $this->_options)) {
+        if (!array_key_exists($lowerName, $this->options)) {
             throw new Zend_Session_SaveHandler_Exception(
                 "Unknown option '$name'"
             );
         }
 
-        $this->_options[$lowerName] = $value;
+        $this->options[$lowerName] = $value;
 
         return $this;
     }
@@ -282,13 +282,13 @@ class Redis implements Zend_Session_SaveHandler_Interface
     {
         $lowerName = strtolower($name);
 
-        if (!array_key_exists($lowerName, $this->_options)) {
+        if (!array_key_exists($lowerName, $this->options)) {
             throw new Zend_Session_SaveHandler_Exception(
                 "Unknown option '$name'"
             );
         }
 
-        return $this->_options[$lowerName];
+        return $this->options[$lowerName];
     }
 
     /**
@@ -299,7 +299,7 @@ class Redis implements Zend_Session_SaveHandler_Interface
   **/
     public function setPhpRedis(PhpRedis $phpredis)
     {
-        $this->_phpredis = $phpredis;
+        $this->phpredis = $phpredis;
 
         return $this;
     }
@@ -311,7 +311,7 @@ class Redis implements Zend_Session_SaveHandler_Interface
   **/
     public function getPhpRedis() : PhpRedis
     {
-        return $this->_phpredis;
+        return $this->phpredis;
     }
 
     /**
@@ -320,8 +320,8 @@ class Redis implements Zend_Session_SaveHandler_Interface
    * @param  string $id
    * @return string
   **/
-    protected function _getKeyName($id)
+    protected function getKeyName($id)
     {
-        return $this->_options['keyprefix'] . $id;
+        return $this->options['keyprefix'] . $id;
     }
 }

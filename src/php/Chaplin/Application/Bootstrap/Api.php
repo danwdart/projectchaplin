@@ -196,7 +196,7 @@ class Api extends ZendBootstrap
     protected function _bootstrap($resource = null)
     {
         try {
-            parent::_bootstrap($resource);
+            parent::bootstrap($resource);
         } catch (Exception $e) {
             echo '<pre>'.$e->getMessage().PHP_EOL.$e->getTraceAsString().'</pre>';
         }

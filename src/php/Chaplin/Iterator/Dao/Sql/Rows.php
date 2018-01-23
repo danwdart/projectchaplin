@@ -31,50 +31,50 @@ use BadMethodCallException;
 
 class Rows implements IteratorInterface
 {
-    private $_daoInterface;
-    private $_bEmpty        = false;
+    private $daoInterface;
+    private $bEmpty        = false;
 
-    private $_intOffset     = 0;
-    private $_intStartRow   = 0;
-    private $_intReturnRows;
-    private $_arrRows;
+    private $intOffset     = 0;
+    private $intStartRow   = 0;
+    private $intReturnRows;
+    private $arrRows;
 
     public function __construct(array $arrRows, SqlAbstract $daoInterface)
     {
-        $this->_arrRows = $arrRows;
-        $this->_daoInterface = $daoInterface;
+        $this->arrRows = $arrRows;
+        $this->daoInterface = $daoInterface;
     }
     public function isEmpty()
     {
-        if (0 == count($this->_arrRows)) {
-            $this->_bEmpty = true;
+        if (0 == count($this->arrRows)) {
+            $this->bEmpty = true;
         }
-        return $this->_bEmpty;
+        return $this->bEmpty;
     }
     public function count()
     {
-        return count($this->_arrRows);
+        return count($this->arrRows);
     }
     public function current()
     {
-        $arrCurrentItem = $this->_arrRows[$this->_intOffset];
-        return $this->_daoInterface->convertToModel($arrCurrentItem);
+        $arrCurrentItem = $this->arrRows[$this->intOffset];
+        return $this->daoInterface->convertToModel($arrCurrentItem);
     }
     function key()
     {
-        return $this->_intOffset;
+        return $this->intOffset;
     }
     function next()
     {
-        $this->_intOffset++;
+        $this->intOffset++;
     }
     function rewind()
     {
-        $this->_intOffset = 0;
+        $this->intOffset = 0;
     }
     function valid()
     {
-        return isset($this->_arrRows[$this->_intOffset]);
+        return isset($this->arrRows[$this->intOffset]);
     }
     //Implements ArrayAccess
     public function offsetSet($offset, $value)

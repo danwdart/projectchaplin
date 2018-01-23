@@ -31,11 +31,11 @@ use Chaplin\Model\Video\Convert as ModelVideoConvert;
 
 class Convert extends GatewayAbstract
 {
-    private $_daoExchange;
+    private $daoExchange;
 
     public function __construct(Exchange $daoExchange)
     {
-        $this->_daoExchange = $daoExchange;
+        $this->daoExchange = $daoExchange;
     }
 
     public function convert()
@@ -44,11 +44,11 @@ class Convert extends GatewayAbstract
           $callback = function (ModelVideoConvert $msg) {
             $msg->process();
           };
-          $this->_daoExchange->listen($queueName, $callback);
+          $this->daoExchange->listen($queueName, $callback);
     }
 
     public function save(ModelVideoConvert $modelConvert)
     {
-        return $this->_daoExchange->save($modelConvert);
+        return $this->daoExchange->save($modelConvert);
     }
 }

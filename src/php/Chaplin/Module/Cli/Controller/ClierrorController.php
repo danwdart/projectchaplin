@@ -36,7 +36,7 @@ class ClierrorController extends Controller
 
     public function cliError()
     {
-        $errors = $this->_getParam('error_handler');
+        $errors = $this->getParam('error_handler');
 
         switch ($errors->type) {
             case ErrorHandler::EXCEPTION_NO_ROUTE:

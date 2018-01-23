@@ -37,7 +37,7 @@ use Zend_Json;
 **/
 class Client
 {
-    protected $_objHttpClient;
+    protected $objHttpClient;
 
     /**
      * Create the object from the interface
@@ -48,7 +48,7 @@ class Client
     **/
     public function __construct(HttpInterface $objHttpClient)
     {
-        $this->_objHttpClient = $objHttpClient;
+        $this->objHttpClient = $objHttpClient;
     }
 
     /**
@@ -62,13 +62,13 @@ class Client
     **/
     public function getPageBody($strURL, $intLogPriority = Zend_Log::ERR)
     {
-        return $this->_objHttpClient->getPageBody($strURL, $intLogPriority);
+        return $this->objHttpClient->getPageBody($strURL, $intLogPriority);
     }
 
     public function getObject($strURL, $intLogPriority = Zend_Log::ERR)
     {
         return Zend_Json::decode(
-            $this->_objHttpClient->getPageBody(
+            $this->objHttpClient->getPageBody(
                 $strURL,
                 $intLogPriority
             )
@@ -85,7 +85,7 @@ class Client
     **/
     public function scrapeXPath($strURL, $strXPath)
     {
-        return $this->_objHttpClient->scrapeXPath($strURL, $strXPath);
+        return $this->objHttpClient->scrapeXPath($strURL, $strXPath);
     }
 
     /**
@@ -99,7 +99,7 @@ class Client
     **/
     public function parseRawXPath($strData, $strXPath)
     {
-        return $this->_objHttpClient->parseRawXPath($strData, $strXPath);
+        return $this->objHttpClient->parseRawXPath($strData, $strXPath);
     }
 
     /**
@@ -114,7 +114,7 @@ class Client
     **/
     public function parseRawHtmlXPath($strData, $strXPath, $strURL = null)
     {
-        return $this->_objHttpClient->parseRawHtmlXPath(
+        return $this->objHttpClient->parseRawHtmlXPath(
             $strData,
             $strXPath,
             $strURL
@@ -135,7 +135,7 @@ class Client
         $bCache = true
     ) {
 
-        return $this->_objHttpClient->getHttpResponse(
+        return $this->objHttpClient->getHttpResponse(
             $strURL,
             $intLogPriority,
             $bCache

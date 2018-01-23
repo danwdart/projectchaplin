@@ -34,12 +34,12 @@ use Zend_Validate_Identical as ValidateIdentical;
 
 class Validate extends Form
 {
-    private $_strToken;
+    private $strToken;
 
     public function __construct($strToken)
     {
         parent::__construct();
-        $this->_strToken = $strToken;
+        $this->strToken = $strToken;
     }
 
     public function init()
@@ -47,7 +47,7 @@ class Validate extends Form
         $this->setMethod('post');
 
         $token = new Hidden('token');
-        $token->setValue($this->_strToken);
+        $token->setValue($this->strToken);
 
         $password = new Password('password');
         $password->setAttrib("class", "form-control");

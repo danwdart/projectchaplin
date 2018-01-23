@@ -32,45 +32,45 @@ use Chaplin\Model\Video as ModelVideo;
 
 class Video extends GatewayAbstract
 {
-    private $_daoVideo;
+    private $daoVideo;
 
     public function __construct(InterfaceVideo $daoVideo)
     {
-        $this->_daoVideo = $daoVideo;
+        $this->daoVideo = $daoVideo;
     }
 
     public function getFeaturedVideos(User $modelUser = null)
     {
-        return $this->_daoVideo->getFeaturedVideos($modelUser);
+        return $this->daoVideo->getFeaturedVideos($modelUser);
     }
 
     public function getByVideoId($strVideoId, User $modelUser = null)
     {
-        return $this->_daoVideo->getByVideoId($strVideoId, $modelUser);
+        return $this->daoVideo->getByVideoId($strVideoId, $modelUser);
     }
     
     public function getByUser(User $modelUser)
     {
-        return $this->_daoVideo->getByUser($modelUser);
+        return $this->daoVideo->getByUser($modelUser);
     }
     
     public function getByUserUnnamed(User $modelUser)
     {
-        return $this->_daoVideo->getByUserUnnamed($modelUser);
+        return $this->daoVideo->getByUserUnnamed($modelUser);
     }
     
     public function getBySearchTerms($strSearchTerms)
     {
-        return $this->_daoVideo->getBySearchTerms($strSearchTerms);
+        return $this->daoVideo->getBySearchTerms($strSearchTerms);
     }
 
     public function delete(ModelVideo $modelVideo)
     {
-        return $this->_daoVideo->delete($modelVideo);
+        return $this->daoVideo->delete($modelVideo);
     }
 
     public function save(ModelVideo $modelVideo)
     {
-        return $this->_daoVideo->save($modelVideo);
+        return $this->daoVideo->save($modelVideo);
     }
 }

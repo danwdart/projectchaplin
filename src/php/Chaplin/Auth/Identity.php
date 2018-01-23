@@ -28,15 +28,15 @@ use Chaplin\Model\User as ModelUser;
 
 class Identity
 {
-    private $_modelUser;
+    private $modelUser;
 
     public function __construct(ModelUser $modelUser)
     {
-        $this->_modelUser = $modelUser;
+        $this->modelUser = $modelUser;
     }
 
     public function getUser()
     {
-        return $this->_modelUser;
+        return $this->modelUser;
     }
 }

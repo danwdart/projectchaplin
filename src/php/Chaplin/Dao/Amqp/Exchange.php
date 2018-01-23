@@ -50,11 +50,11 @@ class Exchange implements DaoInterface
     const TYPE_READ = "read";
     const TYPE_WRITE = "write";
 
-    private $_strExchangeName;
-    private $_strExchangeType;
-    private $_arrExchange;
+    private $strExchangeName;
+    private $strExchangeType;
+    private $arrExchange;
 
-    private static $_amqpConnections = [
+    private static $amqpConnections = [
         self::TYPE_READ => null,
         self::TYPE_WRITE => null
     ];
@@ -65,7 +65,7 @@ class Exchange implements DaoInterface
             throw new Exception('Cannot create with blank exchange name');
         }
 
-        $this->_strExchangeName = $strExchangeName;
+        $this->strExchangeName = $strExchangeName;
 
         $arrExchanges = ConfigAmqp::getInstance()
             ->getConfigArray();
@@ -76,19 +76,19 @@ class Exchange implements DaoInterface
             throw new Exception($strExchangeName.' exchange not found');
         }
 
-        $this->_arrExchange = $arrExchanges[$strExchangeName];
+        $this->arrExchange = $arrExchanges[$strExchangeName];
 
-        if (!isset($this->_arrExchange[self::CONFIG_TYPE])) {
+        if (!isset($this->arrExchange[self::CONFIG_TYPE])) {
             throw new Exception("Exchange type empty.");
         }
     }
 
-    private static function _getConnection(
+    private static function getConnection(
         string $strType
     ): Connection {
 
-        if (is_null(self::$_amqpConnections[$strType])) {
-            self::$_amqpConnections[$strType] = new Connection(
+        if (is_null(self::$amqpConnections[$strType])) {
+            self::$amqpConnections[$strType] = new Connection(
                 getenv("AMQP_HOST"),
                 getenv("AMQP_PORT"),
                 getenv("AMQP_USER"),
@@ -97,21 +97,21 @@ class Exchange implements DaoInterface
             );
         }
 
-        return self::$_amqpConnections[$strType];
+        return self::$amqpConnections[$strType];
     }
 
-    private function _declareExchange(string $strType) : void
+    private function declareExchange(string $strType) : void
     {
-        $connection = self::_getConnection($strType);
+        $connection = self::getConnection($strType);
 
         $channel = $connection->channel();
 
-        $arrFlags = (isset($this->_arrExchange[self::CONFIG_FLAGS]))?
-            $this->_arrExchange[self::CONFIG_FLAGS]:
+        $arrFlags = (isset($this->arrExchange[self::CONFIG_FLAGS]))?
+            $this->arrExchange[self::CONFIG_FLAGS]:
             array();
 
         $channel->exchange_declare(
-            $this->_strExchangeName,
+            $this->strExchangeName,
             'topic',
             $arrFlags[self::FLAG_PASSIVE] ?? false,
             $arrFlags[self::FLAG_DURABLE] ?? true,
@@ -127,13 +127,13 @@ class Exchange implements DaoInterface
     **/
     public function listen($strQueue, Closure $callback) : void
     {
-        if (!isset($this->_arrExchange[self::CONFIG_QUEUES])
-            || !is_array($this->_arrExchange[self::CONFIG_QUEUES][$strQueue])
+        if (!isset($this->arrExchange[self::CONFIG_QUEUES])
+            || !is_array($this->arrExchange[self::CONFIG_QUEUES][$strQueue])
         ) {
             throw new Exception('Queue not found: '.$strQueue);
         }
 
-        $arrQueue = $this->_arrExchange[self::CONFIG_QUEUES][$strQueue];
+        $arrQueue = $this->arrExchange[self::CONFIG_QUEUES][$strQueue];
 
         if (!isset($arrQueue[self::CONFIG_QUEUE_KEYS])
             || !is_array($arrQueue[self::CONFIG_QUEUE_KEYS])
@@ -147,10 +147,10 @@ class Exchange implements DaoInterface
             $arrQueue[self::CONFIG_FLAGS]:
             array();
 
-        $connection = $this->_getConnection(self::TYPE_READ);
+        $connection = $this->getConnection(self::TYPE_READ);
         $channel = $connection->channel();
 
-        $this->_declareExchange(self::TYPE_READ);
+        $this->declareExchange(self::TYPE_READ);
 
         $channel->queue_declare(
             $strQueue,
@@ -164,7 +164,7 @@ class Exchange implements DaoInterface
             $strBindingKey = is_null($strQueueKey)?'#':$strQueueKey;
             $channel->queue_bind(
                 $strQueue,
-                $this->_strExchangeName,
+                $this->strExchangeName,
                 $strBindingKey
             );
         }
@@ -238,7 +238,7 @@ class Exchange implements DaoInterface
         $strRoutingKey
     ) : void {
 
-        $connection = $this->_getConnection(self::TYPE_READ);
+        $connection = $this->getConnection(self::TYPE_READ);
         $channel = $connection->channel();
 
         $message = new Message(
@@ -250,11 +250,11 @@ class Exchange implements DaoInterface
             ]
         );
 
-        $this->_declareExchange(self::TYPE_WRITE);
+        $this->declareExchange(self::TYPE_WRITE);
 
         $channel->basic_publish(
             $message,
-            $this->_strExchangeName,
+            $this->strExchangeName,
             $strRoutingKey
         );
 

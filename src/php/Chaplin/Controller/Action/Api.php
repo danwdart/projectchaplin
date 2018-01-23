@@ -1,6 +1,4 @@
 <?php
-
-
 namespace Chaplin\Controller\Action;
 
 use Zend_Controller_Action;
@@ -23,29 +21,29 @@ class Api extends Zend_Controller_Action
             ->setAutoJsonSerialization(true)
             ->initContext();
 
-        $this->_postInit();
+        $this->postInit();
     }
-    
-    protected function _isAPICall()
+
+    protected function isAPICall()
     {
         return 'json' == $this->_helper
             ->getHelper('restContextSwitch')
             ->getCurrentContext();
     }
 
-    protected function _isXml()
+    protected function isXml()
     {
         return 'xml' == $this->_helper
             ->getHelper('restContextSwitch')
             ->getCurrentContext();
     }
 
-    protected function _forceAPI($arrOut)
+    protected function forceAPI($arrOut)
     {
-        if (!$this->_isAPICall()) {
+        if (!$this->isAPICall()) {
             $this->_helper->layout()->disableLayout();
             $this->_helper->viewRenderer->setNoRender();
-            if ($this->_isXml()) {
+            if ($this->isXml()) {
                 // not implemented for now
                 return $this->getResponse()->setHttpResponseCode(501);
             }
@@ -57,7 +55,7 @@ class Api extends Zend_Controller_Action
         return $this->view->assign($arrOut);
     }
 
-    protected function _postInit()
+    protected function postInit()
     {
         // override if required
     }

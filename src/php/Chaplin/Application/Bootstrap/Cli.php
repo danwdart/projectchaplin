@@ -49,7 +49,7 @@ class Cli extends ZendBootstrap
     protected function _bootstrap($resource = null)
     {
         try {
-            parent::_bootstrap($resource);
+            parent::bootstrap($resource);
         } catch (Exception $e) {
             echo $e->getMessage();
             flush();

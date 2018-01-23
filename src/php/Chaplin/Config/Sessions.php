@@ -28,47 +28,47 @@ class Sessions extends ConfigAbstract
 {
     const CONFIG_TYPE = 'Ini';
 
-    protected function _getConfigType()
+    protected function getConfigType()
     {
         return self::CONFIG_TYPE;
     }
 
-    protected function _getConfigFile()
+    protected function getConfigFile()
     {
         return APPLICATION_PATH.'/config/sessions.ini';
     }
 
     public function getName()
     {
-        $this->_getValue(
-            $this->_zendConfig->session->name,
+        $this->getValue(
+            $this->zendConfig->session->name,
             'session.name'
         );
     }
 
     public function getRememberMeSeconds()
     {
-        $this->_getValue(
-            $this->_zendConfig->session->remember_me_seconds,
+        $this->getValue(
+            $this->zendConfig->session->remember_me_seconds,
             'session.remember_me_seconds'
         );
     }
 
     public function getSessionOptions()
     {
-        return $this->_getValue(
-            $this->_zendConfig->session,
+        return $this->getValue(
+            $this->zendConfig->session,
             'session'
         )->toArray();
     }
 
     public function getSaveHandler()
     {
-        $strClassName = $this->_getValue(
-            $this->_zendConfig->saveHandler->class,
+        $strClassName = $this->getValue(
+            $this->zendConfig->saveHandler->class,
             'saveHandler.class'
         );
-        $arrOptions = $this->_zendConfig->saveHandler->options;
+        $arrOptions = $this->zendConfig->saveHandler->options;
         if (!empty($strClassName)) {
             return new $strClassName($arrOptions);
         }

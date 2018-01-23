@@ -30,24 +30,24 @@ use Exception;
 
 class FieldId extends FieldAbstract
 {
-    private $_mixedValue;
+    private $mixedValue;
     
     public function setFromData($mixedValue)
     {
-        $this->_mixedValue = $mixedValue;
+        $this->mixedValue = $mixedValue;
     }
     
     public function setValue($mixedValue)
     {
-        if (!is_null($this->_mixedValue)) {
+        if (!is_null($this->mixedValue)) {
             throw new Exception('id fields are read-only');
         }
-        $this->_mixedValue = $mixedValue;
-        $this->_bIsDirty = true;
+        $this->mixedValue = $mixedValue;
+        $this->bIsDirty = true;
     }
     
     public function getValue($mixedDefault)
     {
-        return $this->_mixedValue;
+        return $this->mixedValue;
     }
 }

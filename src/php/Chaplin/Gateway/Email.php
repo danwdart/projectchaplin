@@ -11,11 +11,11 @@ use Chaplin\Gateway;
 
 class Email extends GatewayAbstract
 {
-    private $_daoExchange;
+    private $daoExchange;
 
     public function __construct(Exchange $daoExchange)
     {
-        $this->_daoExchange = $daoExchange;
+        $this->daoExchange = $daoExchange;
     }
 
     public function email(
@@ -26,7 +26,7 @@ class Email extends GatewayAbstract
     ) {
     
 
-        $this->_daoExchange->email($modelUser, $strSubject, $strTemplate, $arrParams);
+        $this->daoExchange->email($modelUser, $strSubject, $strTemplate, $arrParams);
     }
 
     public function videoFinished(
@@ -37,7 +37,7 @@ class Email extends GatewayAbstract
         $strUsername = $modelVideo->getUsername();
         $modelUser = Gateway::getUser()->getByUsername($strUsername);
 
-        $this->_daoExchange->email(
+        $this->daoExchange->email(
             $modelUser,
             'Video Finished Processing',
             'videofinished',
@@ -59,7 +59,7 @@ class Email extends GatewayAbstract
         // It's a bit odd but it ensures atomic saves.
         Gateway::getUser()->save($modelUser);
 
-        $this->_daoExchange->email(
+        $this->daoExchange->email(
             $modelUser,
             'Reset Password',
             'resetpassword',

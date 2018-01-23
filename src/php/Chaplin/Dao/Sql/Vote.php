@@ -34,12 +34,12 @@ class Vote extends SqlAbstract implements InterfaceVote
 {
     const TABLE = 'Votes';
 
-    protected function _getTable()
+    protected function getTable()
     {
         return self::TABLE;
     }
 
-    protected function _getPrimaryKey()
+    protected function getPrimaryKey()
     {
         // Not single
         return null;
@@ -47,7 +47,7 @@ class Vote extends SqlAbstract implements InterfaceVote
 
     public function addVote(ModelUser $modelUser, ModelVideo $modelVideo, $intVote)
     {
-        $this->_getAdapter()->query(
+        $this->getAdapter()->query(
             'INSERT INTO '.self::TABLE.' SET '.
             'Vote = ?, Username = ?, VideoId = ? ON DUPLICATE KEY UPDATE Vote = ?',
             [
@@ -59,11 +59,11 @@ class Vote extends SqlAbstract implements InterfaceVote
         );
     }
 
-    protected function _sqlToModel(array $arrSql)
+    protected function sqlToModel(array $arrSql)
     {
     }
 
-    protected function _modelToSql(array $arrModel)
+    protected function modelToSql(array $arrModel)
     {
     }
 

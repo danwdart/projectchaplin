@@ -45,7 +45,7 @@ class User extends Hash
 
     const HASH_SHA512 = 'sha512';
 
-    protected $_arrFields = [
+    protected $arrFields = [
         self::FIELD_Username => ['Class' => 'Chaplin\\Model\\Field\\FieldId'],
         self::FIELD_Password => ['Class' => 'Chaplin\\Model\\Field\\Field'],
         self::FIELD_Nick => ['Class' => 'Chaplin\\Model\\Field\\Field'],
@@ -61,15 +61,15 @@ class User extends Hash
     public static function create($strUsername, $strPassword)
     {
         $modelUser = new self();
-        $modelUser->_bIsNew = true;
-        $modelUser->_setField(self::FIELD_Username, self::encodeUsername($strUsername));
+        $modelUser->bIsNew = true;
+        $modelUser->setField(self::FIELD_Username, self::encodeUsername($strUsername));
         $modelUser->setPassword($strPassword);
         return $modelUser;
     }
 
     public function getId()
     {
-        return $this->_getField(self::FIELD_Username, null);
+        return $this->getField(self::FIELD_Username, null);
     }
 
     public function toArray()
@@ -96,41 +96,41 @@ class User extends Hash
 
     public function verifyPassword($strPassword)
     {
-        return (self::encodePassword($strPassword) == $this->_getField(self::FIELD_Password, null));
+        return (self::encodePassword($strPassword) == $this->getField(self::FIELD_Password, null));
     }
 
     public function setPassword($strPassword)
     {
-        $this->_setField(self::FIELD_Password, self::encodePassword($strPassword));
-        $this->_setField(self::FIELD_HASH, self::HASH_SHA512);
+        $this->setField(self::FIELD_Password, self::encodePassword($strPassword));
+        $this->setField(self::FIELD_HASH, self::HASH_SHA512);
     }
 
     public function resetPassword()
     {
         $strValidationToken = md5(uniqid());
-        $this->_setField(self::FIELD_VALIDATION, $strValidationToken);
-        $this->_setField(self::FIELD_Password, '');
+        $this->setField(self::FIELD_VALIDATION, $strValidationToken);
+        $this->setField(self::FIELD_Password, '');
         return $strValidationToken;
     }
 
     public function getUsername()
     {
-        return $this->_getField(self::FIELD_Username, null);
+        return $this->getField(self::FIELD_Username, null);
     }
 
     public function getNick()
     {
-        return $this->_getField(self::FIELD_Nick, null);
+        return $this->getField(self::FIELD_Nick, null);
     }
 
     public function setNick($strNick)
     {
-        $this->_setField(self::FIELD_Nick, $strNick);
+        $this->setField(self::FIELD_Nick, $strNick);
     }
 
     public function getEmail()
     {
-        return $this->_getField(self::FIELD_Email, null);
+        return $this->getField(self::FIELD_Email, null);
     }
 
     public function getMessages()
@@ -140,12 +140,12 @@ class User extends Hash
 
     public function setEmail($strEmail)
     {
-        $this->_setField(self::FIELD_Email, $strEmail);
+        $this->setField(self::FIELD_Email, $strEmail);
     }
 
     public function getUserType()
     {
-        return new UserType($this->_getField(self::FIELD_UserTypeId, UserType::ID_GUEST));
+        return new UserType($this->getField(self::FIELD_UserTypeId, UserType::ID_GUEST));
     }
 
     public function isGod()
@@ -155,17 +155,17 @@ class User extends Hash
 
     public function setUserType(UserType $helperUserType)
     {
-        $this->_setField(self::FIELD_UserTypeId, $helperUserType->getUserTypeId());
+        $this->setField(self::FIELD_UserTypeId, $helperUserType->getUserTypeId());
     }
 
     public function __get($strProperty)
     {
-        return $this->_getField($strProperty, null);
+        return $this->getField($strProperty, null);
     }
 
     public function __set($strProperty, $strValue)
     {
-        $this->_setField($strProperty, $strValue);
+        $this->setField($strProperty, $strValue);
     }
 
     public function delete()
