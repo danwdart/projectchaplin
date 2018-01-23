@@ -27,8 +27,6 @@ namespace Chaplin\Model\User\Helper;
 
 use Chaplin\Model\User\Helper\Exception\UnknownType;
 
-
-
 class UserType
 {
     const TYPE_GUEST = 'Guest';

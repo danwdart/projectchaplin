@@ -33,8 +33,6 @@ use Chaplin\Model\Video\Privacy;
 use Chaplin\Iterator\Dao\Sql\Rows;
 use Chaplin\Dao\Exception\Video\NotFound;
 
-
-
 class Video extends SqlAbstract implements InterfaceVideo
 {
     const TABLE = 'Videos';

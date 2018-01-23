@@ -33,8 +33,6 @@ use DateTime;
 use Chaplin\Model\Field\Hash;
 use Exception;
 
-
-
 abstract class SqlAbstract implements DaoInterface
 {
     const DATETIME_SQL = 'Y-m-d H:i:s';

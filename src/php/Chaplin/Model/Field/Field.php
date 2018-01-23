@@ -27,8 +27,6 @@ namespace Chaplin\Model\Field;
 
 use Chaplin\Model\Field\FieldAbstract;
 
-
-
 class Field extends FieldAbstract
 {
     private $_mixedValue;

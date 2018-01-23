@@ -30,8 +30,6 @@ use Chaplin\Dao\Interfaces\Vote as InterfaceVote;
 use Chaplin\Model\User as ModelUser;
 use Chaplin\Model\Video as ModelVideo;
 
-
-
 class Vote extends SqlAbstract implements InterfaceVote
 {
     const TABLE = 'Votes';

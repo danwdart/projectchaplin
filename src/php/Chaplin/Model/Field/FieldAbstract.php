@@ -25,9 +25,6 @@
 
 namespace Chaplin\Model\Field;
 
-
-
-
 abstract class FieldAbstract
 {
     protected $_bIsDirty = false;

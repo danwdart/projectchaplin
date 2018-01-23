@@ -27,8 +27,6 @@ namespace Chaplin\Dao\Exception\User;
 
 use Zend_Exception;
 
-
-
 class NotFound extends Zend_Exception
 {
     const MESSAGE = 'User with specified credentials was not found.';

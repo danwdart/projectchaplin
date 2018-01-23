@@ -29,8 +29,6 @@ use Chaplin\Iterator\IteratorInterface;
 use Chaplin\Dao\Sql\SqlAbstract;
 use BadMethodCallException;
 
-
-
 class Rows implements IteratorInterface
 {
     private $_daoInterface;

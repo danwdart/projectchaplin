@@ -29,8 +29,6 @@ use Chaplin\Gateway\GatewayAbstract;
 use Chaplin\Dao\Amqp\Exchange;
 use Chaplin\Model\Video\Convert as ModelVideoConvert;
 
-
-
 class Convert extends GatewayAbstract
 {
     private $_daoExchange;

@@ -30,8 +30,6 @@ use ArrayObject;
 use Chaplin\Model\User\Helper\UserType;
 use Chaplin\Gateway;
 
-
-
 class User extends Hash
 {
     const FIELD_Username = 'Username';

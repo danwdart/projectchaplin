@@ -5,7 +5,6 @@ namespace Chaplin\Model\Video;
 
 use OutOfBoundsException;
 
-
 class Licence
 {
     const FIELD_TEXT = 'Text';

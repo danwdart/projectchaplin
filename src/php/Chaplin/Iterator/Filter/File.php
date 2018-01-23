@@ -27,8 +27,6 @@ namespace Chaplin\Iterator\Filter;
 
 use FilterIterator;
 
-
-
 class File extends FilterIterator
 {
     private $_strAcceptableTypes;

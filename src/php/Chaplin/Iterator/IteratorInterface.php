@@ -25,7 +25,9 @@
 
 namespace Chaplin\Iterator;
 
-use Countable, ArrayAccess, SeekableIterator;
+use Countable;
+use ArrayAccess;
+use SeekableIterator;
 
 interface IteratorInterface extends Countable, ArrayAccess, SeekableIterator
 {

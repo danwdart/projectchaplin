@@ -29,8 +29,6 @@ use Chaplin\Model\Field\Hash;
 use Chaplin\Model\User;
 use Chaplin\Gateway;
 
-
-
 class Channel extends Hash
 {
     const FIELD_CHANNELID = 'ChannelId';

@@ -31,8 +31,6 @@ use Chaplin\Iterator\Dao\Sql\Rows;
 use Chaplin\Model\User as ModelUser;
 use Chaplin\Dao\Exception\User\NotFound;
 
-
-
 class User extends SqlAbstract implements InterfaceUser
 {
     const TABLE = 'Users';

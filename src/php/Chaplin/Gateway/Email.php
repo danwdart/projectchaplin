@@ -9,7 +9,6 @@ use Chaplin\Model\User;
 use Chaplin\Model\Video;
 use Chaplin\Gateway;
 
-
 class Email extends GatewayAbstract
 {
     private $_daoExchange;

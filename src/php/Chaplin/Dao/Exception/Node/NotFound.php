@@ -27,8 +27,6 @@ namespace Chaplin\Dao\Exception\Node;
 
 use Zend_Exception;
 
-
-
 class NotFound extends Zend_Exception
 {
     const MESSAGE = 'Node with id (%s) was not found.';

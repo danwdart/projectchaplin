@@ -27,8 +27,6 @@ namespace Chaplin\Http\Exception;
 
 use Exception;
 
-
-
 class XPathCannotFind extends Exception
 {
     const MESSAGE = 'Could not find an element for query "%s" while scraping URL';

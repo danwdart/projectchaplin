@@ -28,8 +28,6 @@ namespace Chaplin\Iterator\Api;
 use Chaplin\Iterator\IteratorInterface;
 use BadMethodCallException;
 
-
-
 class ModelArray implements IteratorInterface
 {
     private $_daoInterface;

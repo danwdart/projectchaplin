@@ -31,8 +31,6 @@ use Chaplin\Iterator\Dao\Sql\Rows;
 use Exception;
 use Chaplin\Model\Node as ModelNode;
 
-
-
 class Node extends SqlAbstract implements InterfaceNode
 {
     const TABLE = 'Nodes';

@@ -32,8 +32,6 @@ use Chaplin\Gateway;
 use Chaplin\Service;
 use Exception;
 
-
-
 class Convert extends Hash implements Message
 {
     const FIELD_VIDEOID = 'VideoId';

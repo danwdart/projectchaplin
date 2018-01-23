@@ -29,8 +29,6 @@ use Chaplin\Gateway\GatewayAbstract;
 use Chaplin\Dao\Amqp\Exchange;
 use Chaplin\Model\Video\Vimeo as ModelVideoVimeo;
 
-
-
 class Vimeo extends GatewayAbstract
 {
     private $_daoExchange;
