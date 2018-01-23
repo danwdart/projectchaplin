@@ -53,14 +53,8 @@
         "squizlabs/php_codesniffer": "^2.7"
     },
     "autoload": {
-        "psr-0": {
-            "Chaplin_": ""
-	},
         "psr-4": {
             "Chaplin\\": "Chaplin/"
-        },
-	"classmap": [
-            "Chaplin/"
-	]
+        }
     }
 }

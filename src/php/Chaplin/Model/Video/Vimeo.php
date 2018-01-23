@@ -22,17 +22,27 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_Video_Vimeo extends Chaplin_Model_Field_Hash implements Chaplin_Model_Interface_Message
+
+namespace Chaplin\Model\Video;
+
+use Chaplin\Model\Field\Hash;
+use Chaplin\Model\Interfaces\Message;
+use Chaplin\Model\Video;
+use Chaplin\Service;
+use Chaplin\Gateway;
+use Exception;
+
+class Vimeo extends Hash implements Message
 {
     const FIELD_VIMEOID = 'VimeoId';
     const FIELD_VIDEOID = 'VideoId';
 
     protected $_arrFields = [
-        self::FIELD_VIMEOID => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_VIDEOID => ['Class' => 'Chaplin_Model_Field_Field']
+        self::FIELD_VIMEOID => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_VIDEOID => ['Class' => 'Chaplin\\Model\\Field\\Field']
     ];
 
-    public static function create(Chaplin_Model_Video $modelVideo, $strVimeoId)
+    public static function create(Video $modelVideo, $strVimeoId)
     {
         $msgTest = new self();
         $msgTest->_setField(self::FIELD_VIDEOID, $modelVideo->getVideoId());
@@ -53,7 +63,7 @@ class Chaplin_Model_Video_Vimeo extends Chaplin_Model_Field_Hash implements Chap
 
         // phpstan
         $ret = null;
-        $strOut = Chaplin_Service::getInstance()
+        $strOut = Service::getInstance()
             ->getVimeo()
             ->downloadVideo($this->_getVimeoId(), getenv("UPLOADS_PATH"), $ret);
 
@@ -69,12 +79,12 @@ class Chaplin_Model_Video_Vimeo extends Chaplin_Model_Field_Hash implements Chap
         ob_flush();
         flush();
 
-        $modelVideo = Chaplin_Gateway::getInstance()
+        $modelVideo = Gateway::getInstance()
             ->getVideo()
             ->getByVideoId($this->_getField(self::FIELD_VIDEOID, null));
 
         try {
-            Chaplin_Gateway::getEmail()
+            Gateway::getEmail()
                 ->videoFinished($modelVideo);
             echo '"Video Finished" email successfully sent.'.PHP_EOL;
         } catch (Exception $e) {

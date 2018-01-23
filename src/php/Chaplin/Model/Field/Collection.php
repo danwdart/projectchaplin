@@ -22,7 +22,18 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_Field_Collection implements Iterator, Countable
+
+namespace Chaplin\Model\Field;
+
+use Iterator;
+use Countable;
+use Chaplin\Model\Field\Hash;
+use OutOfBoundsException;
+use Exception;
+
+
+
+class Collection implements Iterator, Countable
 {
     private $_intIndex = 0;
     private $_strHashType = null;
@@ -39,7 +50,7 @@ class Chaplin_Model_Field_Collection implements Iterator, Countable
         return $this->_bIsDirty;
     }
 
-    public function addHash(Chaplin_Model_Field_Hash $hash)
+    public function addHash(Hash $hash)
     {
         $this->_collHashes[] = $hash;
         $this->_bIsDirty = true;

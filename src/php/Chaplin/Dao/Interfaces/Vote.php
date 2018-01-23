@@ -22,13 +22,13 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-interface Chaplin_Dao_Interface_Node extends Chaplin_Dao_Interface
-{
-    public function getAllNodes();
-    
-    public function getByNodeId($strNodeId);
-    
-    public function delete(Chaplin_Model_Node $modelNode);
+namespace Chaplin\Dao\Interfaces;
 
-    public function save(Chaplin_Model_Node $modelNode);
+use Chaplin\Dao\DaoInterface;
+use Chaplin\Model\User as ModelUser;
+use Chaplin\Model\Video as ModelVideo;
+
+interface Vote extends DaoInterface
+{
+    public function addVote(ModelUser $modelUser, ModelVideo $modelVideo, $intVote);
 }

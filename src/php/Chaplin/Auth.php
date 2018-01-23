@@ -22,6 +22,7 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+
 namespace Chaplin;
 
 use Zend_Auth as ZendAuth;

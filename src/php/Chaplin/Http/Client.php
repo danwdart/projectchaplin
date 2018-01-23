@@ -22,6 +22,25 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+
+namespace Chaplin\Http;
+
+use Chaplin\Http\HttpInterface;
+use Zend_Http_Client;
+use Zend_Log;
+use Zend_Http_Client_Exception;
+use Chaplin\Http\Exception\InvalidURL;
+use Zend_Uri_Exception;
+use Chaplin\Log;
+use Chaplin\Http\Exception\Unsuccessful;
+use DOMDocument;
+use Exception;
+use DOMXPath;
+use Chaplin\Http\Exception\XPathCannotFind;
+use Chaplin\Http\Exception\XPathNotUnique;
+
+
+
 /**
  * Wrapper to the Zend HTTP Client - just so we can use this interface
  * This only does GET requests right now - to do POST extend this - for one, the arrPageBody[url] needs some more
@@ -29,7 +48,7 @@
  * @package default
  * @author  Dan Dart <chaplin@dandart.co.uk>
 **/
-class Chaplin_Http_Client implements Chaplin_Http_Interface
+class Client implements HttpInterface
 {
     private $_zendHttpClient;
 
@@ -64,8 +83,8 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
      *
      * @param  string $url
      * @return string $pageBody
-     * @throws Chaplin_Http_Exception_Unsuccessful
-     * @throws Chaplin_Http_Exception_InvalidURL
+     * @throws Chaplin\Http\Exception\Unsuccessful
+     * @throws Chaplin\Http\Exception\InvalidURL
      * @author Dan Dart <chaplin@dandart.co.uk>
     **/
     public function getPageBody($url, $intLogPriority = Zend_Log::ERR)
@@ -79,10 +98,10 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         try {
             $this->_zendHttpClient->setUri($url);
         } catch (Zend_Http_Client_Exception $e) {
-            throw new Chaplin_Http_Exception_InvalidURL($url, $e);
+            throw new InvalidURL($url, $e);
         } catch (Zend_Uri_Exception $e) {
-            Chaplin_Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url, $intLogPriority);
-            throw new Chaplin_Http_Exception_InvalidURL($url, $e);
+            Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url, $intLogPriority);
+            throw new InvalidURL($url, $e);
         }
 
         $httpResponse = $this->_zendHttpClient->request();
@@ -91,14 +110,14 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         // Tim hates this - but is there another way?
         if (!is_null($intLogPriority)) {
             if (200 == $httpResponse->getStatus()) {
-                Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
+                Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
             } else {
-                Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
+                Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
             }
         }
 
         if (!$httpResponse->isSuccessful()) {
-            throw new Chaplin_Http_Exception_Unsuccessful($url, $httpResponse->getStatus());
+            throw new Unsuccessful($url, $httpResponse->getStatus());
         }
 
         $this->_arrPageBody[$url] = $this->_checkForMetaRedirect($url, $httpResponse->getBody());
@@ -118,10 +137,10 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
             $this->_zendHttpClient->setUri($url);
             $this->_zendHttpClient->setHeaders('Accept', 'application/json');
         } catch (Zend_Http_Client_Exception $e) {
-            throw new Chaplin_Http_Exception_InvalidURL($url, $e);
+            throw new InvalidURL($url, $e);
         } catch (Zend_Uri_Exception $e) {
-            Chaplin_Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url, $intLogPriority);
-            throw new Chaplin_Http_Exception_InvalidURL($url, $e);
+            Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url, $intLogPriority);
+            throw new InvalidURL($url, $e);
         }
 
         $httpResponse = $this->_zendHttpClient->request();
@@ -130,14 +149,14 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         // Tim hates this - but is there another way?
         if (!is_null($intLogPriority)) {
             if (200 == $httpResponse->getStatus()) {
-                Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
+                Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
             } else {
-                Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
+                Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
             }
         }
 
         if (!$httpResponse->isSuccessful()) {
-            throw new Chaplin_Http_Exception_Unsuccessful($url, $httpResponse->getStatus());
+            throw new Unsuccessful($url, $httpResponse->getStatus());
         }
 
         $this->_arrPageBody[$url] = $this->_checkForMetaRedirect($url, $httpResponse->getBody());
@@ -154,10 +173,10 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         try {
             $this->_zendHttpClient->setUri($url);
         } catch (Zend_Http_Client_Exception $e) {
-            throw new Chaplin_Http_Exception_InvalidURL($url, $e);
+            throw new InvalidURL($url, $e);
         } catch (Zend_Uri_Exception $e) {
-            Chaplin_Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url);
-            throw new Chaplin_Http_Exception_InvalidURL($url, $e);
+            Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url);
+            throw new InvalidURL($url, $e);
         }
 
           $httpResponse = $this->_zendHttpClient->request();
@@ -166,9 +185,9 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
           // Tim hates this - but is there another way?
         if (!is_null($intLogPriority)) {
             if (200 == $httpResponse->getStatus()) {
-                Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
+                Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
             } else {
-                Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
+                Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
             }
         }
 
@@ -217,12 +236,12 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
 
         // If no nodes were found...
         if ($domNodes->length == 0) {
-            throw new Chaplin_Http_Exception_XPathCannotFind($strXPath);
+            throw new XPathCannotFind($strXPath);
         }
 
         // If more than one node was found...
         if ($domNodes->length > 1) {
-            throw new Chaplin_Http_Exception_XPathNotUnique($strXPath);
+            throw new XPathNotUnique($strXPath);
         }
         $strNode = $domNodes->item(0);
 
@@ -255,12 +274,12 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
 
         // If no nodes were found...
         if ($domNodes->length == 0) {
-            throw new Chaplin_Http_Exception_XPathCannotFind($strXPath);
+            throw new XPathCannotFind($strXPath);
         }
 
         // If more than one node was found...
         if ($domNodes->length > 1) {
-            throw new Chaplin_Http_Exception_XPathNotUnique($strXPath);
+            throw new XPathNotUnique($strXPath);
         }
         $strNode = $domNodes->item(0);
 
@@ -285,10 +304,10 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         try {
             $this->_zendHttpClient->setUri($url);
         } catch (Zend_Http_Client_Exception $e) {
-            throw new Chaplin_Http_Exception_InvalidURL($url, $e);
+            throw new InvalidURL($url, $e);
         } catch (Zend_Uri_Exception $e) {
-            Chaplin_Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url);
-            throw new Chaplin_Http_Exception_InvalidURL($url, $e);
+            Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url);
+            throw new InvalidURL($url, $e);
         }
 
         $httpResponse = $this->_zendHttpClient->request();
@@ -297,9 +316,9 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
         // Tim hates this - but is there another way?
         if (!is_null($intLogPriority)) {
             if (200 == $httpResponse->getStatus()) {
-                Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
+                Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
             } else {
-                Chaplin_Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
+                Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
             }
         }
 
@@ -323,7 +342,7 @@ class Chaplin_Http_Client implements Chaplin_Http_Interface
     {
         try {
             $strRedirectContent = $this->_parseXPath($strURL, $strPageBody, "//meta[@http-equiv='refresh']/@content");
-        } catch (Chaplin_Http_Exception_XPathCannotFind $e) {
+        } catch (XPathCannotFind $e) {
             // We didn't find a redirect tag
             return $strPageBody;
         }

@@ -22,7 +22,14 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_User_Helper_Exception_UnknownType extends Exception
+
+namespace Chaplin\Model\User\Helper\Exception;
+
+use Exception;
+
+
+
+class UnknownType extends Exception
 {
     const MESSAGE = 'Unknown UserType: (%s)';
 

@@ -1,5 +1,12 @@
 <?php
-class Chaplin_Model_Video_Privacy
+
+
+namespace Chaplin\Model\Video;
+
+use OutOfBoundsException;
+
+
+class Privacy
 {
     const FIELD_TEXT = 'Text';
     const FIELD_DESC = 'Description';

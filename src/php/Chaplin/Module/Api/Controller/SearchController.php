@@ -24,9 +24,9 @@
 **/
 namespace Chaplin\Module\Api\Controller;
 
-use Chaplin_Controller_Action_Api as ApiController;
-use Chaplin_Gateway as Gateway;
-use Chaplin_Service as Service;
+use Chaplin\Controller\Action\Api as ApiController;
+use Chaplin\Gateway;
+use Chaplin\Service;
 use Zend_Uri as Uri;
 use Zend_Uri_Exception as UriException;
 

@@ -1,5 +1,12 @@
 <?php
-class Chaplin_Model_Video_Licence
+
+
+namespace Chaplin\Model\Video;
+
+use OutOfBoundsException;
+
+
+class Licence
 {
     const FIELD_TEXT = 'Text';
     const FIELD_URL = 'URL';

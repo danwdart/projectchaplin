@@ -22,7 +22,14 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Iterator_Filter_File extends FilterIterator
+
+namespace Chaplin\Iterator\Filter;
+
+use FilterIterator;
+
+
+
+class File extends FilterIterator
 {
     private $_strAcceptableTypes;
 

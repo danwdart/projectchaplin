@@ -22,12 +22,23 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+
+namespace Chaplin;
+
+use Zend_Registry;
+use Chaplin\Dao\PhpRedis\PhpRedisAbstract;
+use Zend_Cache;
+use Chaplin\Http\Client as ChaplinHttpClient;
+use Chaplin\Service\Http\Client as ServiceHttpClient;
+use Chaplin\Service\Encoder\API as ServiceEncoderAPI;
+use Chaplin\Service\YouTube\API as ServiceYouTubeAPI;
+use Chaplin\Service\Vimeo\API as ServiceVimeoAPI;
 use Chaplin\Cache\Backend\PhpRedis as BackendRedis;
 use Chaplin\Cache\Http\Client as CacheHttpClient;
 use Chaplin\Interfaces\Singleton as SingletonInterface;
 use Chaplin\Traits\Singleton as SingletonTrait;
 
-class Chaplin_Service implements SingletonInterface
+class Service implements SingletonInterface
 {
     use SingletonTrait;
 
@@ -44,12 +55,12 @@ class Chaplin_Service implements SingletonInterface
                 'automatic_serialization' => true
             ];
             if (Zend_Registry::isRegistered(
-                Chaplin_Dao_PhpRedis_Abstract::DEFAULT_REGISTRY_KEY
+                PhpRedisAbstract::DEFAULT_REGISTRY_KEY
             )
             ) {
                 $backendOptions = [
                     'phpredis' => Zend_Registry::get(
-                        Chaplin_Dao_PhpRedis_Abstract::DEFAULT_REGISTRY_KEY
+                        PhpRedisAbstract::DEFAULT_REGISTRY_KEY
                     )
                 ];
                 $backendType = new BackendRedis(
@@ -79,26 +90,26 @@ class Chaplin_Service implements SingletonInterface
 
     public function getHttpClient()
     {
-        $objClient = new Chaplin_Http_Client();
+        $objClient = new ChaplinHttpClient();
         $objCache  = new CacheHttpClient(
             $objClient,
             $this->_getCache()
         );
-        return new Chaplin_Service_Http_Client($objCache);
+        return new ServiceHttpClient($objCache);
     }
 
     public function getEncoder()
     {
-        return new Chaplin_Service_Encoder_API();
+        return new ServiceEncoderAPI();
     }
 
     public function getYouTube()
     {
-        return new Chaplin_Service_YouTube_API();
+        return new ServiceYouTubeAPI();
     }
 
     public function getVimeo()
     {
-        return new Chaplin_Service_Vimeo_API();
+        return new ServiceVimeoAPI();
     }
 }

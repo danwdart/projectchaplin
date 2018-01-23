@@ -22,11 +22,20 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Gateway_Video_Comment extends Chaplin_Gateway_Abstract
+
+namespace Chaplin\Gateway\Video;
+
+use Chaplin\Gateway\GatewayAbstract;
+use Chaplin\Dao\Interfaces\Video\Comment as InterfaceVideoComment;
+use Chaplin\Model\Video\Comment as ModelVideoComment;
+
+
+
+class Comment extends GatewayAbstract
 {
     private $_daoComment;
 
-    public function __construct(Chaplin_Dao_Interface_Video_Comment $daoComment)
+    public function __construct(InterfaceVideoComment $daoComment)
     {
         $this->_daoComment = $daoComment;
     }
@@ -41,7 +50,7 @@ class Chaplin_Gateway_Video_Comment extends Chaplin_Gateway_Abstract
         return $this->_daoComment->getByVideoId($strVideoId);
     }
 
-    public function delete(Chaplin_Model_Video_Comment $modelComment)
+    public function delete(ModelVideoComment $modelComment)
     {
         return $this->_daoComment->delete($modelComment);
     }
@@ -51,7 +60,7 @@ class Chaplin_Gateway_Video_Comment extends Chaplin_Gateway_Abstract
         return $this->_daoComment->deleteById($strCommentId);
     }
 
-    public function save(Chaplin_Model_Video_Comment $modelComment)
+    public function save(ModelVideoComment $modelComment)
     {
         return $this->_daoComment->save($modelComment);
     }

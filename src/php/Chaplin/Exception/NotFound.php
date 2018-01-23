@@ -1,5 +1,12 @@
 <?php
-class Chaplin_Exception_NotFound extends Exception
+
+
+namespace Chaplin\Exception;
+
+use Exception;
+
+
+class NotFound extends Exception
 {
     const MESSAGE = 'Page not found (%s)';
 

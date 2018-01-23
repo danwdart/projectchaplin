@@ -22,10 +22,18 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
+
+namespace Chaplin\Model;
+
+use Chaplin\Model\Field\Hash;
+use Chaplin\Model\User;
+use Chaplin\Model\Video\Privacy;
+use Chaplin\Model\Video\Licence;
+use Chaplin\Gateway;
 use Chaplin\Auth;
 use Misd\Linkify\Linkify;
 
-class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
+class Video extends Hash
 {
     const FIELD_VIDEOID = 'VideoId';
     const FIELD_TIMECREATED = 'TimeCreated';
@@ -57,44 +65,44 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
 
     protected $_arrFields = [
         self::FIELD_VIDEOID         => [
-            'Class' => 'Chaplin_Model_Field_FieldId'
+            'Class' => 'Chaplin\\Model\\Field\\FieldId'
         ],
-        self::FIELD_TIMECREATED     => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_USERNAME        => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_FILENAME        => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_THUMBNAIL       => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_TITLE           => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_DESCRIPTION     => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_UPLOADER        => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_SOURCE          => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_LICENCE         => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_LENGTH          => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_WIDTH           => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_HEIGHT          => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_FORMAT          => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_BITRATE         => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_SIZE            => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_VIEWS           => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_PARTIALVIEWS    => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_BOUNCES         => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_PRIVACY         => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_TIMECREATED     => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_USERNAME        => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_FILENAME        => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_THUMBNAIL       => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_TITLE           => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_DESCRIPTION     => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_UPLOADER        => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_SOURCE          => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_LICENCE         => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_LENGTH          => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_WIDTH           => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_HEIGHT          => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_FORMAT          => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_BITRATE         => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_SIZE            => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_VIEWS           => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_PARTIALVIEWS    => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_BOUNCES         => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_PRIVACY         => ['Class' => 'Chaplin\\Model\\Field\\Field'],
         self::FIELD_VOTESUP         => [
-            'Class' => 'Chaplin_Model_Field_Readonly'
+            'Class' => 'Chaplin\\Model\\Field\\Readonly'
         ],
         self::FIELD_VOTESDOWN       => [
-            'Class' => 'Chaplin_Model_Field_Readonly'
+            'Class' => 'Chaplin\\Model\\Field\\Readonly'
         ],
         self::FIELD_YOURVOTE       => [
-            'Class' => 'Chaplin_Model_Field_Readonly'
+            'Class' => 'Chaplin\\Model\\Field\\Readonly'
         ],
         self::CHILD_ASSOC_COMMENTS  => [
-            'Class' => 'Chaplin_Model_Field_Collection',
-            'Param' => 'Chaplin_Model_Video_Comment'
+            'Class' => 'Chaplin\\Model\\Field\\Collection',
+            'Param' => 'Chaplin\\Model\\Video\\Comment'
         ]
     ];
 
     public static function create(
-        Chaplin_Model_User $modelUser,
+        User $modelUser,
         $strFilename,
         // form element?
         $strThumbURL,
@@ -103,7 +111,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         $strUploader,
         $strSource
     ) {
-    
+
         $video = new self();
         $video->_bIsNew = true;
         $video->_setField(self::FIELD_VIDEOID, md5(uniqid()));
@@ -114,7 +122,7 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         $video->_setField(self::FIELD_TITLE, $strTitle);
         $video->_setField(
             self::FIELD_PRIVACY,
-            Chaplin_Model_Video_Privacy::ID_PUBLIC
+            Privacy::ID_PUBLIC
         );
         $video->_setField(self::FIELD_DESCRIPTION, $strDescription);
         $video->_setField(self::FIELD_UPLOADER, $strUploader);
@@ -230,26 +238,26 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
     {
         return $this->_getField(
             self::FIELD_LICENCE,
-            Chaplin_Model_Video_Licence::ID_CCBYSA
+            Licence::ID_CCBYSA
         );
     }
 
     public function getLicence()
     {
-        return new Chaplin_Model_Video_Licence($this->getLicenceId());
+        return new Licence($this->getLicenceId());
     }
 
     public function getPrivacyId()
     {
         return $this->_getField(
             self::FIELD_PRIVACY,
-            Chaplin_Model_Video_Privacy::ID_PUBLIC
+            Privacy::ID_PUBLIC
         );
     }
 
     public function getPrivacy()
     {
-        return new Chaplin_Model_Video_Privacy($this->getPrivacyId());
+        return new Privacy($this->getPrivacyId());
     }
 
     public function getTimeCreated()
@@ -332,14 +340,14 @@ class Chaplin_Model_Video extends Chaplin_Model_Field_Hash
         unlink($strFullPath);
         $strThumbnailPath = APPLICATION_PATH.'/../public'.$this->getThumbnail();
         unlink($strThumbnailPath);
-        return Chaplin_Gateway::getInstance()
+        return Gateway::getInstance()
             ->getVideo()
             ->delete($this);
     }
 
     public function save()
     {
-        return Chaplin_Gateway::getInstance()
+        return Gateway::getInstance()
             ->getVideo()
             ->save($this);
     }

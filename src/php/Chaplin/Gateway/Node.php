@@ -22,11 +22,20 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Gateway_Node extends Chaplin_Gateway_Abstract
+
+namespace Chaplin\Gateway;
+
+use Chaplin\Gateway\GatewayAbstract;
+use Chaplin\Dao\Interfaces\Node as InterfaceNode;
+use Chaplin\Model\Node as ModelNode;
+
+
+
+class Node extends GatewayAbstract
 {
     private $_daoNode;
 
-    public function __construct(Chaplin_Dao_Interface_Node $daoNode)
+    public function __construct(InterfaceNode $daoNode)
     {
         $this->_daoNode = $daoNode;
     }
@@ -40,8 +49,8 @@ class Chaplin_Gateway_Node extends Chaplin_Gateway_Abstract
     {
         return $this->_daoNode->getByNodeId($strNodeId);
     }
-    
-    public function delete(Chaplin_Model_Node $modelNode)
+
+    public function delete(ModelNode $modelNode)
     {
         return $this->_daoNode->delete($modelNode);
     }
@@ -51,7 +60,7 @@ class Chaplin_Gateway_Node extends Chaplin_Gateway_Abstract
         return $this->_daoNode->deleteById($strId);
     }
 
-    public function save(Chaplin_Model_Node $modelNode)
+    public function save(ModelNode $modelNode)
     {
         return $this->_daoNode->save($modelNode);
     }

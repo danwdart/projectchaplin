@@ -24,9 +24,9 @@
 **/
 namespace Chaplin\Module\Api\Form\Video;
 
-use Chaplin_Model_Video as ModelVideo;
-use Chaplin_Model_Video_Licence as VideoLicence;
-use Chaplin_Model_Video_Privacy as VideoPrivacy;
+use Chaplin\Model\Video as ModelVideo;
+use Chaplin\Model\Video\Licence as VideoLicence;
+use Chaplin\Model\Video\Privacy as VideoPrivacy;
 use Zend_Form as Form;
 use Zend_Form_Element_Image as Image;
 use Zend_Form_Element_Select as Select;

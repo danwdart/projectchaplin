@@ -26,8 +26,8 @@
 namespace Chaplin\Cache\Http;
 
 use Chaplin\Cache\CacheAbstract;
-use Chaplin_Http_Interface as HttpInterface;
-use Chaplin_Log as Log;
+use Chaplin\Http\HttpInterface;
+use Chaplin\Log;
 use Zend_Cache_Core as Cache;
 use Zend_Log as ZendLog;
 

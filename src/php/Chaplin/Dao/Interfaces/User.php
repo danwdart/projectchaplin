@@ -22,7 +22,21 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-interface Chaplin_Dao_Interface_Vote extends Chaplin_Dao_Interface
+
+namespace Chaplin\Dao\Interfaces;
+
+use Chaplin\Dao\DaoInterface;
+use Chaplin\Model\User as ModelUser;
+
+interface User extends DaoInterface
 {
-    public function addVote(Chaplin_Model_User $modelUser, Chaplin_Model_Video $modelVideo, $intVote);
+    public function getAllUsers();
+
+    public function getByUsernameAndPassword($strUsername, $strPassword);
+
+    public function getByUsername($strUsername);
+
+    public function save(ModelUser $modelUser);
+
+    public function updateByToken($strToken, $strPassword);
 }

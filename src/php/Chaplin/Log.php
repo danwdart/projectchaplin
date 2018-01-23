@@ -1,5 +1,11 @@
 <?php
-class Chaplin_Log
+
+
+namespace Chaplin;
+
+use Zend_Controller_Front;
+
+class Log
 {
     public static function getInstance()
     {

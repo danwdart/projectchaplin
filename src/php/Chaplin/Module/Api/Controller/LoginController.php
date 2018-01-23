@@ -26,10 +26,10 @@ namespace Chaplin\Module\Api\Controller;
 
 use Chaplin\Auth;
 use Chaplin\Auth\Adapter\Database as AuthAdapterDB;
-use Chaplin_Dao_Exception_User_NotFound as ExceptionUserNotFound;
-use Chaplin_Gateway as Gateway;
-use Chaplin_Model_User as ModelUser;
-use Chaplin_Model_User_Helper_UserType as UserType;
+use Chaplin\Dao\Exception\User\NotFound as ExceptionUserNotFound;
+use Chaplin\Gateway;
+use Chaplin\Model\User as ModelUser;
+use Chaplin\Model\User\Helper\UserType;
 use Chaplin\Module\Api\Form\Auth\Forgot as FormForgot;
 use Chaplin\Module\Api\Form\Auth\Login as FormLogin;
 use Chaplin\Module\Api\Form\Auth\Validate as FormValidate;
@@ -67,7 +67,7 @@ class LoginController extends Controller
         if ($this->_helper->flashMessenger->hasMessages()) {
             $this->view->messages = $this->_helper->flashMessenger->getMessages();
         }
-        
+
         $post = $this->_request->getPost();
 
         $username = $post['username'];

@@ -22,7 +22,19 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_Field_Hash extends Chaplin_Model_Field_Abstract implements JsonSerializable
+
+namespace Chaplin\Model\Field;
+
+use Chaplin\Model\Field\FieldAbstract;
+use JsonSerializable;
+use OutOfBoundsException;
+use Chaplin\Dao\DaoInterface;
+use Iterator;
+use Exception;
+
+
+
+class Hash extends FieldAbstract implements JsonSerializable
 {
     
     protected $_arrFields = array();
@@ -41,7 +53,7 @@ class Chaplin_Model_Field_Hash extends Chaplin_Model_Field_Abstract implements J
         throw new OutOfBoundsException('getId needs to be overridden!');
     }
 
-    public static function createFromData(Chaplin_Dao_Interface $dao, array $arrArray)
+    public static function createFromData(DaoInterface $dao, array $arrArray)
     {
         $hash = new static();
         foreach ($arrArray as $strField => $mixedValue) {
@@ -99,7 +111,7 @@ class Chaplin_Model_Field_Hash extends Chaplin_Model_Field_Abstract implements J
         return $this;
     }
     
-    public function getFields(Chaplin_Dao_Interface $dao)
+    public function getFields(DaoInterface $dao)
     {
         return $this->_collFields;
     }
@@ -137,12 +149,12 @@ class Chaplin_Model_Field_Hash extends Chaplin_Model_Field_Abstract implements J
         foreach ($this->_collFields as $strFieldName => $objField) {
             $strClass = get_class($objField);
             switch ($strClass) {
-                case 'Chaplin_Model_Field_Field':
-                case 'Chaplin_Model_Field_Readonly':
-                case 'Chaplin_Model_Field_FieldId':
+                case 'Chaplin\\Model\\Field\\Field':
+                case 'Chaplin\\Model\\Field\\Readonly':
+                case 'Chaplin\\Model\\Field\\FieldId':
                     $arrOut[$strFieldName] = $objField->getValue(null);
                     break;
-                case 'Chaplin_Model_Field_Collection':
+                case 'Chaplin\\Model\\Field\\Collection':
                     foreach ($objField as $hash) {
                         foreach ($this->_getModelArray(
                             $hash->_collFields

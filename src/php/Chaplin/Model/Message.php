@@ -22,7 +22,18 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-abstract class Chaplin_Model_Message extends Chaplin_Model_Field_Hash
+
+namespace Chaplin\Model;
+
+use Chaplin\Model\Field\Hash;
+use Chaplin\Model\User;
+use Chaplin\Gateway;
+use Exception;
+use Mustache_Engine;
+use Zend_Mail;
+use Chaplin\Service\Amqp\Notification;
+
+abstract class Message extends Hash
 {
     const FIELD_MESSAGEID = 'MessageId';
     const FIELD_MAILTEMPLATE = 'MailTemplate';
@@ -40,31 +51,31 @@ abstract class Chaplin_Model_Message extends Chaplin_Model_Field_Hash
     const PRIORITY_LOW = -1;
 
     protected $_arrFields = [
-        self::FIELD_MESSAGEID => ['Class' => 'Chaplin_Model_Field_FieldId'],
-        self::FIELD_RECIPIENT => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_SENDER => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_SUBJECT => ['Class' => 'Chaplin_Model_Field_Field'],
-        self::FIELD_TEXT => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_MESSAGEID => ['Class' => 'Chaplin\\Model\\Field\\FieldId'],
+        self::FIELD_RECIPIENT => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_SENDER => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_SUBJECT => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_TEXT => ['Class' => 'Chaplin\\Model\\Field\\Field'],
         self::FIELD_DATE_TIMECREATED => [
-            'Class' => 'Chaplin_Model_Field_Field'
+            'Class' => 'Chaplin\\Model\\Field\\Field'
         ],
         self::FIELD_DATE_TIMEACKNOWLEDGED => [
-            'Class' => 'Chaplin_Model_Field_Field'
+            'Class' => 'Chaplin\\Model\\Field\\Field'
         ],
         self::FIELD_DATE_TIMEDELETED => [
-            'Class' => 'Chaplin_Model_Field_Field'
+            'Class' => 'Chaplin\\Model\\Field\\Field'
         ],
-        self::FIELD_PRIORITY => ['Class' => 'Chaplin_Model_Field_Field'],
+        self::FIELD_PRIORITY => ['Class' => 'Chaplin\\Model\\Field\\Field'],
     ];
 
     public static function create(
-        Chaplin_Model_User $modelUserRecipient,
-        Chaplin_Model_User $modelUserSender,
+        User $modelUserRecipient,
+        User $modelUserSender,
         $strSubject,
         $strText,
         $intPriority = self::PRIORITY_NORMAL
     ) {
-    
+
         $modelMessage = new static();
         $modelMessage->_setField(self::FIELD_MESSAGEID, md5(uniqid()));
         $modelMessage->_setField(
@@ -89,7 +100,7 @@ abstract class Chaplin_Model_Message extends Chaplin_Model_Field_Hash
 
     public function save()
     {
-        Chaplin_Gateway::getInstance()->getMessage()->save($this);
+        Gateway::getInstance()->getMessage()->save($this);
         if ($this->bIsNew()) {
             $this->sendEmail();
         }
@@ -107,7 +118,7 @@ abstract class Chaplin_Model_Message extends Chaplin_Model_Field_Hash
         }
 
         try {
-            $modelUser = Chaplin_Gateway::getInstance()
+            $modelUser = Gateway::getInstance()
             ->getUser()
             ->getByUsername($strUsername);
         } catch (Exception $e) {
@@ -163,6 +174,6 @@ abstract class Chaplin_Model_Message extends Chaplin_Model_Field_Hash
 
     public function getExchangeName()
     {
-        return Chaplin_Service_Amqp_Notification::EXCHANGE_NAME;
+        return Notification::EXCHANGE_NAME;
     }
 }
