@@ -1,10 +1,13 @@
 language: php
 dist: xenial
+env:
+  - TRAVIS_NODE_VERSION="9.4"
 php:
     - '7.2'
 node_js:
     - '9.4'
 before_script:
+    - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
     - cd src/php
     - composer install
     - npm install
