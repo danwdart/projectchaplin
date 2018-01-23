@@ -42,7 +42,8 @@ use Chaplin\Http\Exception\XPathNotUnique;
 
 /**
  * Wrapper to the Zend HTTP Client - just so we can use this interface
- * This only does GET requests right now - to do POST extend this - for one, the arrPageBody[url] needs some more
+ * This only does GET requests right now - to do POST extend this - for one,
+ * the arrPageBody[url] needs some more
  *
  * @package default
  * @author  Dan Dart <chaplin@dandart.co.uk>
@@ -99,7 +100,11 @@ class Client implements HttpInterface
         } catch (Zend_Http_Client_Exception $e) {
             throw new InvalidURL($url, $e);
         } catch (Zend_Uri_Exception $e) {
-            Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url, $intLogPriority);
+            Log::getInstance()->log(
+                'WARNING: Seemingly valid but unparseable URL: ' .
+                $url,
+                $intLogPriority
+            );
             throw new InvalidURL($url, $e);
         }
 
@@ -109,9 +114,24 @@ class Client implements HttpInterface
         // Tim hates this - but is there another way?
         if (!is_null($intLogPriority)) {
             if (200 == $httpResponse->getStatus()) {
-                Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
+                Log::getInstance()->log(
+                    'Request: '.$url.
+                    ', Response code: ('.
+                    $httpResponse->getStatus().
+                    ')',
+                    $intLogPriority
+                );
             } else {
-                Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
+                Log::getInstance()->log(
+                    'Request: '.
+                    $url.
+                    ', Response code: ('.
+                    $httpResponse->getStatus().
+                    '), body: ('.
+                    $httpResponse->getBody().
+                    ')',
+                    $intLogPriority
+                );
             }
         }
 
@@ -119,7 +139,10 @@ class Client implements HttpInterface
             throw new Unsuccessful($url, $httpResponse->getStatus());
         }
 
-        $this->arrPageBody[$url] = $this->checkForMetaRedirect($url, $httpResponse->getBody());
+        $this->arrPageBody[$url] = $this->checkForMetaRedirect(
+            $url,
+            $httpResponse->getBody()
+        );
 
         return $this->arrPageBody[$url];
     }
@@ -138,7 +161,11 @@ class Client implements HttpInterface
         } catch (Zend_Http_Client_Exception $e) {
             throw new InvalidURL($url, $e);
         } catch (Zend_Uri_Exception $e) {
-            Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url, $intLogPriority);
+            Log::getInstance()->log(
+                'WARNING: Seemingly valid but unparseable URL: ' .
+                $url,
+                $intLogPriority
+            );
             throw new InvalidURL($url, $e);
         }
 
@@ -148,9 +175,25 @@ class Client implements HttpInterface
         // Tim hates this - but is there another way?
         if (!is_null($intLogPriority)) {
             if (200 == $httpResponse->getStatus()) {
-                Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
+                Log::getInstance()->log(
+                    'Request: '.
+                    $url.
+                    ', Response code: ('.
+                    $httpResponse->getStatus().
+                    ')',
+                    $intLogPriority
+                );
             } else {
-                Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
+                Log::getInstance()->log(
+                    'Request: '.
+                    $url.
+                    ', Response code: ('.
+                    $httpResponse->getStatus().
+                    '), body: ('.
+                    $httpResponse->getBody().
+                    ')',
+                    $intLogPriority
+                );
             }
         }
 
@@ -158,7 +201,10 @@ class Client implements HttpInterface
             throw new Unsuccessful($url, $httpResponse->getStatus());
         }
 
-        $this->arrPageBody[$url] = $this->checkForMetaRedirect($url, $httpResponse->getBody());
+        $this->arrPageBody[$url] = $this->checkForMetaRedirect(
+            $url,
+            $httpResponse->getBody()
+        );
 
         return $this->arrPageBody[$url];
     }
@@ -174,7 +220,10 @@ class Client implements HttpInterface
         } catch (Zend_Http_Client_Exception $e) {
             throw new InvalidURL($url, $e);
         } catch (Zend_Uri_Exception $e) {
-            Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url);
+            Log::getInstance()->log(
+                'WARNING: Seemingly valid but unparseable URL: ' .
+                $url
+            );
             throw new InvalidURL($url, $e);
         }
 
@@ -184,13 +233,32 @@ class Client implements HttpInterface
           // Tim hates this - but is there another way?
         if (!is_null($intLogPriority)) {
             if (200 == $httpResponse->getStatus()) {
-                Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
+                Log::getInstance()->log(
+                    'Request: '.
+                    $url.
+                    ', Response code: ('.
+                    $httpResponse->getStatus().
+                    ')',
+                    $intLogPriority
+                );
             } else {
-                Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
+                Log::getInstance()->log(
+                    'Request: '.
+                    $url.
+                    ', Response code: ('.
+                    $httpResponse->getStatus().
+                    '), body: ('.
+                    $httpResponse->getBody().
+                    ')',
+                    $intLogPriority
+                );
             }
         }
 
-          $this->arrPageBody[$url] = $this->checkForMetaRedirect($url, $httpResponse->getBody());
+          $this->arrPageBody[$url] = $this->checkForMetaRedirect(
+              $url,
+              $httpResponse->getBody()
+          );
 
           return $httpResponse;
     }
@@ -223,7 +291,8 @@ class Client implements HttpInterface
     {
         // Load a parsing environment
         $domDocument = new DOMDocument();
-        // Be quiet - else we'll see a tonne of errors if the XML is invalid - we don't care but we might want to tell later?...
+        // Be quiet - else we'll see a tonne of errors if the XML is invalid -
+        // we don't care but we might want to tell later?...
         if (!@$domDocument->loadXML($strData)) {
             throw new Exception('Could not load XML! Raw follows: ' . $strData);
         }
@@ -249,7 +318,8 @@ class Client implements HttpInterface
 
     /**
      * Parses raw HTML XPath
-     * If URL is present and XPath ends in @src or @href then it attempts absolute URL detection
+     * If URL is present and XPath ends in @src or @href then it attempts
+     * absolute URL detection
      *
      * @param  string $strData
      * @param  string $strXPath
@@ -261,9 +331,13 @@ class Client implements HttpInterface
     {
         // Load a parsing environment
         $domDocument = new DOMDocument();
-        // Be quiet - else we'll see a tonne of errors if the HTML is invalid - we don't care but we might want to tell later?...
+        // Be quiet - else we'll see a tonne of errors if the HTML is invalid -
+        // we don't care but we might want to tell later?...
         if (!@$domDocument->loadHTML($strData)) {
-            throw new Exception('Could not load HTML! Raw follows: ' . $strData);
+            throw new Exception(
+                'Could not load HTML! Raw follows: ' .
+                $strData
+            );
         }
 
         $domXPath = new DOMXPath($domDocument);
@@ -305,7 +379,10 @@ class Client implements HttpInterface
         } catch (Zend_Http_Client_Exception $e) {
             throw new InvalidURL($url, $e);
         } catch (Zend_Uri_Exception $e) {
-            Log::getInstance()->log('WARNING: Seemingly valid but unparseable URL: ' . $url);
+            Log::getInstance()->log(
+                'WARNING: Seemingly valid but unparseable URL: ' .
+                $url
+            );
             throw new InvalidURL($url, $e);
         }
 
@@ -315,9 +392,24 @@ class Client implements HttpInterface
         // Tim hates this - but is there another way?
         if (!is_null($intLogPriority)) {
             if (200 == $httpResponse->getStatus()) {
-                Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().')', $intLogPriority);
+                Log::getInstance()->log(
+                    'Request: '.
+                    $url.
+                    ', Response code: ('.
+                    $httpResponse->getStatus().
+                    ')',
+                    $intLogPriority
+                );
             } else {
-                Log::getInstance()->log('Request: '.$url.', Response code: ('.$httpResponse->getStatus().'), body: ('.$httpResponse->getBody().')', $intLogPriority);
+                Log::getInstance()->log(
+                    'Request: '.
+                    $url.
+                    ', Response code: ('.
+                    $httpResponse->getStatus().
+                    '), body: ('.$httpResponse->getBody().
+                    ')',
+                    $intLogPriority
+                );
             }
         }
 
@@ -330,7 +422,9 @@ class Client implements HttpInterface
     {
         $value = $this->parseRawHtmlXPath($strPageBody, $strXPath);
 
-        if (strpos($strXPath, '/@src') !== false || strpos($strXPath, '/@href') !== false) {
+        if (strpos($strXPath, '/@src') !== false ||
+            strpos($strXPath, '/@href') !== false
+        ) {
             $value = $this->getAbsoluteURL($strURL, $value);
         }
 
@@ -340,7 +434,11 @@ class Client implements HttpInterface
     protected function checkForMetaRedirect($strURL, $strPageBody)
     {
         try {
-            $strRedirectContent = $this->parseXPath($strURL, $strPageBody, "//meta[@http-equiv='refresh']/@content");
+            $strRedirectContent = $this->parseXPath(
+                $strURL,
+                $strPageBody,
+                "//meta[@http-equiv='refresh']/@content"
+            );
         } catch (XPathCannotFind $e) {
             // We didn't find a redirect tag
             return $strPageBody;
@@ -359,7 +457,8 @@ class Client implements HttpInterface
             return $strPageBody;
         }
 
-        // We know we have a URL now, so split the redirect string so we can get it
+        // We know we have a URL now, so split the redirect string so we can
+        // get it
         $arrNewURL = explode('url=', $strRedirectContent, 2);
         $strNewURL = $arrNewURL[1];
 
@@ -374,13 +473,19 @@ class Client implements HttpInterface
 
     protected function getAbsoluteURL($strPageURL, $strRelativePath)
     {
-        // If Relative URLs contain '../' at the beginning, they can either refer to the current directory
+        // If Relative URLs contain '../' at the beginning, they can either
+        // refer to the current directory
 
 
-        // Sometimes sites link to "//host.com/url" when they mean "https://host.com/url" - Google does this
-        // This is already an absolute URL so add the missing scheme from the page URL
+        // Sometimes sites link to "//host.com/url" when they mean
+        // "https://host.com/url" - Google does this
+        // This is already an absolute URL so add the missing scheme
+        // from the page URL
         if (strpos($strRelativePath, '//') === 0) {
-            return parse_url($strPageURL, PHP_URL_SCHEME) . ':' . $strRelativePath;
+            return parse_url(
+                $strPageURL,
+                PHP_URL_SCHEME
+            ) . ':' . $strRelativePath;
         }
 
          /* return if already absolute URL**/
@@ -388,7 +493,8 @@ class Client implements HttpInterface
             return $strRelativePath;
         }
 
-        // YES, this IS strPageURL, because we want to parse out most of it and append the relative path to it!
+        // YES, this IS strPageURL, because we want to parse out most of
+        // it and append the relative path to it!
         $parsed = parse_url($strPageURL);
 
         /* remove non-directory element from path**/
@@ -400,11 +506,20 @@ class Client implements HttpInterface
         }
 
         /* dirty absolute URL**/
-        $strAbsolutePath = $parsed['host'] . $parsed['path'] . '/' . $strRelativePath;
+        $strAbsolutePath = $parsed['host'] .
+            $parsed['path'] .
+            '/' .
+            $strRelativePath;
 
         /* replace '//' or '/./' or '/foo/../' with '/'**/
         $strRegex = array('#(/\.?/)#', '#/(?!\.\.)[^/]+/\.\./#');
-        for ($n=1; $n>0; $strAbsolutePath = preg_replace($strRegex, '/', $strAbsolutePath, -1, $n)) {
+        for ($n = 1; $n > 0; $strAbsolutePath = preg_replace(
+            $strRegex,
+            '/',
+            $strAbsolutePath,
+            -1,
+            $n
+        )) {
         }
 
         // If somehow we don't end up with a scheme, add the one from the URL

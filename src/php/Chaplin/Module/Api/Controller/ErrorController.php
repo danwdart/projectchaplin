@@ -51,7 +51,16 @@ class ErrorController extends Controller
             $this->getResponse()->setHttpResponseCode(500);
             $this->view->message = 'Application error';
             if ($log = $this->getLog()) {
-                $log->crit($this->view->message . ': ' . $errors->exception->getMessage() . PHP_EOL . 'Exception Class: ' . get_class($errors->exception) . PHP_EOL . 'My Vhost: ' . $this->_request->getServer('HTTP_HOST') . PHP_EOL . 'My Host: ' . gethostname() . PHP_EOL . $errors->exception->getTraceAsString(), $errors->exception);
+                $log->crit(
+                    $this->view->message . ': ' .
+                    $errors->exception->getMessage() . PHP_EOL .
+                    'Exception Class: ' . get_class($errors->exception) .
+                    PHP_EOL . 'My Vhost: ' .
+                    $this->_request->getServer('HTTP_HOST') . PHP_EOL .
+                    'My Host: ' . gethostname() . PHP_EOL .
+                    $errors->exception->getTraceAsString(),
+                    $errors->exception
+                );
             }
         }
 

@@ -60,19 +60,19 @@ class Rows implements IteratorInterface
         $arrCurrentItem = $this->arrRows[$this->intOffset];
         return $this->daoInterface->convertToModel($arrCurrentItem);
     }
-    function key()
+    public function key()
     {
         return $this->intOffset;
     }
-    function next()
+    public function next()
     {
         $this->intOffset++;
     }
-    function rewind()
+    public function rewind()
     {
         $this->intOffset = 0;
     }
-    function valid()
+    public function valid()
     {
         return isset($this->arrRows[$this->intOffset]);
     }

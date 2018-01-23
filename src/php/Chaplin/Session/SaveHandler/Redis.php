@@ -44,7 +44,7 @@ use Redis as PhpRedis;
 
 class Redis implements Zend_Session_SaveHandler_Interface
 {
-    const c_ZNAME = 'Chaplin\SessionSet';
+    const C_ZNAME = 'Chaplin\SessionSet';
 
     /**
    * PhpRedis instance
@@ -159,7 +159,7 @@ class Redis implements Zend_Session_SaveHandler_Interface
     public function write($id, $data)
     {
         $this->phpredis->zAdd(
-            self::c_ZNAME,
+            self::C_ZNAME,
             1,
             $id
         );
@@ -185,7 +185,7 @@ class Redis implements Zend_Session_SaveHandler_Interface
     public function destroy($id)
     {
         $this->phpredis->zDelete(
-            self::c_ZNAME,
+            self::C_ZNAME,
             $id
         );
 
@@ -202,7 +202,7 @@ class Redis implements Zend_Session_SaveHandler_Interface
     {
         // Gets all the elements at this ordered set.
         // Returns index-array(val1,val2)
-        $sessions = $this->phpredis->zRange(self::c_ZNAME, 0, -1);
+        $sessions = $this->phpredis->zRange(self::C_ZNAME, 0, -1);
         foreach ($sessions as &$session) {
             // Converts the sessions array into an array(key1,key2)
             // (keys are prefix + val)

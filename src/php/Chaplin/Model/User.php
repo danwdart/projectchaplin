@@ -32,28 +32,28 @@ use Chaplin\Gateway;
 
 class User extends Hash
 {
-    const FIELD_Username = 'Username';
-    const FIELD_Password = 'Password';
-    const FIELD_Nick = 'Nick';
-    const FIELD_Email = 'Email';
-    const FIELD_UserTypeId = 'UserTypeId';
+    const FIELD_USERNAME = 'Username';
+    const FIELD_PASSWORD = 'Password';
+    const FIELD_NICK = 'Nick';
+    const FIELD_EMAIL = 'Email';
+    const FIELD_USER_TYPE_ID = 'UserTypeId';
     const FIELD_HASH = 'Hash';
     const FIELD_VALIDATION = 'Validation';
-    const CHILD_ASSOC_Credentials = 'Credentials';
+    const CHILD_ASSOC_CREDENTIALS = 'Credentials';
 
     const SALT = 'dguqwtduR^%$*%%';
 
     const HASH_SHA512 = 'sha512';
 
     protected $arrFields = [
-        self::FIELD_Username => ['Class' => 'Chaplin\\Model\\Field\\FieldId'],
-        self::FIELD_Password => ['Class' => 'Chaplin\\Model\\Field\\Field'],
-        self::FIELD_Nick => ['Class' => 'Chaplin\\Model\\Field\\Field'],
-        self::FIELD_Email => ['Class' => 'Chaplin\\Model\\Field\\Field'],
-        self::FIELD_UserTypeId => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_USERNAME => ['Class' => 'Chaplin\\Model\\Field\\FieldId'],
+        self::FIELD_PASSWORD => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_NICK => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_EMAIL => ['Class' => 'Chaplin\\Model\\Field\\Field'],
+        self::FIELD_USER_TYPE_ID => ['Class' => 'Chaplin\\Model\\Field\\Field'],
         self::FIELD_VALIDATION => ['Class' => 'Chaplin\\Model\\Field\\Field'],
         self::FIELD_HASH => ['Class' => 'Chaplin\\Model\\Field\\Field'],
-        self::CHILD_ASSOC_Credentials => [
+        self::CHILD_ASSOC_CREDENTIALS => [
             'Class' => 'Chaplin\\Model\\Field\\Collection'
         ]
     ];
@@ -62,20 +62,20 @@ class User extends Hash
     {
         $modelUser = new self();
         $modelUser->bIsNew = true;
-        $modelUser->setField(self::FIELD_Username, self::encodeUsername($strUsername));
+        $modelUser->setField(self::FIELD_USERNAME, self::encodeUsername($strUsername));
         $modelUser->setPassword($strPassword);
         return $modelUser;
     }
 
     public function getId()
     {
-        return $this->getField(self::FIELD_Username, null);
+        return $this->getField(self::FIELD_USERNAME, null);
     }
 
     public function toArray()
     {
         $arrOut = parent::toArray();
-        unset($arrOut[self::FIELD_Password]);
+        unset($arrOut[self::FIELD_PASSWORD]);
         unset($arrOut[self::FIELD_VALIDATION]);
         unset($arrOut[self::FIELD_HASH]);
         return $arrOut;
@@ -96,12 +96,12 @@ class User extends Hash
 
     public function verifyPassword($strPassword)
     {
-        return (self::encodePassword($strPassword) == $this->getField(self::FIELD_Password, null));
+        return (self::encodePassword($strPassword) == $this->getField(self::FIELD_PASSWORD, null));
     }
 
     public function setPassword($strPassword)
     {
-        $this->setField(self::FIELD_Password, self::encodePassword($strPassword));
+        $this->setField(self::FIELD_PASSWORD, self::encodePassword($strPassword));
         $this->setField(self::FIELD_HASH, self::HASH_SHA512);
     }
 
@@ -109,28 +109,28 @@ class User extends Hash
     {
         $strValidationToken = md5(uniqid());
         $this->setField(self::FIELD_VALIDATION, $strValidationToken);
-        $this->setField(self::FIELD_Password, '');
+        $this->setField(self::FIELD_PASSWORD, '');
         return $strValidationToken;
     }
 
     public function getUsername()
     {
-        return $this->getField(self::FIELD_Username, null);
+        return $this->getField(self::FIELD_USERNAME, null);
     }
 
     public function getNick()
     {
-        return $this->getField(self::FIELD_Nick, null);
+        return $this->getField(self::FIELD_NICK, null);
     }
 
     public function setNick($strNick)
     {
-        $this->setField(self::FIELD_Nick, $strNick);
+        $this->setField(self::FIELD_NICK, $strNick);
     }
 
     public function getEmail()
     {
-        return $this->getField(self::FIELD_Email, null);
+        return $this->getField(self::FIELD_EMAIL, null);
     }
 
     public function getMessages()
@@ -140,12 +140,12 @@ class User extends Hash
 
     public function setEmail($strEmail)
     {
-        $this->setField(self::FIELD_Email, $strEmail);
+        $this->setField(self::FIELD_EMAIL, $strEmail);
     }
 
     public function getUserType()
     {
-        return new UserType($this->getField(self::FIELD_UserTypeId, UserType::ID_GUEST));
+        return new UserType($this->getField(self::FIELD_USER_TYPE_ID, UserType::ID_GUEST));
     }
 
     public function isGod()
@@ -155,7 +155,7 @@ class User extends Hash
 
     public function setUserType(UserType $helperUserType)
     {
-        $this->setField(self::FIELD_UserTypeId, $helperUserType->getUserTypeId());
+        $this->setField(self::FIELD_USER_TYPE_ID, $helperUserType->getUserTypeId());
     }
 
     public function __get($strProperty)

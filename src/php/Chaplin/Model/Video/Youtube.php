@@ -73,8 +73,12 @@ class Youtube extends Hash implements Message
         if (0 == $ret) {
             echo 'Downloaded '.$this->getYouTubeId().PHP_EOL;
         } else {
-            echo 'Failed to download '.$this->getYouTubeId().' because '.$strOut;
-            throw new \Exception('Failed to download '.$this->getYouTubeId().' because '.$strOut);
+            echo 'Failed to download '.
+                $this->getYouTubeId().
+                ' because '.$strOut;
+            throw new \Exception(
+                'Failed to download '.$this->getYouTubeId().' because '.$strOut
+            );
         }
         ob_flush();
         flush();
@@ -88,7 +92,8 @@ class Youtube extends Hash implements Message
                 ->videoFinished($modelVideo);
             echo '"Video Finished" email successfully sent.'.PHP_EOL;
         } catch (Exception $e) {
-            echo '"Video Finished" email could not be sent because '.$e->getMessage().PHP_EOL.$e->getTraceAsString().PHP_EOL;
+            echo '"Video Finished" email could not be sent because '.
+                $e->getMessage().PHP_EOL.$e->getTraceAsString().PHP_EOL;
             ob_flush();
             flush();
         }

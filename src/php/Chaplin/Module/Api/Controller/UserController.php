@@ -145,7 +145,7 @@ class UserController extends ApiController
         }
     }
 
-    public function getIndex_API()
+    public function getIndexAPI()
     {
         $strUsername = $this->_request->getParam('id', null);
 
