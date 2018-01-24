@@ -36,7 +36,7 @@ interface HttpInterface
     /**
      * Try to use the client to get the page body
      *
-     * @param  string $strURL
+     * @param  string $url
      * @return string
      * @author Dan Dart <chaplin@dandart.co.uk>
     **/

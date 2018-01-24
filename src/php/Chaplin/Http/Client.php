@@ -64,11 +64,11 @@ class Client implements HttpInterface
         if (is_null($client)) {
             $this->zendHttpClient  = new Zend_Http_Client();
         }
-            $this->zendHttpClient->setConfig(
-                array(
-                'timeout' => 30
-                )
-            );
+        $this->zendHttpClient->setConfig(
+            array(
+            'timeout' => 30
+            )
+        );
     }
 
     /**
@@ -324,7 +324,7 @@ class Client implements HttpInterface
      * @param  string $strData
      * @param  string $strXPath
      * @param  string $strURL
-     * @return void
+     * @return string
      * @author Dan Dart <chaplin@dandart.co.uk>
     **/
     public function parseRawHtmlXPath($strData, $strXPath, $strURL = null)
@@ -364,7 +364,7 @@ class Client implements HttpInterface
     * Gets a Zend_Http_Response from trying to get this URL
     * TODO: Move everything here
     *
-    * @param  string $strURL
+    * @param  string $url
     * @param  int    $intLogPriority = null
     * @return Zend_Http_Response
     * @author Dan Dart <chaplin@dandart.co.uk>
@@ -390,27 +390,25 @@ class Client implements HttpInterface
 
         // Log if priority added - and if 200 don't log the body
         // Tim hates this - but is there another way?
-        if (!is_null($intLogPriority)) {
-            if (200 == $httpResponse->getStatus()) {
-                Log::getInstance()->log(
-                    'Request: '.
-                    $url.
-                    ', Response code: ('.
-                    $httpResponse->getStatus().
-                    ')',
-                    $intLogPriority
-                );
-            } else {
-                Log::getInstance()->log(
-                    'Request: '.
-                    $url.
-                    ', Response code: ('.
-                    $httpResponse->getStatus().
-                    '), body: ('.$httpResponse->getBody().
-                    ')',
-                    $intLogPriority
-                );
-            }
+        if (200 == $httpResponse->getStatus()) {
+            Log::getInstance()->log(
+                'Request: '.
+                $url.
+                ', Response code: ('.
+                $httpResponse->getStatus().
+                ')',
+                $intLogPriority
+            );
+        } else {
+            Log::getInstance()->log(
+                'Request: '.
+                $url.
+                ', Response code: ('.
+                $httpResponse->getStatus().
+                '), body: ('.$httpResponse->getBody().
+                ')',
+                $intLogPriority
+            );
         }
 
         // Do Not Cache This Here!! We have caches above here

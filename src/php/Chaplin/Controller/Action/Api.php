@@ -52,7 +52,7 @@ class Api extends Zend_Controller_Action
             return;
         }
 
-        return $this->view->assign($arrOut);
+        $this->view->assign($arrOut);
     }
 
     protected function postInit()

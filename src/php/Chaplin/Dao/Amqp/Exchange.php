@@ -31,6 +31,7 @@ use Exception;
 use Zend_Json;
 use Zend_Json_Exception;
 use Chaplin\Model\Field\Hash;
+use Chaplin\Model\Interfaces\Message as MessageInterface;
 use Chaplin\Config\Amqp as ConfigAmqp;
 use PhpAmqpLib\Connection\AMQPStreamConnection as Connection;
 use PhpAmqpLib\Message\AMQPMessage as Message;
@@ -122,8 +123,8 @@ class Exchange implements DaoInterface
     /**
     *  Provides the queue listening functionality
     *
-    *  @param: $queueName
-    *  @param: $callback   - this is the function that will be called when a message is found
+    *  @param $strQueue string
+    *  @param $callback Closure  - this is the function that will be called when a message is found
     **/
     public function listen($strQueue, Closure $callback) : void
     {
@@ -231,7 +232,7 @@ class Exchange implements DaoInterface
     /**
     *  Publishes the message
      *
-    *  @param: $modelMessage
+    *  @param $modelMessage
     **/
     public function publish(
         Hash $message,
@@ -262,7 +263,7 @@ class Exchange implements DaoInterface
         $connection->close();
     }
 
-    public function save(Hash $model) : void
+    public function save(MessageInterface $model) : void
     {
         $this->publish($model, $model->getRoutingKey());
     }
