@@ -70,9 +70,11 @@ class ChaplinModules extends ResourceModules
      *
      * @param  string $name
      * @return string
+     * @codingStandardsIgnoreStart
      */
     protected function _formatModuleName($name)
     {
+        // @codingStandardsIgnoreEnd
         $name = strtolower($name);
         $name = str_replace(array('-', '.'), ' ', $name);
         $name = ucwords($name);

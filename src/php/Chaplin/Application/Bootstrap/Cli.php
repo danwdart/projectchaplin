@@ -31,8 +31,10 @@ use Zend_Mail_Transport_Smtp as TransportSmtp;
 
 class Cli extends ZendBootstrap
 {
+    // @codingStandardsIgnoreStart
     protected function _initSmtp()
     {
+        // @codingStandardsIgnoreEnd
         $transport = new TransportSmtp(
             getenv("SMTP_HOST"),
             [
@@ -46,8 +48,10 @@ class Cli extends ZendBootstrap
         ZendMail::setDefaultTransport($transport);
     }
 
+    // @codingStandardsIgnoreStart
     protected function _bootstrap($resource = null)
     {
+        // @codingStandardsIgnoreEnd
         try {
             parent::_bootstrap($resource);
         } catch (Exception $e) {
