@@ -47,7 +47,7 @@ class Acl extends Zend_Controller_Plugin_Abstract
         $this->acl = $acl;
     }
 
-    private function _isValidRequest(Zend_Controller_Request_Abstract $request)
+    private function isValidRequest(Zend_Controller_Request_Abstract $request)
     {
         $dispatcher = Zend_Controller_Front::getInstance()->getDispatcher();
         if ($dispatcher->isDispatchable($request)) {
@@ -62,7 +62,7 @@ class Acl extends Zend_Controller_Plugin_Abstract
 
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
-        if (!$this->_isValidRequest($request)) {
+        if (!$this->isValidRequest($request)) {
             return;
         }
 
