@@ -30,6 +30,6 @@ class BroadcastController extends Controller
 {
     public function getIndex()
     {
-        $this->view->scheme = getenv("SCHEME");
+        $this->view->assign("scheme", getenv("SCHEME"));
     }
 }

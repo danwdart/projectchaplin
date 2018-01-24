@@ -97,9 +97,9 @@ class ModelArray implements IteratorInterface
         throw new BadMethodCallException(__METHOD__);
     }
 
-    /*  Limits the number of rows to be returned in the cursor
-     *  @param:     $intNoRows  = number of rows to return
-     *  @return:    $this (this is a fluent interface)
+    /**  Limits the number of rows to be returned in the cursor
+     *  @param     $intNoRows  = number of rows to return
+     *  @return    $this (this is a fluent interface)
      **/
     public function limit($intNoRows)
     {
@@ -108,8 +108,8 @@ class ModelArray implements IteratorInterface
     /**
      *  Skips the first  $intNoRows
      *
-     *  @param:  $intNoRows  = number of rows to skip
-     *  @return: $this (this is a fluent interface)
+     *  @param  $intNoRows  = number of rows to skip
+     *  @return $this (this is a fluent interface)
      **/
     public function skip($intNoRows)
     {
@@ -118,8 +118,8 @@ class ModelArray implements IteratorInterface
     /**
      *  Sorts the cursor
      *
-     *  @param:  $arrColumns     Associative array of Key => value (1 = ASC, -1 = DESC)
-     *  @return: $this (this is a fluent interface)
+     *  @param  $arrColumns     Associative array of Key => value (1 = ASC, -1 = DESC)
+     *  @return $this (this is a fluent interface)
      **/
     public function sort(array $arrColumns = array())
     {

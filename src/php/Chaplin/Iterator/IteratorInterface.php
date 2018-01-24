@@ -38,28 +38,28 @@ interface IteratorInterface extends Countable, ArrayAccess, SeekableIterator
     /**
      *  Returns whether the Iterator is empty (ie no data passed in)
      *
-     *  @return: true | false;
+     *  @return true | false;
     **/
     public function isEmpty();
     /**
      *  Limits the number of rows to be returned in the cursor
      *
-     *  @param:  $intNoRows  = number of rows to return
-     *  @return: $this (this is a fluent interface)
+     *  @param  $intNoRows  = number of rows to return
+     *  @return $this (this is a fluent interface)
     **/
     public function limit($intNoRows);
     /**
      *  Skips the first  $intNoRows
      *
-     *  @param:  $intNoRows  = number of rows to skip
-     *  @return: $this (this is a fluent interface)
+     *  @param  $intNoRows  = number of rows to skip
+     *  @return $this (this is a fluent interface)
     **/
     public function skip($intNoRows);
     /**
      *  Sorts the cursor
      *
-     *  @param:  $arrColumns     Associative array of Key => value
-     *  @return: $this (this is a fluent interface)
+     *  @param  $arrColumns     Associative array of Key => value
+     *  @return $this (this is a fluent interface)
     **/
     public function sort(array $arrColumns = array());
 }

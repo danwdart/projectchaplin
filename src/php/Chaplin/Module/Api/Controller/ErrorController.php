@@ -45,7 +45,7 @@ class ErrorController extends Controller
             || $errors->exception instanceof ExceptionNotFound
         ) {
             $this->getResponse()->setHttpResponseCode(404);
-            $this->view->message = 'Page not found';
+            $this->view->assign("message", "Page not found");
         } else {
             // application error
             $this->getResponse()->setHttpResponseCode(500);
