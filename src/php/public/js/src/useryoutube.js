@@ -23,28 +23,28 @@
 **/
 import $ from 'jquery';
 
-$(document).ready((ev) => {
-    if (!window.location.href.startsWith('/user/youtube')) {
+$(document).ready(() => {
+    if (!window.location.href.startsWith(`/user/youtube`)) {
         return;
     }
-    let pageToken = $('a[data-next-page-token]')
+    let pageToken = $(`a[data-next-page-token]`)
             .last()
-            .data('next-page-token'),
+            .data(`next-page-token`),
         more = () => {
             if (pageToken) {
                 $.ajax({
-                    url: '?limit=50&pageToken='+pageToken,
+                    url: `?limit=50&pageToken=`+pageToken,
                     success: function(data) {
-                        $('.content-centre').append(data);
-                        pageToken = $('a[data-next-page-token]')
+                        $(`.content-centre`).append(data);
+                        pageToken = $(`a[data-next-page-token]`)
                             .last()
-                            .data('next-page-token');
+                            .data(`next-page-token`);
                     }
                 });
             }
         };
 
-    $(window).on('scroll', (ev) => {
+    $(window).on(`scroll`, () => {
         if (window.innerHeight + document.documentElement.scrollTop <
             document.documentElement.scrollHeight) {
             return;

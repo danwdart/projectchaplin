@@ -5,7 +5,15 @@ php:
 before_script:
     - cd src/php
     - composer install
+    - nvm install 9.4
+    - npm install
+    - cd ../js
+    - npm install
+    - cd ../php
 script:
     - vendor/bin/phpunit --bootstrap ../../test/php/bootstrap.php -c ../../test/php/phpunit.xml
     - vendor/bin/phpstan analyse Chaplin
     - vendor/bin/phpcs --standard=PSR2 Chaplin
+    - npm test 
+    - cd ../js
+    - npm test
