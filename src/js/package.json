@@ -5,7 +5,7 @@
   "scripts": {
     "build": "webpack",
     "watch": "webpack -w",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "eslint *.js",
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect",
     "start": "node server.js"
@@ -23,6 +23,7 @@
     "socket.io": "^2.0.0"
   },
   "devDependencies": {
+    "eslint": "^4.16.0"
   },
   "snyk": true,
   "homepage": "https://github.com/danwdart/projectchaplin#readme",

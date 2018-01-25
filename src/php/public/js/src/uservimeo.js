@@ -24,24 +24,24 @@
 import $ from 'jquery';
 
 $(document).ready(() => {
-    if (!window.location.href.startsWith('/user/vimeo')) {
+    if (!window.location.href.startsWith(`/user/vimeo`)) {
         return;
     }
-    (ev) => {
+    () => {
         var page = 2,
-        morevimeo = () =>{
-            $.ajax(
-                {
-                    url: '?limit=50&page='+page,
-                    success: function(data) {
-                        $('.content-centre').append(data);
-                        page++;
+            morevimeo = () =>{
+                $.ajax(
+                    {
+                        url: `?limit=50&page=`+page,
+                        success: function(data) {
+                            $(`.content-centre`).append(data);
+                            page++;
+                        }
                     }
-                }
-            );
-        };
+                );
+            };
         $(window).on(
-            'scroll', (ev) => {
+            `scroll`, () => {
                 if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.scrollHeight) {
                     return;
                 }
@@ -49,5 +49,5 @@ $(document).ready(() => {
                 morevimeo();
             }
         );
-    }
+    };
 });

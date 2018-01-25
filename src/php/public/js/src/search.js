@@ -24,17 +24,17 @@
 import $ from 'jquery';
 
 $(document).ready(() => {
-    if (!window.location.href.startsWith('/search')) {
+    if (!window.location.href.startsWith(`/search`)) {
         return;
     }
     $.extend(
         {
             getUrlVars: function(){
                 var vars = [], hash;
-                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                var hashes = window.location.href.slice(window.location.href.indexOf(`?`) + 1).split(`&`);
                 for(var i = 0; i < hashes.length; i++)
                 {
-                    hash = hashes[i].split('=');
+                    hash = hashes[i].split(`=`);
                     vars.push(hash[0]);
                     vars[hash[0]] = hash[1];
                 }
@@ -47,12 +47,14 @@ $(document).ready(() => {
     );
 
     let intSkip = 50,
-        moreYoutube = () =>{
+        /* eslint-disable */
+        moreYoutube = () => {
+        /* eslint-enable */
             $.ajax(
                 {
-                    url: '/search/youtube/?search='+$.getUrlVar('search')+'&limit=50&skip='+intSkip,
+                    url: `/search/youtube/?search=`+$.getUrlVar(`search`)+`&limit=50&skip=`+intSkip,
                     success: function(data) {
-                        $('#youtubevids').append(data);
+                        $(`#youtubevids`).append(data);
                         intSkip += 50;
                     }
                 }

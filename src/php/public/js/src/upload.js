@@ -23,8 +23,8 @@
 **/
 import $ from 'jquery';
 
-const $progress = $('#progress'),
-    elFiles = document.getElementById('Files-0');
+const $progress = $(`#progress`),
+    elFiles = document.getElementById(`Files-0`);
 
 let uploading = false;
 
@@ -42,21 +42,21 @@ function progress(e) {
     $progress.val(toSet);
 }
 
-function evtBeforeUnload(e) {
+function evtBeforeUnload() {
     if (uploading) {
-        return 'Are you sure you want to leave? Files are currently uploading.';
+        return `Are you sure you want to leave? Files are currently uploading.`;
     }
 }
 
-function evtReadyStateChange(e) {
+function evtReadyStateChange() {
     uploading = true;
     if (4 === this.readyState) {
         uploading = false;
         if (200 !== this.status) {
-            console.error(this.responseText);
+            //console.error(this.responseText);
             return;
         }
-        return window.location = '/video/name';
+        return window.location = `/video/name`;
     }
 }
 
@@ -70,10 +70,10 @@ function evtSubmit(e)
 
     $progress.show();
 
-    window.addEventListener('beforeunload', evtBeforeUnload);
+    window.addEventListener(`beforeunload`, evtBeforeUnload);
 
-    xhr.addEventListener("readystatechange", evtReadyStateChange);
-    xhr.addEventListener('progress', progress, false);
+    xhr.addEventListener(`readystatechange`, evtReadyStateChange);
+    xhr.addEventListener(`progress`, progress, false);
 
     if (xhr.upload) {
         xhr.upload.onprogress = progress;
@@ -83,11 +83,11 @@ function evtSubmit(e)
         formdata.append(`Files[${i}]`, elFiles.files[i]);
     }
 
-    xhr.open("POST", "/video/upload", true);
+    xhr.open(`POST`, `/video/upload`, true);
     xhr.send(formdata);
 }
 
 
 $(document).ready(() => {
-    $('form.upload').submit(evtSubmit);
+    $(`form.upload`).submit(evtSubmit);
 });

@@ -25,17 +25,17 @@ import $ from 'jquery';
 import io from 'socket.io-client';
 
 $(document).ready(() => {
-    if (!window.location.href.startsWith('/broadcast')) {
+    if (!window.location.href.startsWith(`/broadcast`)) {
         return;
     }
-    $('.effect').change(
+    $(`.effect`).change(
         function() {
-            $('#broadcast').attr('class', $(this).val());
+            $(`#broadcast`).attr(`class`, $(this).val());
         }
     );
-    var socket = io.connect('http://'+window.location.hostname+':1337');
-    if ('undefined' == typeof socket) {
-        alert('Socket undefined');
+    var socket = io.connect(`http://`+window.location.hostname+`:1337`);
+    if (`undefined` == typeof socket) {
+        alert(`Socket undefined`);
         return;
     }
 
@@ -43,48 +43,49 @@ $(document).ready(() => {
         if (id == socket.id) {
             return;
         }
-        img = document.getElementById(id);
+        let img = document.getElementById(id);
         if (null !== img) {
             return;
         }
-        img = document.createElement('img');
-        img.setAttribute('class', "clientvideo");
-        img.setAttribute('height', "300");
-        img.setAttribute('width',"400");
-        img.setAttribute('id', id);
-        document.getElementById('clients').appendChild(img);
+        img = document.createElement(`img`);
+        img.setAttribute(`class`, `clientvideo`);
+        img.setAttribute(`height`, `300`);
+        img.setAttribute(`width`,`400`);
+        img.setAttribute(`id`, id);
+        document.getElementById(`clients`).appendChild(img);
     }
 
-    socket.on(
-        'message', function (data) {
-            console.log(data);
+    /*socket.on(
+        `message`, function (data) {
+            //console.log(data);
         }
     );
     socket.on(
-        'client list', function(data) {
+        `client list`, function(data) {
         }
     );
     socket.on(
-        'client connect', function(data) {
+        `client connect`, function(data) {
         }
     );
+    */
     socket.on(
-        'client disconnect', function(data) {
-            clients = document.getElementById('clients');
-            client = document.getElementById(data.id);
+        `client disconnect`, function(data) {
+            const clients = document.getElementById(`clients`),
+                client = document.getElementById(data.id);
             clients.removeChild(client);
         }
     );
     socket.on(
-        'frame', function(data) {
+        `frame`, function(data) {
             if (socket.id == data.id) {
                 return;
             }
-            img = document.getElementById(data.id);
+            const img = document.getElementById(data.id);
             if (null === img) {
                 addclient(data.id);
             }
-            img.setAttribute('src', data.src);
+            img.setAttribute(`src`, data.src);
         }
     );
 
@@ -94,10 +95,10 @@ $(document).ready(() => {
     navigator.mozGetUserMedia ||
     navigator.msGetUserMedia;
 
-    if('undefined' == typeof navigator.getUserMedia_) {
-        $('#status').html('getUserMedia is not supported in your browser. This is an experimental feature.<br/>To turn this on, this is media.navigator.enabled and media.navigator.permission.disabled');
-        clients =  document.getElementById('clients');
-        broadcast = document.getElementById('broadcast');
+    if(`undefined` == typeof navigator.getUserMedia_) {
+        $(`#status`).html(`getUserMedia is not supported in your browser. This is an experimental feature.<br/>To turn this on, this is media.navigator.enabled and media.navigator.permission.disabled`);
+        const clients =  document.getElementById(`clients`),
+            broadcast = document.getElementById(`broadcast`);
         clients.removeChild(broadcast);
         return;
     }
@@ -108,18 +109,18 @@ $(document).ready(() => {
         },
         function (stream) {
             var domURL = window.URL || window.webkitURL;
-            document.getElementById('broadcast').src =
+            document.getElementById(`broadcast`).src =
             domURL ? domURL.createObjectURL(stream) : stream;
 
-            var video = document.getElementById('broadcast');
-            var canvas = document.getElementById('canvas');
-            var ctx = canvas.getContext('2d');
+            var video = document.getElementById(`broadcast`);
+            var canvas = document.getElementById(`canvas`);
+            var ctx = canvas.getContext(`2d`);
 
             setInterval(
                 function() {
                     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                    if ('undefined' != typeof socket) {
-                        socket.emit('frame', {"src": canvas.toDataURL('image/webp') });
+                    if (`undefined` != typeof socket) {
+                        socket.emit(`frame`, {"src": canvas.toDataURL(`image/webp`) });
                     }
                 },
                 100
@@ -127,7 +128,7 @@ $(document).ready(() => {
 
         },
         function() {
-            $('#status').html('Could not run getUserMedia -either you denied it or the about:config option<br/>media.navigator.permission.disabled is not set to false');
+            $(`#status`).html(`Could not run getUserMedia -either you denied it or the about:config option<br/>media.navigator.permission.disabled is not set to false`);
         }
     );
 });
