@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ruleset name="Chaplin">
+    <rule ref="PSR2"></rule>
+    <file>Chaplin</file>
+	<!-- additional settings -->
+</ruleset>

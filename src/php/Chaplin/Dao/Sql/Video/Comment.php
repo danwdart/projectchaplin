@@ -37,12 +37,12 @@ class Comment extends SqlAbstract implements InterfaceComment
 
     const PK = 'CommentId';
 
-    protected function _getTable()
+    protected function getTable()
     {
         return self::TABLE;
     }
 
-    protected function _getPrimaryKey()
+    protected function getPrimaryKey()
     {
         return self::PK;
     }
@@ -50,7 +50,7 @@ class Comment extends SqlAbstract implements InterfaceComment
     public function getById($strId)
     {
         $strSql = 'SELECT * FROM %s WHERE %s = ?';
-        $arrRow = $this->_getAdapter()->fetchRow(sprintf($strSql, self::TABLE, self::PK), $strId);
+        $arrRow = $this->getAdapter()->fetchRow(sprintf($strSql, self::TABLE, self::PK), $strId);
         if (false === $arrRow) {
             throw new NotFound($strId);
         }
@@ -60,7 +60,7 @@ class Comment extends SqlAbstract implements InterfaceComment
     public function getByVideoId($strVideoId)
     {
         $strSql = 'SELECT * FROM %s WHERE %s = ?';
-        $arrRows = $this->_getAdapter()->fetchAll(
+        $arrRows = $this->getAdapter()->fetchAll(
             sprintf(
                 $strSql,
                 self::TABLE,
@@ -73,30 +73,30 @@ class Comment extends SqlAbstract implements InterfaceComment
 
     public function delete(ModelComment $modelComment)
     {
-        return $this->_delete($modelComment);
+        return $this->deleteModel($modelComment);
     }
 
     public function deleteById($strCommentId)
     {
-        return $this->_deleteWhere($this->_getPrimaryKey(), $strCommentId);
+        return $this->deleteWhere($this->getPrimaryKey(), $strCommentId);
     }
 
-    protected function _sqlToModel(array $arrSql)
+    protected function sqlToModel(array $arrSql)
     {
-        $arrModel = parent::_sqlToModel($arrSql);
+        $arrModel = parent::sqlToModel($arrSql);
         return $arrModel;
     }
 
     public function save(ModelComment $modelComment)
     {
-        return $this->_save($modelComment);
+        return $this->saveModel($modelComment);
     }
 
     public function convertToModel($arrData)
     {
         return ModelComment::createFromData(
             $this,
-            $this->_sqlToModel($arrData)
+            $this->sqlToModel($arrData)
         );
     }
 }

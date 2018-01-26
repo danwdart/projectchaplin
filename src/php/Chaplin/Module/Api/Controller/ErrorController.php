@@ -32,7 +32,7 @@ class ErrorController extends Controller
 {
     public function allError()
     {
-        $errors = $this->_getParam('error_handler');
+        $errors = $this->getParam('error_handler');
 
         if (in_array(
             $errors->type,
@@ -45,13 +45,22 @@ class ErrorController extends Controller
             || $errors->exception instanceof ExceptionNotFound
         ) {
             $this->getResponse()->setHttpResponseCode(404);
-            $this->view->message = 'Page not found';
+            $this->view->assign("message", "Page not found");
         } else {
             // application error
             $this->getResponse()->setHttpResponseCode(500);
             $this->view->message = 'Application error';
-            if ($log = $this->_getLog()) {
-                $log->crit($this->view->message . ': ' . $errors->exception->getMessage() . PHP_EOL . 'Exception Class: ' . get_class($errors->exception) . PHP_EOL . 'My Vhost: ' . $this->_request->getServer('HTTP_HOST') . PHP_EOL . 'My Host: ' . gethostname() . PHP_EOL . $errors->exception->getTraceAsString(), $errors->exception);
+            if ($log = $this->getLog()) {
+                $log->crit(
+                    $this->view->message . ': ' .
+                    $errors->exception->getMessage() . PHP_EOL .
+                    'Exception Class: ' . get_class($errors->exception) .
+                    PHP_EOL . 'My Vhost: ' .
+                    $this->_request->getServer('HTTP_HOST') . PHP_EOL .
+                    'My Host: ' . gethostname() . PHP_EOL .
+                    $errors->exception->getTraceAsString(),
+                    $errors->exception
+                );
             }
         }
 
@@ -59,10 +68,10 @@ class ErrorController extends Controller
             $this->view->exception = $errors->exception;
         }
 
-        $this->view->request   = $errors->request;
+        $this->view->_request   = $errors->_request;
     }
 
-    private function _getLog()
+    private function getLog()
     {
         $bootstrap = $this->getInvokeArg('bootstrap');
         if (!$bootstrap->hasPluginResource('Log')) {

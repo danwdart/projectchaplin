@@ -31,18 +31,18 @@ use Chaplin\Iterator\IteratorInterface as Itt;
 
 class Name extends Form
 {
-    private $_ittVideos;
+    private $ittVideos;
 
     public function __construct(Itt $ittVideos)
     {
-        $this->_ittVideos = $ittVideos;
+        $this->ittVideos = $ittVideos;
         parent::__construct();
     }
 
     public function init()
     {
         $sfVideos = new ZendSubForm('Videos');
-        foreach ($this->_ittVideos as $modelVideo) {
+        foreach ($this->ittVideos as $modelVideo) {
             $subform = new SubForm($modelVideo);
             $sfVideos->addSubForm($subform, $modelVideo->getId());
         }

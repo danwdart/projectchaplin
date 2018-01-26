@@ -31,64 +31,62 @@ use Chaplin\Model\Field\Hash;
 use OutOfBoundsException;
 use Exception;
 
-
-
 class Collection implements Iterator, Countable
 {
-    private $_intIndex = 0;
-    private $_strHashType = null;
-    private $_bIsDirty = false;
-    private $_collHashes = array();
+    private $intIndex = 0;
+    private $strHashType = null;
+    private $bIsDirty = false;
+    private $collHashes = array();
 
     public function __construct($strHashType)
     {
-        $this->_strHashType = $strHashType;
+        $this->strHashType = $strHashType;
     }
 
     public function bIsDirty()
     {
-        return $this->_bIsDirty;
+        return $this->bIsDirty;
     }
 
     public function addHash(Hash $hash)
     {
-        $this->_collHashes[] = $hash;
-        $this->_bIsDirty = true;
+        $this->collHashes[] = $hash;
+        $this->bIsDirty = true;
     }
 
     public function valid()
     {
-        return isset($this->_collHashes[$this->_intIndex]);
+        return isset($this->collHashes[$this->intIndex]);
     }
 
     public function current()
     {
-        return $this->_collHashes[$this->_intIndex];
+        return $this->collHashes[$this->intIndex];
     }
 
     public function next()
     {
-        $this->_intIndex++;
+        $this->intIndex++;
     }
 
     public function rewind()
     {
-        $this->_intIndex = 0;
+        $this->intIndex = 0;
     }
 
     public function count()
     {
-        return count($this->_collHashes);
+        return count($this->collHashes);
     }
 
     public function key()
     {
-        return $this->_intIndex;
+        return $this->intIndex;
     }
 
     public function seek($strId)
     {
-        foreach ($this->_collHashes as $hash) {
+        foreach ($this->collHashes as $hash) {
             if ($hash->getId() == $strId) {
                 return $hash;
             }
@@ -102,11 +100,11 @@ class Collection implements Iterator, Countable
             throw new Exception('Not Array');
         }
 
-        $strHashType = $this->_strHashType;
+        $strHashType = $this->strHashType;
 
         foreach ($mixedValue as $strId => $arrData) {
             $strHashType::createFromIterator($this, $arrData);
-            $this->_collHashes[] = $strHashType::createFromIterator($this, $arrData);
+            $this->collHashes[] = $strHashType::createFromIterator($this, $arrData);
         }
         return $this;
     }

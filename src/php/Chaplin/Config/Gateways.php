@@ -28,28 +28,28 @@ class Gateways extends ConfigAbstract
 {
     const CONFIG_TYPE = 'Ini';
 
-    protected function _getConfigType()
+    protected function getConfigType()
     {
         return self::CONFIG_TYPE;
     }
 
-    protected function _getConfigFile()
+    protected function getConfigFile()
     {
         return APPLICATION_PATH.'/config/gateways.ini';
     }
 
     public function getDaoType($strGatewayType)
     {
-        return $this->_zendConfig->gateways->$strGatewayType->type;
+        return $this->zendConfig->gateways->$strGatewayType->type;
     }
 
     public function getDaoName($strGatewayType)
     {
-        return $this->_zendConfig->gateways->$strGatewayType->name;
+        return $this->zendConfig->gateways->$strGatewayType->name;
     }
 
     public function getParam($strGatewayType)
     {
-        return $this->_zendConfig->gateways->$strGatewayType->param;
+        return $this->zendConfig->gateways->$strGatewayType->param;
     }
 }

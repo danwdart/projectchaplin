@@ -54,7 +54,7 @@ class IndexController extends ApiController
         $this->view->assign('ittFeaturedVideos', $ittFeaturedVideos);
     }
 
-    public function getIndex_API()
+    public function getIndexAPI()
     {
         $modelUser = Auth::getInstance()
             ->hasIdentity() ?

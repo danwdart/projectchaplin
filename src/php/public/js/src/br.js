@@ -25,10 +25,10 @@
 import $ from 'jquery';
 
 // fun
-$('#search').keyup(
+$(`#search`).keyup(
     function() {
-        if ('do a barrel roll' == $(this).val()) {
-            $('#video, div.thumb-wrapper').addClass('br');
+        if (`do a barrel roll` == $(this).val()) {
+            $(`#video, div.thumb-wrapper`).addClass(`br`);
         }
     }
 );

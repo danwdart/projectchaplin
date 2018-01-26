@@ -32,7 +32,7 @@ use Zend_Uri_Exception as UriException;
 
 class SearchController extends ApiController
 {
-    private function _extractYouTubeID(string $strSearchTerm) : string
+    private function extractYouTubeID(string $strSearchTerm) : string
     {
         try {
             // TODO : search helper
@@ -61,17 +61,17 @@ class SearchController extends ApiController
         $this->view->strTitle = $strSearchTerm.': Search - Chaplin';
 
         if (is_null($strSearchTerm)) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
-        $strSearchTerm = $this->_extractYouTubeID($strSearchTerm);
+        $strSearchTerm = $this->extractYouTubeID($strSearchTerm);
 
         $ittVideos = Gateway::getInstance()
             ->getVideo()
             ->getBySearchTerms($strSearchTerm);
 
-        if ($this->_isAPICall()) {
+        if ($this->isAPICall()) {
             return $this->view->assign($ittVideos->toArray());
         }
 
@@ -100,7 +100,7 @@ class SearchController extends ApiController
         $this->view->vimeoFeed = $vimeoFeed;
     }
 
-    public function getIndex_API()
+    public function getIndexAPI()
     {
         $strSearchTerm = htmlentities($this->_request->getQuery('search'));
 
@@ -124,7 +124,7 @@ class SearchController extends ApiController
         $strSearchTerm = htmlentities($strSearchTerm);
 
         if (is_null($strSearchTerm)) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 

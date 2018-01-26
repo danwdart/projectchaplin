@@ -52,7 +52,7 @@ class VideoController extends ApiController
 
         $strVideoId = $this->_request->getParam('id', null);
         if (is_null($strVideoId)) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -97,7 +97,7 @@ class VideoController extends ApiController
         $strVideoId = $this->_request->getParam('id', null);
 
         if (is_null($strVideoId)) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -128,7 +128,7 @@ class VideoController extends ApiController
         $formComment = new FormComment();
 
         if (!Auth::getInstance()->hasIdentity()) {
-            $this->_redirect('/login');
+            $this->redirect('/login');
             return;
         }
 
@@ -156,7 +156,7 @@ class VideoController extends ApiController
         $this->view->assign('formComment', $formComment);
     }
 
-    public function getWatch_API()
+    public function getWatchAPI()
     {
         $modelUser = Auth::getInstance()
             ->hasIdentity()?
@@ -192,7 +192,7 @@ class VideoController extends ApiController
 
         $strVideoId = $this->_request->getParam('id', null);
         if(is_null($strVideoId)) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -220,14 +220,14 @@ class VideoController extends ApiController
         $strId   = bin2hex(base64_decode($strId));
         $strScheme = getenv("SCHEME");
         $strHost = getenv("VHOST");
-        $this->_redirect("$strScheme://$strHost/video/watch/id/$strId");
+        $this->redirect("$strScheme://$strHost/video/watch/id/$strId");
     }
 
     public function getWatchyoutube()
     {
         $strVideoId = $this->_request->getParam('id', null);
         if (is_null($strVideoId)) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -271,13 +271,13 @@ class VideoController extends ApiController
     public function getImportyoutube()
     {
         if ("true" === getenv("NO_UPLOADS")) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
         $strVideoId = $this->_request->getParam('id', null);
         if (is_null($strVideoId)) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -287,14 +287,14 @@ class VideoController extends ApiController
             ->getYouTube()
             ->importVideo($modelUser, $strVideoId);
 
-        $this->_redirect('/video/watch/id/'.$modelVideo->getVideoId());
+        $this->redirect('/video/watch/id/'.$modelVideo->getVideoId());
     }
 
     public function getWatchvimeo()
     {
         $strVideoId = $this->_request->getParam('id', null);
         if (is_null($strVideoId)) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -336,13 +336,13 @@ class VideoController extends ApiController
     public function getImportvimeo()
     {
         if ("true" === getenv("NO_UPLOADS")) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
         $strVideoId = $this->_request->getParam('id', null);
         if (is_null($strVideoId)) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -352,7 +352,7 @@ class VideoController extends ApiController
             ->getVimeo()
             ->importVideo($modelUser, $strVideoId);
 
-        $this->_redirect('/video/watch/id/'.$modelVideo->getVideoId());
+        $this->redirect('/video/watch/id/'.$modelVideo->getVideoId());
     }
 
     public function getComments()
@@ -370,7 +370,7 @@ class VideoController extends ApiController
         $this->view->assign('comments', $ittComments);
     }
 
-    public function getComments_API()
+    public function getCommentsAPI()
     {
         $strVideoId = $this->_request->getParam('id', null);
         if (is_null($strVideoId)) {
@@ -413,7 +413,7 @@ class VideoController extends ApiController
 
         $strVideoId = $this->_request->getParam('id', null);
         if (is_null($strVideoId)) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -440,7 +440,7 @@ class VideoController extends ApiController
         echo file_get_contents($strPath);
     }
 
-    public function getVote_API()
+    public function getVoteAPI()
     {
         $strVideoId = $this->_request->getParam('id', null);
 
@@ -457,7 +457,7 @@ class VideoController extends ApiController
 
         $strVote = $this->_request->getParam('vote', null);
         if (is_null($strVideoId)) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -484,7 +484,7 @@ class VideoController extends ApiController
     public function getUpload()
     {
         if ("true" === getenv("NO_UPLOADS")) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -496,7 +496,7 @@ class VideoController extends ApiController
     public function postUpload()
     {
         if ("true" === getenv("NO_UPLOADS")) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -573,7 +573,7 @@ class VideoController extends ApiController
     {
         // Not sure how to implement this yet
         // Will skip until I work it out
-        $this->_redirect('/');
+        $this->redirect('/');
         return;
         /*
         $identity = Auth::getInstance()
@@ -614,14 +614,14 @@ class VideoController extends ApiController
             }
         }
 
-        $this->_redirect('/');
+        $this->redirect('/');
         */
     }
 
     public function getEdit()
     {
         if ("true" === getenv("NO_UPLOADS")) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -637,7 +637,7 @@ class VideoController extends ApiController
         $strVideoId = $this->_request->getParam('id', null);
 
         if (is_null($strVideoId)) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -653,7 +653,7 @@ class VideoController extends ApiController
     public function postEdit()
     {
         if ("true" === getenv("NO_UPLOADS")) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -669,7 +669,7 @@ class VideoController extends ApiController
         $strVideoId = $this->_request->getParam('id', null);
 
         if (is_null($strVideoId)) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -690,14 +690,14 @@ class VideoController extends ApiController
             $modelVideo->save();
         }
 
-        $this->_redirect('/video/watch/id/'.$strVideoId);
+        $this->redirect('/video/watch/id/'.$strVideoId);
         return;
     }
 
     public function getDelete()
     {
         if ("true" === getenv("NO_UPLOADS")) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -709,13 +709,13 @@ class VideoController extends ApiController
             null;
 
         if (!Auth::getInstance()->hasIdentity()) {
-            $this->_redirect('/login');
+            $this->redirect('/login');
             return;
         }
 
         $strVideoId = $this->_request->getParam('id', null);
         if (is_null($strVideoId)) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -730,6 +730,6 @@ class VideoController extends ApiController
             $modelVideo->delete();
         }
 
-        $this->_redirect('/');
+        $this->redirect('/');
     }
 }

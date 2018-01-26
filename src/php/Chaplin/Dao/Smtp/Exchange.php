@@ -59,7 +59,7 @@ class Exchange implements DaoInterface
         $strHTML = $m->render($strTemplateHTML, $arrParams);
         $strText = $m->render($strTemplateText, $arrParams);
         $mail->setBodyText($strText);
-        $mail->setBodyHTML($strHTML);
+        $mail->setBodyHtml($strHTML);
         $mail->send();
     }
 }

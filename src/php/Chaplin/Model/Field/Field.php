@@ -27,27 +27,25 @@ namespace Chaplin\Model\Field;
 
 use Chaplin\Model\Field\FieldAbstract;
 
-
-
 class Field extends FieldAbstract
 {
-    private $_mixedValue;
+    private $mixedValue;
     
     public function setFromData($mixedValue)
     {
-        $this->_mixedValue = $mixedValue;
+        $this->mixedValue = $mixedValue;
     }
     
     public function setValue($mixedValue)
     {
-        $this->_mixedValue = $mixedValue;
-        $this->_bIsDirty = true;
+        $this->mixedValue = $mixedValue;
+        $this->bIsDirty = true;
     }
         
     public function getValue($mixedDefault)
     {
-        return (is_null($this->_mixedValue))?
+        return (is_null($this->mixedValue))?
             $mixedDefault:
-            $this->_mixedValue;
+            $this->mixedValue;
     }
 }

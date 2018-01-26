@@ -31,20 +31,18 @@ use Chaplin\Iterator\Dao\Sql\Rows;
 use Exception;
 use Chaplin\Model\Node as ModelNode;
 
-
-
 class Node extends SqlAbstract implements InterfaceNode
 {
     const TABLE = 'Nodes';
 
     const PK = 'NodeId';
 
-    protected function _getTable()
+    protected function getTable()
     {
         return self::TABLE;
     }
 
-    protected function _getPrimaryKey()
+    protected function getPrimaryKey()
     {
         return self::PK;
     }
@@ -52,7 +50,7 @@ class Node extends SqlAbstract implements InterfaceNode
     public function getAllNodes()
     {
         $strSql = 'SELECT * FROM %s';
-        $arrRows = $this->_getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
+        $arrRows = $this->getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
         return new Rows($arrRows, $this);
     }
 
@@ -60,7 +58,7 @@ class Node extends SqlAbstract implements InterfaceNode
     {
         $strSql = 'SELECT * FROM %s WHERE %s = ?';
 
-        $arrRow = $this->_getAdapter()->fetchRow(
+        $arrRow = $this->getAdapter()->fetchRow(
             sprintf(
                 $strSql,
                 self::TABLE,
@@ -78,21 +76,16 @@ class Node extends SqlAbstract implements InterfaceNode
 
     public function delete(ModelNode $modelNode)
     {
-        return $this->_delete($modelNode);
-    }
-
-    public function deleteById($strId)
-    {
-        return $this->_deleteById($strId);
+        return $this->deleteModel($modelNode);
     }
 
     public function save(ModelNode $modelNode)
     {
-        return $this->_save($modelNode);
+        return $this->saveModel($modelNode);
     }
 
     public function convertToModel($arrData)
     {
-        return ModelNode::createFromData($this, $this->_sqlToModel($arrData));
+        return ModelNode::createFromData($this, $this->sqlToModel($arrData));
     }
 }

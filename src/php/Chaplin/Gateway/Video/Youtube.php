@@ -29,15 +29,13 @@ use Chaplin\Gateway\GatewayAbstract;
 use Chaplin\Dao\Amqp\Exchange;
 use Chaplin\Model\Video\Youtube as ModelVideoYoutube;
 
-
-
 class Youtube extends GatewayAbstract
 {
-    private $_daoExchange;
+    private $daoExchange;
 
     public function __construct(Exchange $daoExchange)
     {
-        $this->_daoExchange = $daoExchange;
+        $this->daoExchange = $daoExchange;
     }
 
     public function youtube()
@@ -47,11 +45,11 @@ class Youtube extends GatewayAbstract
         $callback = function (ModelVideoYoutube $msg) {
             $msg->process();
         };
-        $this->_daoExchange->listen($queueName, $callback);
+        $this->daoExchange->listen($queueName, $callback);
     }
 
     public function save(ModelVideoYoutube $modelYoutube)
     {
-        return $this->_daoExchange->save($modelYoutube);
+        return $this->daoExchange->save($modelYoutube);
     }
 }

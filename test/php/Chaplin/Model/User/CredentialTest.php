@@ -22,27 +22,33 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_UserTest extends Zend_Test_PHPUnit_ControllerTestCase
-{
-    public function testGetSetUsername()
-    {
-        $strUsername = 'Username';
-        $strPassword = 'Password';
-        $modelUser = Chaplin_Model_User::create($strUsername, $strPassword);
-        $this->assertEquals(
-            strtolower($strUsername),
-            $modelUser->getUsername()
-        );
-    }
+namespace Chaplin\Model\User;
 
-    public function testGetSetNick()
+use PHPUnit\Framework\TestCase;
+use Chaplin\Model\User as ModelUser;
+
+class CredentialTest extends TestCase
+{
+    public function testCreate()
     {
+        $this->markTestSkipped(
+            'Credentials not actively maintained and deprecated'
+        );
+
+        $strServiceName = 'ServiceName';
+        $strServiceURL = 'ServiceURL';
+        $strAccessToken = 'AccessToken';
         $strUsername = 'Username';
         $strPassword = 'Password';
-        $modelUser = Chaplin_Model_User::create($strUsername, $strPassword);
-        $strNick = 'Dan';
-        $this->assertNull($modelUser->getNick());
-        $modelUser->setNick($strNick);
-        $this->assertEquals($strNick, $modelUser->getNick());
+        $modelUser = ModelUser::create($strUsername, $strPassword);
+        $credential = Credential::create(
+            $modelUser,
+            $strServiceName,
+            $strServiceURL,
+            $strAccessToken
+        );
+        $this->assertEquals($strServiceName, $credential->getServiceName());
+        $this->assertEquals($strServiceURL, $credential->getServiceURL());
+        $this->assertEquals($strAccessToken, $credential->getAccessToken());
     }
 }

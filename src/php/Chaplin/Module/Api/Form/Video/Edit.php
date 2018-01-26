@@ -30,17 +30,17 @@ use Zend_Form_Element_Submit as Submit;
 
 class Edit extends Form
 {
-    private $_modelVideo;
+    private $modelVideo;
 
     public function __construct(ModelVideo $modelVideo)
     {
-        $this->_modelVideo = $modelVideo;
+        $this->modelVideo = $modelVideo;
         parent::__construct();
     }
 
     public function init()
     {
-        $subform = new SubForm($this->_modelVideo);
+        $subform = new SubForm($this->modelVideo);
 
         $submit = new Submit('Save');
         $submit->setAttrib("class", "btn btn-primary");

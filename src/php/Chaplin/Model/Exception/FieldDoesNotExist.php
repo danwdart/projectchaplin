@@ -27,8 +27,6 @@ namespace Chaplin\Model\Exception;
 
 use Zend_Exception;
 
-
-
 class FieldDoesNotExist extends Zend_Exception
 {
     const MESSAGE = 'The field called from class (%s) named (%s) does not exist.';

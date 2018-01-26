@@ -27,8 +27,6 @@ namespace Chaplin\Model\User\Helper\Exception;
 
 use Exception;
 
-
-
 class UnknownType extends Exception
 {
     const MESSAGE = 'Unknown UserType: (%s)';

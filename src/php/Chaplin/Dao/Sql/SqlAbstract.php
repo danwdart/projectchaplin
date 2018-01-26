@@ -33,13 +33,11 @@ use DateTime;
 use Chaplin\Model\Field\Hash;
 use Exception;
 
-
-
 abstract class SqlAbstract implements DaoInterface
 {
     const DATETIME_SQL = 'Y-m-d H:i:s';
 
-    private static $_zendDb;
+    private static $zendDb;
 
     public function __construct()
     {
@@ -52,39 +50,39 @@ abstract class SqlAbstract implements DaoInterface
                 "dbname" => getenv("SQL_DATABASE")
             ]
         );
-        self::$_zendDb = $db;
+        self::$zendDb = $db;
     }
 
     public static function setAdapter(Zend_Db_Adapter_Abstract $zendDb)
     {
-        self::$_zendDb = $zendDb;
+        self::$zendDb = $zendDb;
     }
 
-    protected function _getAdapter()
+    protected function getAdapter()
     {
-        if (!self::$_zendDb instanceof Zend_Db_Adapter_Abstract) {
+        if (!self::$zendDb instanceof Zend_Db_Adapter_Abstract) {
             throw new NoAdapter();
         }
-        return self::$_zendDb;
+        return self::$zendDb;
     }
 
-    abstract protected function _getTable();
+    abstract protected function getTable();
 
-    abstract protected function _getPrimaryKey();
+    abstract protected function getPrimaryKey();
 
     abstract public function convertToModel($arrData);
 
-    protected function _modelToSql(array $arrModel)
+    protected function modelToSql(array $arrModel)
     {
         return $arrModel;
     }
 
-    protected function _sqlToModel(array $arrSql)
+    protected function sqlToModel(array $arrSql)
     {
         return $arrSql;
     }
 
-    private function _textToSafe($strText)
+    private function textToSafe($strText)
     {
         if ('UTF-8' != mb_detect_encoding($strText)) {
             $strText = mb_convert_encoding($strText, 'UTF-8');
@@ -92,48 +90,48 @@ abstract class SqlAbstract implements DaoInterface
         return $strText;
     }
 
-    protected function _timestampToSqlDateTime($intTimestamp)
+    protected function timestampToSqlDateTime($intTimestamp)
     {
         $dt = DateTime::createFromFormat('U', $intTimestamp);
         return $dt->format(self::DATETIME_SQL);
     }
 
-    protected function _sqlDateTimeToTimestamp($strDateTime)
+    protected function sqlDateTimeToTimestamp($strDateTime)
     {
         $dt = DateTime::createFromFormat(self::DATETIME_SQL, $strDateTime);
         return $dt->getTimestamp();
     }
 
-    protected function _save(Hash $hash)
+    protected function saveModel(Hash $hash)
     {
-        $strTable = $this->_getTable();
+        $strTable = $this->getTable();
         $collFields = $hash->getFields($this);
-        $arrUpdate = $this->_getUpdateArray($collFields);
+        $arrUpdate = $this->getUpdateArray($collFields);
         if ($hash->bIsNew()) {
-            $this->_getAdapter()->insert($strTable, $arrUpdate);
+            $this->getAdapter()->insert($strTable, $arrUpdate);
         } else {
-            $strWhere = $this->_getAdapter()->quoteInto($this->_getPrimaryKey().' = ?', $hash->getId());
-            $this->_getAdapter()->update($strTable, $arrUpdate, $strWhere);
+            $strWhere = $this->getAdapter()->quoteInto($this->getPrimaryKey().' = ?', $hash->getId());
+            $this->getAdapter()->update($strTable, $arrUpdate, $strWhere);
         }
     }
 
-    protected function _deleteWhere($strField, $strValue)
+    protected function deleteWhere($strField, $strValue)
     {
-        $strWhere = $this->_getAdapter()->quoteInto($strField.' = ?', $strValue);
-        $this->_getAdapter()->delete($this->_getTable(), $strWhere);
+        $strWhere = $this->getAdapter()->quoteInto($strField.' = ?', $strValue);
+        $this->getAdapter()->delete($this->getTable(), $strWhere);
     }
 
-    protected function _delete(Hash $hash)
+    protected function deleteModel(Hash $hash)
     {
-        return $this->_deleteById($hash->getId());
+        return $this->deleteById($hash->getId());
     }
 
-    protected function _deleteById($strId)
+    protected function deleteById($strId)
     {
-        return $this->_deleteWhere($this->_getPrimaryKey(), $strId);
+        return $this->deleteWhere($this->getPrimaryKey(), $strId);
     }
 
-    private function _getUpdateArray(array $collFields)
+    private function getUpdateArray(array $collFields)
     {
         $arrUpdate = array();
         foreach ($collFields as $strFieldName => $objField) {
@@ -142,7 +140,7 @@ abstract class SqlAbstract implements DaoInterface
                 switch ($strClass) {
                     case 'Chaplin\\Model\\Field\\Field':
                     case 'Chaplin\\Model\\Field\\FieldId':
-                        $arrUpdate[$strFieldName] = $this->_textToSafe($objField->getValue(null));
+                        $arrUpdate[$strFieldName] = $this->textToSafe($objField->getValue(null));
                         break;
                     case 'Chaplin\\Model\\Field\\Readonly':
                         break;
@@ -151,6 +149,6 @@ abstract class SqlAbstract implements DaoInterface
                 }
             }
         }
-        return $this->_modelToSql($arrUpdate);
+        return $this->modelToSql($arrUpdate);
     }
 }

@@ -38,7 +38,7 @@ class UserController extends ApiController
     {
         $strUsername = $this->_request->getParam('id', null);
         if (is_null($strUsername)) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -47,7 +47,7 @@ class UserController extends ApiController
              ->getUser()
              ->getByUsername($strUsername);
         } catch (ExceptionUserNotFound $e) {
-            $this->_redirect('/');
+            $this->redirect('/');
         }
 
         $this->view->bIsMe = Auth::getInstance()->hasIdentity() &&
@@ -79,7 +79,7 @@ class UserController extends ApiController
     {
         $strUsername = $this->_request->getParam('id', null);
         if (is_null($strUsername)) {
-            $this->_redirect('/');
+            $this->redirect('/');
             return;
         }
 
@@ -88,7 +88,7 @@ class UserController extends ApiController
              ->getUser()
              ->getByUsername($strUsername);
         } catch (ExceptionUserNotFound $e) {
-            $this->_redirect('/');
+            $this->redirect('/');
         }
 
         $this->view->bIsMe = Auth::getInstance()->hasIdentity() &&
@@ -138,14 +138,14 @@ class UserController extends ApiController
             $user->setEmail($email);
             $user->setNick($fullname);
             $user->save();
-            $this->_redirect('/');
+            $this->redirect('/');
         } catch (Exception $e) {
             $form->Save->addError('An error occurred whilst saving your details. Please try again.');
             return $this->view->assign('form', $form);
         }
     }
 
-    public function getIndex_API()
+    public function getIndexAPI()
     {
         $strUsername = $this->_request->getParam('id', null);
 
