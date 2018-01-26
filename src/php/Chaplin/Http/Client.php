@@ -255,10 +255,10 @@ class Client implements HttpInterface
             }
         }
 
-          $this->arrPageBody[$url] = $this->checkForMetaRedirect(
-              $url,
-              $httpResponse->getBody()
-          );
+        $this->arrPageBody[$url] = $this->checkForMetaRedirect(
+            $url,
+            $httpResponse->getBody()
+        );
 
           return $httpResponse;
     }
