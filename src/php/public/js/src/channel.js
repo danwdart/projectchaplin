@@ -1,4 +1,4 @@
-/**jQuery
+/**
  * This file is part of Project Chaplin.
  *
  * Project Chaplin is free software: you can redistribute it and/or modify
@@ -21,28 +21,15 @@
  * @version   git
  * @link      https://github.com/danwdart/projectchaplin
 **/
-import 'bootstrap';
+import $ from 'jquery';
 
-import './broadcast';
-import './br';
-import './channel';
-import './login';
-import './search';
-import './upload';
-import './uservimeo';
-import './useryoutube';
-import './video';
+$(document).ready(() => {
+    if (!window.location.pathname.startsWith(`/channel`)) {
+        return;
+    }
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'font-awesome/css/font-awesome.css';
-import '../../css/broadcast.css';
-import '../../css/channel.css';
-import '../../css/chaplin.css';
-import '../../css/filters.css';
-import '../../css/header.css';
-import '../../css/media.css';
-import '../../css/profile.css';
-import '../../css/social.css';
-import '../../css/thumbs.css';
-import '../../css/users.css';
-import '../../css/video.css';
+    $(`table tbody tr`).on(`click`, function() {
+        const id = $(this).data(`channel-id`);
+        window.location = `/channel/${id}`;
+    });
+});
