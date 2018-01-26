@@ -27,8 +27,6 @@ namespace Chaplin\Dao\Exception\Video;
 
 use Chaplin\Exception\NotFound as ExceptionNotFound;
 
-
-
 class NotFound extends ExceptionNotFound
 {
     const MESSAGE = 'Video by id (%s) not found.';

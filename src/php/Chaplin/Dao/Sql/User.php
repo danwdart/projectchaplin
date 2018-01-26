@@ -31,20 +31,18 @@ use Chaplin\Iterator\Dao\Sql\Rows;
 use Chaplin\Model\User as ModelUser;
 use Chaplin\Dao\Exception\User\NotFound;
 
-
-
 class User extends SqlAbstract implements InterfaceUser
 {
     const TABLE = 'Users';
 
     const PK = 'Username';
 
-    protected function _getTable()
+    protected function getTable()
     {
         return self::TABLE;
     }
 
-    protected function _getPrimaryKey()
+    protected function getPrimaryKey()
     {
         return self::PK;
     }
@@ -52,7 +50,7 @@ class User extends SqlAbstract implements InterfaceUser
     public function getAllUsers()
     {
         $strSql = 'SELECT * FROM %s';
-        $arrRows = $this->_getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
+        $arrRows = $this->getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
         return new Rows($arrRows, $this);
     }
 
@@ -65,7 +63,7 @@ class User extends SqlAbstract implements InterfaceUser
 
         $strSql = 'SELECT * FROM %s WHERE Username = ? AND Password = ?';
 
-        $arrRow = $this->_getAdapter()->fetchRow(sprintf($strSql, self::TABLE), $arrCredentials);
+        $arrRow = $this->getAdapter()->fetchRow(sprintf($strSql, self::TABLE), $arrCredentials);
 
         if (empty($arrRow)) {
             throw new NotFound();
@@ -78,7 +76,7 @@ class User extends SqlAbstract implements InterfaceUser
     {
         $strSql = 'SELECT * FROM %s WHERE Username = ?';
 
-        $arrRow = $this->_getAdapter()->fetchRow(sprintf($strSql, self::TABLE), $strUsername);
+        $arrRow = $this->getAdapter()->fetchRow(sprintf($strSql, self::TABLE), $strUsername);
 
         if (empty($arrRow)) {
             throw new NotFound();
@@ -90,28 +88,28 @@ class User extends SqlAbstract implements InterfaceUser
 
     public function save(ModelUser $modelUser)
     {
-        return $this->_save($modelUser);
+        return $this->saveModel($modelUser);
     }
 
     public function convertToModel($arrData)
     {
-        return ModelUser::createFromData($this, $this->_sqlToModel($arrData));
+        return ModelUser::createFromData($this, $this->sqlToModel($arrData));
     }
 
     public function updateByToken($strToken, $strPassword)
     {
         $arrData = [
-            ModelUser::FIELD_Password =>
+            ModelUser::FIELD_PASSWORD =>
                 ModelUser::encodePassword($strPassword),
             ModelUser::FIELD_VALIDATION => null,
             ModelUser::FIELD_HASH => ModelUser::HASH_SHA512
         ];
 
-        $intNumUpdated = $this->_getAdapter()
+        $intNumUpdated = $this->getAdapter()
             ->update(
-                $this->_getTable(),
+                $this->getTable(),
                 $arrData,
-                $this->_getAdapter()->quoteInto(
+                $this->getAdapter()->quoteInto(
                     ModelUser::FIELD_VALIDATION.' = ?',
                     $strToken
                 )

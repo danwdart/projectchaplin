@@ -21,28 +21,30 @@
  * @version   git
  * @link      https://github.com/danwdart/projectchaplin
 **/
-io = require('socket.io').listen(1337);
+const io = require(`socket.io`).listen(1337);
 io.sockets.on(
-    'connection', function (socket) {
-        socket.emit('message', { hello: 'world' });
+    `connection`, function (socket) {
+        /*
+	socket.emit(`message`, { hello: `world` });
         socket.on(
-            'message', function (data) {
-                console.log(data);
+            `message`, function (data) {
+                // console.log(data);
+            }
+        );
+	*/
+        socket.on(
+            `frame`, function(data) {
+                socket.broadcast.emit(`frame`, {src: data.src, id: socket.id});
             }
         );
         socket.on(
-            'frame', function(data) {
-                socket.broadcast.emit('frame', {src: data.src, id: socket.id});
+            `rtc`, function(data) {
+                socket.broadcast.emit(`rtc`, data);
             }
         );
         socket.on(
-            'rtc', function(data) {
-                socket.broadcast.emit('rtc', data);
-            }
-        );
-        socket.on(
-            'disconnect', function() {
-                socket.broadcast.emit('client disconnect', {id: socket.id});
+            `disconnect`, function() {
+                socket.broadcast.emit(`client disconnect`, {id: socket.id});
             }
         );
     }

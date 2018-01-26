@@ -31,8 +31,10 @@ use Zend_Registry as Reg;
 
 class Bootstrap extends ModuleBootstrap
 {
+    // @codingStandardsIgnoreStart
     protected function _initAcl()
     {
+        // @codingStandardsIgnoreEnd
         //$acl = $this->getApplication()->getResource('acl');
         $acl = Reg::get('acl');
 

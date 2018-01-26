@@ -27,13 +27,11 @@ namespace Chaplin\Dao\Sql;
 
 use Chaplin\Dao\Sql\SqlAbstract;
 use Chaplin\Dao\Interfaces\Video as InterfaceVideo;
-use Chaplin\Model\User;
+use Chaplin\Model\User as ModelUser;
 use Chaplin\Model\Video as ModelVideo;
 use Chaplin\Model\Video\Privacy;
 use Chaplin\Iterator\Dao\Sql\Rows;
 use Chaplin\Dao\Exception\Video\NotFound;
-
-
 
 class Video extends SqlAbstract implements InterfaceVideo
 {
@@ -41,17 +39,17 @@ class Video extends SqlAbstract implements InterfaceVideo
 
     const PK = 'VideoId';
 
-    protected function _getTable()
+    protected function getTable()
     {
         return self::TABLE;
     }
 
-    protected function _getPrimaryKey()
+    protected function getPrimaryKey()
     {
         return self::PK;
     }
 
-    public function getFeaturedVideos(User $modelUser = null)
+    public function getFeaturedVideos(ModelUser $modelUser = null)
     {
         $strSql = 'SELECT * FROM %s WHERE '.
             ModelVideo::FIELD_PRIVACY.' = "'.Privacy::ID_PUBLIC.
@@ -59,23 +57,27 @@ class Video extends SqlAbstract implements InterfaceVideo
             '" OR '.
             ModelVideo::FIELD_USERNAME .' = "'.$modelUser->getUsername().'"').
             ' ORDER BY TimeCreated DESC';
-        $arrRows = $this->_getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
+        $arrRows = $this->getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
         return new Rows($arrRows, $this);
     }
 
-    public function getByVideoId($strVideoId, User $modelUser = null)
+    public function getByVideoId($strVideoId, ModelUser $modelUser = null)
     {
         $strSql = 'select Videos.*, '.
-            '(SELECT COUNT(*) AS COUNT FROM Votes WHERE VideoId = ? AND Vote = 1) AS '.ModelVideo::FIELD_VOTESUP.
-            ', (SELECT COUNT(*) AS COUNT FROM Votes WHERE VideoId = ? AND Vote = 0) AS '.ModelVideo::FIELD_VOTESDOWN.
-            ', (SELECT Vote FROM Votes WHERE VideoId = ? '.((is_null($modelUser))?'':'AND Username = ?').' LIMIT 1) AS YourVote'.
+            '(SELECT COUNT(*) AS COUNT FROM Votes WHERE '.
+            ' VideoId = ? AND Vote = 1) AS '.ModelVideo::FIELD_VOTESUP.
+            ', (SELECT COUNT(*) AS COUNT FROM Votes WHERE VideoId = ? '.
+            'AND Vote = 0) AS '.ModelVideo::FIELD_VOTESDOWN.
+            ', (SELECT Vote FROM Votes WHERE VideoId = ? '.
+            ((is_null($modelUser))?'':'AND Username = ?').
+            ' LIMIT 1) AS YourVote'.
             ' FROM %s WHERE %s = ? AND ('.
             ModelVideo::FIELD_PRIVACY.' = "'.Privacy::ID_PUBLIC.
             ((is_null($modelUser))? '")' :
             '" OR '.
             ModelVideo::FIELD_USERNAME .' = "'.$modelUser->getUsername().'")');
 
-        $arrRow = $this->_getAdapter()->fetchRow(
+        $arrRow = $this->getAdapter()->fetchRow(
             sprintf($strSql, self::TABLE, self::PK),
             (is_null($modelUser) ?
                 [$strVideoId, $strVideoId, $strVideoId, $strVideoId]:
@@ -94,7 +96,7 @@ class Video extends SqlAbstract implements InterfaceVideo
         return new Rows([], $this);
     }
 
-    public function getByUser(User $modelUser)
+    public function getByUser(ModelUser $modelUser)
     {
         // todo fill in
         return new Rows([], $this);
@@ -102,29 +104,29 @@ class Video extends SqlAbstract implements InterfaceVideo
 
     public function delete(ModelVideo $modelVideo)
     {
-        return $this->_delete($modelVideo);
+        return $this->deleteModel($modelVideo);
     }
 
-    protected function _sqlToModel(array $arrSql)
+    protected function sqlToModel(array $arrSql)
     {
-        $arrModel = parent::_sqlToModel($arrSql);
+        $arrModel = parent::sqlToModel($arrSql);
         unset($arrModel['Fb_Pos']);
         unset($arrModel['Fb_Neg']);
         if (isset($arrModel[ModelVideo::FIELD_TIMECREATED])) {
             $arrModel[ModelVideo::FIELD_TIMECREATED] =
-                $this->_sqlDateTimeToTimestamp(
+                $this->sqlDateTimeToTimestamp(
                     $arrModel[ModelVideo::FIELD_TIMECREATED]
                 );
         }
         return $arrModel;
     }
 
-    protected function _modelToSql(array $arrModel)
+    protected function modelToSql(array $arrModel)
     {
-        $arrSql = parent::_modelToSql($arrModel);
+        $arrSql = parent::modelToSql($arrModel);
         if (isset($arrSql[ModelVideo::FIELD_TIMECREATED])) {
             $arrSql[ModelVideo::FIELD_TIMECREATED] =
-                $this->_timestampToSqlDateTime(
+                $this->timestampToSqlDateTime(
                     $arrSql[ModelVideo::FIELD_TIMECREATED]
                 );
         }
@@ -133,11 +135,11 @@ class Video extends SqlAbstract implements InterfaceVideo
 
     public function save(ModelVideo $modelVideo)
     {
-        return $this->_save($modelVideo);
+        return $this->saveModel($modelVideo);
     }
 
     public function convertToModel($arrData)
     {
-        return ModelVideo::createFromData($this, $this->_sqlToModel($arrData));
+        return ModelVideo::createFromData($this, $this->sqlToModel($arrData));
     }
 }

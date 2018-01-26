@@ -29,39 +29,37 @@ use Chaplin\Gateway\GatewayAbstract;
 use Chaplin\Dao\Interfaces\Channel as InterfaceChannel;
 use Chaplin\Model\Channel as ModelChannel;
 
-
-
 class Channel extends GatewayAbstract
 {
-    private $_daoChannel;
+    private $daoChannel;
 
     public function __construct(InterfaceChannel $daoChannel)
     {
-        $this->_daoChannel = $daoChannel;
+        $this->daoChannel = $daoChannel;
     }
 
     public function getAllChannels()
     {
-        return $this->_daoChannel->getAllChannels();
+        return $this->daoChannel->getAllChannels();
     }
 
     public function getByChannelId($strChannelId)
     {
-        return $this->_daoChannel->getByChannelId($strChannelId);
+        return $this->daoChannel->getByChannelId($strChannelId);
     }
 
     public function delete(ModelChannel $modelChannel)
     {
-        return $this->_daoChannel->delete($modelChannel);
+        return $this->daoChannel->delete($modelChannel);
     }
 
     public function deleteById($strId)
     {
-        return $this->_daoChannel->deleteById($strId);
+        return $this->daoChannel->deleteById($strId);
     }
 
     public function save(ModelChannel $modelChannel)
     {
-        return $this->_daoChannel->save($modelChannel);
+        return $this->daoChannel->save($modelChannel);
     }
 }

@@ -27,8 +27,6 @@ namespace Chaplin\Http\Exception;
 
 use Exception;
 
-
-
 class XPathNotUnique extends Exception
 {
     const MESSAGE = 'Could not find a unique element for query "%s" while scraping URL';

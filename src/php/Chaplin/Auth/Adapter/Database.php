@@ -32,13 +32,13 @@ use Zend_Auth_Result as Result;
 
 class Database implements AdapterInterface
 {
-    private $_strUsername;
-    private $_strPassword;
+    private $strUsername;
+    private $strPassword;
 
     public function __construct($strUsername, $strPassword)
     {
-        $this->_strUsername = $strUsername;
-        $this->_strPassword = $strPassword;
+        $this->strUsername = $strUsername;
+        $this->strPassword = $strPassword;
     }
 
     public function authenticate()
@@ -47,8 +47,8 @@ class Database implements AdapterInterface
             $modelUser = Gateway::getInstance()
                 ->getUser()
                 ->getByUsernameAndPassword(
-                    $this->_strUsername,
-                    $this->_strPassword
+                    $this->strUsername,
+                    $this->strPassword
                 );
 
             $identity = new Identity($modelUser);

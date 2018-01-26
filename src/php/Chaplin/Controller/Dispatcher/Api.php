@@ -60,6 +60,6 @@ class Api extends DispatcherStandard
             return "allError";
         }
 
-        return strtolower($strVerb) . $formatted . ($bIsXHR ? "_API" : "");
+        return strtolower($strVerb) . $formatted . ($bIsXHR ? "API" : "");
     }
 }

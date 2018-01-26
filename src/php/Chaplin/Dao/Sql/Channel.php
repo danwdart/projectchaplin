@@ -37,12 +37,12 @@ class Channel extends SqlAbstract implements InterfaceChannel
 
     const PK = 'ChannelId';
 
-    protected function _getTable()
+    protected function getTable()
     {
         return self::TABLE;
     }
 
-    protected function _getPrimaryKey()
+    protected function getPrimaryKey()
     {
         return self::PK;
     }
@@ -50,7 +50,7 @@ class Channel extends SqlAbstract implements InterfaceChannel
     public function getAllChannels()
     {
         $strSql = 'SELECT * FROM %s';
-        $arrRows = $this->_getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
+        $arrRows = $this->getAdapter()->fetchAll(sprintf($strSql, self::TABLE));
         return new Rows($arrRows, $this);
     }
 
@@ -58,7 +58,7 @@ class Channel extends SqlAbstract implements InterfaceChannel
     {
         $strSql = 'SELECT * FROM %s WHERE %s = ?';
 
-        $arrRow = $this->_getAdapter()->fetchRow(
+        $arrRow = $this->getAdapter()->fetchRow(
             sprintf(
                 $strSql,
                 self::TABLE,
@@ -76,21 +76,16 @@ class Channel extends SqlAbstract implements InterfaceChannel
 
     public function delete(ModelChannel $modelChannel)
     {
-        return $this->_delete($modelChannel);
-    }
-
-    public function deleteById($strId)
-    {
-        return $this->_deleteById($strId);
+        return $this->deleteModel($modelChannel);
     }
 
     public function save(ModelChannel $modelChannel)
     {
-        return $this->_save($modelChannel);
+        return $this->saveModel($modelChannel);
     }
 
     public function convertToModel($arrData)
     {
-        return ModelChannel::createFromData($this, $this->_sqlToModel($arrData));
+        return ModelChannel::createFromData($this, $this->sqlToModel($arrData));
     }
 }

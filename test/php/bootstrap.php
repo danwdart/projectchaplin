@@ -22,29 +22,26 @@
  * @version   GIT: $Id$
  * @link      https://github.com/danwdart/projectchaplin
 **/
-class Chaplin_Model_User_CredentialTest
-    extends Zend_Test_PHPUnit_ControllerTestCase
-{
-    public function testCreate()
-    {
-        $this->markTestSkipped(
-            'Credentials not actively maintained and deprecated'
-        );
 
-        $strServiceName = 'ServiceName';
-        $strServiceURL = 'ServiceURL';
-        $strAccessToken = 'AccessToken';
-        $strUsername = 'Username';
-        $strPassword = 'Password';
-        $modelUser = Chaplin_Model_User::create($strUsername, $strPassword);
-        $credential = Chaplin_Model_User_Credential::create(
-            $modelUser,
-            $strServiceName,
-            $strServiceURL,
-            $strAccessToken
-        );
-        $this->assertEquals($strServiceName, $credential->getServiceName());
-        $this->assertEquals($strServiceURL, $credential->getServiceURL());
-        $this->assertEquals($strAccessToken, $credential->getAccessToken());
-    }
-}
+// Define path to application directory
+defined('APPLICATION_PATH')
+    || define(
+        'APPLICATION_PATH',
+        realpath(
+            dirname(__FILE__) . '/../../src/php'
+        )
+    );
+
+// Define application environment
+defined('APPLICATION_ENV')
+    || define(
+        'APPLICATION_ENV',
+        (
+            getenv('APPLICATION_ENV') ?? 'testing'
+        )
+    );
+
+
+require_once APPLICATION_PATH.'/vendor/autoload.php';
+
+Mockery::getConfiguration()->allowMockingNonExistentMethods(false);

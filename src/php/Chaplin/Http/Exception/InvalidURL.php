@@ -27,8 +27,6 @@ namespace Chaplin\Http\Exception;
 
 use Chaplin\Http\Exception;
 
-
-
 class InvalidURL extends Exception
 {
     const MESSAGE = '%s was an invalid URL, reason: %s';

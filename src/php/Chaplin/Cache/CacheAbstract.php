@@ -28,30 +28,30 @@ use Zend_Cache_Core as ZendCache;
 
 abstract class CacheAbstract
 {
-    private $_zendCache;
+    private $zendCache;
 
     public function setCache(ZendCache $zendCache = null)
     {
-        $this->_zendCache    = $zendCache;
+        $this->zendCache    = $zendCache;
     }
 
-    protected function _cacheLoadKey($strKey)
+    protected function cacheLoadKey($strKey)
     {
-        if (is_null($this->_zendCache)) {
+        if (is_null($this->zendCache)) {
             return false;
         }
-        return $this->_zendCache->load($strKey);
+        return $this->zendCache->load($strKey);
     }
 
-    protected function _cacheSaveKey($strKey, $mixedValue)
+    protected function cacheSaveKey($strKey, $mixedValue)
     {
-        if (is_null($this->_zendCache)) {
+        if (is_null($this->zendCache)) {
             return false;
         }
-        return $this->_zendCache->save($mixedValue, $strKey);
+        return $this->zendCache->save($mixedValue, $strKey);
     }
 
-    protected function _getCacheKey($strMethod, $strString)
+    protected function getCacheKey($strMethod, $strString)
     {
         return preg_replace('/[^a-zA-Z0-9_]/', '', $strMethod.$strString);
     }

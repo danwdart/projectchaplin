@@ -5,7 +5,7 @@ namespace Chaplin\Traits;
 
 trait MultiSingleton
 {
-    private static $_arrInstances = [];
+    private static $arrInstances = [];
 
     private function __clone()
     {
@@ -28,12 +28,12 @@ trait MultiSingleton
     public static function getInstance()
     {
         $strClass = get_called_class();
-        if (isset(self::$_arrInstances[$strClass])) {
-            return self::$_arrInstances[$strClass];
+        if (isset(self::$arrInstances[$strClass])) {
+            return self::$arrInstances[$strClass];
         }
 
         $instance = new $strClass();
-        self::$_arrInstances[$strClass] = $instance;
+        self::$arrInstances[$strClass] = $instance;
         return $instance;
     }
 }

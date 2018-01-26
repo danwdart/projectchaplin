@@ -46,8 +46,10 @@ use Zend_View_Helper_Navigation_HelperAbstract as HelperAbstract;
 
 class Api extends ZendBootstrap
 {
+    // @codingStandardsIgnoreStart
     protected function _initAcl()
     {
+        // @codingStandardsIgnoreEnd
         $acl = new Acl();
 
         $acl->addRole(
@@ -98,16 +100,20 @@ class Api extends ZendBootstrap
         Reg::set('acl', $acl);
     }
 
+    // @codingStandardsIgnoreStart
     protected function _initApi()
     {
+        // @codingStandardsIgnoreEnd
         $this->bootstrap('frontController');
         HelperBroker::addPrefix("Chaplin\\Controller\\Action\\Helper\\");
         HelperBroker::addHelper(new RestContextSwitch());
         $this->frontController->registerPlugin(new PluginApi());
     }
 
+    // @codingStandardsIgnoreStart
     protected function _initRoutes()
     {
+        // @codingStandardsIgnoreEnd
         $router = Front::getInstance()->getRouter();
         /*
         $route = new Zend_Controller_Router_Route_Regex('.*-p(\d+).htm',
@@ -166,8 +172,10 @@ class Api extends ZendBootstrap
         $router->addRoute('userinfo', $route);
     }
 
+    // @codingStandardsIgnoreStart
     protected function _initSession()
     {
+        // @codingStandardsIgnoreEnd
         $configSessions = ConfigSessions::getInstance();
         if (!is_null($configSessions->getSaveHandler())) {
             Session::setSaveHandler($configSessions->getSaveHandler());
@@ -178,8 +186,10 @@ class Api extends ZendBootstrap
         Session::start();
     }
 
+    // @codingStandardsIgnoreStart
     protected function _initSmtp()
     {
+        // @codingStandardsIgnoreEnd
         $transport = new TransportSmtp(
             getenv("SMTP_HOST"),
             [
@@ -193,8 +203,10 @@ class Api extends ZendBootstrap
         ZendMail::setDefaultTransport($transport);
     }
 
+    // @codingStandardsIgnoreStart
     protected function _bootstrap($resource = null)
     {
+        // @codingStandardsIgnoreEnd
         try {
             parent::_bootstrap($resource);
         } catch (Exception $e) {

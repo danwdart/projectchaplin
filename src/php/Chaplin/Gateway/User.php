@@ -29,44 +29,42 @@ use Chaplin\Gateway\GatewayAbstract;
 use Chaplin\Dao\Interfaces\User as InterfaceUser;
 use Chaplin\Model\User as ModelUser;
 
-
-
 class User extends GatewayAbstract
 {
-    private $_daoUser;
+    private $daoUser;
 
     public function __construct(InterfaceUser $daoUser)
     {
-        $this->_daoUser = $daoUser;
+        $this->daoUser = $daoUser;
     }
 
     public function getAllUsers()
     {
-        return $this->_daoUser->getAllUsers();
+        return $this->daoUser->getAllUsers();
     }
 
     public function getByUsernameAndPassword($strUsername, $strPassword)
     {
-        return $this->_daoUser->getByUsernameAndPassword($strUsername, $strPassword);
+        return $this->daoUser->getByUsernameAndPassword($strUsername, $strPassword);
     }
 
     public function getByUsername($strUsername)
     {
-        return $this->_daoUser->getByUsername($strUsername);
+        return $this->daoUser->getByUsername($strUsername);
     }
 
     public function delete(ModelUser $modelUser)
     {
-        $this->_daoUser->delete($modelUser);
+        $this->daoUser->delete($modelUser);
     }
 
     public function save(ModelUser $modelUser)
     {
-        $this->_daoUser->save($modelUser);
+        $this->daoUser->save($modelUser);
     }
 
     public function updateByToken($strToken, $strPassword)
     {
-        return $this->_daoUser->updateByToken($strToken, $strPassword);
+        return $this->daoUser->updateByToken($strToken, $strPassword);
     }
 }

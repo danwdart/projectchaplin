@@ -5,7 +5,6 @@ namespace Chaplin\Model\Video;
 
 use OutOfBoundsException;
 
-
 class Licence
 {
     const FIELD_TEXT = 'Text';
@@ -38,7 +37,7 @@ class Licence
     const URL_CCBYNCND = self::HOST_CC.'/licenses/by-nc-nd/3.0/';
     const URL_CC0 = self::HOST_CC.'/publicdomain/zero/1.0/';
 
-    private static $_arrInfo = [
+    private static $arrInfo = [
     self::ID_CCBY => [
     self::FIELD_TEXT    => self::TEXT_CCBY,
     self::FIELD_URL     => self::URL_CCBY
@@ -69,12 +68,12 @@ class Licence
     ]
     ];
 
-    private $_strId;
+    private $strId;
 
     public static function getSelectOptions()
     {
         $arrOut = [];
-        foreach (self::$_arrInfo as $strId => $arrOption) {
+        foreach (self::$arrInfo as $strId => $arrOption) {
             $arrOut[$strId] = $arrOption[self::FIELD_TEXT];
         }
         return $arrOut;
@@ -87,25 +86,25 @@ class Licence
 
     public function __construct($strId)
     {
-        if (!isset(self::$_arrInfo[$strId])) {
+        if (!isset(self::$arrInfo[$strId])) {
             throw new OutOfBoundsException('Invalid id: '.$strId);
         }
 
-        $this->_strId = $strId;
+        $this->strId = $strId;
     }
 
     public function getId()
     {
-        return $this->_strId;
+        return $this->strId;
     }
 
     public function getText()
     {
-        return self::$_arrInfo[$this->_strId][self::FIELD_TEXT];
+        return self::$arrInfo[$this->strId][self::FIELD_TEXT];
     }
 
     public function getURL()
     {
-        return self::$_arrInfo[$this->_strId][self::FIELD_URL];
+        return self::$arrInfo[$this->strId][self::FIELD_URL];
     }
 }

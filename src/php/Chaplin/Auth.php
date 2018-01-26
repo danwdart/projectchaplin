@@ -25,21 +25,11 @@
 
 namespace Chaplin;
 
+use Chaplin\Interfaces\Singleton as SingletonInterface;
+use Chaplin\Traits\Singleton as SingletonTrait;
 use Zend_Auth as ZendAuth;
 
-class Auth extends ZendAuth
+class Auth extends ZendAuth implements SingletonInterface
 {
-    public static function getInstance()
-    {
-        if (null === self::$_instance) {
-            self::$_instance = new self();
-        }
-
-        return self::$_instance;
-    }
-
-    public static function inject(ZendAuth $auth)
-    {
-        self::$_instance = $auth;
-    }
+    use SingletonTrait;
 }

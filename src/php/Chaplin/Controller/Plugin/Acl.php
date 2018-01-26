@@ -40,14 +40,14 @@ use Chaplin\Auth;
 
 class Acl extends Zend_Controller_Plugin_Abstract
 {
-    private $_acl;
+    private $acl;
 
     public function __construct(Zend_Acl $acl)
     {
-        $this->_acl = $acl;
+        $this->acl = $acl;
     }
 
-    private function _isValidRequest(Zend_Controller_Request_Abstract $request)
+    private function isValidRequest(Zend_Controller_Request_Abstract $request)
     {
         $dispatcher = Zend_Controller_Front::getInstance()->getDispatcher();
         if ($dispatcher->isDispatchable($request)) {
@@ -62,7 +62,7 @@ class Acl extends Zend_Controller_Plugin_Abstract
 
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
-        if (!$this->_isValidRequest($request)) {
+        if (!$this->isValidRequest($request)) {
             return;
         }
 
@@ -80,14 +80,14 @@ class Acl extends Zend_Controller_Plugin_Abstract
             UserType::TYPE_GUEST;
 
         if (false === strpos($request->getRequestUri(), 'login')
-            && $this->_acl->isAllowed($role, strtolower($resource), $strAction)
+            && $this->acl->isAllowed($role, strtolower($resource), $strAction)
             && 'error' != $strAction
         ) {
             $login = new Zend_Session_Namespace('login');
             $login->url = $request->getRequestUri();
         }
 
-        if (!$this->_acl->isAllowed($role, strtolower($resource), $strAction)) {
+        if (!$this->acl->isAllowed($role, strtolower($resource), $strAction)) {
             return $redirectHelper->gotoUrl('/login');
         }
     }

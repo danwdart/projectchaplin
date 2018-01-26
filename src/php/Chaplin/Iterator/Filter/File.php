@@ -27,21 +27,19 @@ namespace Chaplin\Iterator\Filter;
 
 use FilterIterator;
 
-
-
 class File extends FilterIterator
 {
-    private $_strAcceptableTypes;
+    private $strAcceptableTypes;
 
     public function setAcceptableTypes($strAcceptableTypes)
     {
-        $this->_strAcceptableTypes = $strAcceptableTypes;
+        $this->strAcceptableTypes = $strAcceptableTypes;
     }
 
     public function accept()
     {
         return parent::current()->isFile() &&
-         preg_match('/\\.('.$this->_strAcceptableTypes.')$/i', parent::current()->getFilename()) &&
+         preg_match('/\\.('.$this->strAcceptableTypes.')$/i', parent::current()->getFilename()) &&
          false === strpos(parent::current()->getPathname(), realpath(APPLICATION_PATH.'/..'));
     }
 }

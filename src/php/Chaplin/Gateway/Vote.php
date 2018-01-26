@@ -30,19 +30,17 @@ use Chaplin\Dao\Interfaces\Vote as InterfaceVote;
 use Chaplin\Model\User;
 use Chaplin\Model\Video;
 
-
-
 class Vote extends GatewayAbstract
 {
-    private $_daoVote;
+    private $daoVote;
 
     public function __construct(InterfaceVote $daoVote)
     {
-        $this->_daoVote = $daoVote;
+        $this->daoVote = $daoVote;
     }
 
     public function addVote(User $modelUser, Video $modelVideo, $intVote)
     {
-        return $this->_daoVote->addVote($modelUser, $modelVideo, $intVote);
+        return $this->daoVote->addVote($modelUser, $modelVideo, $intVote);
     }
 }

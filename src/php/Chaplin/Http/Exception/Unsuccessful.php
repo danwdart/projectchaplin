@@ -27,8 +27,6 @@ namespace Chaplin\Http\Exception;
 
 use Chaplin\Http\Exception;
 
-
-
 class Unsuccessful extends Exception
 {
     const MESSAGE = 'HTTP request for url %s was unsuccessful (Error code %s).';

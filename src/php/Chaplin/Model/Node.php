@@ -33,8 +33,6 @@ use Chaplin\Model\Video;
 use Chaplin\Iterator\Api\ModelArray;
 use Chaplin\Gateway;
 
-
-
 class Node extends Hash
 {
     const FIELD_NODEID = 'NodeId';
@@ -42,7 +40,7 @@ class Node extends Hash
     const FIELD_NAME = 'Name';
     const FIELD_ACTIVE = 'Active';
 
-    protected $_arrFields = array(
+    protected $arrFields = array(
         self::FIELD_NODEID => array('Class' => 'Chaplin\\Model\\Field\\FieldId'),
         self::FIELD_IP => array('Class' => 'Chaplin\\Model\\Field\\Field'),
         self::FIELD_NAME => array('Class' => 'Chaplin\\Model\\Field\\Field'),
@@ -52,11 +50,11 @@ class Node extends Hash
     public static function create($strIP, $strName)
     {
         $node = new self();
-        $node->_bIsNew = true;
-        $node->_setField(self::FIELD_NODEID, md5(uniqid()));
-        $node->_setField(self::FIELD_IP, $strIP);
-        $node->_setField(self::FIELD_NAME, $strName);
-        $node->_setField(self::FIELD_ACTIVE, 0);
+        $node->bIsNew = true;
+        $node->setField(self::FIELD_NODEID, md5(uniqid()));
+        $node->setField(self::FIELD_IP, $strIP);
+        $node->setField(self::FIELD_NAME, $strName);
+        $node->setField(self::FIELD_ACTIVE, 0);
         return $node;
     }
 
@@ -67,22 +65,22 @@ class Node extends Hash
 
     public function getNodeId()
     {
-        return $this->_getField(self::FIELD_NODEID, null);
+        return $this->getField(self::FIELD_NODEID, null);
     }
 
     public function getIP()
     {
-        return $this->_getField(self::FIELD_IP, null);
+        return $this->getField(self::FIELD_IP, null);
     }
 
     public function getName()
     {
-        return $this->_getField(self::FIELD_NAME, null);
+        return $this->getField(self::FIELD_NAME, null);
     }
 
     public function bIsActive()
     {
-        return $this->_getField(self::FIELD_ACTIVE, false);
+        return $this->getField(self::FIELD_ACTIVE, false);
     }
 
     public function getRoot()
@@ -102,19 +100,19 @@ class Node extends Hash
                 ->getHttpClient()
                 ->getHttpResponse($this->getStatusURL(), null, 0);
             if (200 == $response->getStatus()) {
-                $this->_setField(self::FIELD_ACTIVE, 1);
+                $this->setField(self::FIELD_ACTIVE, 1);
                 $this->save();
                 return true;
             }
         } catch (Exception $e) {
-            $this->_setField(self::FIELD_ACTIVE, 0);
+            $this->setField(self::FIELD_ACTIVE, 0);
             $this->save();
             return false;
         }
         return false;
     }
 
-    private function _get($url)
+    private function get($url)
     {
         $strURL = $this->getRoot().$url;
         try {
@@ -129,13 +127,13 @@ class Node extends Hash
     public function getVideoById($strVideoId)
     {
         // todo header
-        $arrVideo = $this->_get('/video/watch/id/'.$strVideoId.'?format=json');
+        $arrVideo = $this->get('/video/watch/id/'.$strVideoId.'?format=json');
         return Video::createFromAPIResponse($arrVideo, $this->getRoot());
     }
 
     public function getFeaturedVideos()
     {
-        $arrVideo = $this->_get('/?format=json');
+        $arrVideo = $this->get('/?format=json');
         return new ModelArray("Chaplin\\Model\\Video", $this->getRoot(), $arrVideo);
     }
 

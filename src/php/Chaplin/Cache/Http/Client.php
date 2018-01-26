@@ -33,40 +33,40 @@ use Zend_Log as ZendLog;
 
 class Client extends CacheAbstract implements HttpInterface
 {
-    private $_objHttpClient;
+    private $objHttpClient;
 
     public function __construct(HttpInterface $objHttpClient, Cache $cacheHttpClient = null)
     {
-        $this->_objHttpClient = $objHttpClient;
+        $this->objHttpClient = $objHttpClient;
         $this->setCache($cacheHttpClient);
     }
 
     public function getPageBody($strURL, $intLogPriority = ZendLog::ERR)
     {
-        $cacheKey   = $this->_getCacheKey(__METHOD__, $strURL);
-        if (false === ($response = $this->_cacheLoadKey($cacheKey))) {
-            $response   = $this->_objHttpClient->getPageBody($strURL, $intLogPriority);
-            $this->_cacheSaveKey($cacheKey, $response);
+        $cacheKey   = $this->getCacheKey(__METHOD__, $strURL);
+        if (false === ($response = $this->cacheLoadKey($cacheKey))) {
+            $response   = $this->objHttpClient->getPageBody($strURL, $intLogPriority);
+            $this->cacheSaveKey($cacheKey, $response);
         }
         return $response;
     }
 
     public function getObject($strURL, $intLogPriority = ZendLog::ERR)
     {
-        $cacheKey   = $this->_getCacheKey(__METHOD__, $strURL);
-        if (false === ($response = $this->_cacheLoadKey($cacheKey))) {
-            $response   = $this->_objHttpClient->getObject($strURL, $intLogPriority);
-            $this->_cacheSaveKey($cacheKey, $response);
+        $cacheKey   = $this->getCacheKey(__METHOD__, $strURL);
+        if (false === ($response = $this->cacheLoadKey($cacheKey))) {
+            $response   = $this->objHttpClient->getObject($strURL, $intLogPriority);
+            $this->cacheSaveKey($cacheKey, $response);
         }
         return $response;
     }
 
     public function scrapeXPath($strURL, $strXPath)
     {
-        $cacheKey   = $this->_getCacheKey(__METHOD__, $strURL . 'X' . $strXPath);
-        if (false === ($response = $this->_cacheLoadKey($cacheKey))) {
-            $response   = $this->_objHttpClient->scrapeXPath($strURL, $strXPath);
-            $this->_cacheSaveKey($cacheKey, $response);
+        $cacheKey   = $this->getCacheKey(__METHOD__, $strURL . 'X' . $strXPath);
+        if (false === ($response = $this->cacheLoadKey($cacheKey))) {
+            $response   = $this->objHttpClient->scrapeXPath($strURL, $strXPath);
+            $this->cacheSaveKey($cacheKey, $response);
         }
         return $response;
     }
@@ -74,15 +74,15 @@ class Client extends CacheAbstract implements HttpInterface
     public function getHttpResponse($strURL, $intLogPriority = ZendLog::ERR, $bCache = true)
     {
         if (!$bCache) {
-            return $this->_objHttpClient->getHttpResponse($strURL, $intLogPriority);
+            return $this->objHttpClient->getHttpResponse($strURL, $intLogPriority);
         }
 
         Log::getInstance()->log('Cache: trying to load ('.$strURL.')', $intLogPriority);
-        $cacheKey = $this->_getCacheKey(__METHOD__, $strURL);
-        if (false === ($response = $this->_cacheLoadKey($cacheKey))) {
-            $response = $this->_objHttpClient->getHttpResponse($strURL, $intLogPriority);
+        $cacheKey = $this->getCacheKey(__METHOD__, $strURL);
+        if (false === ($response = $this->cacheLoadKey($cacheKey))) {
+            $response = $this->objHttpClient->getHttpResponse($strURL, $intLogPriority);
             if (200 == $response->getStatus()) {
-                $this->_cacheSaveKey($cacheKey, $response);
+                $this->cacheSaveKey($cacheKey, $response);
             }
         }
         Log::getInstance()->log('Cache: retrieved ('.$response->getBody().')', $intLogPriority);
@@ -91,11 +91,11 @@ class Client extends CacheAbstract implements HttpInterface
 
     public function parseRawXPath($strData, $strXPath)
     {
-        return $this->_objHttpClient->parseRawXPath($strData, $strXPath);
+        return $this->objHttpClient->parseRawXPath($strData, $strXPath);
     }
 
     public function parseRawHtmlXPath($strData, $strXPath, $strURL = null)
     {
-        return $this->_objHttpClient->parseRawHtmlXPath($strData, $strXPath, $strURL);
+        return $this->objHttpClient->parseRawHtmlXPath($strData, $strXPath, $strURL);
     }
 }

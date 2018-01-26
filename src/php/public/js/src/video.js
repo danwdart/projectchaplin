@@ -25,59 +25,59 @@
 import $ from 'jquery';
 
 $(document).ready(() => {
-    $('.effect').change(
+    $(`.effect`).change(
         function() {
-            $('#video').attr('class', $(this).val());
+            $(`#video`).attr(`class`, $(this).val());
         }
     );
-    $('#slower').click(
+    $(`#slower`).click(
         function() {
-            $('#video')[0].playbackRate = 0.5;
+            $(`#video`)[0].playbackRate = 0.5;
         }
     );
-    $('#normalspeed').click(
+    $(`#normalspeed`).click(
         function() {
-            $('#video')[0].playbackRate = 1;
+            $(`#video`)[0].playbackRate = 1;
         }
     );
-    $('#faster').click(
+    $(`#faster`).click(
         function() {
-            $('#video')[0].playbackRate = 2;
+            $(`#video`)[0].playbackRate = 2;
         }
     );
-    $('.infinite').on(
-        'click', (ev) => {
+    $(`.infinite`).on(
+        `click`, (ev) => {
             let $btn = $(ev.currentTarget);
 
-            $btn.toggleClass('active');
-            $('#video').attr('loop', $btn.hasClass('active'));
+            $btn.toggleClass(`active`);
+            $(`#video`).attr(`loop`, $btn.hasClass(`active`));
 
         }
     );
     // <a class="ajax" rel="ready" href="http://clickedurl"></a>
     // <div id="ready" rel="http://refreshfrom">Result</div>
-    $('a.ajax').click(
+    $(`a.ajax`).click(
         function(e) {
             e.preventDefault();
             const el = $(this);
             $.ajax(
                 {
-                    url: el.attr('href'),
-                    method: 'GET',
+                    url: el.attr(`href`),
+                    method: `GET`,
                     success: function() {
-                        const rel = el.attr('data-result-in');
+                        const rel = el.attr(`data-result-in`);
                         if (null === rel) {
                             return;
                         }
-                        const elRel = $('#'+rel),
-                            elRelUrl = elRel.attr('data-refresh-from');
+                        const elRel = $(`#`+rel),
+                            elRelUrl = elRel.attr(`data-refresh-from`);
                         if (null === elRelUrl) {
                             return;
                         }
                         $.ajax(
                             {
                                 url: elRelUrl,
-                                method: 'GET',
+                                method: `GET`,
                                 success: function(data) {
                                     elRel.html(data);
                                 }
@@ -85,63 +85,63 @@ $(document).ready(() => {
                         );
                     }
                 }
-            )
+            );
         }
-    )
-    $('.vote').click(function(e) {
+    );
+    $(`.vote`).click(function(e) {
         e.preventDefault();
-        const $ups = $(".vote .ups"),
-            $downs = $(".vote .downs"),
-            url = $(this).attr("href");
-        console.log("Sending vote");
+        const $ups = $(`.vote .ups`),
+            $downs = $(`.vote .downs`),
+            url = $(this).attr(`href`);
+        //console.log(`Sending vote`);
         $.ajax(
             {
                 url,
-                type: "GET",
-                dataType: "json",
+                type: `GET`,
+                dataType: `json`,
                 success: function(data) {
                     $ups.html(data.ups);
                     $downs.html(data.downs);
                 },
-                error: function(err) {
-                    console.error(err);
+                error: function() {
+                    //console.error(err);
                 }
             }
-        )
-    })
+        );
+    });
 
-    $('form.ajax input[type="submit"]').click(
+    $(`form.ajax input[type="submit"]`).click(
         function(e) {
             e.preventDefault();
-            parent = $('form.ajax');
+            const parent = $(`form.ajax`);
             $.ajax(
                 {
-                    url: parent.attr('action'),
-                    type: parent.attr('method'),
+                    url: parent.attr(`action`),
+                    type: parent.attr(`method`),
                     data: parent.serialize(),
                     success: function() {
-                        parent.append('<span class="success">Comment posted... </span>');
-                        parent.children('.success').fadeOut(3000, function() {$(this).remove();});
+                        parent.append(`<span class="success">Comment posted... </span>`);
+                        parent.children(`.success`).fadeOut(3000, function() {$(this).remove();});
                     },
                     error: function() {
-                        parent.append('<span class="error">Sorry, we couldn\'t post your comment.</span>');
+                        parent.append(`<span class="error">Sorry, we couldn't post your comment.</span>`);
                     }
                 }
             );
-            parentrel = parent.attr('rel');
+            const parentrel = parent.attr(`rel`);
             if (null != parentrel) {
-                el = $('#'+parentrel);
-                elrel = el.attr('rel');
+                const el = $(`#`+parentrel),
+                    elrel = el.attr(`rel`);
                 if (null != elrel) {
                     $.ajax(
                         {
                             url: elrel,
-                            type: 'GET',
+                            type: `GET`,
                             success: function(data) {
                                 el.html(data);
                             },
                             error: function() {
-                                console.log('failed to update');
+                                // console.log(`failed to update`);
                             }
                         }
                     );

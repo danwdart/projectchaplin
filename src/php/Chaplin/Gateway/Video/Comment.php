@@ -29,39 +29,37 @@ use Chaplin\Gateway\GatewayAbstract;
 use Chaplin\Dao\Interfaces\Video\Comment as InterfaceVideoComment;
 use Chaplin\Model\Video\Comment as ModelVideoComment;
 
-
-
 class Comment extends GatewayAbstract
 {
-    private $_daoComment;
+    private $daoComment;
 
     public function __construct(InterfaceVideoComment $daoComment)
     {
-        $this->_daoComment = $daoComment;
+        $this->daoComment = $daoComment;
     }
 
     public function getById($strId)
     {
-        return $this->_daoComment->getById($strId);
+        return $this->daoComment->getById($strId);
     }
 
     public function getByVideoId($strVideoId)
     {
-        return $this->_daoComment->getByVideoId($strVideoId);
+        return $this->daoComment->getByVideoId($strVideoId);
     }
 
     public function delete(ModelVideoComment $modelComment)
     {
-        return $this->_daoComment->delete($modelComment);
+        return $this->daoComment->delete($modelComment);
     }
 
     public function deleteById($strCommentId)
     {
-        return $this->_daoComment->deleteById($strCommentId);
+        return $this->daoComment->deleteById($strCommentId);
     }
 
     public function save(ModelVideoComment $modelComment)
     {
-        return $this->_daoComment->save($modelComment);
+        return $this->daoComment->save($modelComment);
     }
 }

@@ -28,58 +28,56 @@ namespace Chaplin\Iterator\Api;
 use Chaplin\Iterator\IteratorInterface;
 use BadMethodCallException;
 
-
-
 class ModelArray implements IteratorInterface
 {
-    private $_daoInterface;
-    private $_bEmpty        = false;
+    private $daoInterface;
+    private $bEmpty        = false;
 
-    private $_intOffset     = 0;
-    private $_intStartRow   = 0;
-    private $_intReturnRows;
-    private $_strClass;
-    private $_arrRows;
-    private $_strURLPrefix;
+    private $intOffset     = 0;
+    private $intStartRow   = 0;
+    private $intReturnRows;
+    private $strClass;
+    private $arrRows;
+    private $strURLPrefix;
 
     public function __construct($strClass, $strURLPrefix, array $arrRows)
     {
-        $this->_arrRows = $arrRows;
-        $this->_strClass = $strClass;
-        $this->_strURLPrefix = $strURLPrefix;
+        $this->arrRows = $arrRows;
+        $this->strClass = $strClass;
+        $this->strURLPrefix = $strURLPrefix;
     }
     public function isEmpty()
     {
-        if (0 == count($this->_arrRows)) {
-            $this->_bEmpty = true;
+        if (0 == count($this->arrRows)) {
+            $this->bEmpty = true;
         }
-        return $this->_bEmpty;
+        return $this->bEmpty;
     }
     public function count()
     {
-        return count($this->_arrRows);
+        return count($this->arrRows);
     }
     public function current()
     {
-        $arrCurrentItem = $this->_arrRows[$this->_intOffset];
-        $strClass = $this->_strClass;
-        return $strClass::createFromAPIResponse($arrCurrentItem, $this->_strURLPrefix);
+        $arrCurrentItem = $this->arrRows[$this->intOffset];
+        $strClass = $this->strClass;
+        return $strClass::createFromAPIResponse($arrCurrentItem, $this->strURLPrefix);
     }
-    function key()
+    public function key()
     {
-        return $this->_intOffset;
+        return $this->intOffset;
     }
-    function next()
+    public function next()
     {
-        $this->_intOffset++;
+        $this->intOffset++;
     }
-    function rewind()
+    public function rewind()
     {
-        $this->_intOffset = 0;
+        $this->intOffset = 0;
     }
-    function valid()
+    public function valid()
     {
-        return isset($this->_arrRows[$this->_intOffset]);
+        return isset($this->arrRows[$this->intOffset]);
     }
     //Implements ArrayAccess
     public function offsetSet($offset, $value)
@@ -99,9 +97,9 @@ class ModelArray implements IteratorInterface
         throw new BadMethodCallException(__METHOD__);
     }
 
-    /*  Limits the number of rows to be returned in the cursor
-     *  @param:     $intNoRows  = number of rows to return
-     *  @return:    $this (this is a fluent interface)
+    /**  Limits the number of rows to be returned in the cursor
+     *  @param     $intNoRows  = number of rows to return
+     *  @return    $this (this is a fluent interface)
      **/
     public function limit($intNoRows)
     {
@@ -110,8 +108,8 @@ class ModelArray implements IteratorInterface
     /**
      *  Skips the first  $intNoRows
      *
-     *  @param:  $intNoRows  = number of rows to skip
-     *  @return: $this (this is a fluent interface)
+     *  @param  $intNoRows  = number of rows to skip
+     *  @return $this (this is a fluent interface)
      **/
     public function skip($intNoRows)
     {
@@ -120,8 +118,8 @@ class ModelArray implements IteratorInterface
     /**
      *  Sorts the cursor
      *
-     *  @param:  $arrColumns     Associative array of Key => value (1 = ASC, -1 = DESC)
-     *  @return: $this (this is a fluent interface)
+     *  @param  $arrColumns     Associative array of Key => value (1 = ASC, -1 = DESC)
+     *  @return $this (this is a fluent interface)
      **/
     public function sort(array $arrColumns = array())
     {

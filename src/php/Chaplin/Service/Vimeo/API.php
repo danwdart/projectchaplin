@@ -49,7 +49,7 @@ class API
         return $token['body']['access_token'];
     }
 
-    private function _getLib()
+    private function getLib()
     {
         $lib = new Vimeo(
             getenv("VIMEO_CLIENT_ID"),
@@ -64,12 +64,12 @@ class API
 
     public function search($strSearchTerm, $page = 0, $intLimit = 50)
     {
-        $lib = $this->_getLib();
+        $lib = $this->getLib();
         if (!$lib) {
             return null;
         }
 
-        return $lib->request(
+        return $lib->_request(
             '/videos',
             [
                 'query' => $strSearchTerm,
@@ -81,22 +81,22 @@ class API
 
     public function getVideoById($strId)
     {
-        $lib = $this->_getLib();
+        $lib = $this->getLib();
         if (!$lib) {
             return null;
         }
 
-        return $lib->request('/videos/'.$strId, [], 'GET')['body'];
+        return $lib->_request('/videos/'.$strId, [], 'GET')['body'];
     }
 
     public function getUserProfile($strSearchTerm)
     {
-        $lib = $this->_getLib();
+        $lib = $this->getLib();
         if (!$lib) {
             return null;
         }
 
-        $res = $lib->request(
+        $res = $lib->_request(
             '/users',
             [
                 'query' => $strSearchTerm
@@ -120,12 +120,12 @@ class API
 
     public function getUserUploads($strChannelId, $intPage = 1)
     {
-        $lib = $this->_getLib();
+        $lib = $this->getLib();
         if (!$lib) {
             return null;
         }
 
-        return $lib->request(
+        return $lib->_request(
             '/users/'.$strChannelId.'/videos',
             [
             'page' => $intPage
