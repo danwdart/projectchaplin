@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b8d869d8d66394e6cc938aafda4867f1",
+    "content-hash": "f37b7450483944d590c93b4186700d89",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1780,6 +1780,57 @@
             "time": "2017-12-23T16:53:46+00:00"
         },
         {
+            "name": "squizlabs/php_codesniffer",
+            "version": "3.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "reference": "d7c00c3000ac0ce79c96fcbfef86b49a71158cd1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/d7c00c3000ac0ce79c96fcbfef86b49a71158cd1",
+                "reference": "d7c00c3000ac0ce79c96fcbfef86b49a71158cd1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "ext-tokenizer": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0"
+            },
+            "bin": [
+                "bin/phpcs",
+                "bin/phpcbf"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Sherwood",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+            "homepage": "http://www.squizlabs.com/php-codesniffer",
+            "keywords": [
+                "phpcs",
+                "standards"
+            ],
+            "time": "2017-12-19T21:44:46+00:00"
+        },
+        {
             "name": "symfony/config",
             "version": "v4.0.2",
             "source": {
@@ -2673,6 +2724,67 @@
     ],
     "packages-dev": [
         {
+            "name": "consistence/coding-standard",
+            "version": "2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/consistence/coding-standard.git",
+                "reference": "e273382d2ca04dff0be8a6d9733647f93fc72066"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/consistence/coding-standard/zipball/e273382d2ca04dff0be8a6d9733647f93fc72066",
+                "reference": "e273382d2ca04dff0be8a6d9733647f93fc72066",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~7.0",
+                "slevomat/coding-standard": "~4.0",
+                "squizlabs/php_codesniffer": "~3.2.0"
+            },
+            "require-dev": {
+                "jakub-onderka/php-console-highlighter": "0.3.2",
+                "jakub-onderka/php-parallel-lint": "0.9.2",
+                "phing/phing": "2.16",
+                "phpunit/phpunit": "6.5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Consistence\\": [
+                        "Consistence"
+                    ]
+                },
+                "classmap": [
+                    "Consistence"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vašek Purchart",
+                    "email": "me@vasekpurchart.cz",
+                    "homepage": "http://vasekpurchart.cz"
+                }
+            ],
+            "description": "Consistence - Coding Standard - PHP Code Sniffer rules",
+            "keywords": [
+                "Coding Standard",
+                "PHPCodeSniffer",
+                "codesniffer",
+                "coding",
+                "cs",
+                "phpcs",
+                "ruleset",
+                "sniffer",
+                "standard"
+            ],
+            "time": "2017-12-15T11:56:02+00:00"
+        },
+        {
             "name": "doctrine/instantiator",
             "version": "1.1.0",
             "source": {
@@ -2773,6 +2885,53 @@
                 "test"
             ],
             "time": "2016-01-20T08:20:44+00:00"
+        },
+        {
+            "name": "jakub-onderka/php-parallel-lint",
+            "version": "v0.9.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JakubOnderka/PHP-Parallel-Lint.git",
+                "reference": "2ead2e4043ab125bee9554f356e0a86742c2d4fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JakubOnderka/PHP-Parallel-Lint/zipball/2ead2e4043ab125bee9554f356e0a86742c2d4fa",
+                "reference": "2ead2e4043ab125bee9554f356e0a86742c2d4fa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "jakub-onderka/php-console-highlighter": "~0.3",
+                "nette/tester": "~1.3"
+            },
+            "suggest": {
+                "jakub-onderka/php-console-highlighter": "Highlight syntax in code snippet"
+            },
+            "bin": [
+                "parallel-lint"
+            ],
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "./"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Jakub Onderka",
+                    "email": "jakub.onderka@gmail.com"
+                }
+            ],
+            "description": "This tool check syntax of PHP files about 20x faster than serial check.",
+            "homepage": "https://github.com/JakubOnderka/PHP-Parallel-Lint",
+            "time": "2015-12-15T10:42:16+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -4153,82 +4312,41 @@
             "time": "2016-10-03T07:35:21+00:00"
         },
         {
-            "name": "squizlabs/php_codesniffer",
-            "version": "2.9.1",
+            "name": "slevomat/coding-standard",
+            "version": "4.3.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "dcbed1074f8244661eecddfc2a675430d8d33f62"
+                "url": "https://github.com/slevomat/coding-standard.git",
+                "reference": "823ba04bdcfe642ec2b912e4650d6e33d48c2ef7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/dcbed1074f8244661eecddfc2a675430d8d33f62",
-                "reference": "dcbed1074f8244661eecddfc2a675430d8d33f62",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/823ba04bdcfe642ec2b912e4650d6e33d48c2ef7",
+                "reference": "823ba04bdcfe642ec2b912e4650d6e33d48c2ef7",
                 "shasum": ""
             },
             "require": {
-                "ext-simplexml": "*",
-                "ext-tokenizer": "*",
-                "ext-xmlwriter": "*",
-                "php": ">=5.1.2"
+                "php": "^7.1",
+                "squizlabs/php_codesniffer": "^3.0.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0"
+                "jakub-onderka/php-parallel-lint": "0.9.2",
+                "phing/phing": "2.16",
+                "phpstan/phpstan": "0.9.1",
+                "phpunit/phpunit": "6.5.5"
             },
-            "bin": [
-                "scripts/phpcs",
-                "scripts/phpcbf"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.x-dev"
-                }
-            },
+            "type": "phpcodesniffer-standard",
             "autoload": {
-                "classmap": [
-                    "CodeSniffer.php",
-                    "CodeSniffer/CLI.php",
-                    "CodeSniffer/Exception.php",
-                    "CodeSniffer/File.php",
-                    "CodeSniffer/Fixer.php",
-                    "CodeSniffer/Report.php",
-                    "CodeSniffer/Reporting.php",
-                    "CodeSniffer/Sniff.php",
-                    "CodeSniffer/Tokens.php",
-                    "CodeSniffer/Reports/",
-                    "CodeSniffer/Tokenizers/",
-                    "CodeSniffer/DocGenerators/",
-                    "CodeSniffer/Standards/AbstractPatternSniff.php",
-                    "CodeSniffer/Standards/AbstractScopeSniff.php",
-                    "CodeSniffer/Standards/AbstractVariableSniff.php",
-                    "CodeSniffer/Standards/IncorrectPatternException.php",
-                    "CodeSniffer/Standards/Generic/Sniffs/",
-                    "CodeSniffer/Standards/MySource/Sniffs/",
-                    "CodeSniffer/Standards/PEAR/Sniffs/",
-                    "CodeSniffer/Standards/PSR1/Sniffs/",
-                    "CodeSniffer/Standards/PSR2/Sniffs/",
-                    "CodeSniffer/Standards/Squiz/Sniffs/",
-                    "CodeSniffer/Standards/Zend/Sniffs/"
-                ]
+                "psr-4": {
+                    "SlevomatCodingStandard\\": "SlevomatCodingStandard"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-3-Clause"
+                "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Greg Sherwood",
-                    "role": "lead"
-                }
-            ],
-            "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
-            "homepage": "http://www.squizlabs.com/php-codesniffer",
-            "keywords": [
-                "phpcs",
-                "standards"
-            ],
-            "time": "2017-05-22T02:43:20+00:00"
+            "description": "Slevomat Coding Standard for PHP_CodeSniffer complements Consistence Coding Standard by providing sniffs with additional checks.",
+            "time": "2018-01-21T20:33:49+00:00"
         },
         {
             "name": "theseer/tokenizer",
