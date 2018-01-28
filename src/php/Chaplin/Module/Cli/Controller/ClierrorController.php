@@ -24,7 +24,7 @@
 **/
 namespace Chaplin\Module\Cli\Controller;
 
-use Zend_Controller_Action as Controller;
+use Chaplin\Controller\Action as Controller;
 use Zend_Controller_Plugin_ErrorHandler as ErrorHandler;
 
 class ClierrorController extends Controller

@@ -25,7 +25,7 @@
 namespace Chaplin\Module\Cli\Controller;
 
 use Chaplin\Gateway;
-use Zend_Controller_Action as Controller;
+use Chaplin\Controller\Action as Controller;
 
 class CliController extends Controller
 {

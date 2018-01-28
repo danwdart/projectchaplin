@@ -68,7 +68,7 @@ class ErrorController extends Controller
             $this->view->exception = $errors->exception;
         }
 
-        $this->view->_request   = $errors->_request;
+        $this->view->request   = $errors->request;
     }
 
     private function getLog()
