@@ -23,7 +23,7 @@
  * @link       https://github.com/danwdart/projectchaplin
 **/
 ?>
-<h1><?php echo $this->message ?></h1>
+<h1>Error code <?php echo $this->exception->getCode(); ?>: <?php echo $this->message ?></h1>
 <?php if (isset($this->exception)): ?>
 <?php if ('development' == APPLICATION_ENV): ?>
 <h2><?php echo $this->exception->getMessage() ?></h2>
@@ -37,6 +37,6 @@
     </pre>
     <h3>Request Parameters:</h3>
     <pre>
-<?php echo var_export($this->_request->getParams(), true)?>
+<?php echo var_export($this->request->getParams(), true)?>
     </pre>
 <?php endif; endif;?>

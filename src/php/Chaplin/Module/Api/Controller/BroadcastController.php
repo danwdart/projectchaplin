@@ -24,7 +24,7 @@
 **/
 namespace Chaplin\Module\Api\Controller;
 
-use Zend_Controller_Action as Controller;
+use Chaplin\Controller\Action as Controller;
 
 class BroadcastController extends Controller
 {

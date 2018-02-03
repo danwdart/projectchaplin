@@ -20,22 +20,22 @@
     "url": "https://github.com/danwdart/projectchaplin/issues"
   },
   "dependencies": {
-    "bootstrap": "^4.0.0-beta.3",
+    "bootstrap": "^4.0.0",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.1.1",
-    "popper.js": "^1.12.9",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.13.0",
     "socket.io-client": "^2.0.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.37",
-    "@babel/preset-env": "^7.0.0-beta.37",
-    "@babel/preset-stage-0": "^7.0.0-beta.37",
+    "@babel/core": "^7.0.0-beta.38",
+    "@babel/preset-env": "^7.0.0-beta.38",
+    "@babel/preset-stage-0": "^7.0.0-beta.38",
     "babel-loader": "^8.0.0-beta.0",
-    "css-loader": "^0.28.8",
+    "css-loader": "^0.28.9",
     "eslint": "^4.16.0",
     "file-loader": "^1.1.6",
-    "snyk": "^1.68.0",
-    "style-loader": "^0.19.1",
+    "snyk": "^1.69.5",
+    "style-loader": "^0.20.1",
     "url-loader": "^0.6.2",
     "webpack": "^3.10.0"
   },

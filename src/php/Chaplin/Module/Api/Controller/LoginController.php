@@ -35,7 +35,7 @@ use Chaplin\Module\Api\Form\Auth\Login as FormLogin;
 use Chaplin\Module\Api\Form\Auth\Validate as FormValidate;
 use Chaplin\Module\Api\Form\UserData\Create as FormCreateUser;
 use Exception;
-use Zend_Controller_Action as Controller;
+use Chaplin\Controller\Action as Controller;
 use Zend_Db_Statement_Exception as StatementException;
 use Zend_Http_Client as HttpClient;
 use Zend_Json as Json;

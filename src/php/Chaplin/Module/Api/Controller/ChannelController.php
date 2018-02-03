@@ -24,11 +24,24 @@
 **/
 namespace Chaplin\Module\Api\Controller;
 
-use Zend_Controller_Action as Controller;
+use Chaplin\Module\Api\Form\Channel\Create as FormCreateChannel;
+use Chaplin\Controller\Action as Controller;
 
 class ChannelController extends Controller
 {
     public function getIndex()
     {
+        $this->view->channels = [
+            (object)[
+                "id" => 1,
+                "name" => "My Cool Channel",
+                "description" => "My description"
+            ]
+        ];
+    }
+
+    public function getCreate()
+    {
+        $this->view->form = new FormCreateChannel();
     }
 }

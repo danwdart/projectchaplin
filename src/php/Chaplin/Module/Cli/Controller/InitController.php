@@ -28,7 +28,7 @@ use Chaplin\Gateway;
 use Chaplin\Model\User as ModelUser;
 use Chaplin\Model\User\Helper\UserType;
 use Zend_Db_Statement_Exception as StatementException;
-use Zend_Controller_Action as Controller;
+use Chaplin\Controller\Action as Controller;
 
 class InitController extends Controller
 {
