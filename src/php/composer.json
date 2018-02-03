@@ -15,13 +15,13 @@
     "authors": [
         {
             "name": "Dan Dart",
-            "email": "chaplin@kathiedart.co.uk",
-            "homepage": "http://kathiedart.co.uk",
+            "email": "chaplin@dandart.co.uk",
+            "homepage": "http://dandart.co.uk",
             "role": "Developer"
         }
     ],
     "support": {
-        "email": "chaplin@kathiedart.co.uk",
+        "email": "chaplin@dandart.co.uk",
         "irc": "irc://irc.megworld.co.uk/projectchaplin"
     },
     "repositories": [
