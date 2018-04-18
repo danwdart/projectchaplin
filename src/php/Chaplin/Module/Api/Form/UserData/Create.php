@@ -83,6 +83,7 @@ class Create extends Form
         $fullname->setAttrib('placeholder', 'John Smith');
 
         $email = new Text('email');
+        $email->setLabel("Email Address");
         $email->setAttrib("type", "email");
         $email->setAttrib("class", "form-control");
         $email->setAttrib('placeholder', 'john@smith.com');
