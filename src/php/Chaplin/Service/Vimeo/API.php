@@ -69,7 +69,7 @@ class API
             return null;
         }
 
-        return $lib->_request(
+        return $lib->request(
             '/videos',
             [
                 'query' => $strSearchTerm,
@@ -86,7 +86,7 @@ class API
             return null;
         }
 
-        return $lib->_request('/videos/'.$strId, [], 'GET')['body'];
+        return $lib->request('/videos/'.$strId, [], 'GET')['body'];
     }
 
     public function getUserProfile($strSearchTerm)
@@ -96,7 +96,7 @@ class API
             return null;
         }
 
-        $res = $lib->_request(
+        $res = $lib->request(
             '/users',
             [
                 'query' => $strSearchTerm
@@ -125,7 +125,7 @@ class API
             return null;
         }
 
-        return $lib->_request(
+        return $lib->request(
             '/users/'.$strChannelId.'/videos',
             [
             'page' => $intPage
