@@ -8,6 +8,7 @@ before_script:
     - nvm install 9.4
     - npm install
     - cd ../js
+    - npm -g install snyk
     - npm install
     - cd ../php
 script:
