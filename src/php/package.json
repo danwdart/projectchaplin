@@ -35,7 +35,7 @@
     "eslint": "^5.2.0",
     "file-loader": "^1.1.11",
     "snyk": "^1.69.5",
-    "style-loader": "^0.21.0",
+    "style-loader": "^0.22.0",
     "url-loader": "^1.0.1",
     "webpack": "^4.16.3"
   },
