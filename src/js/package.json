@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "eslint": "^5.2.0",
-    "snyk": "^1.82.1"
+    "snyk": "^1.90.2"
   },
   "snyk": true,
   "homepage": "https://github.com/danwdart/projectchaplin#readme",
