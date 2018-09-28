@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.1.1",
-    "@babel/preset-env": "^7.0.0-beta.38",
+    "@babel/preset-env": "^7.1.0",
     "@babel/preset-stage-0": "^7.0.0-beta.38",
     "babel-loader": "^8.0.2",
     "css-loader": "^1.0.0",
