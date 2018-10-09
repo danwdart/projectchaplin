@@ -1,0 +1,12 @@
+{
+    "app": {
+        "name": "Project Chaplin API"
+    },
+    "media": {
+        "tokenSecret": "change-me-please"
+    },
+    "cors": true,
+    "search": {
+        "enabled": true
+    }
+}

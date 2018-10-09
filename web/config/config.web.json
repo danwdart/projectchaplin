@@ -1,0 +1,42 @@
+{
+    "app": {
+        "name": "Project Chaplin"
+    },
+    "server": {
+        "host": "0.0.0.0",
+        "port": "8080"
+    },
+    "api": {
+        "host": "localhost",
+        "port": "8081",
+        "auth": {
+            "clientId": "chaplin",
+            "secret": "secret"
+        }
+    },
+    "global" : {
+        "baseUrl": "http://chaplin.localhost:8080"
+    },
+    "engines": {
+        "js": {
+            "cache": true,
+            "debug": true,
+            "debugLevel": "DEBUG",
+            "whitespace": true,
+            "paths": {
+                "helpers": "workspace/utils/helpers"
+            }
+        }
+    },
+    "paths": {
+        "datasources": "./workspace/datasources",
+        "events": "./workspace/events",
+        "middleware": "./workspace/middleware",
+        "pages": "./workspace/pages",
+        "partials": "./workspace/partials",
+        "public": "./workspace/public",
+        "routes": "./workspace/routes",
+        "helpers": "./workspace/utils/helpers",
+        "filters": "./workspace/utils/filters"
+    }
+}

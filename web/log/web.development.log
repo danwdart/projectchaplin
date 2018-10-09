@@ -1,0 +1,206 @@
+{"name":"dadi-web","hostname":"gliese","pid":30251,"level":30,"msg":"Starting DADI Web in cluster mode, using 4 workers.","time":"2018-09-27T21:15:50.454Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30339,"level":30,"msg":"Starting DADI Web in cluster mode, using 4 workers.","time":"2018-09-27T21:16:04.993Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":4051,"level":30,"msg":"Starting DADI Web in cluster mode, using 4 workers.","time":"2018-09-27T23:59:06.114Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":4051,"level":30,"msg":"Master cluster setting up 4 workers...","time":"2018-09-27T23:59:06.114Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":4051,"level":30,"msg":"Worker 4062 is online","time":"2018-09-27T23:59:06.312Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":4051,"level":30,"msg":"Worker 4079 is online","time":"2018-09-27T23:59:06.345Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":4051,"level":30,"msg":"Worker 4072 is online","time":"2018-09-27T23:59:06.384Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":4051,"level":30,"msg":"Worker 4081 is online","time":"2018-09-27T23:59:06.446Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Starting DADI Web in cluster mode, using 4 workers.","time":"2018-09-29T15:22:28.818Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Master cluster setting up 4 workers...","time":"2018-09-29T15:22:28.818Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 24978 is online","time":"2018-09-29T15:22:28.973Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 24984 is online","time":"2018-09-29T15:22:28.992Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 24993 is online","time":"2018-09-29T15:22:29.049Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 24991 is online","time":"2018-09-29T15:22:29.063Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 24991 died with code: 0, and signal: null","time":"2018-09-29T15:22:48.280Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:22:48.280Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 24978 died with code: 0, and signal: null","time":"2018-09-29T15:22:48.325Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:22:48.325Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 24984 died with code: 0, and signal: null","time":"2018-09-29T15:22:48.370Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:22:48.370Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 25171 is online","time":"2018-09-29T15:22:48.415Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 24993 died with code: 0, and signal: null","time":"2018-09-29T15:22:48.434Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:22:48.434Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 25178 is online","time":"2018-09-29T15:22:48.457Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 25185 is online","time":"2018-09-29T15:22:48.621Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 25192 is online","time":"2018-09-29T15:22:48.730Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 25178 died with code: 0, and signal: null","time":"2018-09-29T15:22:56.191Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:22:56.192Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 25171 died with code: 0, and signal: null","time":"2018-09-29T15:22:56.231Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:22:56.231Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 25185 died with code: 0, and signal: null","time":"2018-09-29T15:22:56.273Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:22:56.273Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 25192 died with code: 0, and signal: null","time":"2018-09-29T15:22:56.308Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:22:56.308Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 25230 is online","time":"2018-09-29T15:22:56.383Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 25223 is online","time":"2018-09-29T15:22:56.434Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 25239 is online","time":"2018-09-29T15:22:56.510Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":24962,"level":30,"msg":"Worker 25237 is online","time":"2018-09-29T15:22:56.545Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":25324,"level":30,"msg":"Starting DADI Web in cluster mode, using 4 workers.","time":"2018-09-29T15:23:54.340Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":25324,"level":30,"msg":"Master cluster setting up 4 workers...","time":"2018-09-29T15:23:54.340Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":25324,"level":30,"msg":"Worker 25348 is online","time":"2018-09-29T15:23:54.457Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":25324,"level":30,"msg":"Worker 25341 is online","time":"2018-09-29T15:23:54.491Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":25324,"level":30,"msg":"Worker 25335 is online","time":"2018-09-29T15:23:54.496Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":25324,"level":30,"msg":"Worker 25355 is online","time":"2018-09-29T15:23:54.505Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":25458,"level":30,"msg":"Starting DADI Web in cluster mode, using 4 workers.","time":"2018-09-29T15:24:18.361Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":25458,"level":30,"msg":"Master cluster setting up 4 workers...","time":"2018-09-29T15:24:18.362Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":25458,"level":30,"msg":"Worker 25472 is online","time":"2018-09-29T15:24:18.470Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":25458,"level":30,"msg":"Worker 25478 is online","time":"2018-09-29T15:24:18.479Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":25458,"level":30,"msg":"Worker 25485 is online","time":"2018-09-29T15:24:18.514Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":25458,"level":30,"msg":"Worker 25492 is online","time":"2018-09-29T15:24:18.550Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":26346,"level":30,"msg":"Starting DADI Web in cluster mode, using 4 workers.","time":"2018-09-29T15:24:50.880Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":26346,"level":30,"msg":"Master cluster setting up 4 workers...","time":"2018-09-29T15:24:50.881Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":26346,"level":30,"msg":"Worker 26516 is online","time":"2018-09-29T15:24:51.065Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":26346,"level":30,"msg":"Worker 26502 is online","time":"2018-09-29T15:24:51.072Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":26346,"level":30,"msg":"Worker 26508 is online","time":"2018-09-29T15:24:51.078Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":26346,"level":30,"msg":"Worker 26520 is online","time":"2018-09-29T15:24:51.150Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Starting DADI Web in cluster mode, using 4 workers.","time":"2018-09-29T15:27:21.973Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Master cluster setting up 4 workers...","time":"2018-09-29T15:27:21.973Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27460 is online","time":"2018-09-29T15:27:22.102Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27473 is online","time":"2018-09-29T15:27:22.110Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27466 is online","time":"2018-09-29T15:27:22.120Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27480 is online","time":"2018-09-29T15:27:22.165Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27480 died with code: 0, and signal: null","time":"2018-09-29T15:27:24.210Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:27:24.210Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27473 died with code: 0, and signal: null","time":"2018-09-29T15:27:24.219Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:27:24.219Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27460 died with code: 0, and signal: null","time":"2018-09-29T15:27:24.235Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:27:24.235Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27466 died with code: 0, and signal: null","time":"2018-09-29T15:27:24.254Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:27:24.254Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27507 is online","time":"2018-09-29T15:27:24.352Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27521 is online","time":"2018-09-29T15:27:24.354Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27508 is online","time":"2018-09-29T15:27:24.403Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27524 is online","time":"2018-09-29T15:27:24.437Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27507 died with code: 0, and signal: null","time":"2018-09-29T15:27:26.583Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:27:26.583Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27508 died with code: 0, and signal: null","time":"2018-09-29T15:27:26.671Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:27:26.671Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27521 died with code: 0, and signal: null","time":"2018-09-29T15:27:26.719Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:27:26.719Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27558 is online","time":"2018-09-29T15:27:26.756Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27568 is online","time":"2018-09-29T15:27:26.931Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27576 is online","time":"2018-09-29T15:27:27.033Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27524 died with code: 0, and signal: null","time":"2018-09-29T15:27:27.300Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:27:27.300Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27588 is online","time":"2018-09-29T15:27:27.672Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27568 died with code: 0, and signal: null","time":"2018-09-29T15:27:29.281Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:27:29.282Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27558 died with code: 0, and signal: null","time":"2018-09-29T15:27:29.296Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:27:29.296Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27614 is online","time":"2018-09-29T15:27:29.441Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27616 is online","time":"2018-09-29T15:27:29.512Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27576 died with code: 0, and signal: null","time":"2018-09-29T15:27:30.090Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:27:30.090Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27588 died with code: 0, and signal: null","time":"2018-09-29T15:27:30.181Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:27:30.181Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27629 is online","time":"2018-09-29T15:27:30.246Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27636 is online","time":"2018-09-29T15:27:30.336Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27614 died with code: 0, and signal: null","time":"2018-09-29T15:27:32.236Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:27:32.237Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27616 died with code: 0, and signal: null","time":"2018-09-29T15:27:32.259Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:27:32.259Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27668 is online","time":"2018-09-29T15:27:32.372Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27669 is online","time":"2018-09-29T15:27:32.475Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27636 died with code: 0, and signal: null","time":"2018-09-29T15:27:32.919Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:27:32.919Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27683 is online","time":"2018-09-29T15:27:33.076Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27629 died with code: 0, and signal: null","time":"2018-09-29T15:27:33.170Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:27:33.170Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27442,"level":30,"msg":"Worker 27692 is online","time":"2018-09-29T15:27:33.359Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27721,"level":30,"msg":"Starting DADI Web in cluster mode, using 4 workers.","time":"2018-09-29T15:27:36.090Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27721,"level":30,"msg":"Master cluster setting up 4 workers...","time":"2018-09-29T15:27:36.091Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27721,"level":30,"msg":"Worker 27734 is online","time":"2018-09-29T15:27:36.202Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27721,"level":30,"msg":"Worker 27747 is online","time":"2018-09-29T15:27:36.225Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27721,"level":30,"msg":"Worker 27740 is online","time":"2018-09-29T15:27:36.262Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":27721,"level":30,"msg":"Worker 27754 is online","time":"2018-09-29T15:27:36.314Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":28761,"level":30,"msg":"Starting DADI Web in cluster mode, using 4 workers.","time":"2018-09-29T15:27:56.125Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":28761,"level":30,"msg":"Master cluster setting up 4 workers...","time":"2018-09-29T15:27:56.125Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":28761,"level":30,"msg":"Worker 28799 is online","time":"2018-09-29T15:27:56.294Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":28761,"level":30,"msg":"Worker 28814 is online","time":"2018-09-29T15:27:56.304Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":28761,"level":30,"msg":"Worker 28805 is online","time":"2018-09-29T15:27:56.314Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":28761,"level":30,"msg":"Worker 28812 is online","time":"2018-09-29T15:27:56.367Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Starting DADI Web in cluster mode, using 4 workers.","time":"2018-09-29T15:29:27.899Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Master cluster setting up 4 workers...","time":"2018-09-29T15:29:27.900Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29545 is online","time":"2018-09-29T15:29:28.019Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29551 is online","time":"2018-09-29T15:29:28.064Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29554 is online","time":"2018-09-29T15:29:28.064Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29564 is online","time":"2018-09-29T15:29:28.118Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29545 died with code: 0, and signal: null","time":"2018-09-29T15:29:32.998Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:29:32.999Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29554 died with code: 0, and signal: null","time":"2018-09-29T15:29:33.016Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:29:33.016Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29551 died with code: 0, and signal: null","time":"2018-09-29T15:29:33.085Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:29:33.085Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29604 is online","time":"2018-09-29T15:29:33.111Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29610 is online","time":"2018-09-29T15:29:33.159Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29564 died with code: 0, and signal: null","time":"2018-09-29T15:29:33.178Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:29:33.178Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29618 is online","time":"2018-09-29T15:29:33.248Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29626 is online","time":"2018-09-29T15:29:33.483Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29618 died with code: 0, and signal: null","time":"2018-09-29T15:29:36.490Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:29:36.490Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29604 died with code: 0, and signal: null","time":"2018-09-29T15:29:36.534Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:29:36.534Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29610 died with code: 0, and signal: null","time":"2018-09-29T15:29:36.566Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:29:36.566Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29626 died with code: 0, and signal: null","time":"2018-09-29T15:29:36.614Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:29:36.614Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29654 is online","time":"2018-09-29T15:29:36.655Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29668 is online","time":"2018-09-29T15:29:36.743Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29675 is online","time":"2018-09-29T15:29:36.797Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29661 is online","time":"2018-09-29T15:29:36.869Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29675 died with code: 0, and signal: null","time":"2018-09-29T15:29:39.673Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:29:39.674Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29668 died with code: 0, and signal: null","time":"2018-09-29T15:29:39.705Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:29:39.705Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29661 died with code: 0, and signal: null","time":"2018-09-29T15:29:39.813Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:29:39.813Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29654 died with code: 0, and signal: null","time":"2018-09-29T15:29:39.835Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:29:39.835Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29700 is online","time":"2018-09-29T15:29:39.862Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29706 is online","time":"2018-09-29T15:29:39.993Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29715 is online","time":"2018-09-29T15:29:40.168Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":29534,"level":30,"msg":"Worker 29716 is online","time":"2018-09-29T15:29:40.264Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Starting DADI Web in cluster mode, using 4 workers.","time":"2018-09-29T15:30:51.772Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Master cluster setting up 4 workers...","time":"2018-09-29T15:30:51.773Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30570 is online","time":"2018-09-29T15:30:51.893Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30563 is online","time":"2018-09-29T15:30:51.954Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30577 is online","time":"2018-09-29T15:30:51.973Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30581 is online","time":"2018-09-29T15:30:51.997Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30570 died with code: 0, and signal: null","time":"2018-09-29T15:30:59.614Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:30:59.614Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30577 died with code: 0, and signal: null","time":"2018-09-29T15:30:59.640Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:30:59.640Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30581 died with code: 0, and signal: null","time":"2018-09-29T15:30:59.676Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:30:59.676Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30563 died with code: 0, and signal: null","time":"2018-09-29T15:30:59.741Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:30:59.741Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30898 is online","time":"2018-09-29T15:30:59.754Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30913 is online","time":"2018-09-29T15:30:59.834Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30904 is online","time":"2018-09-29T15:30:59.919Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30920 is online","time":"2018-09-29T15:30:59.970Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30898 died with code: 0, and signal: null","time":"2018-09-29T15:31:02.504Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:31:02.504Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30920 died with code: 0, and signal: null","time":"2018-09-29T15:31:02.551Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:31:02.551Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30904 died with code: 0, and signal: null","time":"2018-09-29T15:31:02.570Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:31:02.570Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30913 died with code: 0, and signal: null","time":"2018-09-29T15:31:02.620Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Starting a new worker","time":"2018-09-29T15:31:02.620Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30947 is online","time":"2018-09-29T15:31:02.644Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30955 is online","time":"2018-09-29T15:31:02.763Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30966 is online","time":"2018-09-29T15:31:02.795Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":30383,"level":30,"msg":"Worker 30954 is online","time":"2018-09-29T15:31:02.838Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":31691,"level":30,"msg":"Starting DADI Web in cluster mode, using 4 workers.","time":"2018-09-29T15:32:13.361Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":31691,"level":30,"msg":"Master cluster setting up 4 workers...","time":"2018-09-29T15:32:13.361Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":31691,"level":30,"msg":"Worker 31708 is online","time":"2018-09-29T15:32:13.485Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":31691,"level":30,"msg":"Worker 31702 is online","time":"2018-09-29T15:32:13.496Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":31691,"level":30,"msg":"Worker 31715 is online","time":"2018-09-29T15:32:13.520Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":31691,"level":30,"msg":"Worker 31722 is online","time":"2018-09-29T15:32:13.564Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":31812,"level":30,"msg":"Starting DADI Web in cluster mode, using 4 workers.","time":"2018-09-29T15:32:46.430Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":31812,"level":30,"msg":"Master cluster setting up 4 workers...","time":"2018-09-29T15:32:46.431Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":31812,"level":30,"msg":"Worker 31823 is online","time":"2018-09-29T15:32:46.539Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":31812,"level":30,"msg":"Worker 31829 is online","time":"2018-09-29T15:32:46.560Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":31812,"level":30,"msg":"Worker 31843 is online","time":"2018-09-29T15:32:46.601Z","v":0}
+{"name":"dadi-web","hostname":"gliese","pid":31812,"level":30,"msg":"Worker 31836 is online","time":"2018-09-29T15:32:46.604Z","v":0}

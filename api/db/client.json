@@ -1,0 +1,4 @@
+{ clientId: 'chaplin',
+    secret: 'secret',
+    accessType: 'admin'
+}

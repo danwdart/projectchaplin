@@ -1,0 +1,27 @@
+{
+    "page": {
+      "name": "Homepage",
+      "description": "Chaplin - Home"
+    },
+    "settings": {
+      "cache": true,
+      "beautify": true,
+      "keepWhitespace": true,
+      "passFilters": true
+    },
+    "routes": [
+      {
+        "path": "/"
+      }
+    ],
+    "contentType": "text/html",
+    "template": "index.js",
+    "datasources": [
+    ],
+    "requiredDatasources": [
+    ],
+    "events": [
+    ],
+    "preloadEvents": [
+    ]
+  }

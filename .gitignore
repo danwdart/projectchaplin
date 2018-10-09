@@ -1,11 +1,2 @@
-*~
-vendor
 node_modules
-*.pid
-npm-debug.log
-/public/js/index*
-/public/js/*.svg
-/public/js/*.woff*
-/public/js/*.eot
-/public/js/*.ttf
 .env

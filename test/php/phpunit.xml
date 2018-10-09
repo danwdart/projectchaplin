@@ -1,5 +1,0 @@
-<phpunit bootstrap="./bootstrap.php">
-    <testsuite>
-        <directory>./Chaplin</directory>
-    </testsuite>
-</phpunit>

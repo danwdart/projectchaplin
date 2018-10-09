@@ -1,0 +1,24 @@
+{
+  "name": "projectchaplin-queue",
+  "version": "1.0.0",
+  "description": "Project Chaplin Queue",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/danwdart/projectchaplin.git"
+  },
+  "keywords": [
+    "project",
+    "chaplin",
+    "queue"
+  ],
+  "author": "Dan Dart <npm@dandart.co.uk>",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/danwdart/projectchaplin/issues"
+  },
+  "homepage": "https://github.com/danwdart/projectchaplin#readme"
+}
