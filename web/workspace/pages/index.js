@@ -1,5 +1,3 @@
-${layout(
-    'Main',
-    header({username: 'Bob', nick: 'Bobby', type: 'God'}, false, null),
-    `Main content`
-)}
+${partials_header}
+Main content
+${partials_footer}
