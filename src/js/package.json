@@ -23,7 +23,7 @@
     "socket.io": "^2.1.1"
   },
   "devDependencies": {
-    "eslint": "^5.2.0",
+    "eslint": "^5.13.0",
     "snyk": "^1.95.3"
   },
   "snyk": true,
