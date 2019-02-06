@@ -37,7 +37,7 @@
     "snyk": "^1.95.3",
     "style-loader": "^0.23.0",
     "url-loader": "^1.1.1",
-    "webpack": "^4.17.3"
+    "webpack": "^4.29.2"
   },
   "snyk": true,
   "homepage": "https://github.com/danwdart/projectchaplin#readme",
