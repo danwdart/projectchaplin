@@ -20,11 +20,11 @@
     "url": "https://github.com/danwdart/projectchaplin/issues"
   },
   "dependencies": {
-    "socket.io": "^2.1.1"
+    "socket.io": "^2.2.0"
   },
   "devDependencies": {
-    "eslint": "^5.2.0",
-    "snyk": "^1.95.3"
+    "eslint": "^5.16.0",
+    "snyk": "^1.165.0"
   },
   "snyk": true,
   "homepage": "https://github.com/danwdart/projectchaplin#readme",
