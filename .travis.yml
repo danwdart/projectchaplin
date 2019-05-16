@@ -5,7 +5,7 @@ php:
 before_script:
     - cd src/php
     - composer install
-    - nvm install 9.4
+    - nvm install 12.2
     - npm install
     - cd ../js
     - npm -g install snyk
