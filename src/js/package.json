@@ -23,8 +23,8 @@
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
-    "eslint": "^6.7.2",
-    "snyk": "^1.258.1"
+    "eslint": "^7.0.0-alpha.0",
+    "snyk": "^1.288.0"
   },
   "snyk": true,
   "homepage": "https://github.com/danwdart/projectchaplin#readme",
