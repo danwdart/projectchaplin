@@ -24,14 +24,14 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
-    "socket.io-client": "^2.3.0"
+    "socket.io-client": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-stage-0": "^7.8.3",
     "babel-loader": "^8.1.0",
-    "css-loader": "^3.5.3",
+    "css-loader": "^5.0.0",
     "eslint": "^7.1.0",
     "file-loader": "^6.0.0",
     "snyk": "^1.334.0",
