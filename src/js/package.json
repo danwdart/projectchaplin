@@ -20,7 +20,7 @@
     "url": "https://github.com/danwdart/projectchaplin/issues"
   },
   "dependencies": {
-    "socket.io": "^3.0.0"
+    "socket.io": "^4.5.0"
   },
   "devDependencies": {
     "eslint": "^7.1.0",
